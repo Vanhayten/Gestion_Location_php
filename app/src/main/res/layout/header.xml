@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/NAVblack_theme75"
+    android:orientation="vertical"
+    android:id="@+id/c3"
+    android:paddingLeft="15dp"
+    android:layout_gravity="left"
+    android:layout_width="match_parent"
+    android:layout_height="220dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profilpic"
+            android:layout_width="137dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="20dp"
+            android:elevation="6dp"
+            android:src="@mipmap/man1"
+            app:civ_border_color="@color/NAVwhite_theme50"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:id="@+id/unser_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="60dp"
+            android:text="@string/user"
+            android:textColor="@color/NAVwhite_theme50"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/role"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="6dp"
+            android:paddingLeft="60dp"
+            android:text="#Administrateur"
+            android:textColor="@color/NAVgray_theme50"
+            android:textSize="15dp"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+</LinearLayout>

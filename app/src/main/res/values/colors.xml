@@ -3,4 +3,9 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="NAVblack_theme100">#000000</color>
+    <color name="NAVblack_theme75">#20272B</color>
+    <color name="NAVgray_theme50">#616161</color>
+    <color name="NAVwhite_theme50">#FAFAFA</color>
+    <color name="NAVwhite_theme10">#E4E7E8</color>
 </resources>

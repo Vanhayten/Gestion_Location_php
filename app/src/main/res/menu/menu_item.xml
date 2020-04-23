@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/flotte"
+        android:title="Ma Flotte">
+        <menu>
+            <item
+                android:id="@+id/vihicule"
+                android:title="   Mes véhicules"></item>
+            <item
+                android:id="@+id/assurances"
+                android:title="   Mes assurances"></item>
+            <item
+                android:id="@+id/entretiens"
+                android:title="   Mes assurances"></item>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/recette"
+        android:title="Ma Recette"/>
+    <item
+        android:id="@+id/charges"
+        android:title="Mes Charges"/>
+    <item
+        android:id="@+id/calendrier"
+        android:title="Calendrier"/>
+    <item
+        android:id="@+id/clients"
+        android:title="Mes Clients"/>
+
+</menu>
