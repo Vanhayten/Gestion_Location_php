@@ -25,8 +25,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
+
+
             android:layout_marginTop="50dp"
             android:background="@color/NAVwhite_theme50"
             android:orientation="vertical">
@@ -62,17 +62,19 @@
 
             />
         
-        <View
+        <TextView
+            android:id="@+id/idcolor"
             android:layout_width="match_parent"
-            android:layout_height="1dp"></View>
+            android:layout_height="1dp"></TextView>
 
     </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
+    <ListView
+        android:id="@+id/list1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
 
-    </androidx.recyclerview.widget.RecyclerView>
+    </ListView>
 
             <Button
                 android:layout_width="102dp"
