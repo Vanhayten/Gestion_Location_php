@@ -44,7 +44,6 @@ public class PageAdapter_vihucle extends BaseAdapter
         public TextView matr;
         public TextView color;
         public TextView marq;
-
     }
 
 
@@ -75,4 +74,4 @@ public class PageAdapter_vihucle extends BaseAdapter
         return convertView;
     }
     }
-}
+

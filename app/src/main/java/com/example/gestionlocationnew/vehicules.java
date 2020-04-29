@@ -35,6 +35,8 @@ ArrayList<list_vihcule> arrayList;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        db= new gestion_location(this);
+
         drawerLayout = findViewById(R.id.drawer);
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.navigationView);
@@ -49,7 +51,7 @@ ArrayList<list_vihcule> arrayList;
 
         //-------------------------
 
-   SQLiteDatabase table = db.getReadableDatabase ();
+                    SQLiteDatabase table = db.getReadableDatabase ();
                     String requet = "select * from véhicules ";
                     Cursor c = table.rawQuery ( requet, null );
                     arrayList = new ArrayList<list_vihcule> ();
@@ -61,6 +63,7 @@ ArrayList<list_vihcule> arrayList;
                     }
                     PageAdapter_vihucle listrep = new PageAdapter_vihucle ( this, arrayList );
                     ls.setAdapter ( listrep );
+
 
 
 

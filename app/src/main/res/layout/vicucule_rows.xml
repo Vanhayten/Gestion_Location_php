@@ -17,8 +17,8 @@
         android:textSize="22sp"
         android:id="@+id/marqueV"
         android:textAlignment="center"
+        android:gravity="center_horizontal"
         android:textColor="#000C5D"
-
         ></TextView>
     <TextView
         android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
         android:textColor="#ADADAD"
         android:layout_marginTop="8dp"
         android:textAlignment="center"
-
+        android:gravity="center_horizontal"
         ></TextView>
 </LinearLayout>
 </LinearLayout>

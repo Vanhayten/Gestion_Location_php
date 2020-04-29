@@ -155,7 +155,7 @@ public class gestion_location extends SQLiteOpenHelper {
     }
 
     //methode ajouter vehucle
-    public boolean insert_vehiucle(String Nom,String date , String imatricul, String marque, Integer valeur, String Date_Effet, String Date_echance, String couleur){
+        public boolean insert_vehiucle(String Nom,String date , String imatricul, String marque, Integer valeur, String Date_Effet, String Date_echance, String couleur){
         boolean res=false;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues tab_ch1 = new ContentValues();
