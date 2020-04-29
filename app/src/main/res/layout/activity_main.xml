@@ -20,13 +20,11 @@
             android:background="@color/NAVwhite_theme50" />
 
         <LinearLayout
-            android:layout_width="357dp"
+            android:layout_width="match_parent"
             android:layout_height="672dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-
-
             android:layout_marginTop="50dp"
             android:background="@color/NAVwhite_theme50"
             android:orientation="vertical">
@@ -71,6 +69,7 @@
     <ListView
         android:id="@+id/list1"
         android:layout_width="match_parent"
+        android:layout_marginLeft=""
         android:layout_height="wrap_content"
         >
 
