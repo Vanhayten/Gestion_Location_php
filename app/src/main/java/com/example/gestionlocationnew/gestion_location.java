@@ -30,6 +30,7 @@ public class gestion_location extends SQLiteOpenHelper {
 
     //declaration table véhicules
     private static final String Table3 = "véhicules";
+    private static final String Col_Marque_Vihicule = "MarqueVihicule";
     private static final String Col_DateCirculation = "DateCirculation";
     private static final String Col_immatriculation = "immatriculation";
     private static final String Col_MarqueCombustion = "MarqueCombustion";
@@ -101,14 +102,13 @@ public class gestion_location extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String table1 = "Create table "+Table1+" ("+Col_login+" text primary key ,"+Col_Mdp+" text,"+Col_Nom+" text,"+Col_Prenom+" text,"+Col_Role+" text)";
         String table2 = "Create table "+Table2+" ("+Col_nom+" text  ,"+Col_prenom+" text,"+Col_adresse+" text,"+Col_cin+" text primary key,"+Col_tel+" text,"+Col_activité+" text)";
-        String table3 = "Create table "+Table3+" ("+Col_DateCirculation+" date ,"+Col_immatriculation+" text primary key,"+Col_MarqueCombustion+" text,"+Col_ValeurDentrée+" Integer,"+Col_Date_Effet_Assurance+" date,"+Col_Date_Echeance+" date,"+Col_Couleur_Vehicule+" text)";
+        String table3 = "Create table "+Table3+" ("+Col_Marque_Vihicule+" text ,"+Col_DateCirculation+" date ,"+Col_immatriculation+" text primary key,"+Col_MarqueCombustion+" text,"+Col_ValeurDentrée+" Integer,"+Col_Date_Effet_Assurance+" date,"+Col_Date_Echeance+" date,"+Col_Couleur_Vehicule+" text)";
         String table4 = "Create table "+Table4+" ("+Col_IdRecette+" text primary key ,"+Col_NbJour+" integer,"+Col_prix+" integer,"+Col_DateEncaissement+" date,"+Col_MoyenPayment+" integer,"+Col_immatriculationR+" text)";
         String table5 = "Create table "+Table5+" ("+Col_IdCharge+" text primary key ,"+Col_Date+" date,"+Col_Montant+" integer,"+Col_Payment+" text)";
         String table6 = "Create table "+Table6+" ("+Col_IdEvenement+" text primary key,"+Col_DateDebut+" date ,"+Col_DateFin+" date,"+Col_Rappel+" text,"+Col_Nature+" text,"+Col_Responsable+" text)";
         String table7 = "Create table "+Table7+" ("+Col_imatriculation_reparation+" text,"+Col_pieces_changes+" text,"+Col_main_douvre+" TEXT,"+Col_ref_facture+" TEXT,"+Col_date_reparation+"  DATE,"+Col_montant_reparation+" integer)";
         String table8 = "Create table "+Table8+" ("+Col_imatriculation_asurance+" text,"+Col_date_debut_assurance+" date,"+Col_date_fin_assurance+" TEXT,"+Col_compagnie_assurance+" text,"+Col_prime_assurance+" integer)";
         String table9 = "Create table "+Table9+" ("+Col_imatriculation_sinistre+" text,"+Col_date_sinistre+" date,"+Col_ganre_daccident+" TEXT,"+Col_montant_reparation_sinistre+" Integer,"+Col_responsabilite+" Text,"+Col_MONTANT_PRIS_EN_CHARGE+" Integer)";
-
 
         db.execSQL(table1);
         db.execSQL(table2);
@@ -155,10 +155,11 @@ public class gestion_location extends SQLiteOpenHelper {
     }
 
     //methode ajouter vehucle
-    public boolean insert_vehiucle(String date , String imatricul, String marque, Integer valeur, String Date_Effet, String Date_echance, String couleur){
+    public boolean insert_vehiucle(String Nom,String date , String imatricul, String marque, Integer valeur, String Date_Effet, String Date_echance, String couleur){
         boolean res=false;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues tab_ch1 = new ContentValues();
+        tab_ch1.put(Col_Marque_Vihicule,Nom);
         tab_ch1.put(Col_DateCirculation,date);
         tab_ch1.put(Col_immatriculation,imatricul);
         tab_ch1.put(Col_MarqueCombustion,marque);

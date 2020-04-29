@@ -49,7 +49,6 @@
         android:layout_width="172dp"
         android:layout_height="48dp"
         android:layout_marginTop="276dp"
-
         android:onClick="connection"
         android:text="Connection"
         app:layout_constraintEnd_toEndOf="parent"

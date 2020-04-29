@@ -91,6 +91,7 @@
                     android:drawableLeft="@drawable/ic_add_black_24dp"
                     android:drawablePadding="4dp"
                     android:text="Ajouter"
+                    android:onClick="Page_Ajoute"
                     android:textColor="@color/NAVwhite_theme50">
 
                 </Button>

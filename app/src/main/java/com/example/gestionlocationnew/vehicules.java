@@ -123,4 +123,8 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
         return false;
     }
 
+    public void Page_Ajoute(View view) {
+        Intent Ajouter = new Intent(this,Ajoute_vihicule.class);
+        startActivity(Ajouter);
+    }
 }
