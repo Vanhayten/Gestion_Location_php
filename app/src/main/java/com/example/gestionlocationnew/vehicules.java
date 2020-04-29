@@ -1,9 +1,12 @@
 package com.example.gestionlocationnew;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +17,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+
 public class vehicules extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     String Nom,Prenom,role;
@@ -21,6 +26,9 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
     Toolbar toolbar;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
+ListView ls;
+ArrayList<list_vihcule> arrayList;
+ gestion_location db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +45,24 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+        ls=(ListView)findViewById(R.id.list1);
+
         //-------------------------
+
+   SQLiteDatabase table = db.getReadableDatabase ();
+                    String requet = "select * from véhicules ";
+                    Cursor c = table.rawQuery ( requet, null );
+                    arrayList = new ArrayList<list_vihcule> ();
+                    arrayList.clear ();
+                    while (c.moveToNext ())
+                    {
+                        list_vihcule list = new list_vihcule (c.getString(0),c.getString(2));
+                        arrayList.add ( list );
+                    }
+                    PageAdapter_vihucle listrep = new PageAdapter_vihucle ( this, arrayList );
+                    ls.setAdapter ( listrep );
+
+
 
 
         NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);

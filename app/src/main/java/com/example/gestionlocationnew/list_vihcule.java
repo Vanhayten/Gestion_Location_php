@@ -28,4 +28,9 @@ public class list_vihcule {
     public void setMarque(String marque) {
         this.marque = marque;
     }
+
+    public list_vihcule(String matr, String marque) {
+        this.matr = matr;
+        this.marque = marque;
+    }
 }
