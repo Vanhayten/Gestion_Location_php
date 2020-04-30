@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -38,6 +39,10 @@ TextView textView;
         SQLiteDatabase table = db.getReadableDatabase ();
         String requet = "select * from sinistre where imatriculation_sinistre ='"+matr+"'";
         Cursor c = table.rawQuery ( requet, null );
+        if(c.getCount()==0){
+            Toast.makeText(this,"Aucun Sinistre pour cette Vihucle",Toast.LENGTH_SHORT).show();
+
+        }
         while (c.moveToNext ()){
             liste_sinistre listeS= new liste_sinistre();
             listeS.setdate(c.getString(1));
