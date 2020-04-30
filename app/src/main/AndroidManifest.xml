@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".historique_sinistre" />
         <activity android:name=".Ajoute_vihicule" />
         <activity android:name=".entretiens" />
         <activity android:name=".assurances" />
