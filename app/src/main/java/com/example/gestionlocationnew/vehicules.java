@@ -62,7 +62,7 @@ ArrayList<list_vihcule> arrayList;
                     arrayList.clear ();
                     while (c.moveToNext ())
                     {
-                        list_vihcule list = new list_vihcule (c.getString(2),c.getString(0),c.getString(7));
+                        list_vihcule list = new list_vihcule (c.getString(0),c.getString(2),c.getString(7));
                         arrayList.add ( list );
                     }
                     PageAdapter_vihucle listrep = new PageAdapter_vihucle ( this, arrayList );
