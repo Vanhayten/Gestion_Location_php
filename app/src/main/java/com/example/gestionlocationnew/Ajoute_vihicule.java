@@ -27,7 +27,7 @@ gestion_location DB;
         ArrayList<String> arrayList  = new ArrayList<String>();
         arrayList.add("Diesel");
         arrayList.add("Essence");
-        arrayList.add("Hbride");
+        arrayList.add("Hybride");
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,arrayList);
         spinner.setAdapter(arrayAdapter);
     }
