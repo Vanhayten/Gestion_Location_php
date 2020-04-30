@@ -1,6 +1,8 @@
 package com.example.gestionlocationnew;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -146,7 +149,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                         /**
                          * buton historique
                          */
-                        historique   =(Button)myDyalog.findViewById(R.id.btn_historique);
+                        historique  =(Button)myDyalog_ajoute.findViewById(R.id.btn_historique);
                         historique.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -159,10 +162,77 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                             }
                         });
 
+                        /**
+                         * buton ajoute
+                         */
+                        ajoute =(Button)myDyalog_ajoute.findViewById(R.id.btn_Ajouter);
+                        ajoute.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                final Dialog myDyalog_ajoute_conformation;
+                                myDyalog_ajoute_conformation = new Dialog(assurances.this);
+                                myDyalog_ajoute_conformation.setContentView(R.layout.dialog_ajoute_sinisstre);
+                                final TextView text1,text2,text3,text4,text5,text6;
+                                Button btnConfirmation;
+                                text1 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_matricule2);
+                                text2 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_datesinistre2);
+                                text3 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_ganredaccident2);
+                                text4 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_vmontant2);
+                                text5 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_responsabilite2);
+                                text6 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_montant2);
+                                text1.setText(matr.getText());
+
+                                /**
+                                 *
+                                 * click button d'ajoute
+                                 */
+                                btnConfirmation =(Button)myDyalog_ajoute_conformation.findViewById(R.id.btn_modifier1);
+                                btnConfirmation.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        /**
+                                         *
+                                         * dialog confirmation on joute
+                                         */
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(assurances.this);
+                                        builder.setCancelable(true);
+                                        builder.setTitle("Neveaux sinistre");
+                                        builder.setMessage("vous vouller ajouter");
+                                        builder.setPositiveButton("Confirm",
+                                                new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        boolean confirm = db.insert_sinistre(text1.getText().toString(),text2.getText().toString(),text3.getText().toString(),Integer.parseInt(text4.getText().toString()),text5.getText().toString(),Integer.parseInt(text6.getText().toString()));
+                                                        if(confirm){
+                                                            Toast.makeText(assurances.this, "Bien ajoute", Toast.LENGTH_SHORT).show();
+                                                            myDyalog_ajoute_conformation.dismiss();
+                                                        }else{
+                                                            Toast.makeText(assurances.this, "Erreur d'ajoute", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
+                                        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                            }
+                                        });
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+
+                                    }
+                                });
+
+
+                                myDyalog_ajoute_conformation.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                myDyalog_ajoute_conformation.show();
 
 
 
-
+                            }
+                        });
 
 
                         myDyalog_ajoute.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
