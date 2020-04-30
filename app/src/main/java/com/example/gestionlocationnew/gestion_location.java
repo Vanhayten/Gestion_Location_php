@@ -215,9 +215,10 @@ public class gestion_location extends SQLiteOpenHelper {
 //methode modifier vihicule
 
 
-    public void modifier_vihucle(String date , String imatricul, String marque, Integer valeur, String Date_Effet, String Date_echance, String couleur){
+    public void modifier_vihucle(String Nom,String date , String imatricul, String marque, Integer valeur, String Date_Effet, String Date_echance, String couleur){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues v = new ContentValues();
+        v.put(Col_Marque_Vihicule,Nom);
         v.put(Col_DateCirculation,date);
         v.put(Col_MarqueCombustion,marque);
         v.put(Col_ValeurDentrée,valeur);

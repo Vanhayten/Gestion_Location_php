@@ -1,13 +1,24 @@
 package com.example.gestionlocationnew;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -26,9 +37,12 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
     Toolbar toolbar;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
-ListView ls;
-ArrayList<list_vihcule> arrayList;
- gestion_location db;
+    ListView ls;
+    ArrayList<list_vihcule> arrayList;
+    gestion_location db;
+    TextView matr;
+    Dialog myDyalog;
+    Dialog AjouteDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +98,184 @@ ArrayList<list_vihcule> arrayList;
         username.setText(Nom+" "+Prenom);
         role1.setText(role);
 
+        //onclick on listner aficher le dialog
+        myDyalog = new Dialog(this);
+        ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                TextView text1,text2,text3,text4,text5,text6,text7,text8,text9;
+                Button Suprimer,Modifier;
+
+                myDyalog.setContentView(R.layout.dialog_vihicule);
+                text1 = (TextView)myDyalog.findViewById(R.id.text_nom);
+                text2 = (TextView)myDyalog.findViewById(R.id.text_matricule);
+                text3 = (TextView)myDyalog.findViewById(R.id.text_datecirulation);
+                text4 = (TextView)myDyalog.findViewById(R.id.text_marqueCombision);
+                text5 = (TextView)myDyalog.findViewById(R.id.text_valeur_entrer);
+                text6 = (TextView)myDyalog.findViewById(R.id.text_dateeffet);
+                text7 = (TextView)myDyalog.findViewById(R.id.text_dateechance);
+                text8 = (TextView)myDyalog.findViewById(R.id.text_couleur);
+                text9 = (TextView)myDyalog.findViewById(R.id.text_close);
+                Suprimer =(Button)myDyalog.findViewById(R.id.btn_suprimer);
+                Modifier =(Button)myDyalog.findViewById(R.id.btn_modifier);
+
+
+                matr =(TextView)view.findViewById(R.id.marqueV);
+
+                //Onclose dyalog
+                text9.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myDyalog.dismiss();
+                    }
+                });
+
+
+
+                Modifier.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /**
+                         * code modifier
+                         */
+                        final EditText text1,text2,text3,text4,text5,text6,text7,text8;
+                        Button Confirmer;
+                        AjouteDialog= new Dialog(vehicules.this);
+                        AjouteDialog.setContentView(R.layout.dialog_ajoute_vihicule);
+                        text1 = (EditText)AjouteDialog.findViewById(R.id.text_nom1);
+                        text2 = (EditText)AjouteDialog.findViewById(R.id.text_matricule1);
+                        text3 = (EditText)AjouteDialog.findViewById(R.id.text_datecirulation1);
+                        text4 = (EditText)AjouteDialog.findViewById(R.id.text_marqueCombision1);
+                        text5 = (EditText)AjouteDialog.findViewById(R.id.text_valeur_entrer1);
+                        text6 = (EditText)AjouteDialog.findViewById(R.id.text_dateeffet1);
+                        text7 = (EditText)AjouteDialog.findViewById(R.id.text_dateechance1);
+                        text8 = (EditText)AjouteDialog.findViewById(R.id.text_couleur1);
+                        Confirmer =(Button)AjouteDialog.findViewById(R.id.btn_modifier1);
+
+                        SQLiteDatabase table = db.getReadableDatabase ();
+                        String requet = "select * from véhicules where immatriculation ='"+matr.getText()+"'";
+                        Cursor c = table.rawQuery ( requet, null );
+
+                        while (c.moveToNext()){
+                            text1.setText(c.getString(0));
+                            text2.setText(c.getString(2));
+                            text3.setText(c.getString(1));
+                            text4.setText(c.getString(3));
+                            text5.setText(c.getString(4));
+                            text6.setText(c.getString(5));
+                            text7.setText(c.getString(6));
+                            text8.setText(c.getString(7));
+                        }
+
+                        Confirmer.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                /**
+                                 * confirmation suprimer
+                                 *
+                                 */
+                                AlertDialog.Builder builder = new AlertDialog.Builder(vehicules.this);
+                                builder.setCancelable(true);
+                                builder.setTitle("Confirmation");
+                                builder.setMessage("Vous vouller vraiment modifier");
+                                builder.setPositiveButton("Confirm",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                /**
+                                                 * confirmer
+                                                 */
+                                                try {
+                                                    db.modifier_vihucle(text1.getText().toString(),text3.getText().toString(),text2.getText().toString(),text4.getText().toString(),Integer.parseInt(text5.getText().toString()),text6.getText().toString(),text7.getText().toString(),text8.getText().toString());
+                                                    Toast.makeText(vehicules.this, "Bien Modification", Toast.LENGTH_SHORT).show();
+                                                    finish();
+                                                    startActivity(getIntent());
+
+                                                }catch (Exception Ex){
+                                                    Toast.makeText(vehicules.this, "Erreur Modification", Toast.LENGTH_SHORT).show();
+                                                }
+
+
+                                            }
+                                        });
+                                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        /**
+                                         * not confirmer
+                                         */
+                                        AjouteDialog.dismiss();
+                                    }
+                                });
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+
+                            }
+                        });
+
+                        AjouteDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        AjouteDialog.show();
+                    }
+                });
+
+
+                Suprimer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(vehicules.this);
+                        builder.setCancelable(true);
+                        builder.setTitle("suppression");
+                        builder.setMessage("Vous vouller vraiment suprimer");
+                        builder.setPositiveButton("Confirm",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        db.suprimer_vihucle(matr.getText().toString());
+                                        finish();
+                                        startActivity(getIntent());
+                                        myDyalog.dismiss();
+                                    }
+                                });
+                        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+
+                    }
+                });
+
+                //inisialise les donner from bas donner
+                SQLiteDatabase table = db.getReadableDatabase ();
+                String requet = "select * from véhicules where immatriculation ='"+matr.getText()+"'";
+                Cursor c = table.rawQuery ( requet, null );
+
+                while (c.moveToNext()){
+                    text1.setText("Nom vihicule :  "+c.getString(0));
+                    text2.setText("Imatriculation :  "+c.getString(2));
+                    text3.setText("Date Circulation :  "+c.getString(1));
+                    text4.setText("Marque Combustion :  "+c.getString(3));
+                    text5.setText("Valeur Dentrée :  "+c.getString(4));
+                    text6.setText("Date Effet Assurance :  "+c.getString(5));
+                    text7.setText("Date Echeance :  "+c.getString(6));
+                    text8.setText("Couleur Vehicule :  "+c.getString(7));
+                }
+
+
+
+                myDyalog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                myDyalog.show();
+
+
+
+
+            }
+        });
 
     }
 

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark"
+    android:padding="5dp"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+
+
+<LinearLayout
+    android:layout_width="350dp"
+    android:layout_height="475dp"
+    android:background="@color/colorPrimaryDark"
+    android:padding="5dp"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="60dp"
+        android:layout_marginLeft="60dp">
+        <EditText
+            android:id="@+id/text_nom1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nom"
+            android:textColorHint="@color/NAVwhite"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="5sp"
+            android:textSize="18dp"/>
+
+        <EditText
+            android:id="@+id/text_matricule1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:enabled="false"
+            android:hint="Matricule"
+            android:textColor="@color/NAVwhite"
+            android:textColorHint="@color/NAVwhite"
+            android:textSize="18dp" />
+        <EditText
+            android:id="@+id/text_datecirulation1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date Circulation"
+            android:textColorHint="@color/NAVwhite"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="5sp"
+            android:textSize="18dp"
+            />
+        <EditText
+            android:id="@+id/text_marqueCombision1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Marque Combustion"
+            android:textColorHint="@color/NAVwhite"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="5sp"
+            android:textSize="18dp" />
+        <EditText
+            android:id="@+id/text_valeur_entrer1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Valeur Dentrée"
+            android:textColorHint="@color/NAVwhite"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="5sp"
+            android:textSize="18dp"
+           />
+        <EditText
+            android:id="@+id/text_dateeffet1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date Effet Assurance"
+            android:textColorHint="@color/NAVwhite"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="5sp"
+            android:textSize="18dp" />
+        <EditText
+            android:id="@+id/text_dateechance1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date Echeance"
+            android:textColorHint="@color/NAVwhite"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="5sp"
+            android:textSize="18dp"
+            />
+        <EditText
+            android:id="@+id/text_couleur1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Couleur Vehicule"
+            android:textColorHint="@color/NAVwhite"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="5sp"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        >
+        <Button
+            android:id="@+id/btn_modifier1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirmer"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/button_style"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginRight="18dp"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>
+</ScrollView>

@@ -19,6 +19,7 @@
         android:textAlignment="center"
         android:gravity="center_horizontal"
         android:textColor="#000C5D"
+        android:textStyle="bold"
         ></TextView>
     <TextView
         android:layout_width="wrap_content"
