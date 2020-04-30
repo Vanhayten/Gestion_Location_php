@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="130dp"
+    android:background="@color/colorPrimaryDark"
+    android:padding="5dp"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+    <TextView
+        android:id="@+id/text_close"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textColor="@color/NAVwhite"
+        android:text="x"
+        android:textStyle="bold"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:background="@drawable/cercelbaground"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="-20dp"
+        android:orientation="horizontal">
+    <TextView
+        android:id="@+id/text_nom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom"
+        android:textStyle="bold"
+        android:textColor="@color/NAVwhite"
+        android:layout_marginTop="5sp"
+        android:textSize="18dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="333dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_assurance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="18dp"
+            android:background="@drawable/button_style"
+            android:gravity="center"
+            android:text="ASSURANCE AUTO"
+            android:textColor="@color/NAVwhite" />
+
+        <Button
+            android:id="@+id/btn_sinistres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/button_style"
+            android:gravity="center"
+            android:text="SINISTRES AUTO"
+            android:textColor="@color/NAVwhite" />
+
+    </LinearLayout>
+
+</LinearLayout>

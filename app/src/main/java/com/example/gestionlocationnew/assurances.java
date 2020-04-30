@@ -1,13 +1,18 @@
 package com.example.gestionlocationnew;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,6 +39,9 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
     ArrayList<list_vihcule> arrayList;
     PageAdapter_vihucle listrep;
     gestion_location db;
+    Dialog myDyalog;
+    TextView matr;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +94,65 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
 
             }
         });
+
+
         //-------------------------
         ls=(ListView)findViewById(R.id.list2);
+        //onclick on listner aficher le dialog
+        myDyalog = new Dialog(this);
+        ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Button sinistre,assurance;
+                TextView textClose,textnom;
+                myDyalog.setContentView(R.layout.dialog_assurance_sinistre);
+                sinistre   =(Button)myDyalog.findViewById(R.id.btn_sinistres);
+                assurance  =(Button)myDyalog.findViewById(R.id.btn_assurance);
+                textClose =(TextView)myDyalog.findViewById(R.id.text_close);
+                textnom =(TextView)myDyalog.findViewById(R.id.text_nom);
+
+
+                /**
+                 * get matricule to dialog
+                 */
+                matr =(TextView)view.findViewById(R.id.marqueV);
+                textnom.setText("le matricule : "+matr.getText());
+
+                /**
+                 * button sinistre
+                 */
+                sinistre.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myDyalog.dismiss();
+                        Intent I = new Intent(assurances.this,activity_sinistre.class);
+                        Bundle B = new Bundle();
+                        B.putString("matricule",matr.getText().toString());
+                        I.putExtras(B);
+                        startActivity(I);
+                    }
+                });
+
+
+
+
+
+                //Onclose dyalog
+                textClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myDyalog.dismiss();
+                    }
+                });
+                myDyalog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                myDyalog.show();
+
+            }
+        });
+
+
+
+
 
 
         SQLiteDatabase table = db.getReadableDatabase ();
