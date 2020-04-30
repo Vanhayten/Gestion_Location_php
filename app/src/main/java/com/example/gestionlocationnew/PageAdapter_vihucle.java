@@ -77,25 +77,25 @@ public String col;
         if(col.equals("Rouge")){  holder.matr.setTextColor(Color.RED);}*/
         switch (col){
             case "Rouge":
-               holder.matr.setTextColor(Color.RED);
+               holder.marq.setTextColor(Color.RED);
                 break;
             case "Vert":
-                holder.matr.setTextColor(Color.GREEN);
+                holder.marq.setTextColor(Color.GREEN);
                 break;
             case "Noir":
-                holder.matr.setTextColor(Color.BLACK);
+                holder.marq.setTextColor(Color.BLACK);
                 break;
             case "Jaune":
-                holder.matr.setTextColor(Color.YELLOW);
+                holder.marq.setTextColor(Color.YELLOW);
                 break;
             case "Gris":
-                holder.matr.setTextColor(Color.GRAY);
+                holder.marq.setTextColor(Color.GRAY);
                 break;
             case "Bleu":
-                holder.matr.setTextColor(Color.BLUE);
+                holder.marq.setTextColor(Color.BLUE);
                 break;
             case "Blanc":
-                holder.matr.setTextColor(Color.WHITE);
+                holder.marq.setTextColor(Color.WHITE);
                 break;
 
         }
