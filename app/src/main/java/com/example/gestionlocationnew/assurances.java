@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,7 +30,9 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     ListView ls;
+    EditText t1;
     ArrayList<list_vihcule> arrayList;
+    PageAdapter_vihucle listrep;
     gestion_location db;
 
     @Override
@@ -47,6 +52,40 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+        // recherche par matrucil
+        t1=(EditText)findViewById(R.id.Recherche_assurance);
+        t1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                ArrayList<list_vihcule> arrayList1;
+                SQLiteDatabase table = db.getReadableDatabase ();
+                String requet = "select * from véhicules where immatriculation ='"+t1.getText()+"'";
+                Cursor c = table.rawQuery ( requet, null );
+                if(c.getCount()>=1){
+                    ls.clearChoices();
+                    arrayList1= new ArrayList<list_vihcule> ();
+                    while (c.moveToNext ())
+                    {
+                        list_vihcule list = new list_vihcule (c.getString(0),c.getString(2),c.getString(7));
+                        arrayList1.add ( list );
+                    }
+                    PageAdapter_vihucle adapter_vihucle = new PageAdapter_vihucle (assurances.this,arrayList1);
+                    ls.setAdapter ( adapter_vihucle );
+                }else{
+                    ls.setAdapter (listrep);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         //-------------------------
         ls=(ListView)findViewById(R.id.list2);
 
@@ -65,7 +104,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
             list_vihcule list = new list_vihcule (c.getString(0),c.getString(2),c.getString(7));
             arrayList.add ( list );
         }
-        PageAdapter_vihucle listrep = new PageAdapter_vihucle ( this, arrayList );
+       listrep = new PageAdapter_vihucle ( this, arrayList );
         ls.setAdapter ( listrep );
 
 
