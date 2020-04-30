@@ -124,12 +124,50 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 sinistre.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myDyalog.dismiss();
-                        Intent I = new Intent(assurances.this,activity_sinistre.class);
+
+
+                        TextView textnom,textClose;
+                        Button historique,ajoute;
+                        final Dialog myDyalog_ajoute;
+                        myDyalog_ajoute = new Dialog(assurances.this);
+                        myDyalog_ajoute.setContentView(R.layout.dialog_historique_ajouter_sinistre);
+                        textnom =(TextView)myDyalog_ajoute.findViewById(R.id.text_nom);
+                        textnom.setText("le matricule : "+matr.getText());
+
+                        //Onclose dyalog
+                        textClose =(TextView)myDyalog_ajoute.findViewById(R.id.text_close);
+                        textClose.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                myDyalog_ajoute.dismiss();
+                            }
+                        });
+
+                        /**
+                         * buton historique
+                         */
+                        historique   =(Button)myDyalog.findViewById(R.id.btn_historique);
+                        historique.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                        Intent I = new Intent(assurances.this,historique_sinistre.class);
                         Bundle B = new Bundle();
                         B.putString("matricule",matr.getText().toString());
                         I.putExtras(B);
                         startActivity(I);
+                            }
+                        });
+
+
+
+
+
+
+
+                        myDyalog_ajoute.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        myDyalog_ajoute.show();
+
                     }
                 });
 
