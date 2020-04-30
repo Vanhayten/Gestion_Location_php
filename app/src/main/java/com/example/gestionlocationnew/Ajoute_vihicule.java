@@ -43,11 +43,11 @@ gestion_location DB;
         text7 = (EditText)findViewById(R.id.vihicule_Couleur);
         Boolean result = DB.insert_vehiucle(text1.getText().toString(),text2.getText().toString(),text3.getText().toString(),spinner.getSelectedItem().toString(), Integer.parseInt(text4.getText().toString()),text5.getText().toString(),text6.getText().toString(),text7.getText().toString());
         if(result){
-            Toast.makeText(this, "Bien ajoute", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "L'ajoute Effectué", Toast.LENGTH_SHORT).show();
             Intent I = new Intent(this,vehicules.class);
             startActivity(I);
         }else{
-            Toast.makeText(this, "Erreur d'ajoute", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "L'ajoute n'est pas Effectué", Toast.LENGTH_SHORT).show();
         }
 
     }

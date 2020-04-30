@@ -213,7 +213,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                                 AlertDialog.Builder builder = new AlertDialog.Builder(vehicules.this);
                                 builder.setCancelable(true);
                                 builder.setTitle("Confirmation");
-                                builder.setMessage("Vous vouller vraiment modifier");
+                                builder.setMessage("Voulez-vous vraiment modifier ?");
                                 builder.setPositiveButton("Ok",
                                         new DialogInterface.OnClickListener() {
                                             @Override
@@ -223,12 +223,12 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                                                  */
                                                 try {
                                                     db.modifier_vihucle(text1.getText().toString(),text3.getText().toString(),text2.getText().toString(),text4.getText().toString(),Integer.parseInt(text5.getText().toString()),text6.getText().toString(),text7.getText().toString(),text8.getText().toString());
-                                                    Toast.makeText(vehicules.this, "Bien Modification", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(vehicules.this, "Modification Réussi", Toast.LENGTH_SHORT).show();
                                                     finish();
                                                     startActivity(getIntent());
 
                                                 }catch (Exception Ex){
-                                                    Toast.makeText(vehicules.this, "Erreur Modification", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(vehicules.this, "Modifiction n'est pas Effectué", Toast.LENGTH_SHORT).show();
                                                 }
 
 
@@ -262,7 +262,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                         AlertDialog.Builder builder = new AlertDialog.Builder(vehicules.this);
                         builder.setCancelable(true);
                         builder.setTitle("suppression");
-                        builder.setMessage("Vous vouller vraiment suprimer");
+                        builder.setMessage("voullez-vous vraiment suprimer ?");
                         builder.setPositiveButton("Ok",
                                 new DialogInterface.OnClickListener() {
                                     @Override
@@ -291,11 +291,11 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 Cursor c = table.rawQuery ( requet, null );
 
                 while (c.moveToNext()){
-                    text1.setText("Nom vihicule :  "+c.getString(0));
+                    text1.setText("Nom Vehicule :  "+c.getString(0));
                     text2.setText("Imatriculation :  "+c.getString(2));
                     text3.setText("Date Circulation :  "+c.getString(1));
                     text4.setText("Marque Combustion :  "+c.getString(3));
-                    text5.setText("Valeur Dentrée :  "+c.getString(4));
+                    text5.setText("Valeur d'entrée :  "+c.getString(4));
                     text6.setText("Date Effet Assurance :  "+c.getString(5));
                     text7.setText("Date Echeance :  "+c.getString(6));
                     text8.setText("Couleur Vehicule :  "+c.getString(7));

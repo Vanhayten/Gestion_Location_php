@@ -22,15 +22,16 @@
         android:orientation="vertical"
         android:layout_marginRight="60dp"
         android:layout_marginLeft="60dp">
+
         <EditText
             android:id="@+id/text_nom1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nom"
-            android:textColorHint="@color/NAVwhite"
-            android:textColor="@color/NAVwhite"
             android:layout_marginTop="5sp"
-            android:textSize="18dp"/>
+            android:hint="Marque Vehicule"
+            android:textColor="@color/NAVwhite"
+            android:textColorHint="@color/NAVwhite"
+            android:textSize="18dp" />
 
         <EditText
             android:id="@+id/text_matricule1"
@@ -61,16 +62,16 @@
             android:textColor="@color/NAVwhite"
             android:layout_marginTop="5sp"
             android:textSize="18dp" />
+
         <EditText
             android:id="@+id/text_valeur_entrer1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Valeur Dentrée"
-            android:textColorHint="@color/NAVwhite"
-            android:textColor="@color/NAVwhite"
             android:layout_marginTop="5sp"
-            android:textSize="18dp"
-           />
+            android:hint="Valeur d'entrée"
+            android:textColor="@color/NAVwhite"
+            android:textColorHint="@color/NAVwhite"
+            android:textSize="18dp" />
         <EditText
             android:id="@+id/text_dateeffet1"
             android:layout_width="match_parent"

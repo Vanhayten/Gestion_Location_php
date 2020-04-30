@@ -12,7 +12,7 @@
                 android:title="   Mes assurances"></item>
             <item
                 android:id="@+id/entretiens"
-                android:title="   Mes assurances"></item>
+                android:title="   Mes entretiens"></item>
         </menu>
     </item>
     <item

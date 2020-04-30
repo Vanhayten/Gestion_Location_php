@@ -22,15 +22,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginLeft="30dp">
+
         <TextView
             android:id="@+id/text_nom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nom"
-            android:textStyle="bold"
-            android:textColor="@color/NAVwhite"
             android:layout_marginTop="5sp"
-            android:textSize="18dp"/>
+            android:text="Marque Vehicule"
+            android:textColor="@color/NAVwhite"
+            android:textSize="18dp"
+            android:textStyle="bold" />
         <TextView
             android:id="@+id/text_matricule"
             android:layout_width="wrap_content"
@@ -40,24 +41,26 @@
             android:textColor="@color/NAVwhite"
             android:layout_marginTop="16sp"
             android:textSize="18dp"/>
+
         <TextView
             android:id="@+id/text_datecirulation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DateCirculation"
-            android:textStyle="bold"
-            android:textColor="@color/NAVwhite"
             android:layout_marginTop="16sp"
-            android:textSize="18dp"/>
+            android:text="Date Circulation"
+            android:textColor="@color/NAVwhite"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/text_marqueCombision"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MarqueCombustion"
-            android:textStyle="bold"
-            android:textColor="@color/NAVwhite"
             android:layout_marginTop="16sp"
-            android:textSize="18dp"/>
+            android:text="Marque Combustion"
+            android:textColor="@color/NAVwhite"
+            android:textSize="18dp"
+            android:textStyle="bold" />
         <TextView
             android:id="@+id/text_valeur_entrer"
             android:layout_width="wrap_content"
