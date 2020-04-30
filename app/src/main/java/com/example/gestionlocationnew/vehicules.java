@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,10 +41,12 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
     ActionBarDrawerToggle toggle;
     ListView ls;
     ArrayList<list_vihcule> arrayList;
+    PageAdapter_vihucle listrep;
     gestion_location db;
     TextView matr;
     Dialog myDyalog;
     Dialog AjouteDialog;
+    EditText t1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +66,42 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         ls=(ListView)findViewById(R.id.list1);
+        t1=(EditText)findViewById(R.id.chercherMatr);
+
+        // recherche par matrucule
+        t1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                ArrayList<list_vihcule> arrayList1;
+                SQLiteDatabase table = db.getReadableDatabase ();
+                String requet = "select * from véhicules where immatriculation ='"+t1.getText()+"'";
+                Cursor c = table.rawQuery ( requet, null );
+                if(c.getCount()>=1){
+                    ls.clearChoices();
+                    arrayList1= new ArrayList<list_vihcule> ();
+                    while (c.moveToNext ())
+                    {
+                        list_vihcule list = new list_vihcule (c.getString(0),c.getString(2),c.getString(7));
+                        arrayList1.add ( list );
+                    }
+                    PageAdapter_vihucle adapter_vihucle = new PageAdapter_vihucle (vehicules.this,arrayList1);
+                    ls.setAdapter ( adapter_vihucle );
+                }else{
+                    ls.setAdapter (listrep);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         //-------------------------
 
@@ -79,13 +119,8 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                         list_vihcule list = new list_vihcule (c.getString(0),c.getString(2),c.getString(7));
                         arrayList.add ( list );
                     }
-                    PageAdapter_vihucle listrep = new PageAdapter_vihucle ( this, arrayList );
+                    listrep = new PageAdapter_vihucle ( this, arrayList );
                     ls.setAdapter ( listrep );
-
-
-
-
-
         NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);
         View headerView = navigationView1.getHeaderView(0);
         TextView username = headerView.findViewById(R.id.unser_name);
@@ -179,7 +214,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                                 builder.setCancelable(true);
                                 builder.setTitle("Confirmation");
                                 builder.setMessage("Vous vouller vraiment modifier");
-                                builder.setPositiveButton("Confirm",
+                                builder.setPositiveButton("Ok",
                                         new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
@@ -228,7 +263,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                         builder.setCancelable(true);
                         builder.setTitle("suppression");
                         builder.setMessage("Vous vouller vraiment suprimer");
-                        builder.setPositiveButton("Confirm",
+                        builder.setPositiveButton("Ok",
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {

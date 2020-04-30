@@ -57,6 +57,7 @@
                     android:textAlignment="center"
                     android:textColor="@color/NAVwhite_theme50"
                     android:textColorHint="#FFFFFF"
+                    android:id="@+id/chercherMatr"
 
                     />
 
