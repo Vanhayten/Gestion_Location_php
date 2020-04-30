@@ -1,6 +1,7 @@
 package com.example.gestionlocationnew;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ public class PageAdapter_vihucle extends BaseAdapter
 {
     private Context context;
     private ArrayList<list_vihcule> foodModelArrayList;
-
+public String col;
     public PageAdapter_vihucle(Context context, ArrayList<list_vihcule> foodModelArrayList) {
         this.context = context;
         this.foodModelArrayList = foodModelArrayList;
@@ -59,7 +60,10 @@ public class PageAdapter_vihucle extends BaseAdapter
 
             holder.matr=(TextView)convertView.findViewById(R.id.matrV);
             holder.marq=(TextView)convertView.findViewById(R.id.marqueV);
-           // holder.color=(TextView)convertView.findViewById(R.id.);
+           // holder.color=(TextView)convertView.findViewById(R.id.marqueV);
+
+
+
 
             convertView.setTag(holder);
         }else {
@@ -68,8 +72,36 @@ public class PageAdapter_vihucle extends BaseAdapter
         }
 
         holder.matr.setText(foodModelArrayList.get(position).getMatr());
+        col=foodModelArrayList.get(position).getColor();
+      /*  if(col.equals("Vert")){  holder.matr.setTextColor(Color.GREEN);}
+        if(col.equals("Rouge")){  holder.matr.setTextColor(Color.RED);}*/
+        switch (col){
+            case "Rouge":
+               holder.matr.setTextColor(Color.RED);
+                break;
+            case "Vert":
+                holder.matr.setTextColor(Color.GREEN);
+                break;
+            case "Noir":
+                holder.matr.setTextColor(Color.BLACK);
+                break;
+            case "Jaune":
+                holder.matr.setTextColor(Color.YELLOW);
+                break;
+            case "Gris":
+                holder.matr.setTextColor(Color.GRAY);
+                break;
+            case "Bleu":
+                holder.matr.setTextColor(Color.BLUE);
+                break;
+            case "Blanc":
+                holder.matr.setTextColor(Color.WHITE);
+                break;
+
+        }
+
         holder.marq.setText(foodModelArrayList.get(position).getMarque());
-       // holder.color.setText(foodModelArrayList.get(position).getColor());
+       //holder.color.setText(foodModelArrayList.get(position).getColor());
 
         return convertView;
     }

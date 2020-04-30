@@ -54,11 +54,15 @@ ArrayList<list_vihcule> arrayList;
                     SQLiteDatabase table = db.getReadableDatabase ();
                     String requet = "select * from véhicules ";
                     Cursor c = table.rawQuery ( requet, null );
+                    if(c.getCount()==0){
+                        Intent i=new Intent(this,Ajoute_vihicule.class);
+                        startActivity(i);
+                    }
                     arrayList = new ArrayList<list_vihcule> ();
                     arrayList.clear ();
                     while (c.moveToNext ())
                     {
-                        list_vihcule list = new list_vihcule (c.getString(0),c.getString(2));
+                        list_vihcule list = new list_vihcule (c.getString(0),c.getString(2),c.getString(7));
                         arrayList.add ( list );
                     }
                     PageAdapter_vihucle listrep = new PageAdapter_vihucle ( this, arrayList );

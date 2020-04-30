@@ -29,7 +29,13 @@ public class list_vihcule {
         this.marque = marque;
     }
 
-    public list_vihcule(String matr, String marque) {
+   /* public list_vihcule(String matr, String marque) {
+        this.matr = matr;
+        this.marque = marque;
+    }*/
+
+    public list_vihcule( String matr, String marque,String color) {
+        this.color = color;
         this.matr = matr;
         this.marque = marque;
     }
