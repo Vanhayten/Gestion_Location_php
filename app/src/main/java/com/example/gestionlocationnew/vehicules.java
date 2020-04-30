@@ -94,7 +94,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 }else{
                     ls.setAdapter (listrep);
                 }
-
+//
             }
 
             @Override
