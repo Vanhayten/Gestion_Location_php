@@ -1,9 +1,15 @@
 
 package com.example.gestionlocationnew;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,14 +20,19 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-    public class entretiens extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
+
+public class entretiens extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
         String Nom,Prenom,role;
         DrawerLayout drawerLayout;
         Toolbar toolbar;
         NavigationView navigationView;
         ActionBarDrawerToggle toggle;
-
+        EditText t1;
+        gestion_location db;
+        ListView ls;
+    PageAdapter_vihucle listrep;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -38,7 +49,54 @@ import com.google.android.material.navigation.NavigationView;
             toggle.syncState();
             navigationView.setNavigationItemSelectedListener(this);
             //-------------------------
+            db=new gestion_location(this);
+            t1=(EditText)findViewById(R.id.recherche);
+            ls=(ListView)findViewById(R.id.list3);
+          t1.addTextChangedListener(new TextWatcher() {
+              @Override
+              public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+              }
+
+              @Override
+              public void onTextChanged(CharSequence s, int start, int before, int count) {
+                  ArrayList<list_vihcule> arrayList1;
+                  SQLiteDatabase table = db.getReadableDatabase ();
+                  String requet = "select * from véhicules where immatriculation ='"+t1.getText()+"'";
+                  Cursor c = table.rawQuery ( requet, null );
+                  if(c.getCount()>=1){
+                      ls.clearChoices();
+                      arrayList1= new ArrayList<list_vihcule> ();
+                      while (c.moveToNext ())
+                      {
+                          list_vihcule list = new list_vihcule (c.getString(0),c.getString(2),c.getString(7));
+                          arrayList1.add ( list );
+                      }
+                      PageAdapter_vihucle adapter_vihucle = new PageAdapter_vihucle (entretiens.this,arrayList1);
+                      ls.setAdapter ( adapter_vihucle );
+                  }else{
+                      ls.setAdapter (listrep);
+                  }
+              }
+
+              @Override
+              public void afterTextChanged(Editable s) {
+
+              }
+          });
+            SQLiteDatabase table = db.getReadableDatabase ();
+            ArrayList<list_vihcule> arrayList;
+            String requet = "select * from véhicules ";
+            Cursor c = table.rawQuery ( requet, null );
+            arrayList = new ArrayList<list_vihcule> ();
+            arrayList.clear ();
+            while (c.moveToNext ())
+            {
+                list_vihcule list = new list_vihcule (c.getString(0),c.getString(2),c.getString(7));
+                arrayList.add ( list );
+            }
+            listrep = new PageAdapter_vihucle ( this, arrayList );
+            ls.setAdapter ( listrep );
 
             NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);
             View headerView = navigationView1.getHeaderView(0);
@@ -56,7 +114,8 @@ import com.google.android.material.navigation.NavigationView;
 
         }
 
-        @Override
+
+                @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             Intent T;
             Bundle b = new Bundle();
