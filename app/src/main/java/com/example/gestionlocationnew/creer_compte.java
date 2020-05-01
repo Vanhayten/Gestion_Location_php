@@ -36,9 +36,9 @@ public class creer_compte extends AppCompatActivity {
         boolean result = db.insert_emp(ch1,ch2,ch3,ch4,ch5);
         if(result == true){
             //    StyleableToast.makeText(this,"Ajoute succesful",R.style.crereToast).show();
-            Toast.makeText(this,"Ajoute succesful",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"L'ajoute Réussi",Toast.LENGTH_LONG).show();
         }else{
-            Toast.makeText(this,"Ajoute Not succesful",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"L'ajoute Echoué",Toast.LENGTH_LONG).show();
         }
 
     }
