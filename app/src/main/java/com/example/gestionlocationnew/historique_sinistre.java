@@ -183,7 +183,7 @@ String id_sinistre;
                                }
 
 
-                               /**c
+                               /**
                                 *
                                 * confirme update
                                 */

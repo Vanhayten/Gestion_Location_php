@@ -1,16 +1,23 @@
 
 package com.example.gestionlocationnew;
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -33,6 +40,9 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
         gestion_location db;
         ListView ls;
     PageAdapter_vihucle listrep;
+    TextView Matricule;
+    Button btn_atende;
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -110,7 +120,154 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
             username.setText(Nom+" "+Prenom);
             role1.setText(role);
 
+            /**
+             *
+             * on select la vihicule
+             */
 
+            ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    final Dialog MyDyalog;
+                    MyDyalog = new Dialog(entretiens.this);
+                    MyDyalog.setContentView(R.layout.dialog_vidange_reparation_visitetechnique);
+                    ImageButton img1_reparation,img2_vidange,img3_visite;
+                    TextView text1,text_nom;
+                    text1 =(TextView)MyDyalog.findViewById(R.id.text_close);
+                    text_nom =(TextView)MyDyalog.findViewById(R.id.text_nom);
+                    img1_reparation =(ImageButton)MyDyalog.findViewById(R.id.reparation);
+                    img2_vidange =(ImageButton)MyDyalog.findViewById(R.id.vidange);
+                    img3_visite =(ImageButton)MyDyalog.findViewById(R.id.visite_technique);
+
+
+                    Matricule =(TextView) view.findViewById(R.id.marqueV);
+                    text_nom.setText("Matricule : "+Matricule.getText().toString());
+                    /**
+                     *
+                     * on click close
+                     */
+                    text1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            MyDyalog.dismiss();
+                        }
+                    });
+
+                    /**
+                     *
+                     * button vidange
+                     */
+
+                    img2_vidange.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                           final Dialog dyalog_vidange;
+                           dyalog_vidange = new Dialog(entretiens.this);
+                           dyalog_vidange.setContentView(R.layout.dialog_vidange);
+                            TextView text1,text_nom;
+                            text1 =(TextView)dyalog_vidange.findViewById(R.id.text_close);
+                            text_nom =(TextView)dyalog_vidange.findViewById(R.id.text_nom);
+                            text_nom.setText("Matricule : "+Matricule.getText().toString());
+                            /**
+                             *
+                             * on click close
+                             */
+                            text1.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dyalog_vidange.dismiss();
+                                }
+                            });
+
+                            /**
+                             *
+                             * inser kilometrage
+                             */
+                            try {
+
+
+                                btn_atende = (Button) dyalog_vidange.findViewById(R.id.btn_atende);
+                                String requet = "select kilomaitrage,type_vidage from vidange where imatriculation_vidange ='" + Matricule.getText() + "'";
+                                SQLiteDatabase table = db.getReadableDatabase();
+                                Cursor c = table.rawQuery(requet, null);
+                                Integer kilom = 0;
+                                while (c.moveToNext()) {
+                                    kilom = Integer.parseInt(c.getString(0)) + Integer.parseInt(c.getString(1));
+                                }
+                                btn_atende.setText("Vidange en atente : " + kilom + " KM");
+                            }catch(Exception EX){
+                                Toast.makeText(entretiens.this, "Aucun vidage", Toast.LENGTH_SHORT).show();
+                            }
+
+                            /**
+                             * button detaille vidange
+                             */
+                            btn_atende.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    final Dialog dyalog_detaille_vidange;
+                                    dyalog_detaille_vidange = new Dialog(entretiens.this);
+                                    dyalog_detaille_vidange.setContentView(R.layout.dialog_detaille_vidange);
+                                        TextView text1,text2,text3,text4,text5;
+                                        text1 =(TextView) dyalog_detaille_vidange.findViewById(R.id.text_matricule);
+                                        text2 =(TextView) dyalog_detaille_vidange.findViewById(R.id.text_datevidange);
+                                        text3 =(TextView) dyalog_detaille_vidange.findViewById(R.id.text_kilomaitrage);
+                                        text4 =(TextView) dyalog_detaille_vidange.findViewById(R.id.text_filtre);
+                                        text5 =(TextView) dyalog_detaille_vidange.findViewById(R.id.texttype_vidange);
+                                        try {
+                                            String requet = "select * from vidange where imatriculation_vidange ='" + Matricule.getText() + "'";
+                                            SQLiteDatabase table = db.getReadableDatabase();
+                                            Cursor c = table.rawQuery(requet, null);
+                                            while (c.moveToNext()) {
+                                                text1.setText("matricule : " + c.getString(0));
+                                                text2.setText("date vodange : " + c.getString(1));
+                                                text3.setText("kilomaitrage : " + c.getString(2));
+                                                text4.setText("filtre : " + c.getString(3));
+                                                text5.setText("type vidange : " + c.getString(4));
+                                            }
+                                        }catch (Exception Ex){
+                                        }
+                                    dyalog_detaille_vidange.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    dyalog_detaille_vidange.show();
+                                }
+                            });
+
+
+                            /**
+                             *
+                             * button Ajoute vidange
+                             */
+                            final Button Ajoute_vidange;
+                            Ajoute_vidange = (Button) dyalog_vidange.findViewById(R.id.btn_Ajouter1);
+                            Ajoute_vidange.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent I = new Intent(entretiens.this, com.example.gestionlocationnew.Ajoute_vidange.class);
+                                    Bundle B= new Bundle();
+                                    B.putString("Matricule",Matricule.getText().toString());
+                                    I.putExtras(B);
+                                    startActivity(I);
+                                }
+                            });
+
+                    dyalog_vidange.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dyalog_vidange.show();
+                        }
+                    });
+
+
+
+
+
+
+
+
+
+                    MyDyalog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    MyDyalog.show();
+
+                }
+            });
 
         }
 

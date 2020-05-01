@@ -91,6 +91,13 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_responsabilite = "responsabilite";
     private static final String Col_MONTANT_PRIS_EN_CHARGE = "MONTANT_PRIS_EN_CHARGE";
 
+    //declaration table vidange
+    private static final String Table10 = "vidange";
+    private static final String Col_imatriculation_vidange  = "imatriculation_vidange";
+    private static final String Col_date_vidange = "date_vidange";
+    private static final String Col_kilomaitrage  = "kilomaitrage";
+    private static final String Col_filtre = "filtre";
+    private static final String Col_type_vidage = "type_vidage";
 
 
 
@@ -110,6 +117,7 @@ public class gestion_location extends SQLiteOpenHelper {
         String table7 = "Create table "+Table7+" ("+Col_imatriculation_reparation+" text,"+Col_pieces_changes+" text,"+Col_main_douvre+" TEXT,"+Col_ref_facture+" TEXT,"+Col_date_reparation+"  DATE,"+Col_montant_reparation+" integer)";
         String table8 = "Create table "+Table8+" ("+Col_imatriculation_asurance+" text,"+Col_date_debut_assurance+" date,"+Col_date_fin_assurance+" TEXT,"+Col_compagnie_assurance+" text,"+Col_prime_assurance+" integer)";
         String table9 = "Create table "+Table9+" ("+Col_id_sinistre+" Integer PRIMARY KEY AUTOINCREMENT , "+Col_imatriculation_sinistre+" text,"+Col_date_sinistre+" date,"+Col_ganre_daccident+" TEXT,"+Col_montant_reparation_sinistre+" Integer,"+Col_responsabilite+" Text,"+Col_MONTANT_PRIS_EN_CHARGE+" Integer)";
+        String table10 = "Create table "+Table10+" ("+Col_imatriculation_vidange+" text , "+Col_date_vidange+" date , "+Col_kilomaitrage+" integer , "+Col_filtre+" TEXT , "+Col_type_vidage+" Integer)";
 
         db.execSQL(table1);
         db.execSQL(table2);
@@ -120,6 +128,7 @@ public class gestion_location extends SQLiteOpenHelper {
         db.execSQL(table7);
         db.execSQL(table8);
         db.execSQL(table9);
+        db.execSQL(table10);
     }
 
     @Override
@@ -133,12 +142,13 @@ public class gestion_location extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+Table7);
         db.execSQL("DROP TABLE IF EXISTS "+Table8);
         db.execSQL("DROP TABLE IF EXISTS "+Table9);
+        db.execSQL("DROP TABLE IF EXISTS "+Table10);
         onCreate(db);
     }
 
     public boolean insert_emp(String Login ,String Pass,String nom,String prenom,String role){
         boolean res=false;
-        SQLiteDatabase db=this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues tab_ch = new ContentValues();
         tab_ch.put(Col_login,Login);
         tab_ch.put(Col_Mdp,Pass);
@@ -154,6 +164,27 @@ public class gestion_location extends SQLiteOpenHelper {
         }
         return res;
     }
+
+    //insert vidange
+    public boolean insert_vidange(String matricule ,String Date,Integer km,String filter,Integer type){
+        boolean res=false;
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues tab_ch = new ContentValues();
+        tab_ch.put(Col_imatriculation_vidange,matricule);
+        tab_ch.put(Col_date_vidange,Date);
+        tab_ch.put(Col_kilomaitrage,km);
+        tab_ch.put(Col_filtre,filter);
+        tab_ch.put(Col_type_vidage,type);
+        long result = db.insert(Table10,null,tab_ch);
+        if(result == -1){
+            res=false;
+        }
+        else{
+            res=true;
+        }
+        return res;
+    }
+
 
     //methode ajouter vehucle
         public boolean insert_vehiucle(String Nom,String date , String imatricul, String marque, Integer valeur, String Date_Effet, String Date_echance, String couleur){
