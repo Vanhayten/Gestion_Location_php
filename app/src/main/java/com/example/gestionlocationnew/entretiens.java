@@ -180,6 +180,11 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                             });
 
                             /**
+                             * close last dialog
+                             */
+                            MyDyalog.dismiss();
+
+                            /**
                              *
                              * inser kilometrage
                              */
@@ -205,10 +210,15 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                             btn_atende.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+
+
+
                                     final Dialog dyalog_detaille_vidange;
                                     dyalog_detaille_vidange = new Dialog(entretiens.this);
                                     dyalog_detaille_vidange.setContentView(R.layout.dialog_detaille_vidange);
                                         TextView text1,text2,text3,text4,text5;
+                                        TextView close;
+                                        close =(TextView) dyalog_detaille_vidange.findViewById(R.id.text_close);
                                         text1 =(TextView) dyalog_detaille_vidange.findViewById(R.id.text_matricule);
                                         text2 =(TextView) dyalog_detaille_vidange.findViewById(R.id.text_datevidange);
                                         text3 =(TextView) dyalog_detaille_vidange.findViewById(R.id.text_kilomaitrage);
@@ -221,12 +231,24 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                                             while (c.moveToNext()) {
                                                 text1.setText("matricule : " + c.getString(0));
                                                 text2.setText("date vodange : " + c.getString(1));
-                                                text3.setText("kilomaitrage : " + c.getString(2));
+                                                text3.setText("kilomaitrage : " + c.getString(2)+" KM");
                                                 text4.setText("filtre : " + c.getString(3));
-                                                text5.setText("type vidange : " + c.getString(4));
+                                                text5.setText("type vidange : " + c.getString(4)+" KM");
                                             }
                                         }catch (Exception Ex){
                                         }
+
+                                    /**
+                                     * close dialog
+                                     */
+
+                                    close.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dyalog_detaille_vidange.dismiss();
+                                        }
+                                    });
+
                                     dyalog_detaille_vidange.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                                     dyalog_detaille_vidange.show();
                                 }
