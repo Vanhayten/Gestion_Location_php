@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -173,11 +174,13 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                                 final Dialog myDyalog_ajoute_conformation;
                                 myDyalog_ajoute_conformation = new Dialog(assurances.this);
                                 myDyalog_ajoute_conformation.setContentView(R.layout.dialog_ajoute_sinisstre);
-                                final TextView text1,text2,text3,text4,text5,text6;
+                                final TextView text1,text2,text4,text5,text6;
+                                final CheckBox CH1,CH2;
                                 Button btnConfirmation;
                                 text1 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_matricule2);
                                 text2 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_datesinistre2);
-                                text3 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_ganredaccident2);
+                                CH1 = (CheckBox)myDyalog_ajoute_conformation.findViewById(R.id.text_ganredaccident2);
+                                CH2 = (CheckBox)myDyalog_ajoute_conformation.findViewById(R.id.text_ganredaccident3);
                                 text4 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_vmontant2);
                                 text5 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_responsabilite2);
                                 text6 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_montant2);
@@ -205,7 +208,15 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                                                 new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {
-                                                        boolean confirm = db.insert_sinistre(text1.getText().toString(),text2.getText().toString(),text3.getText().toString(),Integer.parseInt(text4.getText().toString()),text5.getText().toString(),Integer.parseInt(text6.getText().toString()));
+                                                        String ch11="";
+                                                            if(CH1.isChecked() && CH2.isChecked() ){
+                                                                ch11 ="Corporele , Material";
+                                                            }else if (CH1.isChecked() && !CH2.isChecked()){
+                                                                ch11 ="Corporele";
+                                                            }else if(!CH1.isChecked() && CH2.isChecked()){
+                                                                ch11 ="Material";
+                                                                }
+                                                        boolean confirm = db.insert_sinistre(text1.getText().toString(),text2.getText().toString(),ch11,Integer.parseInt(text4.getText().toString()),text5.getText().toString(),Integer.parseInt(text6.getText().toString()));
                                                         if(confirm){
                                                             Toast.makeText(assurances.this, "Bien ajoute", Toast.LENGTH_SHORT).show();
                                                             myDyalog_ajoute_conformation.dismiss();
