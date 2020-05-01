@@ -55,11 +55,11 @@ String id_sinistre;
         }
         while (c.moveToNext ()){
             liste_sinistre listeS= new liste_sinistre();
-            listeS.setdate(c.getString(1));
-            listeS.setgenre(c.getString(2));
-            listeS.setmontant(c.getString(3));
-            listeS.setresp(c.getString(4));
-            listeS.setmontant1(c.getString(5));
+            listeS.setdate(c.getString(2));
+            listeS.setgenre(c.getString(3));
+            listeS.setmontant(c.getString(4));
+            listeS.setresp(c.getString(5));
+            listeS.setmontant1(c.getString(6));
             list.add(listeS);
 
         }
