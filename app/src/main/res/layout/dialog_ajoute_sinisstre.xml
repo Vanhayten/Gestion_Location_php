@@ -90,15 +90,30 @@
                 android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
                 android:textSize="18dp" />
-            <EditText
-                android:id="@+id/text_responsabilite2"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Responsabilite"
-                android:textColorHint="@color/NAVwhite"
-                android:textColor="@color/NAVwhite"
-                android:layout_marginTop="5sp"
-                android:textSize="18dp" />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5sp"
+                    android:text="Responsabiliter :"
+                    android:textColor="@color/NAVgray_theme50"
+                    android:textColorHint="@color/NAVwhite"
+                    android:textSize="18dp" />
+
+                <Spinner
+                    android:id="@+id/text_responsabilite2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Responsabilite"
+                    android:textColorHint="@color/NAVwhite"
+                    android:textColor="@color/NAVwhite"
+                    android:layout_marginTop="5sp"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
 
             <EditText
                 android:id="@+id/text_montant2"

@@ -14,10 +14,12 @@ import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -174,18 +176,25 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                                 final Dialog myDyalog_ajoute_conformation;
                                 myDyalog_ajoute_conformation = new Dialog(assurances.this);
                                 myDyalog_ajoute_conformation.setContentView(R.layout.dialog_ajoute_sinisstre);
-                                final TextView text1,text2,text4,text5,text6;
+                                final TextView text1,text2,text4,text6;
                                 final CheckBox CH1,CH2;
+                                final Spinner spinner;
                                 Button btnConfirmation;
                                 text1 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_matricule2);
                                 text2 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_datesinistre2);
                                 CH1 = (CheckBox)myDyalog_ajoute_conformation.findViewById(R.id.text_ganredaccident2);
                                 CH2 = (CheckBox)myDyalog_ajoute_conformation.findViewById(R.id.text_ganredaccident3);
                                 text4 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_vmontant2);
-                                text5 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_responsabilite2);
+                                spinner = (Spinner)myDyalog_ajoute_conformation.findViewById(R.id.text_responsabilite2);
                                 text6 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_montant2);
                                 text1.setText(matr.getText());
 
+                                    ArrayList<String> arrayList = new ArrayList<String>();
+                                    arrayList.add("0%");
+                                    arrayList.add("50%");
+                                    arrayList.add("100%");
+                                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(assurances.this,R.layout.support_simple_spinner_dropdown_item,arrayList);
+                                    spinner.setAdapter(arrayAdapter);
                                 /**
                                  *
                                  * click button d'ajoute
@@ -216,7 +225,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                                                             }else if(!CH1.isChecked() && CH2.isChecked()){
                                                                 ch11 ="Material";
                                                                 }
-                                                        boolean confirm = db.insert_sinistre(text1.getText().toString(),text2.getText().toString(),ch11,Integer.parseInt(text4.getText().toString()),text5.getText().toString(),Integer.parseInt(text6.getText().toString()));
+                                                        boolean confirm = db.insert_sinistre(text1.getText().toString(),text2.getText().toString(),ch11,Integer.parseInt(text4.getText().toString()),spinner.getSelectedItem().toString(),Integer.parseInt(text6.getText().toString()));
                                                         if(confirm){
                                                             Toast.makeText(assurances.this, "Bien ajoute", Toast.LENGTH_SHORT).show();
                                                             myDyalog_ajoute_conformation.dismiss();

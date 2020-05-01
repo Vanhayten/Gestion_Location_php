@@ -14,10 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -133,22 +135,31 @@ String id_sinistre;
                         * remplire les editext
                         */
 
-                       final EditText text1,text2,text4,text5,text6;
+                       final EditText text1,text2,text4,text6;
                        final CheckBox CH1,CH2;
+                       final Spinner spinner;
                        text1 =(EditText)myDyalog_modifier.findViewById(R.id.text_matricule2);
                        text2 =(EditText)myDyalog_modifier.findViewById(R.id.text_datesinistre2);
                        CH1 = (CheckBox)myDyalog_modifier.findViewById(R.id.text_ganredaccident2);
                        CH2 = (CheckBox)myDyalog_modifier.findViewById(R.id.text_ganredaccident3);
                        text4 =(EditText)myDyalog_modifier.findViewById(R.id.text_vmontant2);
-                       text5 =(EditText)myDyalog_modifier.findViewById(R.id.text_responsabilite2);
+                       spinner =(Spinner)myDyalog_modifier.findViewById(R.id.text_responsabilite2);
                        text6 =(EditText)myDyalog_modifier.findViewById(R.id.text_montant2);
                        text1.setText(b.getString("matricule"));
                        text2.setText(date.getText().toString());
                        text4.setText(montant.getText().toString());
-                       text5.setText(resp.getText().toString());
                        text6.setText(montant1.getText().toString());
 
-
+                       /**
+                        *
+                        * remplisage list spinner
+                        */
+                       ArrayList<String> arrayList = new ArrayList<String>();
+                       arrayList.add("0%");
+                       arrayList.add("50%");
+                       arrayList.add("100%");
+                       ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(historique_sinistre.this,R.layout.support_simple_spinner_dropdown_item,arrayList);
+                       spinner.setAdapter(arrayAdapter);
 
                        /**
                         * on confirme modification
@@ -191,7 +202,7 @@ String id_sinistre;
                                    v1.put("date_sinistre", text2.getText().toString());
                                    v1.put("ganre_daccident",ch11);
                                    v1.put("montant_reparation", text4.getText().toString());
-                                   v1.put("responsabilite", text5.getText().toString());
+                                   v1.put("responsabilite", spinner.getSelectedItem().toString());
                                    v1.put("MONTANT_PRIS_EN_CHARGE", text6.getText().toString());
                                    String id = "id_sinistre";
                                    DB.update("sinistre", v1, "" + id + "=?", new String[]{id_sinistre});
