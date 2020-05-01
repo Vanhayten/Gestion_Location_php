@@ -3,6 +3,7 @@ package com.example.gestionlocationnew;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -126,6 +127,24 @@ String id_sinistre;
                         Button modifier_confirme;
                          modifier_confirme =(Button)myDyalog_modifier.findViewById(R.id.btn_modifier1);
 
+                       /**
+                        *
+                        * remplire les editext
+                        */
+
+                       final EditText text1,text2,text3,text4,text5,text6;
+                       text1 =(EditText)myDyalog_modifier.findViewById(R.id.text_matricule2);
+                       text2 =(EditText)myDyalog_modifier.findViewById(R.id.text_datesinistre2);
+                       text3 =(EditText)myDyalog_modifier.findViewById(R.id.text_ganredaccident2);
+                       text4 =(EditText)myDyalog_modifier.findViewById(R.id.text_vmontant2);
+                       text5 =(EditText)myDyalog_modifier.findViewById(R.id.text_responsabilite2);
+                       text6 =(EditText)myDyalog_modifier.findViewById(R.id.text_montant2);
+                       text1.setText(b.getString("matricule"));
+                       text2.setText(date.getText().toString());
+                       text3.setText(genre.getText().toString());
+                       text4.setText(montant.getText().toString());
+                       text5.setText(resp.getText().toString());
+                       text6.setText(montant1.getText().toString());
 
 
 
@@ -146,29 +165,31 @@ String id_sinistre;
                                String matr = b.getString ( "matricule" );
                                String requet = "select * from sinistre WHERE imatriculation_sinistre = '"+matr+"' and date_sinistre = '"+date.getText().toString()+"' and ganre_daccident ='"+genre.getText().toString()+"' and montant_reparation ='"+montant.getText().toString()+"' and responsabilite ='"+resp.getText().toString()+"' and MONTANT_PRIS_EN_CHARGE ='"+montant1.getText().toString()+"'";
                                Cursor c1 = table.rawQuery ( requet, null );
-                               if(c1.getCount() == 0){
-                                   Toast.makeText(historique_sinistre.this, "null"+date.getText().toString(), Toast.LENGTH_SHORT).show();
-                               }
                                while(c1.moveToNext()){
-                                   Toast.makeText(historique_sinistre.this, c1.getString(0), Toast.LENGTH_SHORT).show();
+                                   id_sinistre = c1.getString(0);
                                }
 
 
+                               /**c
+                                *
+                                * confirme update
+                                */
+                               try {
 
-
-
-                                /*
-                              EditText text1,text2,text3,text4,text5,text6;
-                              text1 =(EditText)myDyalog_modifier.findViewById(R.id.text_matricule2);
-                              text2 =(EditText)myDyalog_modifier.findViewById(R.id.text_datesinistre2);
-                              text3 =(EditText)myDyalog_modifier.findViewById(R.id.text_ganredaccident2);
-                              text4 =(EditText)myDyalog_modifier.findViewById(R.id.text_vmontant2);
-                              text5 =(EditText)myDyalog_modifier.findViewById(R.id.text_responsabilite2);
-                              text6 =(EditText)myDyalog_modifier.findViewById(R.id.text_montant2);
-                              text1.setText(b.getString("matricule"));
-
-                                 */
-
+                                   SQLiteDatabase DB = db.getWritableDatabase();
+                                   ContentValues v1 = new ContentValues();
+                                   v1.put("date_sinistre", text2.getText().toString());
+                                   v1.put("ganre_daccident", text3.getText().toString());
+                                   v1.put("montant_reparation", text4.getText().toString());
+                                   v1.put("responsabilite", text5.getText().toString());
+                                   v1.put("MONTANT_PRIS_EN_CHARGE", text6.getText().toString());
+                                   String id = "id_sinistre";
+                                   DB.update("sinistre", v1, "" + id + "=?", new String[]{id_sinistre});
+                                   finish();
+                                   startActivity(getIntent());
+                               }catch (Exception Ex){
+                                   Toast.makeText(historique_sinistre.this, "erreur de modification", Toast.LENGTH_SHORT).show();
+                               }
 
 
 
