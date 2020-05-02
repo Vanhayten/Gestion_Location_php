@@ -19,6 +19,9 @@ public class Ajoute_vidange extends AppCompatActivity {
     gestion_location db;
     EditText kilomaitrage,matricule;
     String matr;
+    EditText Date;
+    CheckBox ch1,ch2,ch3;
+    Bundle b;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +34,13 @@ public class Ajoute_vidange extends AppCompatActivity {
         arrayAdapter.add("15000");
         type_spinner.setAdapter(arrayAdapter);
         matricule = (EditText)findViewById(R.id.Edit_matricule);
+        Date = (EditText)findViewById(R.id.Edit_date);
+        kilomaitrage = (EditText)findViewById(R.id.Edit_kilomaitrage);
+        ch1 =(CheckBox)findViewById(R.id.filter1);
+        ch2 =(CheckBox)findViewById(R.id.filter2);
+        ch3 =(CheckBox)findViewById(R.id.filter3);
 
-        Bundle b = new Bundle();
+
         b = getIntent().getExtras();
         matr = b.getString ( "Matricule" );
         matricule.setText(matr);
@@ -40,18 +48,9 @@ public class Ajoute_vidange extends AppCompatActivity {
     }
 
     public void Ajoute(View view) {
-        EditText Date;
-        CheckBox ch1,ch2,ch3;
-
-        Date = (EditText)findViewById(R.id.Edit_date);
-        kilomaitrage = (EditText)findViewById(R.id.Edit_kilomaitrage);
-        ch1 =(CheckBox)findViewById(R.id.filter1);
-        ch2 =(CheckBox)findViewById(R.id.filter2);
-        ch3 =(CheckBox)findViewById(R.id.filter3);
-
-        String choix = "";
+        String choix ="";
         if(ch1.isChecked()){
-            choix=" air";
+            choix =" air";
         }
         if(ch2.isChecked()){
             choix=choix+" ,  huile";
