@@ -23,6 +23,9 @@ gestion_location DB;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajoute_vihicule);
         DB = new gestion_location(this);
+        /**
+         * remplire spinner
+         */
         spinner = (Spinner)findViewById(R.id.vihicule_marque);
         ArrayList<String> arrayList  = new ArrayList<String>();
         arrayList.add("Diesel");

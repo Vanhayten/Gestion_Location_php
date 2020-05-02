@@ -1,6 +1,7 @@
 
 package com.example.gestionlocationnew;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -274,6 +275,119 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
 
                     dyalog_vidange.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     dyalog_vidange.show();
+                        }
+                    });
+
+                    final Dialog dialog_visite;
+                    dialog_visite = new Dialog(entretiens.this);
+                    dialog_visite.setContentView(R.layout.dialog_visite_texhnique);
+                    img3_visite.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            /**
+                             * close last dialog
+                             */
+                            MyDyalog.dismiss();
+
+
+                            /**
+                             * bundel visite technique
+                             */
+
+
+                            TextView Nom;
+                            Button date_visite;
+                            Nom = (TextView) dialog_visite.findViewById(R.id.text_nom);
+                            date_visite = (Button) dialog_visite.findViewById(R.id.btn_atende);
+                            Nom.setText("matricule : "+Matricule.getText());
+
+
+                            /**
+                             * recupiration date prochaine
+                             */
+                            try {
+
+                            SQLiteDatabase table = db.getReadableDatabase ();
+                            String requet = "select * from visite_technique where imatriculation_visite = '"+Matricule.getText()+"'";
+                            Cursor c = table.rawQuery ( requet, null );
+                            while (c.moveToNext()){
+                                date_visite.setText("prochaine visite technique : "+c.getString(2));
+                            }
+                            }catch(Exception Ex){
+                                Toast.makeText(entretiens.this, "aucun visite", Toast.LENGTH_SHORT).show();
+                            }
+
+                            dialog_visite.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            dialog_visite.show();
+                        }
+                    });
+
+
+                    /**
+                     * on click close
+                     */
+                    TextView close;
+                    close = (TextView) dialog_visite.findViewById(R.id.text_close);
+                    close.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog_visite.dismiss();
+                        }
+                    });
+
+                    /**
+                     * on click ajouter
+                     */
+                    Button btn_Ajouter;
+                    btn_Ajouter = (Button) dialog_visite.findViewById(R.id.btn_Ajouter1);
+                    btn_Ajouter.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final Dialog dialog_ajoute_visite;
+                            dialog_ajoute_visite = new Dialog(entretiens.this);
+                            dialog_ajoute_visite.setContentView(R.layout.dialog_ajoute_visite_technique);
+                    final EditText matricule,date1,Date2;
+                    Button confirme;
+                    matricule =(EditText) dialog_ajoute_visite.findViewById(R.id.text_matricule1);
+                            date1 =(EditText) dialog_ajoute_visite.findViewById(R.id.text_date);
+                            Date2 =(EditText) dialog_ajoute_visite.findViewById(R.id.text_date_proch);
+                            confirme =(Button) dialog_ajoute_visite.findViewById(R.id.btn_modifier1);
+                    matricule.setText(Matricule.getText().toString());
+
+                            /**
+                             * confirmation dajoute
+                             */
+                            confirme.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    boolean res=false;
+                                    SQLiteDatabase DB = db.getWritableDatabase();
+                                    ContentValues tab_ch1 = new ContentValues();
+                                    tab_ch1.put("imatriculation_visite",Matricule.getText().toString());
+                                    tab_ch1.put("date_visite",date1.getText().toString());
+                                    tab_ch1.put("prch_visite",Date2.getText().toString());
+                                    long result = DB.insert("visite_technique",null,tab_ch1);
+                                    if(result == -1){
+                                        res=false;
+                                    }
+                                    else{
+                                        res=true;
+                                    }
+                                    if(res){
+                                        finish();
+                                        Toast.makeText(entretiens.this, "Bien Ajouter", Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Toast.makeText(entretiens.this, "erreur d'joute", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+
+                            dialog_ajoute_visite.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            dialog_ajoute_visite.show();
+
+
                         }
                     });
 

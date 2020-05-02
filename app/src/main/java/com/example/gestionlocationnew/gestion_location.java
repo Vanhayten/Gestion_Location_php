@@ -99,6 +99,13 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_filtre = "filtre";
     private static final String Col_type_vidage = "type_vidage";
 
+    //declaration table visite_technique
+    private static final String Table11 = "visite_technique";
+    private static final String Col_imatriculation_visite  = "imatriculation_visite";
+    private static final String Col_date_visite = "date_visite";
+    private static final String Col_date_prch_visite  = "prch_visite";
+
+
 
 
     public gestion_location(Context context) {
@@ -118,6 +125,9 @@ public class gestion_location extends SQLiteOpenHelper {
         String table8 = "Create table "+Table8+" ("+Col_imatriculation_asurance+" text,"+Col_date_debut_assurance+" date,"+Col_date_fin_assurance+" TEXT,"+Col_compagnie_assurance+" text,"+Col_prime_assurance+" integer)";
         String table9 = "Create table "+Table9+" ("+Col_id_sinistre+" Integer PRIMARY KEY AUTOINCREMENT , "+Col_imatriculation_sinistre+" text,"+Col_date_sinistre+" date,"+Col_ganre_daccident+" TEXT,"+Col_montant_reparation_sinistre+" Integer,"+Col_responsabilite+" Text,"+Col_MONTANT_PRIS_EN_CHARGE+" Integer)";
         String table10 = "Create table "+Table10+" ("+Col_imatriculation_vidange+" text , "+Col_date_vidange+" date , "+Col_kilomaitrage+" integer , "+Col_filtre+" TEXT , "+Col_type_vidage+" Integer)";
+        String table11 = "Create table "+Table11+" ("+Col_imatriculation_visite+" text , "+Col_date_visite+" date , "+Col_date_prch_visite+" date)";
+
+
 
         db.execSQL(table1);
         db.execSQL(table2);
@@ -129,6 +139,7 @@ public class gestion_location extends SQLiteOpenHelper {
         db.execSQL(table8);
         db.execSQL(table9);
         db.execSQL(table10);
+        db.execSQL(table11);
     }
 
     @Override
@@ -143,6 +154,7 @@ public class gestion_location extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+Table8);
         db.execSQL("DROP TABLE IF EXISTS "+Table9);
         db.execSQL("DROP TABLE IF EXISTS "+Table10);
+        db.execSQL("DROP TABLE IF EXISTS "+Table11);
         onCreate(db);
     }
 
