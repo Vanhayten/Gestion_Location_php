@@ -189,13 +189,15 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                                 final Dialog dialog_asurance_dialog;
                                 dialog_asurance_dialog = new Dialog(assurances.this);
                                 dialog_asurance_dialog.setContentView(R.layout.dialog_detaille_asurance);
-                                    TextView matr,date1,date2,companie,prim;
-                                    matr=(TextView) dialog_asurance_dialog.findViewById(R.id.text_matricule);
+                                    TextView matr1,date1,date2,companie,prim;
+                                    matr1=(TextView) dialog_asurance_dialog.findViewById(R.id.text_matricule);
                                     date1=(TextView) dialog_asurance_dialog.findViewById(R.id.date_debut);
                                     date2=(TextView) dialog_asurance_dialog.findViewById(R.id.date_fin);
                                     companie=(TextView) dialog_asurance_dialog.findViewById(R.id.compagnie_assurance);
                                     prim=(TextView) dialog_asurance_dialog.findViewById(R.id.texttype_vidange);
-                                        matr.setText(matr.getText().toString());
+
+                                        matr1.setText("Matricule : "+matr.getText().toString());
+
                                 SQLiteDatabase table = db.getReadableDatabase ();
                                 String requet = "select * from assurance where imatriculation_asurance ='"+matr.getText().toString()+"'";
                                 Cursor c = table.rawQuery ( requet, null );
@@ -215,7 +217,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                                 close.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-
+                                        dialog_asurance_dialog.dismiss();
                                     }
                                 });
 
