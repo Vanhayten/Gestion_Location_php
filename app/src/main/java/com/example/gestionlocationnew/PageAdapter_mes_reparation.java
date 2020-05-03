@@ -19,9 +19,9 @@ public class PageAdapter_mes_reparation extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return new nouvel_reparation();
-            case 1:
                 return new consulter_reparation();
+            case 1:
+                return new nouvel_reparation();
             default:
                 return null;
         }
