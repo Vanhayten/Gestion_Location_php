@@ -5,10 +5,72 @@
     android:layout_height="match_parent"
     tools:context=".consulter_reparation">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="l'historique des reparations"
+            android:textAllCaps="true"
+            android:textSize="24sp"
+            android:layout_marginTop="16dp"
+            ></TextView>
+        <LinearLayout
+            android:id="@+id/linner2"
+            android:layout_below="@id/title1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linner1"
+            android:layout_below="@id/linner2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <EditText
+                android:id="@+id/date1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_weight="1"
+                android:hint="1er date(YYYY-mm-dd)"
+                android:inputType="text"></EditText>
+
+            <EditText
+                android:id="@+id/date2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="2eme date(YYYY-mm-dd)"
+                android:inputType="date">
+
+            </EditText>
+        </LinearLayout>
+        <Button
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/aficher_reparat"
+            android:layout_below="@id/linner1"
+            android:text="aficher"
+            android:layout_marginLeft="140dp">
+
+        </Button>
+
+        <ListView
+            android:id="@+id/liste_reparation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/aficher_reparat"
+            android:layout_marginTop="16dp"
+            android:layout_weight="10"></ListView>
+    </RelativeLayout>
 
 </FrameLayout>
