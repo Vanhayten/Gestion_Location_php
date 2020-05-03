@@ -82,6 +82,22 @@ public class consulter_reparation extends Fragment {
         t1 = (EditText) view.findViewById ( R.id.date1 );
         t2 = (EditText) view.findViewById ( R.id.date2 );
         ls = (ListView) view.findViewById ( R.id.liste_reparation );
+        //
+        String strtext = getActivity().getIntent().getExtras().getString("matricule");
+        SQLiteDatabase table = db.getReadableDatabase ();
+        String requet = "select * from reparation where imatriculation ='" +strtext+ "' ";
+        Cursor c = table.rawQuery ( requet, null );
+        ArrayList<class_reparation> arrayList = new ArrayList<> ();
+        arrayList.clear ();
+        while (c.moveToNext ())
+        {
+            class_reparation list = new class_reparation ( "date : " + c.getString ( 4 ) + "      Matricule :" + c.getString ( 0 ),   "pièces : " + c.getString ( 1 ) + "         montant : " + c.getString ( 5 ),    "référence facture : " + c.getString ( 3 ) );
+            arrayList.add ( list );
+        }
+        arrayList_reparation = arrayList;
+        adapter_reparation listrep = new adapter_reparation ( getActivity (), arrayList_reparation );
+        ls.setAdapter ( listrep );
+        //
         b1 = (Button) view.findViewById ( R.id.aficher_reparat );
         b1.setOnClickListener ( new View.OnClickListener () {
             @Override
