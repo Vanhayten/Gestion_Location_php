@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".reparation"></activity>
         <activity android:name=".Ajoute_vidange" />
         <activity android:name=".historique_sinistre" />
         <activity android:name=".Ajoute_vihicule" />

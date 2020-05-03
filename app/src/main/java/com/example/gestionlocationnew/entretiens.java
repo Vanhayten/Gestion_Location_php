@@ -142,6 +142,29 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
 
 
                     Matricule =(TextView) view.findViewById(R.id.marqueV);
+
+
+                    /**
+                     *onclick reparation
+                     */
+
+                    img1_reparation.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent I = new Intent(entretiens.this,reparation.class);
+                            Bundle B = new Bundle();
+
+                            B.putString("matricule", Matricule.getText().toString());
+                            nouvel_reparation fragobj = new nouvel_reparation ();
+                            fragobj.setArguments(B);
+
+                            I.putExtras(B);
+                            startActivity(I);
+
+                        }
+                    });
+
+
                     text_nom.setText("Matricule : "+Matricule.getText().toString());
                     /**
                      *
