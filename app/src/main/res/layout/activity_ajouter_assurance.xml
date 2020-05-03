@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ajouter_assurance">
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="165dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="70dp"
+        android:text="Matricule" />
+
+    <EditText
+        android:id="@+id/editText19"
+        android:layout_width="203dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="16dp"
+        android:layout_toRightOf="@id/textView22"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="165dp"
+        android:layout_height="25dp"
+        android:layout_below="@id/textView22"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="30dp"
+        android:text="Date Debut" />
+
+
+    <EditText
+        android:id="@+id/editText9"
+        android:layout_width="205dp"
+        android:layout_height="44dp"
+        android:layout_below="@id/textView22"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@id/textView16"
+        android:inputType="date" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="165dp"
+        android:layout_height="25dp"
+        android:layout_below="@id/editText9"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="30dp"
+        android:text="Date Fin" />
+
+    <EditText
+        android:id="@+id/editText16"
+        android:layout_width="205dp"
+        android:layout_height="44dp"
+        android:layout_below="@id/editText9"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@id/textView18"
+        android:inputType="date" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="165dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView18"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="30dp"
+        android:text="Compagine d'assurance" />
+
+    <EditText
+        android:id="@+id/editText17"
+        android:layout_width="205dp"
+        android:layout_height="44dp"
+        android:layout_below="@id/textView18"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@id/textView19"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="165dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView19"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="30dp"
+        android:text="Prime d'assurance" />
+
+    <EditText
+        android:id="@+id/editText18"
+        android:layout_width="205dp"
+        android:layout_height="44dp"
+        android:layout_below="@id/textView19"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="16dp"
+        android:layout_toRightOf="@id/textView20"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/button11"
+        android:layout_width="159dp"
+        android:layout_height="47dp"
+        android:layout_below="@id/textView20"
+        android:layout_marginLeft="140dp"
+        android:layout_marginTop="40dp"
+        android:onClick="ajouterAssurance"
+        android:text="Confirmation" />
+
+</RelativeLayout>

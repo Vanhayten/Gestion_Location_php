@@ -109,7 +109,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
         ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Button sinistre,assurance;
+                final Button sinistre,assurance;
                 TextView textClose,textnom;
                 myDyalog.setContentView(R.layout.dialog_assurance_sinistre);
                 sinistre   =(Button)myDyalog.findViewById(R.id.btn_sinistres);
@@ -121,8 +121,147 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 /**
                  * get matricule to dialog
                  */
+
                 matr =(TextView)view.findViewById(R.id.marqueV);
                 textnom.setText("le matricule : "+matr.getText());
+
+
+
+
+
+
+
+                /**
+                 * assurance
+                 *
+                 */
+                assurance.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        TextView textnom,textClose;
+                        Button ajoute;
+                        final Dialog dialog;
+                        dialog = new Dialog(assurances.this);
+                        dialog.setContentView(R.layout.dialog_assurance);
+                        textnom =(TextView)dialog.findViewById(R.id.text_matr);
+                        textnom.setText("le matricule : "+matr.getText());
+
+
+                        //Onclose dyalog
+                        textClose =(TextView)dialog.findViewById(R.id.text_close);
+                        textClose.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+
+
+                        /**
+                         * recupiration last asuranse
+                         */
+                        Button proch_assurance;
+                        proch_assurance =(Button) dialog.findViewById(R.id.ajouter_assurance);
+                        SQLiteDatabase table = db.getReadableDatabase ();
+                        String requet = "select date_fin from assurance where imatriculation_asurance ='"+matr.getText().toString()+"'";
+                        Cursor c = table.rawQuery ( requet, null );
+                        while (c.moveToNext()){
+                            proch_assurance.setText("Prochaine Assurance : "+c.getString(0));
+                        }
+
+
+                        /**
+                         *
+                         * on click button detaille
+                         */
+
+                        proch_assurance.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+
+                                /**
+                                 * dialog detaile assurance
+                                 */
+
+                                final Dialog dialog_asurance_dialog;
+                                dialog_asurance_dialog = new Dialog(assurances.this);
+                                dialog_asurance_dialog.setContentView(R.layout.dialog_detaille_asurance);
+                                    TextView matr1,date1,date2,companie,prim;
+                                    matr1=(TextView) dialog_asurance_dialog.findViewById(R.id.text_matricule);
+                                    date1=(TextView) dialog_asurance_dialog.findViewById(R.id.date_debut);
+                                    date2=(TextView) dialog_asurance_dialog.findViewById(R.id.date_fin);
+                                    companie=(TextView) dialog_asurance_dialog.findViewById(R.id.compagnie_assurance);
+                                    prim=(TextView) dialog_asurance_dialog.findViewById(R.id.texttype_vidange);
+
+                                        matr1.setText("Matricule : "+matr.getText().toString());
+
+                                SQLiteDatabase table = db.getReadableDatabase ();
+                                String requet = "select * from assurance where imatriculation_asurance ='"+matr.getText().toString()+"'";
+                                Cursor c = table.rawQuery ( requet, null );
+                                if (c.moveToLast()){
+                                    date1.setText("Date debut :"+c.getString(1).toString());
+                                    date2.setText("Date fin :"+c.getString(2).toString());
+                                    companie.setText("Compagnie assurance :"+c.getString(3).toString());
+                                    prim.setText("prime assurance :"+c.getString(4).toString());
+                                }
+
+                                /**
+                                 *
+                                 * onclick close
+                                 */
+                                TextView close;
+                                close=(TextView) dialog_asurance_dialog.findViewById(R.id.text_close);
+                                close.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog_asurance_dialog.dismiss();
+                                    }
+                                });
+
+
+
+                                dialog_asurance_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                dialog_asurance_dialog.show();
+                            }
+                        });
+
+
+
+
+                        /**
+                         * button ajouter assurance
+                         */
+                        final Button ajouter_assurance;
+                        ajouter_assurance = (Button) dialog.findViewById(R.id.btn_Ajouter1);
+                        ajouter_assurance.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent I = new Intent(assurances.this, com.example.gestionlocationnew.ajouter_assurance.class);
+                                Bundle B= new Bundle();
+                                B.putString("matricule",matr.getText().toString());
+                                I.putExtras(B);
+                                startActivity(I);
+                            }
+                        });
+
+
+
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.show();
+                    }
+                });
+
+
+
+
+
+
+
+
+
 
                 /**
                  * button sinistre
@@ -149,6 +288,9 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                             }
                         });
 
+
+
+
                         /**
                          * buton historique
                          */
@@ -164,6 +306,8 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                         startActivity(I);
                             }
                         });
+
+
 
                         /**
                          * buton ajoute
