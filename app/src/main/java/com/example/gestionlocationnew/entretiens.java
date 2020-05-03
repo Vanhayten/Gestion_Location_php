@@ -43,6 +43,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
     PageAdapter_vihucle listrep;
     TextView Matricule;
     Button btn_atende;
+    Dialog dialog_ajoute_visite;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -362,12 +363,15 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                     /**
                      * on click ajouter
                      */
+                   // final Dialog dialog_ajoute_visite;
+
                     Button btn_Ajouter;
                     btn_Ajouter = (Button) dialog_visite.findViewById(R.id.btn_Ajouter1);
                     btn_Ajouter.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            final Dialog dialog_ajoute_visite;
+                            dialog_visite.dismiss();
+
                             dialog_ajoute_visite = new Dialog(entretiens.this);
                             dialog_ajoute_visite.setContentView(R.layout.dialog_ajoute_visite_technique);
                     final EditText matricule,date1,Date2;
@@ -398,7 +402,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                                         res=true;
                                     }
                                     if(res){
-                                        finish();
+                                        dialog_ajoute_visite.dismiss();
                                         Toast.makeText(entretiens.this, "Bien Ajouter", Toast.LENGTH_SHORT).show();
                                     }else{
                                         Toast.makeText(entretiens.this, "erreur d'joute", Toast.LENGTH_SHORT).show();
