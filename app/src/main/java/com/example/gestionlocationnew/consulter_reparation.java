@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -79,6 +80,7 @@ public class consulter_reparation extends Fragment {
         db = new gestion_location ( getActivity () );
 
 
+
         t1 = (EditText) view.findViewById ( R.id.date1 );
         t2 = (EditText) view.findViewById ( R.id.date2 );
         ls = (ListView) view.findViewById ( R.id.liste_reparation );
@@ -109,6 +111,16 @@ public class consulter_reparation extends Fragment {
                     String d2 = t2.getText ().toString ();
                     String strtext = getActivity().getIntent().getExtras().getString("matricule");
                     SQLiteDatabase table = db.getReadableDatabase ();
+
+                    String currentString = d1;
+                    String[] separated = currentString.split("/");
+                    String str = separated[2];
+                    str =str+"-"+separated[1];
+                    str =str+"-"+separated[0];
+                    Toast.makeText(getActivity(), ""+str, Toast.LENGTH_SHORT).show();
+
+
+
                     String requet = "select * from reparation where imatriculation ='" +strtext+ "' and   date_reparation  between '" + d1 + "' and '" + d2 + "' ";
                     Cursor c = table.rawQuery ( requet, null );
                     ArrayList<class_reparation> arrayList = new ArrayList<> ();

@@ -151,15 +151,29 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                 img1_reparation.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent I = new Intent(entretiens.this, reparation.class);
-                        Bundle B = new Bundle();
 
-                        B.putString("matricule", Matricule.getText().toString());
-                        nouvel_reparation fragobj = new nouvel_reparation();
-                        fragobj.setArguments(B);
+                        SQLiteDatabase table = db.getReadableDatabase ();
+                        String requet = "select * from reparation where imatriculation ='" +Matricule.getText().toString()+ "' ";
+                        Cursor c = table.rawQuery ( requet, null );
+                        if(c.getCount() == 0){
+                            boolean b = db.insert_reparation(Matricule.getText().toString(), "", "", "","", 0);
+                            if(b) {
+                                Toast.makeText(entretiens.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(entretiens.this,"l'enregistrement ne pas effectuer",Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+                            Intent I = new Intent(entretiens.this, reparation.class);
+                            Bundle B = new Bundle();
 
-                        I.putExtras(B);
-                        startActivity(I);
+                            B.putString("matricule", Matricule.getText().toString());
+                            nouvel_reparation fragobj = new nouvel_reparation();
+                            fragobj.setArguments(B);
+
+                            I.putExtras(B);
+                            startActivity(I);
+                        }
+
 
                     }
                 });
