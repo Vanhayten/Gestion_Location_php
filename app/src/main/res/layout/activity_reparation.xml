@@ -9,7 +9,7 @@
     app:layout_constraintBottom_toTopOf="parent"
     android:orientation="vertical"
     tools:context=".reparation">
-/////////////////////////////
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tablayout2"
         android:layout_width="match_parent"
