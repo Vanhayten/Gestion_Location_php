@@ -74,9 +74,9 @@ public class nouvel_reparation extends Fragment {
         t6 = (EditText)view.findViewById(R.id.editText27);
 
 
-            String strtext = getArguments().getString("matricule");
+         //   = getArguments().getString("matricule");
 
-
+        String strtext = getActivity().getIntent().getExtras().getString("matricule");
 
 
         t1.setText(strtext);
