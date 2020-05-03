@@ -141,8 +141,8 @@
         android:layout_below="@id/editText27"
         android:layout_marginLeft="150dp"
         android:layout_marginTop="30dp"
-        android:onClick="enregistre"
         android:text="Enregistrer"
+        android:id="@+id/butn"
         >
     </Button>
 
