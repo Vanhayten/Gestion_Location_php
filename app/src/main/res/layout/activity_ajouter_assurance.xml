@@ -22,6 +22,7 @@
         android:layout_marginTop="60dp"
         android:layout_marginRight="16dp"
         android:layout_toRightOf="@id/textView22"
+        android:enabled="false"
         android:inputType="textPersonName" />
 
     <TextView

@@ -11,13 +11,13 @@
         android:theme="@style/AppTheme">
         <activity android:name=".reparation"></activity>
         <activity android:name=".Ajoute_vidange" />
+        <activity android:name=".ajouter_assurance" />
         <activity android:name=".historique_sinistre" />
         <activity android:name=".Ajoute_vihicule" />
         <activity android:name=".entretiens" />
         <activity android:name=".assurances" />
         <activity android:name=".calendrier" />
         <activity android:name=".creer_compte" />
-        <activity android:name=".historique_sinistre" />
         <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

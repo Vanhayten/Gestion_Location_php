@@ -8,7 +8,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.navigation.NavigationView;
 
 import org.w3c.dom.Text;
 
@@ -18,10 +21,21 @@ public class Ajoute_vihicule extends AppCompatActivity {
 EditText text1,text2,text3,text4,text5,text6,text7;
 Spinner spinner;
 gestion_location DB;
+String Nom,Prenom,role;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajoute_vihicule);
+
+
+
+        Bundle b = getIntent().getExtras();
+        Nom = b.getString("nom");
+        Prenom =  b.getString("prenom");
+        role = ""+b.getString("role");
+
+
         DB = new gestion_location(this);
         /**
          * remplire spinner
@@ -48,6 +62,11 @@ gestion_location DB;
         if(result){
             Toast.makeText(this, "L'ajoute Effectué", Toast.LENGTH_SHORT).show();
             Intent I = new Intent(this,vehicules.class);
+            Bundle b1 = new Bundle();
+            b1.putString("nom",Nom);
+            b1.putString("prenom",Prenom);
+            b1.putString("role",role);
+            I.putExtras(b1);
             startActivity(I);
         }else{
             Toast.makeText(this, "L'ajoute n'est pas Effectué", Toast.LENGTH_SHORT).show();

@@ -53,6 +53,21 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+        NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);
+        View headerView = navigationView1.getHeaderView(0);
+        TextView username = headerView.findViewById(R.id.unser_name);
+        TextView role1 = headerView.findViewById(R.id.role);
+
+        Bundle b = getIntent().getExtras();
+        Nom = b.getString("nom");
+        Prenom =  b.getString("prenom");
+        role = ""+b.getString("role");
+        username.setText(Nom+" "+Prenom);
+        role1.setText(role);
+
+
         db= new gestion_location(this);
 
         drawerLayout = findViewById(R.id.drawer);
@@ -109,7 +124,13 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                     String requet = "select * from véhicules ";
                     Cursor c = table.rawQuery ( requet, null );
                     if(c.getCount()==0){
+                        finish();
                         Intent i=new Intent(this,Ajoute_vihicule.class);
+                        Bundle b1 = new Bundle();
+                        b1.putString("nom",Nom);
+                        b1.putString("prenom",Prenom);
+                        b1.putString("role",role);
+                        i.putExtras(b1);
                         startActivity(i);
                     }
                     arrayList = new ArrayList<list_vihcule> ();
@@ -121,17 +142,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                     }
                     listrep = new PageAdapter_vihucle ( this, arrayList );
                     ls.setAdapter ( listrep );
-        NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);
-        View headerView = navigationView1.getHeaderView(0);
-        TextView username = headerView.findViewById(R.id.unser_name);
-        TextView role1 = headerView.findViewById(R.id.role);
 
-        Bundle b = getIntent().getExtras();
-        Nom = b.getString("nom");
-        Prenom =  b.getString("prenom");
-        role = ""+b.getString("role");
-        username.setText(Nom+" "+Prenom);
-        role1.setText(role);
 
         //onclick on listner aficher le dialog
         myDyalog = new Dialog(this);
