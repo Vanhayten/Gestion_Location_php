@@ -109,7 +109,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
         ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Button sinistre,assurance;
+                final Button sinistre,assurance;
                 TextView textClose,textnom;
                 myDyalog.setContentView(R.layout.dialog_assurance_sinistre);
                 sinistre   =(Button)myDyalog.findViewById(R.id.btn_sinistres);
@@ -121,6 +121,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 /**
                  * get matricule to dialog
                  */
+
                 matr =(TextView)view.findViewById(R.id.marqueV);
                 textnom.setText("le matricule : "+matr.getText());
 
@@ -162,6 +163,53 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                         B.putString("matricule",matr.getText().toString());
                         I.putExtras(B);
                         startActivity(I);
+                            }
+                        });
+
+                        /**
+                         * assurance
+                         *
+                         */
+                        assurance.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+
+                                TextView textnom,textClose;
+                                Button ajoute;
+                                final Dialog dialog;
+                                dialog = new Dialog(assurances.this);
+                                dialog.setContentView(R.layout.dialog_assurance);
+                                textnom =(TextView)dialog.findViewById(R.id.text_matr);
+                                textnom.setText("le matricule : "+matr.getText());
+
+                                //Onclose dyalog
+                                textClose =(TextView)dialog.findViewById(R.id.text_close);
+                                textClose.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                /**
+                                 * button ajouter assurance
+                                 */
+                                final Button ajouter_assurance;
+                                ajouter_assurance = (Button) dialog.findViewById(R.id.btn_Ajouter1);
+                                ajouter_assurance.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent I = new Intent(assurances.this, com.example.gestionlocationnew.ajouter_assurance.class);
+                                        Bundle B= new Bundle();
+                                        B.putString("matricule",matr.getText().toString());
+                                        I.putExtras(B);
+                                        startActivity(I);
+                                    }
+                                });
+
+
+                                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                dialog.show();
                             }
                         });
 
