@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -20,7 +21,7 @@ import android.widget.Toast;
 public class nouvel_reparation extends Fragment {
     EditText t1,t2,t3,t4,t5,t6;
     gestion_location dp;
-
+Button b1;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -72,6 +73,7 @@ public class nouvel_reparation extends Fragment {
         t4 = (EditText)view.findViewById(R.id.editText25);
         t5 = (EditText)view.findViewById(R.id.editText26);
         t6 = (EditText)view.findViewById(R.id.editText27);
+        b1 = (Button) view.findViewById(R.id.butn);
 
 
          //   = getArguments().getString("matricule");
@@ -82,20 +84,19 @@ public class nouvel_reparation extends Fragment {
         t1.setText(strtext);
         dp = new gestion_location(getActivity());
         // Inflate the layout for this fragment
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean b = dp.insert_reparation(t1.getText().toString(), t2.getText().toString(), t3.getText().toString(), t4.getText().toString(), t5.getText().toString(), Integer.parseInt(t6.getText().toString()));
+                 if(b) {
+                     Toast.makeText(getActivity(), "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+                 }else{
+                    Toast.makeText(getActivity(),"l'enregistrement ne pas effectuer",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
         return view ;
     }
-    public void enregistre (View view)
-    {
-        boolean b ;
-        try {
 
-            b = dp.insert_reparation(t1.getText().toString(), t2.getText().toString(), t3.getText().toString(), t4.getText().toString(), t5.getText().toString(), Integer.parseInt(t6.getText().toString()));
-            Toast.makeText(getActivity(),"l'enregistrement effecuter",Toast.LENGTH_SHORT).show();
-
-        }catch(Exception ex)
-        {
-            Toast.makeText(getActivity(),"l'enregistrement ne pas effectuer",Toast.LENGTH_SHORT).show();
-        }
-
-    }
 }
