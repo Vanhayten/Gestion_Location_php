@@ -15,7 +15,10 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -117,11 +120,19 @@ public class consulter_reparation extends Fragment {
                     String str = separated[2];
                     str =str+"-"+separated[1];
                     str =str+"-"+separated[0];
-                    Toast.makeText(getActivity(), ""+str, Toast.LENGTH_SHORT).show();
 
 
+                    String currentString1 = d2;
+                    String[] separated1 = currentString.split("/");
+                    String str1 = separated1[2];
+                    str1 =str1+"-"+separated1[1];
+                    str1 =str1+"-"+separated1[0];
 
-                    String requet = "select * from reparation where imatriculation ='" +strtext+ "' and   date_reparation  between '" + d1 + "' and '" + d2 + "' ";
+
+                    Toast.makeText(getActivity(), ""+str+"  "+str1, Toast.LENGTH_SHORT).show();
+
+
+                    String requet = "select * from reparation where imatriculation ='" +strtext+ "' and   date_reparation  between '" + str + "' and '" + str1 + "' ";
                     Cursor c = table.rawQuery ( requet, null );
                     ArrayList<class_reparation> arrayList = new ArrayList<> ();
                     arrayList.clear ();
