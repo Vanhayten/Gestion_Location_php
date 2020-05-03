@@ -20,13 +20,13 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Afficher"
+            android:text="Ajouter"
             android:id="@+id/ajouter_reparation"/>
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ajouter"
+            android:text="Afficher"
             android:id="@+id/affiche_reparation"/>
     </com.google.android.material.tabs.TabLayout>
 
