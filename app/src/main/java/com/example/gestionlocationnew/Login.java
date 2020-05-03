@@ -56,10 +56,8 @@ public class Login extends AppCompatActivity {
                 b.putString("prenom",c.getString(3).toString());
                 b.putString("role",c.getString(4).toString());
                 T.putExtras(b);
-                   /* str1=c.getString(2);
-                    str2=c.getString(3);
-                    //Toast.makeText(this,str1,Toast.LENGTH_SHORT).show();
-                   // text.setText(str1+" "+str2);*/
+
+                finish();
                 startActivity(T);
 
             }

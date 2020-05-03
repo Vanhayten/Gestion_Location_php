@@ -442,6 +442,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                     b.putString("prenom",Prenom);
                     b.putString("role",role);
                     T.putExtras(b);
+                    finish();
                     startActivity(T);
                     break;
                 case R.id.assurances:
@@ -450,6 +451,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                     b.putString("prenom",Prenom);
                     b.putString("role",role);
                     T.putExtras(b);
+                    finish();
                     startActivity(T);
                     break;
                 case R.id.entretiens:
@@ -458,6 +460,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                     b.putString("prenom",Prenom);
                     b.putString("role",role);
                     T.putExtras(b);
+                    finish();
                     startActivity(T);
                     break;
 
@@ -467,6 +470,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                     b.putString("prenom",Prenom);
                     b.putString("role",role);
                     T.putExtras(b);
+                    finish();
                     startActivity(T);
                     break;
                 case R.id.charges:
@@ -475,6 +479,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                     b.putString("prenom",Prenom);
                     b.putString("role",role);
                     T.putExtras(b);
+                    finish();
                     startActivity(T);
                     break;
                 case R.id.calendrier:
@@ -483,6 +488,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                     b.putString("prenom",Prenom);
                     b.putString("role",role);
                     T.putExtras(b);
+                    finish();
                     startActivity(T);
                     break;
                 case R.id.clients:
@@ -491,6 +497,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                     b.putString("prenom",Prenom);
                     b.putString("role",role);
                     T.putExtras(b);
+                    finish();
                     startActivity(T);
                     break;
 

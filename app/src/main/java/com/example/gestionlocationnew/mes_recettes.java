@@ -70,6 +70,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
                 T.putExtras(b);
+                finish();
                 startActivity(T);
                 break;
             case R.id.recette:
@@ -79,6 +80,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
                 T.putExtras(b);
+                finish();
                 startActivity(T);
                 break;
             case R.id.charges:
@@ -87,6 +89,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
                 T.putExtras(b);
+                finish();
                 startActivity(T);
                 break;
             case R.id.calendrier:
@@ -95,6 +98,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
                 T.putExtras(b);
+                finish();
                 startActivity(T);
                 break;
             case R.id.clients:
@@ -103,6 +107,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
                 T.putExtras(b);
+                finish();
                 startActivity(T);
                 break;
         }

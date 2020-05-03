@@ -336,7 +336,9 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
                 T.putExtras(b);
+                finish();
                 startActivity(T);
+
                 break;
             case R.id.assurances:
                 T = new Intent(this, assurances.class);
@@ -344,7 +346,9 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
                 T.putExtras(b);
+                finish();
                 startActivity(T);
+
                 break;
             case R.id.entretiens:
                 T = new Intent(this, entretiens.class);
@@ -352,6 +356,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
                 T.putExtras(b);
+                finish();
                 startActivity(T);
                 break;
 
@@ -361,6 +366,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
                 T.putExtras(b);
+                finish();
                 startActivity(T);
                 break;
             case R.id.charges:
@@ -369,6 +375,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
                 T.putExtras(b);
+                finish();
                 startActivity(T);
                 break;
             case R.id.calendrier:
@@ -377,6 +384,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
                 T.putExtras(b);
+                finish();
                 startActivity(T);
                 break;
             case R.id.clients:
@@ -385,6 +393,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
                 T.putExtras(b);
+                finish();
                 startActivity(T);
                 break;
 
