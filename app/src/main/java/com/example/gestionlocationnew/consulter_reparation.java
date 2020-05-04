@@ -123,7 +123,7 @@ public class consulter_reparation extends Fragment {
 
 
                     String currentString1 = d2;
-                    String[] separated1 = currentString.split("/");
+                    String[] separated1 = currentString1.split("/");
                     String str1 = separated1[2];
                     str1 =str1+"-"+separated1[1];
                     str1 =str1+"-"+separated1[0];
