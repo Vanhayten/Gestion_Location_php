@@ -13,8 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -79,6 +83,7 @@ public class consulter_reparation extends Fragment {
         db = new gestion_location ( getActivity () );
 
 
+
         t1 = (EditText) view.findViewById ( R.id.date1 );
         t2 = (EditText) view.findViewById ( R.id.date2 );
         ls = (ListView) view.findViewById ( R.id.liste_reparation );
@@ -109,7 +114,25 @@ public class consulter_reparation extends Fragment {
                     String d2 = t2.getText ().toString ();
                     String strtext = getActivity().getIntent().getExtras().getString("matricule");
                     SQLiteDatabase table = db.getReadableDatabase ();
-                    String requet = "select * from reparation where imatriculation ='" +strtext+ "' and   date_reparation  between '" + d1 + "' and '" + d2 + "' ";
+
+                    String currentString = d1;
+                    String[] separated = currentString.split("/");
+                    String str = separated[2];
+                    str =str+"-"+separated[1];
+                    str =str+"-"+separated[0];
+
+
+                    String currentString1 = d2;
+                    String[] separated1 = currentString.split("/");
+                    String str1 = separated1[2];
+                    str1 =str1+"-"+separated1[1];
+                    str1 =str1+"-"+separated1[0];
+
+
+                    Toast.makeText(getActivity(), ""+str+"  "+str1, Toast.LENGTH_SHORT).show();
+
+
+                    String requet = "select * from reparation where imatriculation ='" +strtext+ "' and   date_reparation  between '" + str + "' and '" + str1 + "' ";
                     Cursor c = table.rawQuery ( requet, null );
                     ArrayList<class_reparation> arrayList = new ArrayList<> ();
                     arrayList.clear ();
