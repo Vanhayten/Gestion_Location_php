@@ -33,6 +33,7 @@ public class consulter_reparation extends Fragment {
     ListView ls;
     ArrayList<String> arrayList = new ArrayList<String> ();
     ArrayList<class_reparation> arrayList_reparation;
+    ArrayList<class_reparation> arrayList_reparation1;
     Button b1;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -89,6 +90,8 @@ public class consulter_reparation extends Fragment {
         ls = (ListView) view.findViewById ( R.id.liste_reparation );
         //
         String strtext = getActivity().getIntent().getExtras().getString("matricule");
+
+
         SQLiteDatabase table = db.getReadableDatabase ();
         String requet = "select * from reparation where imatriculation ='" +strtext+ "' ";
         Cursor c = table.rawQuery ( requet, null );
@@ -99,8 +102,9 @@ public class consulter_reparation extends Fragment {
             class_reparation list = new class_reparation ( "date : " + c.getString ( 4 ) + "      Matricule :" + c.getString ( 0 ),   "pièces : " + c.getString ( 1 ) + "         montant : " + c.getString ( 5 ),    "référence facture : " + c.getString ( 3 ) );
             arrayList.add ( list );
         }
-        arrayList_reparation = arrayList;
-        adapter_reparation listrep = new adapter_reparation ( getActivity (), arrayList_reparation );
+
+        arrayList_reparation1 = arrayList;
+        adapter_reparation listrep = new adapter_reparation ( getActivity (), arrayList_reparation1 );
         ls.setAdapter ( listrep );
         //
         b1 = (Button) view.findViewById ( R.id.aficher_reparat );
@@ -115,37 +119,50 @@ public class consulter_reparation extends Fragment {
                     String strtext = getActivity().getIntent().getExtras().getString("matricule");
                     SQLiteDatabase table = db.getReadableDatabase ();
 
-                    String currentString = d1;
-                    String[] separated = currentString.split("/");
-                    String str = separated[2];
-                    str =str+"-"+separated[1];
-                    str =str+"-"+separated[0];
 
-
-                    String currentString1 = d2;
-                    String[] separated1 = currentString1.split("/");
-                    String str1 = separated1[2];
-                    str1 =str1+"-"+separated1[1];
-                    str1 =str1+"-"+separated1[0];
-
-
-                    Toast.makeText(getActivity(), ""+str+"  "+str1, Toast.LENGTH_SHORT).show();
-
-
-                    String requet = "select * from reparation where imatriculation ='" +strtext+ "' and   date_reparation  between '" + str + "' and '" + str1 + "' ";
+                    String requet = "select * from reparation where imatriculation ='" +strtext+ "'";
+                    //and  date_reparation  between '" + d1 + "' and '" + d2 + "'
                     Cursor c = table.rawQuery ( requet, null );
-                    ArrayList<class_reparation> arrayList = new ArrayList<> ();
-                    arrayList.clear ();
+                    ArrayList<class_reparation> arrayList1 = new ArrayList<> ();
+
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    Date date1 = sdf.parse(d1);
+                    Date date2 = sdf.parse(d2);
+                    Toast.makeText(getActivity(), date1+""+date2, Toast.LENGTH_SHORT).show();
+
+
+                    Date date3;
+                    c.moveToNext ();
                     while (c.moveToNext ())
                     {
-                        class_reparation list = new class_reparation ( "date : " + c.getString ( 4 ) + "      Matricule :" + c.getString ( 0 ),   "pièces : " + c.getString ( 1 ) + "         montant : " + c.getString ( 5 ),    "référence facture : " + c.getString ( 3 ) );
-                        arrayList.add ( list );
+
+                        /**
+                         * inisialise date from bass donner
+                         */
+
+                         date3=null;
+                         date3 = sdf.parse(c.getString(4));
+
+                        if (date3.after(date1)  &&  date3.before(date2) ) {
+                            class_reparation list = new class_reparation ( "date : " + c.getString ( 4 ) + "      Matricule :" + c.getString ( 0 ),   "pièces : " + c.getString ( 1 ) + "         montant : " + c.getString ( 5 ),    "référence facture : " + c.getString ( 3 ) );
+                            arrayList1.add ( list );
+                            Toast.makeText(getActivity(), date3+"", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(getActivity(), "nothing", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
-                    arrayList_reparation = arrayList;
+                    arrayList_reparation = arrayList1;
                     adapter_reparation listrep = new adapter_reparation ( getActivity (), arrayList_reparation );
                     ls.setAdapter ( listrep );
+
                 } catch (Exception ex) {
+                    Toast.makeText(getActivity(), ex.toString(), Toast.LENGTH_SHORT).show();
                 }
+
+
+
             }
         } );
 
