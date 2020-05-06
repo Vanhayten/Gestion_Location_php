@@ -41,15 +41,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
                 android:layout_weight="1"
-                android:hint="1er date(YYYY-mm-dd)"
-                android:inputType="text"></EditText>
+                android:hint="1er date"
+                android:inputType="date|none"></EditText>
 
             <EditText
                 android:id="@+id/date2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="2eme date(YYYY-mm-dd)"
+                android:hint="2eme date"
                 android:inputType="date">
 
             </EditText>
