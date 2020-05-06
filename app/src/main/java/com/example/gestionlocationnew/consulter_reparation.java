@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 
@@ -93,19 +94,25 @@ public class consulter_reparation extends Fragment {
 
 
         SQLiteDatabase table = db.getReadableDatabase ();
-        String requet = "select * from reparation where imatriculation ='" +strtext+ "' ";
+        String requet = "select * from reparation where imatriculation ='" +strtext+ "'";
         Cursor c = table.rawQuery ( requet, null );
         ArrayList<class_reparation> arrayList = new ArrayList<> ();
         arrayList.clear ();
-        while (c.moveToNext ())
+
+
+        while (c.moveToNext())
         {
             class_reparation list = new class_reparation ( "date : " + c.getString ( 4 ) + "      Matricule :" + c.getString ( 0 ),   "pièces : " + c.getString ( 1 ) + "         montant : " + c.getString ( 5 ),    "référence facture : " + c.getString ( 3 ) );
             arrayList.add ( list );
         }
+        Collections.reverse(arrayList);
 
         arrayList_reparation1 = arrayList;
         adapter_reparation listrep = new adapter_reparation ( getActivity (), arrayList_reparation1 );
         ls.setAdapter ( listrep );
+
+
+
         //
         b1 = (Button) view.findViewById ( R.id.aficher_reparat );
         b1.setOnClickListener ( new View.OnClickListener () {
@@ -133,7 +140,7 @@ public class consulter_reparation extends Fragment {
 
 
                     Date date3;
-                    c.moveToNext ();
+
                     while (c.moveToNext ())
                     {
 
@@ -148,11 +155,10 @@ public class consulter_reparation extends Fragment {
                             class_reparation list = new class_reparation ( "date : " + c.getString ( 4 ) + "      Matricule :" + c.getString ( 0 ),   "pièces : " + c.getString ( 1 ) + "         montant : " + c.getString ( 5 ),    "référence facture : " + c.getString ( 3 ) );
                             arrayList1.add ( list );
                             Toast.makeText(getActivity(), date3+"", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(getActivity(), "nothing", Toast.LENGTH_SHORT).show();
                         }
 
                     }
+                    Collections.reverse(arrayList1);
                     arrayList_reparation = arrayList1;
                     adapter_reparation listrep = new adapter_reparation ( getActivity (), arrayList_reparation );
                     ls.setAdapter ( listrep );

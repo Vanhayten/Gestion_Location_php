@@ -37,7 +37,7 @@ public class adapter_reparation extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return listReparation.get ( position );
+        return listReparation.get (position);
     }
 
     @Override

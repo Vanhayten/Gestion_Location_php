@@ -145,15 +145,16 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
 
 
         //onclick on listner aficher le dialog
-        myDyalog = new Dialog(this);
+
         ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                myDyalog = new Dialog(vehicules.this);
+                myDyalog.setContentView(R.layout.dialog_vihicule);
                 TextView text1,text2,text3,text4,text5,text6,text7,text8,text9;
                 Button Suprimer,Modifier;
 
-                myDyalog.setContentView(R.layout.dialog_vihicule);
+
                 text1 = (TextView)myDyalog.findViewById(R.id.text_nom);
                 text2 = (TextView)myDyalog.findViewById(R.id.text_matricule);
                 text3 = (TextView)myDyalog.findViewById(R.id.text_datecirulation);
@@ -185,18 +186,18 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                         /**
                          * code modifier
                          */
-                        final EditText text1,text2,text3,text4,text5,text6,text7,text8;
+                        final EditText text11,text22,text33,text44,text55,text66,text77,text88;
                         Button Confirmer;
                         AjouteDialog= new Dialog(vehicules.this);
                         AjouteDialog.setContentView(R.layout.dialog_ajoute_vihicule);
-                        text1 = (EditText)AjouteDialog.findViewById(R.id.text_nom1);
-                        text2 = (EditText)AjouteDialog.findViewById(R.id.text_matricule1);
-                        text3 = (EditText)AjouteDialog.findViewById(R.id.text_datecirulation1);
-                        text4 = (EditText)AjouteDialog.findViewById(R.id.text_marqueCombision1);
-                        text5 = (EditText)AjouteDialog.findViewById(R.id.text_valeur_entrer1);
-                        text6 = (EditText)AjouteDialog.findViewById(R.id.text_dateeffet1);
-                        text7 = (EditText)AjouteDialog.findViewById(R.id.text_dateechance1);
-                        text8 = (EditText)AjouteDialog.findViewById(R.id.text_couleur1);
+                        text11 = (EditText)AjouteDialog.findViewById(R.id.text_nom1);
+                        text22 = (EditText)AjouteDialog.findViewById(R.id.text_matricule1);
+                        text33 = (EditText)AjouteDialog.findViewById(R.id.text_datecirulation1);
+                        text44 = (EditText)AjouteDialog.findViewById(R.id.text_marqueCombision1);
+                        text55 = (EditText)AjouteDialog.findViewById(R.id.text_valeur_entrer1);
+                        text66 = (EditText)AjouteDialog.findViewById(R.id.text_dateeffet1);
+                        text77 = (EditText)AjouteDialog.findViewById(R.id.text_dateechance1);
+                        text88 = (EditText)AjouteDialog.findViewById(R.id.text_couleur1);
                         Confirmer =(Button)AjouteDialog.findViewById(R.id.btn_modifier1);
 
                         SQLiteDatabase table = db.getReadableDatabase ();
@@ -204,14 +205,14 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                         Cursor c = table.rawQuery ( requet, null );
 
                         while (c.moveToNext()){
-                            text1.setText(c.getString(0));
-                            text2.setText(c.getString(2));
-                            text3.setText(c.getString(1));
-                            text4.setText(c.getString(3));
-                            text5.setText(c.getString(4));
-                            text6.setText(c.getString(5));
-                            text7.setText(c.getString(6));
-                            text8.setText(c.getString(7));
+                            text11.setText(c.getString(0));
+                            text22.setText(c.getString(2));
+                            text33.setText(c.getString(1));
+                            text44.setText(c.getString(3));
+                            text55.setText(c.getString(4));
+                            text66.setText(c.getString(5));
+                            text77.setText(c.getString(6));
+                            text88.setText(c.getString(7));
                         }
 
                         Confirmer.setOnClickListener(new View.OnClickListener() {
@@ -233,7 +234,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                                                  * confirmer
                                                  */
                                                 try {
-                                                    db.modifier_vihucle(text1.getText().toString(),text3.getText().toString(),text2.getText().toString(),text4.getText().toString(),Integer.parseInt(text5.getText().toString()),text6.getText().toString(),text7.getText().toString(),text8.getText().toString());
+                                                    db.modifier_vihucle(text11.getText().toString(),text33.getText().toString(),text22.getText().toString(),text44.getText().toString(),Integer.parseInt(text55.getText().toString()),text66.getText().toString(),text77.getText().toString(),text88.getText().toString());
                                                     Toast.makeText(vehicules.this, "Modification Réussi", Toast.LENGTH_SHORT).show();
                                                     finish();
                                                     startActivity(getIntent());
@@ -316,9 +317,6 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
 
                 myDyalog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 myDyalog.show();
-
-
-
 
             }
         });
@@ -403,6 +401,11 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
 
     public void Page_Ajoute(View view) {
         Intent Ajouter = new Intent(this,Ajoute_vihicule.class);
+        Bundle b = new Bundle();
+        b.putString("nom",Nom);
+        b.putString("prenom",Prenom);
+        b.putString("role",role);
+        Ajouter.putExtras(b);
         startActivity(Ajouter);
     }
 }
