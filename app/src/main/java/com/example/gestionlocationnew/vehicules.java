@@ -16,9 +16,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -186,19 +188,27 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                         /**
                          * code modifier
                          */
-                        final EditText text11,text22,text33,text44,text55,text66,text77,text88;
+                        final EditText text11,text22,text33,text55,text66,text77,text88;
+                        final Spinner text44;
                         Button Confirmer;
                         AjouteDialog= new Dialog(vehicules.this);
                         AjouteDialog.setContentView(R.layout.dialog_ajoute_vihicule);
                         text11 = (EditText)AjouteDialog.findViewById(R.id.text_nom1);
                         text22 = (EditText)AjouteDialog.findViewById(R.id.text_matricule1);
                         text33 = (EditText)AjouteDialog.findViewById(R.id.text_datecirulation1);
-                        text44 = (EditText)AjouteDialog.findViewById(R.id.text_marqueCombision1);
+                        text44 = (Spinner)AjouteDialog.findViewById(R.id.text_marqueCombision1);
                         text55 = (EditText)AjouteDialog.findViewById(R.id.text_valeur_entrer1);
                         text66 = (EditText)AjouteDialog.findViewById(R.id.text_dateeffet1);
                         text77 = (EditText)AjouteDialog.findViewById(R.id.text_dateechance1);
                         text88 = (EditText)AjouteDialog.findViewById(R.id.text_couleur1);
                         Confirmer =(Button)AjouteDialog.findViewById(R.id.btn_modifier1);
+
+                        ArrayList<String> arrayList = new ArrayList<String>();
+                        arrayList.add("Diesel");
+                        arrayList.add("Essence");
+                        arrayList.add("Hybride");
+                  ArrayAdapter<String> arraspinner = new ArrayAdapter<String>(vehicules.this,R.layout.support_simple_spinner_dropdown_item,arrayList);
+                        text44.setAdapter(arraspinner);
 
                         SQLiteDatabase table = db.getReadableDatabase ();
                         String requet = "select * from véhicules where immatriculation ='"+matr.getText()+"'";
@@ -208,7 +218,6 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                             text11.setText(c.getString(0));
                             text22.setText(c.getString(2));
                             text33.setText(c.getString(1));
-                            text44.setText(c.getString(3));
                             text55.setText(c.getString(4));
                             text66.setText(c.getString(5));
                             text77.setText(c.getString(6));
@@ -234,7 +243,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                                                  * confirmer
                                                  */
                                                 try {
-                                                    db.modifier_vihucle(text11.getText().toString(),text33.getText().toString(),text22.getText().toString(),text44.getText().toString(),Integer.parseInt(text55.getText().toString()),text66.getText().toString(),text77.getText().toString(),text88.getText().toString());
+                                                    db.modifier_vihucle(text11.getText().toString(),text33.getText().toString(),text22.getText().toString(),text44.getSelectedItem().toString(),Integer.parseInt(text55.getText().toString()),text66.getText().toString(),text77.getText().toString(),text88.getText().toString());
                                                     Toast.makeText(vehicules.this, "Modification Réussi", Toast.LENGTH_SHORT).show();
                                                     finish();
                                                     startActivity(getIntent());

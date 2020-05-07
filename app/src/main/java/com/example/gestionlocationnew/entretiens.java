@@ -166,20 +166,20 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                             final Dialog MyDyalog_ajou;
                             MyDyalog_ajou = new Dialog(entretiens.this);
                             MyDyalog_ajou.setContentView(R.layout.dialog_ajoute_reparation);
-
+                            final EditText text1 ,text2,text3,text4,text5,text6;
+                            text1 =(EditText)MyDyalog_ajou.findViewById(R.id.text_matricule1);
+                            text2 =(EditText)MyDyalog_ajou.findViewById(R.id.text_piece);
+                            text3 =(EditText)MyDyalog_ajou.findViewById(R.id.text_main);
+                            text4 =(EditText)MyDyalog_ajou.findViewById(R.id.text_ref_facture);
+                            text5 =(EditText)MyDyalog_ajou.findViewById(R.id.text_date_reparation);
+                            text6 =(EditText)MyDyalog_ajou.findViewById(R.id.text_Montant);
+                            text1.setText(Matricule.getText().toString());
                                 Button btn_ajoute;
                                 btn_ajoute=(Button) MyDyalog_ajou.findViewById(R.id.btn_modifier1);
                                 btn_ajoute.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        EditText text1,text2,text3,text4,text5,text6;
-                                        text1 =(EditText)MyDyalog_ajou.findViewById(R.id.text_matricule1);
-                                        text2 =(EditText)MyDyalog_ajou.findViewById(R.id.text_piece);
-                                        text3 =(EditText)MyDyalog_ajou.findViewById(R.id.text_main);
-                                        text4 =(EditText)MyDyalog_ajou.findViewById(R.id.text_ref_facture);
-                                        text5 =(EditText)MyDyalog_ajou.findViewById(R.id.text_date_reparation);
-                                        text6 =(EditText)MyDyalog_ajou.findViewById(R.id.text_Montant);
-                                        text1.setText(Matricule.getText());
+
 
                                         boolean b = db.insert_reparation(Matricule.getText().toString(), text2.getText().toString(), text3.getText().toString(), text4.getText().toString(), text5.getText().toString(), Integer.parseInt(text6.getText().toString()));
                                         if(b) {

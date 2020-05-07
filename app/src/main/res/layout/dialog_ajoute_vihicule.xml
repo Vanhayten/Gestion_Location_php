@@ -53,7 +53,7 @@
             android:layout_marginTop="5sp"
             android:textSize="18dp"
             />
-        <EditText
+        <Spinner
             android:id="@+id/text_marqueCombision1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
