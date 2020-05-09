@@ -100,20 +100,20 @@
             android:gravity="center"
             android:layout_marginTop="20dp"
             >
+
             <Button
                 android:id="@+id/btn_confirmer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Confirmer"
                 android:layout_gravity="center"
-                android:gravity="center"
-                android:background="@drawable/button_style"
-                android:textColor="@color/NAVwhite"
                 android:layout_marginRight="18dp"
+                android:background="@drawable/button_style"
+                android:gravity="center"
+                android:onClick="Confirmer"
+                android:text="Confirmer"
 
 
-
-                />
+                android:textColor="@color/NAVwhite" />
 
 
         </LinearLayout>

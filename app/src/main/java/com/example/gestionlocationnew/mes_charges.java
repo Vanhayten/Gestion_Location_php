@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,8 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     gestion_location db;
+    TextView   datech, montant;
+    String modpay="";
 
 
     @Override
@@ -141,10 +144,10 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         final Dialog dyalog_mes_charges;
         dyalog_mes_charges = new Dialog(this);
         dyalog_mes_charges.setContentView(R.layout.dialoge_ajoute_mes_charges);
-        TextView   datech, montant;
+
         CheckBox espéce,chéque,virment;
         TextView close;
-        String modpay="";
+
         datech= (TextView)dyalog_mes_charges.findViewById(R.id.text_datecha);
         montant= (TextView)dyalog_mes_charges.findViewById(R.id.text_datecha);
         espéce= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_espéce);
@@ -160,13 +163,20 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         if (virment.isChecked()){
             modpay=modpay+" ,virment";
         }
+        Button confirmer;
+        confirmer = (Button)dyalog_mes_charges.findViewById(R.id.btn_confirmer);
+        confirmer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean c=db.insert_charge(datech.getText().toString(),montant.getText().toString(),modpay);
+                if (c){
+                    Toast.makeText(mes_charges.this,"l'ajoute Reussi",Toast.LENGTH_LONG).show();}
 
-            boolean c=db.insert_charge(datech.getText().toString(),montant.getText().toString(),modpay);
-        if (c){
-            Toast.makeText(this,"l'ajoute Reussi",Toast.LENGTH_LONG).show();}
+                else{
+                    Toast.makeText(mes_charges.this,"Erreur d'ajoute",Toast.LENGTH_LONG).show();}
+            }
+        });
 
-        else{
-            Toast.makeText(this,"Erreur d'ajoute",Toast.LENGTH_LONG).show();}
 
 
 

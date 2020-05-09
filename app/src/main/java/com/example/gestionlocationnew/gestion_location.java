@@ -247,8 +247,8 @@ public boolean insert_client(String nom ,String prenom,String adr,String cin,Str
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues tab_ch = new ContentValues();
         tab_ch.put(Col_Date,date);
-        tab_ch.put(Col_Montant,montant;
-        tab_ch.put(Col_Payment,paym;
+        tab_ch.put(Col_Montant,montant);
+        tab_ch.put(Col_Payment,paym);
 
         long result = db.insert(Table5,null,tab_ch);
         if(result == -1){
