@@ -82,7 +82,7 @@ Button b1;
 
 
         t1.setText(strtext);
-        dp = new gestion_location(getActivity());
+       dp = new gestion_location(getActivity());
         // Inflate the layout for this fragment
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,5 +98,6 @@ Button b1;
         });
         return view ;
     }
-
 }
+
+

@@ -176,6 +176,26 @@ public class gestion_location extends SQLiteOpenHelper {
         }
         return res;
     }
+//insert client
+public boolean insert_client(String nom ,String prenom,String adr,String cin,String tel,String activi){
+    boolean res=false;
+    SQLiteDatabase db = this.getWritableDatabase();
+    ContentValues tab_ch = new ContentValues();
+    tab_ch.put(Col_nom,nom);
+    tab_ch.put(Col_prenom,prenom);
+    tab_ch.put(Col_adresse,adr);
+    tab_ch.put(Col_cin,cin);
+    tab_ch.put(Col_tel,tel);
+    tab_ch.put(Col_activité,activi);
+    long result = db.insert(Table2,null,tab_ch);
+    if(result == -1){
+        res=false;
+    }
+    else{
+        res=true;
+    }
+    return res;
+}
 
     //insert vidange
     public boolean insert_vidange(String matricule ,String Date,Integer km,String filter,Integer type){
