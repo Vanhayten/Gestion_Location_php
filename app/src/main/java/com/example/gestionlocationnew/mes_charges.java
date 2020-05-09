@@ -57,6 +57,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         //-------------------------
+        db = new gestion_location(this);
 
 
         NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);
@@ -72,7 +73,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         role1.setText(role);
 
         //remplissage liste des charges
-        boolean c=db.insert_charge("01/08/2019",15,"virment");
+       // boolean c1 = db.insert_charge("01/08/2019",15,"virment");
         ls=(ListView)findViewById(R.id.listcharges);
         ArrayList<list_vihcule> arrayList1;
         SQLiteDatabase table = db.getReadableDatabase ();
@@ -83,7 +84,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
             arrayList1= new ArrayList<list_vihcule> ();
             while (c.moveToNext ())
             {
-                list_vihcule list = new list_vihcule (c.getString(1),c.getString(2),c.getString(3));
+                list_vihcule list = new list_vihcule (c.getString(1)+" DH",c.getString(2)+" "+c.getString(3),"");
                 arrayList1.add ( list );
             }
             PageAdapter_vihucle adapter_vihucle = new PageAdapter_vihucle (mes_charges.this,arrayList1);
@@ -177,11 +178,11 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         TextView close;
 
         datech= (TextView)dyalog_mes_charges.findViewById(R.id.text_datecha);
-        montant= (TextView)dyalog_mes_charges.findViewById(R.id.text_datecha);
+        montant= (TextView)dyalog_mes_charges.findViewById(R.id.text_Montant);
         espéce= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_espéce);
         chéque= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_chèque);
        virment= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_virement);
-        db = new gestion_location(this);
+
        if (espéce.isChecked()){
            modpay="espéce";
        }
