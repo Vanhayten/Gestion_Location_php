@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CalendarView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,9 +13,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.applandeo.materialcalendarview.EventDay;
+import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 public class calendrier extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+
+
 
     String Nom,Prenom,role;
     DrawerLayout drawerLayout;
@@ -22,10 +33,24 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
 
+    /**
+     * calandar
+     */
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendrier);
+
+        /**
+         * calander
+         */
+       // calendarView = (CalendarView)findViewById(R.id.calendarView);
+
 
         drawerLayout = findViewById(R.id.drawer);
         toolbar = findViewById(R.id.toolbar);
@@ -54,7 +79,14 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
 
 
 
+
+
     }
+
+
+
+
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

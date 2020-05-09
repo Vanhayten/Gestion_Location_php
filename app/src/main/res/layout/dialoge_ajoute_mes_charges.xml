@@ -24,35 +24,27 @@
             android:layout_marginLeft="60dp">
 
             <EditText
-                android:id="@+id/text_idch"
+                android:id="@+id/text_datecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
-                android:hint="Id_Charge"
+                android:clickable="true"
+                android:hint="Date"
+                android:inputType="date"
                 android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
                 android:textSize="18dp" />
 
             <EditText
-                android:id="@+id/text_datecha"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                android:enabled="false"
-                android:hint="Date"
-                android:textColor="@color/NAVwhite"
-                android:textColorHint="@color/NAVwhite"
-                android:textSize="18dp" />
-            <EditText
                 android:id="@+id/text_Montant"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Montant"
-                android:textColorHint="@color/NAVwhite"
-                android:textColor="@color/NAVwhite"
                 android:layout_marginTop="5sp"
-                android:textSize="18dp"
-                />
+                android:hint="Montant"
+                android:inputType="number"
+                android:textColor="@color/NAVwhite"
+                android:textColorHint="@color/NAVwhite"
+                android:textSize="18dp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

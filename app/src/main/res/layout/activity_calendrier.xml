@@ -19,17 +19,25 @@
             android:layout_height="wrap_content"
             android:background="@color/NAVwhite_theme50" />
 
-        <LinearLayout
-            android:layout_width="357dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="672dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="54dp"
-            android:layout_marginLeft="54dp"
-            android:layout_marginTop="59dp"
-            android:orientation="vertical"/>
-        //comment
+            android:layout_marginTop="50dp"
+            android:background="@color/NAVwhite_theme50"
+            android:orientation="vertical">
+            //comment
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout >
+
+
+
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
