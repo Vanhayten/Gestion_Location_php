@@ -299,23 +299,26 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                         historique.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                SQLiteDatabase table = db.getReadableDatabase ();
-                                String requet = "select count(*) from sinistre where imatriculation_sinistre ='"+matr+"'";
-                                Cursor c = table.rawQuery ( requet, null );
-                                if(c.moveToNext()){
-                                    if(Integer.parseInt(c.getString(0)) == 0 ){
-                                        Toast.makeText(assurances.this, ""+c.getString(0), Toast.LENGTH_SHORT).show();
-                                    }else{
 
-                                        Intent I = new Intent(assurances.this,historique_sinistre.class);
+                                SQLiteDatabase table = db.getReadableDatabase ();
+                                String requet = "select count(*) from sinistre where imatriculation_sinistre ='"+matr.getText().toString()+"'";
+                                Cursor c = table.rawQuery ( requet, null );
+                                if(c.moveToNext()) {
+                                    if (Integer.parseInt(c.getString(0)) == 0) {
+
+                                        Toast.makeText(assurances.this, "sinistre vide", Toast.LENGTH_SHORT).show();
+                                    } else {
+
+                                        Intent I = new Intent(assurances.this, historique_sinistre.class);
                                         Bundle B = new Bundle();
-                                        B.putString("matricule",matr.getText().toString());
+                                        B.putString("matricule", matr.getText().toString());
                                         I.putExtras(B);
                                         startActivity(I);
                                     }
                                 }
+                                }
 
-                            }
+
                         });
 
 
