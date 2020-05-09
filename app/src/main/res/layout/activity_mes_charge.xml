@@ -20,15 +20,85 @@
             android:background="@color/NAVwhite_theme50" />
 
         <LinearLayout
-            android:layout_width="357dp"
+            android:layout_width="match_parent"
             android:layout_height="672dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
             android:layout_marginTop="50dp"
-            android:orientation="vertical"/>
+            android:background="@color/NAVwhite_theme50"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/NAVblack_theme75"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:text="Mes charges"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="28dp"></TextView>
+
+                <EditText
+                    style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_horizontal"
+                    android:hint="Recherche"
+                    android:textAlignment="center"
+                    android:textColor="@color/NAVwhite_theme50"
+                    android:textColorHint="#FFFFFF"
+                    android:id="@+id/chercherClient"
+
+                    />
+
+                <TextView
+                    android:id="@+id/idcolor"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"></TextView>
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/listcharges"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="-25dp"
+                android:layout_marginRight="30dp"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="10.0sp">
+
+            </ListView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_width="102dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/rounded_buttom"
+                    android:drawableStart="@drawable/ic_add_black_24dp"
+                    android:drawableLeft="@drawable/ic_add_black_24dp"
+                    android:drawablePadding="4dp"
+                    android:text="Ajouter"
+                    android:onClick="confirmer"
+
+                    android:textColor="@color/NAVwhite_theme50" />
+            </RelativeLayout>
+        </LinearLayout>
         //comment
     </RelativeLayout>
 

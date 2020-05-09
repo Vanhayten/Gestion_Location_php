@@ -119,7 +119,7 @@ public class gestion_location extends SQLiteOpenHelper {
         String table2 = "Create table "+Table2+" ("+Col_nom+" text  ,"+Col_prenom+" text,"+Col_adresse+" text,"+Col_cin+" text primary key,"+Col_tel+" text,"+Col_activité+" text)";
         String table3 = "Create table "+Table3+" ("+Col_Marque_Vihicule+" text ,"+Col_DateCirculation+" date ,"+Col_immatriculation+" text primary key,"+Col_MarqueCombustion+" text,"+Col_ValeurDentrée+" Integer,"+Col_Date_Effet_Assurance+" date,"+Col_Date_Echeance+" date,"+Col_Couleur_Vehicule+" text)";
         String table4 = "Create table "+Table4+" ("+Col_IdRecette+" text primary key ,"+Col_NbJour+" integer,"+Col_prix+" integer,"+Col_DateEncaissement+" date,"+Col_MoyenPayment+" integer,"+Col_immatriculationR+" text)";
-        String table5 = "Create table "+Table5+" ("+Col_IdCharge+" text primary key ,"+Col_Date+" date,"+Col_Montant+" integer,"+Col_Payment+" text)";
+        String table5 = "Create table "+Table5+" ("+Col_IdCharge+" Integer PRIMARY KEY AUTOINCREMENT,"+Col_Date+" date,"+Col_Montant+" integer,"+Col_Payment+" text)";
         String table6 = "Create table "+Table6+" ("+Col_IdEvenement+" text primary key,"+Col_DateDebut+" date ,"+Col_DateFin+" date,"+Col_Rappel+" text,"+Col_Nature+" text,"+Col_Responsable+" text)";
         String table7 = "Create table "+Table7+" ("+Col_imatriculation_reparation+" text,"+Col_pieces_changes+" text,"+Col_main_douvre+" TEXT,"+Col_ref_facture+" TEXT,"+Col_date_reparation+"  DATE,"+Col_montant_reparation+" integer)";
         String table8 = "Create table "+Table8+" ("+Col_imatriculation_asurance+" text,"+Col_date_debut_assurance+" date,"+Col_date_fin_assurance+" TEXT,"+Col_compagnie_assurance+" text,"+Col_prime_assurance+" integer)";

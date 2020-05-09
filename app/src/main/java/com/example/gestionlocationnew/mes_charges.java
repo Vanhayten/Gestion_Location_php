@@ -1,10 +1,15 @@
 package com.example.gestionlocationnew;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -21,6 +26,8 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
     Toolbar toolbar;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
+    gestion_location db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.navigationView);
         setSupportActionBar(toolbar);
+        db = new gestion_location(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawerOpen,R.string.drawerClose);
@@ -129,4 +137,41 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         return false;
     }
 
+    public void confirmer(View view) {
+        final Dialog dyalog_mes_charges;
+        dyalog_mes_charges = new Dialog(this);
+        dyalog_mes_charges.setContentView(R.layout.dialoge_ajoute_mes_charges);
+        TextView   datech, montant;
+        CheckBox espéce,chéque,virment;
+        TextView close;
+        String modpay="";
+        datech= (TextView)dyalog_mes_charges.findViewById(R.id.text_datecha);
+        montant= (TextView)dyalog_mes_charges.findViewById(R.id.text_datecha);
+        espéce= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_espéce);
+        chéque= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_chèque);
+       virment= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_virement);
+       if (espéce.isChecked()){
+           modpay="espéce";
+       }
+        if (chéque.isChecked()){
+            modpay=modpay+" ,chéque";
+        }
+        if (virment.isChecked()){
+            modpay=modpay+" ,virment";
+        }
+
+
+
+
+
+
+
+
+
+
+            dyalog_mes_charges.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dyalog_mes_charges.show();
+
+
+    }
 }
