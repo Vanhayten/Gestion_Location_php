@@ -2,6 +2,8 @@ package com.example.gestionlocationnew;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +23,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+
 public class mes_charges extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     String Nom,Prenom,role;
@@ -30,6 +35,9 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
     gestion_location db;
     TextView   datech, montant;
     String modpay="";
+    ArrayList<list_vihcule> arrayList;
+    PageAdapter_vihucle listrep;
+    ListView ls;
 
 
     @Override
@@ -63,6 +71,25 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         username.setText(Nom+" "+Prenom);
         role1.setText(role);
 
+        //remplissage liste des charges
+        ls=(ListView)findViewById(R.id.listcharges);
+        ArrayList<list_vihcule> arrayList1;
+        SQLiteDatabase table = db.getReadableDatabase ();
+        String requet = "select * from charge";
+        Cursor c = table.rawQuery ( requet, null );
+        if(c.getCount()>=1){
+            ls.clearChoices();
+            arrayList1= new ArrayList<list_vihcule> ();
+            while (c.moveToNext ())
+            {
+                list_vihcule list = new list_vihcule (c.getString(1),c.getString(2),c.getString(3));
+                arrayList1.add ( list );
+            }
+            PageAdapter_vihucle adapter_vihucle = new PageAdapter_vihucle (mes_charges.this,arrayList1);
+            ls.setAdapter ( adapter_vihucle );
+        }else{
+            ls.setAdapter (listrep);
+        }
 
 
     }
