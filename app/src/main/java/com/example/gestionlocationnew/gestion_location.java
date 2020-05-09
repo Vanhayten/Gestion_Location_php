@@ -242,7 +242,7 @@ public boolean insert_client(String nom ,String prenom,String adr,String cin,Str
     }
 //insert charge
 
-    public boolean insert_charge(String date ,String montant,String paym){
+    public boolean insert_charge(String date ,Integer montant,String paym){
         boolean res=false;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues tab_ch = new ContentValues();

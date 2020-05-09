@@ -72,6 +72,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         role1.setText(role);
 
         //remplissage liste des charges
+        boolean c=db.insert_charge("01/08/2019",15,"virment");
         ls=(ListView)findViewById(R.id.listcharges);
         ArrayList<list_vihcule> arrayList1;
         SQLiteDatabase table = db.getReadableDatabase ();
@@ -195,7 +196,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         confirmer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean c=db.insert_charge(datech.getText().toString(),montant.getText().toString(),modpay);
+                boolean c=db.insert_charge(datech.getText().toString(),Integer.parseInt(montant.getText().toString()),modpay);
                 if (c){
                     Toast.makeText(mes_charges.this,"l'ajoute Reussi",Toast.LENGTH_LONG).show();}
 
