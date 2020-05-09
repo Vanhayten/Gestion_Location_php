@@ -84,7 +84,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
             arrayList1= new ArrayList<list_vihcule> ();
             while (c.moveToNext ())
             {
-                list_vihcule list = new list_vihcule (c.getString(1)+" DH",c.getString(2)+" "+c.getString(3),"");
+                list_vihcule list = new list_vihcule (c.getString(2)+" DH     , "+c.getString(3),c.getString(1),"");
                 arrayList1.add ( list );
             }
             PageAdapter_vihucle adapter_vihucle = new PageAdapter_vihucle (mes_charges.this,arrayList1);
