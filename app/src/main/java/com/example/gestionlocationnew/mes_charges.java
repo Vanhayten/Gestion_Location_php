@@ -38,7 +38,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.navigationView);
         setSupportActionBar(toolbar);
-        db = new gestion_location(this);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawerOpen,R.string.drawerClose);
@@ -150,6 +150,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         espéce= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_espéce);
         chéque= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_chèque);
        virment= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_virement);
+        db = new gestion_location(this);
        if (espéce.isChecked()){
            modpay="espéce";
        }
@@ -159,6 +160,14 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         if (virment.isChecked()){
             modpay=modpay+" ,virment";
         }
+
+            boolean c=db.insert_charge(datech.getText().toString(),montant.getText().toString(),modpay);
+        if (c){
+            Toast.makeText(this,"l'ajoute Reussi",Toast.LENGTH_LONG).show();}
+
+        else{
+            Toast.makeText(this,"Erreur d'ajoute",Toast.LENGTH_LONG).show();}
+
 
 
 
