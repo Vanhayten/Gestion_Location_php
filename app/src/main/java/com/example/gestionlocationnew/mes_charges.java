@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -59,6 +60,11 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         //-------------------------
 
 
+
+
+
+
+
         NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);
         View headerView = navigationView1.getHeaderView(0);
         TextView username = headerView.findViewById(R.id.unser_name);
@@ -95,6 +101,33 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         }else{
             ls.setAdapter (listrep);
         }
+
+//modifer supprimer charge
+        ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final Dialog dyaloge_modifier_supprimer_mes_charges;
+                dyaloge_modifier_supprimer_mes_charges = new Dialog(mes_charges.this);
+                dyaloge_modifier_supprimer_mes_charges.setContentView(R.layout.dialoge_modifier_supprimer_mes_charge);
+                Button Suprimer,Modifier;
+                Suprimer =(Button)dyaloge_modifier_supprimer_mes_charges.findViewById(R.id.btn_charge1);
+                Modifier =(Button)dyaloge_modifier_supprimer_mes_charges.findViewById(R.id.btn_charge2);
+
+
+
+
+
+
+
+
+
+
+                dyaloge_modifier_supprimer_mes_charges.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dyaloge_modifier_supprimer_mes_charges.show();
+            }
+        });
+
+
 
 
     }
