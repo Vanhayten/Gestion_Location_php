@@ -74,7 +74,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
         db = new gestion_location(this);
         //remplissage liste des charges
-        boolean c1 = db.insert_charge("01/08/2019",15,"virment","des1");
+       // boolean c1 = db.insert_charge("01/08/2019",15,"virment","des1");
         ls=(ListView)findViewById(R.id.listcharges);
         ArrayList<list_vihcule> arrayList1;
         SQLiteDatabase table = db.getReadableDatabase ();
@@ -85,7 +85,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
             arrayList1= new ArrayList<list_vihcule> ();
             while (c.moveToNext ())
             {
-                list_vihcule list = new list_vihcule (c.getString(1),c.getString(2),c.getString(3));
+                list_vihcule list = new list_vihcule (c.getString(1),c.getString(2)+" , "+c.getString(3)+" , "+c.getString(4),"");
                 arrayList1.add ( list );
             }
             PageAdapter_vihucle adapter_vihucle = new PageAdapter_vihucle (mes_charges.this,arrayList1);
@@ -199,7 +199,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         confirmer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean c=db.insert_charge(datech.getText().toString(),Integer.parseInt(montant.getText().toString()),modpay,design.getText().toString());
+                boolean c = db.insert_charge(datech.getText().toString(),Integer.parseInt(montant.getText().toString()),modpay,design.getText().toString());
                 if (c){
                     Toast.makeText(mes_charges.this,"l'ajoute Reussi",Toast.LENGTH_LONG).show();}
 
