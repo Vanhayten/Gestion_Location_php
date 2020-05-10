@@ -79,11 +79,13 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         ls=(ListView)findViewById(R.id.listcharges);
         ArrayList<list_vihcule> arrayList1;
         SQLiteDatabase table = db.getReadableDatabase ();
+        arrayList1= new ArrayList<list_vihcule> ();
         String requet = "select * from charge";
         Cursor c = table.rawQuery ( requet, null );
+        arrayList1.clear();
         if(c.getCount()>=1){
             ls.clearChoices();
-            arrayList1= new ArrayList<list_vihcule> ();
+
             while (c.moveToNext ())
             {
                 list_vihcule list = new list_vihcule (c.getString(1),c.getString(2)+" , "+c.getString(3)+" , "+c.getString(4),"");
@@ -178,7 +180,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         TextView close;
 
         datech= (TextView)dyalog_mes_charges.findViewById(R.id.text_datecha);
-        montant= (TextView)dyalog_mes_charges.findViewById(R.id.text_datecha);
+        montant= (TextView)dyalog_mes_charges.findViewById(R.id.text_Montant);
         espéce= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_espéce);
         chéque= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_chèque);
        virment= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_virement);
