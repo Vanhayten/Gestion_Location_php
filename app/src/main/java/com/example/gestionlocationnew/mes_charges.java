@@ -71,8 +71,10 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         username.setText(Nom+" "+Prenom);
         role1.setText(role);
 
+
+        db = new gestion_location(this);
         //remplissage liste des charges
-        boolean c1=db.insert_charge("01/08/2019",15,"virment","des1");
+        boolean c1 = db.insert_charge("01/08/2019",15,"virment","des1");
         ls=(ListView)findViewById(R.id.listcharges);
         ArrayList<list_vihcule> arrayList1;
         SQLiteDatabase table = db.getReadableDatabase ();
@@ -182,7 +184,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         chéque= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_chèque);
        virment= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_virement);
         design= (TextView) dyalog_mes_charges.findViewById(R.id.text_design);
-        db = new gestion_location(this);
+
        if (espéce.isChecked()){
            modpay="espéce";
        }
