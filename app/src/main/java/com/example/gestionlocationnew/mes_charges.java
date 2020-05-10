@@ -88,7 +88,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
             while (c.moveToNext ())
             {
-                list_vihcule list = new list_vihcule (c.getString(1),c.getString(2)+" , "+c.getString(3)+" , "+c.getString(4),"");
+                list_vihcule list = new list_vihcule (c.getString(1),c.getString(2)+"    "+c.getString(3)+"     "+c.getString(4),"");
                 arrayList1.add ( list );
             }
             PageAdapter_vihucle adapter_vihucle = new PageAdapter_vihucle (mes_charges.this,arrayList1);
@@ -186,22 +186,22 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
        virment= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_virement);
         design= (TextView) dyalog_mes_charges.findViewById(R.id.text_design);
 
-       if (espéce.isChecked()){
-           modpay="espéce";
-       }
-        if (chéque.isChecked()){
-            modpay=modpay+" ,chéque";
-        }
-        if (virment.isChecked()){
-            modpay=modpay+" ,virment";
-        }
+
         Button confirmer;
         confirmer = (Button)dyalog_mes_charges.findViewById(R.id.btn_confirmer);
         confirmer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                boolean c = db.insert_charge(datech.getText().toString(),Integer.parseInt(montant.getText().toString()),modpay,design.getText().toString());
+                if (espéce.isChecked()){
+                    modpay="espéce";
+                }
+                if (chéque.isChecked()){
+                    modpay=modpay+" ,chéque";
+                }
+                if (virment.isChecked()){
+                    modpay=modpay+" ,virment";
+                }
+                boolean c = db.insert_charge(datech.getText().toString(),Integer.parseInt(montant.getText().toString()),modpay.toString(),design.getText().toString());
                 if (c){
                     Toast.makeText(mes_charges.this,"l'ajoute Reussi",Toast.LENGTH_LONG).show();
                 } else{
