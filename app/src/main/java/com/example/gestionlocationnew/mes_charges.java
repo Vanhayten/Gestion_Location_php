@@ -1,17 +1,23 @@
 package com.example.gestionlocationnew;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +30,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class mes_charges extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -37,8 +46,9 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
     TextView   datech, montant,design;
     CheckBox espéce,chéque,virment;
     String modpay="";
-    PageAdapter_vihucle listrep;
+    Page_Adapter_charge listrep;
     ListView ls;
+    Page_Adapter_charge adapter_vihucle;
 
 
     @Override
@@ -60,11 +70,6 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         //-------------------------
 
 
-
-
-
-
-
         NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);
         View headerView = navigationView1.getHeaderView(0);
         TextView username = headerView.findViewById(R.id.unser_name);
@@ -82,9 +87,9 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         //remplissage liste des charges
         boolean c1 = db.insert_charge("01/08/2019",15,"virment","des1");
         ls=(ListView)findViewById(R.id.listcharges);
-        ArrayList<list_vihcule> arrayList1;
+        ArrayList<list_charge> arrayList1;
         SQLiteDatabase table = db.getReadableDatabase ();
-        arrayList1= new ArrayList<list_vihcule> ();
+        arrayList1= new ArrayList<list_charge> ();
         String requet = "select * from charge";
         Cursor c = table.rawQuery ( requet, null );
         arrayList1.clear();
@@ -93,39 +98,178 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
             while (c.moveToNext ())
             {
-                list_vihcule list = new list_vihcule (c.getString(1),c.getString(2)+"DH    "+c.getString(3)+"     "+c.getString(4),"");
+                list_charge list = new list_charge (c.getString(1),c.getString(2)+"DH    "+c.getString(3)+"     "+c.getString(4),c.getString(0).toString());
                 arrayList1.add ( list );
             }
-            PageAdapter_vihucle adapter_vihucle = new PageAdapter_vihucle (mes_charges.this,arrayList1);
+             adapter_vihucle = new Page_Adapter_charge (mes_charges.this,arrayList1);
             ls.setAdapter ( adapter_vihucle );
         }else{
             ls.setAdapter (listrep);
         }
 
-//modifer supprimer charge
+
+
+        //modifer supprimer charge
         ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Dialog dyaloge_modifier_supprimer_mes_charges;
                 dyaloge_modifier_supprimer_mes_charges = new Dialog(mes_charges.this);
                 dyaloge_modifier_supprimer_mes_charges.setContentView(R.layout.dialoge_modifier_supprimer_mes_charge);
-                Button Suprimer,Modifier;
-                Suprimer =(Button)dyaloge_modifier_supprimer_mes_charges.findViewById(R.id.btn_charge1);
-                Modifier =(Button)dyaloge_modifier_supprimer_mes_charges.findViewById(R.id.btn_charge2);
+                Button Suprimer, Modifier;
+                Suprimer = (Button) dyaloge_modifier_supprimer_mes_charges.findViewById(R.id.btn_charge2);
+                Modifier = (Button) dyaloge_modifier_supprimer_mes_charges.findViewById(R.id.btn_charge1);
+                final TextView id_charge;
+                id_charge =(TextView)view.findViewById(R.id.Id_charge);
+                /**
+                 * button Suprimer
+                 */
+                Suprimer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mes_charges.this);
+                        builder.setCancelable(true);
+                        builder.setTitle("Confirmation");
+                        builder.setMessage("Voulez-vous vraiment suprimer ?");
+                        builder.setPositiveButton("Ok",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        /**
+                                         * confirmer
+                                         */
+
+                                        try {
+                                            SQLiteDatabase DB = db.getWritableDatabase();
+                                             DB.delete("Charge","Id_Charge=?",new String[]{id_charge.getText().toString()});
+                                            Toast.makeText(mes_charges.this, "Modification Réussi", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                            startActivity(getIntent());
+
+                                        }catch (Exception Ex){
+                                            Toast.makeText(mes_charges.this, "Modifiction n'est pas Effectué", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                    }
+                                });
+                        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                /**
+                                 * not confirmer
+                                 */
+                                dyaloge_modifier_supprimer_mes_charges.dismiss();
+                            }
+                        });
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+
+
+                    }
+                });
+
+
+                /**
+                 * Button Modifier
+                 */
+
+                Modifier.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        final Dialog dyaloge_modifier_mes_charges;
+                        dyaloge_modifier_mes_charges = new Dialog(mes_charges.this);
+                        dyaloge_modifier_mes_charges.setContentView(R.layout.dialoge_ajoute_mes_charges);
+                        Button confirm_modifier;
+                        datech= (TextView)dyaloge_modifier_mes_charges.findViewById(R.id.text_datecha);
+                        montant= (TextView)dyaloge_modifier_mes_charges.findViewById(R.id.text_Montant);
+                        espéce= (CheckBox) dyaloge_modifier_mes_charges.findViewById(R.id.mode_espéce);
+                        chéque= (CheckBox) dyaloge_modifier_mes_charges.findViewById(R.id.mode_chèque);
+                        virment= (CheckBox) dyaloge_modifier_mes_charges.findViewById(R.id.mode_virement);
+                        design= (TextView) dyaloge_modifier_mes_charges.findViewById(R.id.text_design);
+
+                        confirm_modifier =(Button)dyaloge_modifier_mes_charges.findViewById(R.id.btn_confirmer);
+                        confirm_modifier.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                /**
+                                 * confirmation
+                                 */
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(mes_charges.this);
+                                builder.setCancelable(true);
+                                builder.setTitle("Confirmation");
+                                builder.setMessage("Voulez-vous vraiment modifier ?");
+                                builder.setPositiveButton("Ok",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                /**
+                                                 * confirmer
+                                                 */
+                                                try {
+                                                    modpay="";
+                                                    if (espéce.isChecked()){
+                                                        modpay="espéce";
+                                                    }
+                                                    if (chéque.isChecked()){
+                                                        modpay=modpay+" ,chéque";
+                                                    }
+                                                    if (virment.isChecked()){
+                                                        modpay=modpay+" ,virment";
+                                                    }
+
+                                                    SQLiteDatabase DB = db.getWritableDatabase();
+                                                    ContentValues v = new ContentValues();
+                                                    v.put("Date",datech.getText().toString());
+                                                    v.put("Montant",Integer.parseInt(montant.getText().toString()));
+                                                    v.put("Payment",modpay);
+                                                    v.put("designation",design.getText().toString());
+
+                                                    DB.update("Charge",v,"Id_Charge=?",new String[]{id_charge.getText().toString()});
+
+                                                    Toast.makeText(mes_charges.this, "Modification Réussi", Toast.LENGTH_SHORT).show();
+                                                    finish();
+                                                    startActivity(getIntent());
+
+                                                }catch (Exception Ex){
+                                                    Toast.makeText(mes_charges.this, "Modifiction n'est pas Effectué", Toast.LENGTH_SHORT).show();
+                                                }
+
+
+                                            }
+                                        });
+                                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        /**
+                                         * not confirmer
+                                         */
+                                        dyaloge_modifier_mes_charges.dismiss();
+                                    }
+                                });
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
+                        });
 
 
 
+                        dyaloge_modifier_mes_charges.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dyaloge_modifier_mes_charges.show();
 
 
-
-
-
+                    }
+                });
 
 
                 dyaloge_modifier_supprimer_mes_charges.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dyaloge_modifier_supprimer_mes_charges.show();
             }
         });
+
 
 
 
@@ -245,6 +389,69 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
             dyalog_mes_charges.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dyalog_mes_charges.show();
 
+
+    }
+
+    public void Recherche(View view) {
+        /**
+         *
+         * Recherche on la list mes cherge
+         */
+
+        final EditText Recherche;
+        Recherche =(EditText)findViewById(R.id.chercherCharge);
+
+        ArrayList<list_charge> arrayList2;
+        SQLiteDatabase table = db.getReadableDatabase();
+        String requet = "select * from Charge";
+
+        try {
+
+
+            Cursor c = table.rawQuery(requet, null);
+
+
+            arrayList2 = new ArrayList<list_charge>();
+
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String dateEditext = Recherche.getText().toString();
+            Date date = null;
+
+            date = sdf.parse(dateEditext);
+            Toast.makeText(this, ""+date, Toast.LENGTH_SHORT).show();
+
+            Date date3;
+            int i = 0;
+
+
+            while (c.moveToNext()) {
+                date3 = null;
+
+                date3 = sdf.parse(c.getString(1));
+                Toast.makeText(this, ""+date3, Toast.LENGTH_SHORT).show();
+
+                if (date3.compareTo(date) == 0) {
+                    i++;
+                    list_charge list = new list_charge (c.getString(1),c.getString(2)+"DH    "+c.getString(3)+"     "+c.getString(4),c.getString(0).toString());
+                    arrayList2.add ( list );
+                }
+
+            }
+
+            Page_Adapter_charge adapter_vihucle1 = new Page_Adapter_charge(mes_charges.this, arrayList2);
+
+            if (i > 0) {
+                ls.setAdapter(adapter_vihucle1);
+
+            } else {
+                ls.setAdapter(adapter_vihucle);
+            }
+
+
+        } catch (Exception Ex) {
+
+        }
 
     }
 }

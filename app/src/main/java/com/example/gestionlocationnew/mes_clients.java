@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -80,7 +79,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
 
 
         ls=(ListView)findViewById(R.id.listClient);
-        t1=(EditText)findViewById(R.id.chercherClient);
+        t1=(EditText)findViewById(R.id.chercherCharge);
         t1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

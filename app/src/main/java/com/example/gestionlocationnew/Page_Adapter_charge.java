@@ -1,5 +1,6 @@
 package com.example.gestionlocationnew;
 
+
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -10,12 +11,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class PageAdapter_vihucle extends BaseAdapter
+public class Page_Adapter_charge extends BaseAdapter
 {
     private Context context;
-    private ArrayList<list_vihcule> foodModelArrayList;
-public String col;
-    public PageAdapter_vihucle(Context context, ArrayList<list_vihcule> foodModelArrayList) {
+    private ArrayList<list_charge> foodModelArrayList;
+    public String col;
+    public Page_Adapter_charge(Context context, ArrayList<list_charge> foodModelArrayList) {
         this.context = context;
         this.foodModelArrayList = foodModelArrayList;
     }
@@ -30,7 +31,7 @@ public String col;
     @Override
     public int getItemViewType(int position) {
 
-        return foodModelArrayList.size();
+        return position;
     }
     @Override
     public Object getItem(int position) {
@@ -39,18 +40,13 @@ public String col;
 
     @Override
     public long getItemId(int position) {
-        int count;
-        if (foodModelArrayList.size() > 0) {
-            count = getCount();
-        } else {
-            count = 1;
-        }
-        return count;
+        return 0;
     }
     static class ViewHolder{
         public TextView matr;
         public TextView color;
         public TextView marq;
+        public TextView id;
     }
 
 
@@ -62,11 +58,12 @@ public String col;
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.vicucule_rows, null, true);
+            convertView = inflater.inflate(R.layout.charche_rows, null, true);
 
             holder.matr=(TextView)convertView.findViewById(R.id.matrV);
             holder.marq=(TextView)convertView.findViewById(R.id.marqueV);
-           // holder.color=(TextView)convertView.findViewById(R.id.marqueV);
+            holder.id=(TextView)convertView.findViewById(R.id.Id_charge);
+
 
 
 
@@ -78,38 +75,11 @@ public String col;
         }
 
         holder.matr.setText(foodModelArrayList.get(position).getMatr());
-        col=foodModelArrayList.get(position).getColor();
-      /*  if(col.equals("Vert")){  holder.matr.setTextColor(Color.GREEN);}
-        if(col.equals("Rouge")){  holder.matr.setTextColor(Color.RED);}*/
-        switch (col){
-            case "Rouge":
-               holder.marq.setTextColor(Color.RED);
-                break;
-            case "Vert":
-                holder.marq.setTextColor(Color.GREEN);
-                break;
-            case "Noir":
-                holder.marq.setTextColor(Color.BLACK);
-                break;
-            case "Jaune":
-                holder.marq.setTextColor(Color.YELLOW);
-                break;
-            case "Gris":
-                holder.marq.setTextColor(Color.GRAY);
-                break;
-            case "Bleu":
-                holder.marq.setTextColor(Color.BLUE);
-                break;
-            case "Blanc":
-                holder.marq.setTextColor(Color.WHITE);
-                break;
-
-        }
-
         holder.marq.setText(foodModelArrayList.get(position).getMarque());
-       //holder.color.setText(foodModelArrayList.get(position).getColor());
+        holder.id.setText(foodModelArrayList.get(position).getColor());
+        //holder.color.setText(foodModelArrayList.get(position).getColor());
 
         return convertView;
     }
-    }
+}
 

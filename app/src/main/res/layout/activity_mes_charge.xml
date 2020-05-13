@@ -46,9 +46,13 @@
                     android:textColor="#FFFFFF"
                     android:textSize="28dp"></TextView>
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
                 <EditText
                     style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
-                    android:layout_width="300dp"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="8dp"
@@ -57,9 +61,17 @@
                     android:textAlignment="center"
                     android:textColor="@color/NAVwhite_theme50"
                     android:textColorHint="#FFFFFF"
-                    android:id="@+id/chercherClient"
+                    android:id="@+id/chercherCharge"
 
                     />
+                    <Button
+                        android:layout_marginTop="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Recherche"
+                        android:onClick="Recherche"/>
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/idcolor"
