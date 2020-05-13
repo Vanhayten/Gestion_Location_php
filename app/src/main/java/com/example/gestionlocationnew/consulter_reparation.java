@@ -36,6 +36,7 @@ public class consulter_reparation extends Fragment {
     ArrayList<class_reparation> arrayList_reparation;
     ArrayList<class_reparation> arrayList_reparation1;
     Button b1;
+    Cursor c;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -95,7 +96,7 @@ public class consulter_reparation extends Fragment {
 
         SQLiteDatabase table = db.getReadableDatabase ();
         String requet = "select * from reparation where imatriculation ='" +strtext+ "'";
-        Cursor c = table.rawQuery ( requet, null );
+      c= table.rawQuery ( requet, null );
         ArrayList<class_reparation> arrayList = new ArrayList<> ();
         arrayList.clear ();
 

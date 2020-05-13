@@ -151,10 +151,10 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                 img1_reparation.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Cursor c;
                         SQLiteDatabase table = db.getReadableDatabase();
                         String requet = "select count(*) from reparation where imatriculation ='" + Matricule.getText().toString() + "' ";
-                        Cursor c = table.rawQuery(requet, null);
+                      c= table.rawQuery(requet, null);
 
 
                         /**
@@ -163,7 +163,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                          */
                         if (c.moveToNext()) {
 
-                        if (Integer.parseInt(c.getString(0)) == 0) {
+                      /*  if (Integer.parseInt(c.getString(0)) == 0) {
 
                             final Dialog MyDyalog_ajou;
                             MyDyalog_ajou = new Dialog(entretiens.this);
@@ -197,7 +197,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                             MyDyalog_ajou.show();
 
 
-                        } else {
+                        } else {*/
 
                             Intent I = new Intent(entretiens.this, reparation.class);
                             Bundle B = new Bundle();
@@ -213,7 +213,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                     }
 
 
-                    }
+                  //  }
                 });
 
                 text_nom.setText("Matricule : " + Matricule.getText().toString());
