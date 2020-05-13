@@ -64,12 +64,6 @@
                     android:id="@+id/chercherCharge"
 
                     />
-                    <Button
-                        android:layout_marginTop="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Recherche"
-                        android:onClick="Recherche"/>
 
                 </LinearLayout>
 

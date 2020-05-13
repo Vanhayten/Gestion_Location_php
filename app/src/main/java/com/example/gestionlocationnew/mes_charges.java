@@ -107,8 +107,75 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
             ls.setAdapter (listrep);
         }
 
+         final EditText Recherche;
+        Recherche =(EditText)findViewById(R.id.chercherCharge);
+Recherche.addTextChangedListener(new TextWatcher() {
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        ArrayList<list_charge> arrayList2;
+        SQLiteDatabase table = db.getReadableDatabase();
+        String requet = "select * from Charge";
+
+        try {
 
 
+            Cursor c = table.rawQuery(requet, null);
+
+
+            arrayList2 = new ArrayList<list_charge>();
+
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String dateEditext = Recherche.getText().toString();
+            Date date = null;
+
+            date = sdf.parse(dateEditext);
+            //   Toast.makeText(this, ""+date, Toast.LENGTH_SHORT).show();
+
+            Date date3;
+            int i = 0;
+
+
+            while (c.moveToNext()) {
+                date3 = null;
+
+                  date3 = sdf.parse(c.getString(1));
+                //Toast.makeText(this, ""+date3, Toast.LENGTH_SHORT).show();
+
+                if (date3.compareTo(date) == 0) {
+                    i++;
+                    list_charge list = new list_charge (c.getString(1),c.getString(2)+"DH    "+c.getString(3)+"     "+c.getString(4),c.getString(0).toString());
+                    arrayList2.add ( list );
+                }
+
+            }
+
+            Page_Adapter_charge adapter_vihucle1 = new Page_Adapter_charge(mes_charges.this, arrayList2);
+
+            if (i > 0) {
+                ls.setAdapter(adapter_vihucle1);
+
+            } else {
+                ls.setAdapter(adapter_vihucle);
+            }
+
+
+        } catch (Exception Ex) {
+
+        }
+
+    }
+});
         //modifer supprimer charge
         ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -142,12 +209,12 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                                         try {
                                             SQLiteDatabase DB = db.getWritableDatabase();
                                              DB.delete("Charge","Id_Charge=?",new String[]{id_charge.getText().toString()});
-                                            Toast.makeText(mes_charges.this, "Modification Réussi", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(mes_charges.this, "Supprision Réussi", Toast.LENGTH_SHORT).show();
                                             finish();
                                             startActivity(getIntent());
 
                                         }catch (Exception Ex){
-                                            Toast.makeText(mes_charges.this, "Modifiction n'est pas Effectué", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(mes_charges.this, "Supprision n'est pas Effectué", Toast.LENGTH_SHORT).show();
                                         }
 
                                     }
@@ -392,66 +459,4 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
     }
 
-    public void Recherche(View view) {
-        /**
-         *
-         * Recherche on la list mes cherge
-         */
-
-        final EditText Recherche;
-        Recherche =(EditText)findViewById(R.id.chercherCharge);
-
-        ArrayList<list_charge> arrayList2;
-        SQLiteDatabase table = db.getReadableDatabase();
-        String requet = "select * from Charge";
-
-        try {
-
-
-            Cursor c = table.rawQuery(requet, null);
-
-
-            arrayList2 = new ArrayList<list_charge>();
-
-
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            String dateEditext = Recherche.getText().toString();
-            Date date = null;
-
-            date = sdf.parse(dateEditext);
-            Toast.makeText(this, ""+date, Toast.LENGTH_SHORT).show();
-
-            Date date3;
-            int i = 0;
-
-
-            while (c.moveToNext()) {
-                date3 = null;
-
-                date3 = sdf.parse(c.getString(1));
-                Toast.makeText(this, ""+date3, Toast.LENGTH_SHORT).show();
-
-                if (date3.compareTo(date) == 0) {
-                    i++;
-                    list_charge list = new list_charge (c.getString(1),c.getString(2)+"DH    "+c.getString(3)+"     "+c.getString(4),c.getString(0).toString());
-                    arrayList2.add ( list );
-                }
-
-            }
-
-            Page_Adapter_charge adapter_vihucle1 = new Page_Adapter_charge(mes_charges.this, arrayList2);
-
-            if (i > 0) {
-                ls.setAdapter(adapter_vihucle1);
-
-            } else {
-                ls.setAdapter(adapter_vihucle);
-            }
-
-
-        } catch (Exception Ex) {
-
-        }
-
-    }
 }
