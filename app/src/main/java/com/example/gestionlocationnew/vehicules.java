@@ -49,7 +49,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
     Dialog myDyalog;
     Dialog AjouteDialog;
     EditText t1;
-
+    Cursor c;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +97,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 ArrayList<list_vihcule> arrayList1;
                 SQLiteDatabase table = db.getReadableDatabase ();
                 String requet = "select * from véhicules where immatriculation ='"+t1.getText()+"'";
-                Cursor c = table.rawQuery ( requet, null );
+               c = table.rawQuery ( requet, null );
                 if(c.getCount()>=1){
                     ls.clearChoices();
                     arrayList1= new ArrayList<list_vihcule> ();
