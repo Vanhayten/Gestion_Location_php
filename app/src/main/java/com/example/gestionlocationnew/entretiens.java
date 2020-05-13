@@ -161,7 +161,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                          *
                          * if list reparation vide most be remplire
                          */
-                        if (c.moveToNext()) {
+                      //  if (c.moveToNext()) {
 
                       /*  if (Integer.parseInt(c.getString(0)) == 0) {
 
@@ -210,7 +210,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                             startActivity(I);
 
                         }
-                    }
+               //     }
 
 
                   //  }
