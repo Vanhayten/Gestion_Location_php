@@ -92,7 +92,8 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
               //  boolean c1 = db.insert_charge("01/08/2019", 15, "virment", "des1");
                // Toast.makeText(this,""+c.getString(0),Toast.LENGTH_SHORT).show();
             }
-        }catch (Exception e){Toast.makeText(this,"",Toast.LENGTH_SHORT).show();}
+        }catch (Exception e){//Toast.makeText(this,"",Toast.LENGTH_SHORT).show();
+             }
         ls=(ListView)findViewById(R.id.listcharges);
         ArrayList<list_charge> arrayList1;
         SQLiteDatabase table = db.getReadableDatabase ();
