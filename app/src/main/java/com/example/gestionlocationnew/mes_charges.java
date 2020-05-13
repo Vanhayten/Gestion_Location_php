@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
@@ -50,7 +51,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
     ListView ls;
     Page_Adapter_charge adapter_vihucle;
 
-
+    Cursor c;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,13 +86,19 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
         db = new gestion_location(this);
         //remplissage liste des charges
-        boolean c1 = db.insert_charge("01/08/2019",15,"virment","des1");
+
+        try{
+            if(c.getCount()==0) {
+              //  boolean c1 = db.insert_charge("01/08/2019", 15, "virment", "des1");
+               // Toast.makeText(this,""+c.getString(0),Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e){Toast.makeText(this,"",Toast.LENGTH_SHORT).show();}
         ls=(ListView)findViewById(R.id.listcharges);
         ArrayList<list_charge> arrayList1;
         SQLiteDatabase table = db.getReadableDatabase ();
         arrayList1= new ArrayList<list_charge> ();
         String requet = "select * from charge";
-        Cursor c = table.rawQuery ( requet, null );
+        c = table.rawQuery ( requet, null );
         arrayList1.clear();
         if(c.getCount()>=1){
             ls.clearChoices();
