@@ -49,7 +49,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
     Dialog myDyalog;
     Dialog AjouteDialog;
     EditText t1;
-    Cursor c;
+    Cursor c,c1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,9 +123,9 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
         //-------------------------
 
                     SQLiteDatabase table = db.getReadableDatabase ();
-                    String requet = "select * from véhicules ";
-                    Cursor c = table.rawQuery ( requet, null );
-                    if(c.getCount()==0){
+                   String requet = "select * from véhicules ";
+                    c1 = table.rawQuery ( requet, null );
+                    if(c1.getCount()==0){
                         finish();
                         Intent i=new Intent(this,Ajoute_vihicule.class);
                         Bundle b1 = new Bundle();
@@ -137,9 +137,9 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                     }
                     arrayList = new ArrayList<list_vihcule> ();
                     arrayList.clear ();
-                    while (c.moveToNext ())
+                    while (c1.moveToNext ())
                     {
-                        list_vihcule list = new list_vihcule (c.getString(0),c.getString(2),c.getString(7));
+                        list_vihcule list = new list_vihcule (c1.getString(0),c1.getString(2),c1.getString(7));
                         arrayList.add ( list );
                     }
                     listrep = new PageAdapter_vihucle ( this, arrayList );
