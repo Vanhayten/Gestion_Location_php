@@ -50,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="35dp"
-                    android:text="Email or Username"
+                    android:text="   Username"
                     android:textColor="#c2c2c2"
                     android:textSize="13.3sp" />
 
@@ -76,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30.3dp"
-                    android:text="Password"
+                    android:text="   Password"
                     android:textColor="#c2c2c2"
                     android:textSize="13.3sp" />
 
