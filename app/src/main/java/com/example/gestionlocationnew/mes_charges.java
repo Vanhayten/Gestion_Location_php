@@ -85,7 +85,11 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
 
         db = new gestion_location(this);
-        //remplissage liste des charges
+
+
+        /**
+         *remplissage liste des charges
+         */
 
         ls=(ListView)findViewById(R.id.listcharges);
         ArrayList<list_charge> arrayList1;
