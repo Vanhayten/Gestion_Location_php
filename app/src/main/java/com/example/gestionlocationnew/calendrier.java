@@ -39,7 +39,7 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
 
 
 
-
+    CustomCalendarView customCalendarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

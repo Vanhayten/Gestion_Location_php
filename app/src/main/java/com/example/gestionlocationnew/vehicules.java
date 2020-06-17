@@ -125,16 +125,16 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                     SQLiteDatabase table = db.getReadableDatabase ();
                    String requet = "select * from véhicules ";
                     c1 = table.rawQuery ( requet, null );
-                    if(c1.getCount()==0){
+                   if(c1.getCount()==0){
                         finish();
-                        Intent i=new Intent(this,Ajoute_vihicule.class);
+                       Intent i=new Intent(this,Ajoute_vihicule.class);
                         Bundle b1 = new Bundle();
                         b1.putString("nom",Nom);
                         b1.putString("prenom",Prenom);
                         b1.putString("role",role);
                         i.putExtras(b1);
-                        startActivity(i);
-                    }
+                       startActivity(i);
+                   }
                     arrayList = new ArrayList<list_vihcule> ();
                     arrayList.clear ();
                     while (c1.moveToNext ())
