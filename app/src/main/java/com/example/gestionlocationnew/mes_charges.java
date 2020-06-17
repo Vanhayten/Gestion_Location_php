@@ -192,6 +192,7 @@ Recherche.addTextChangedListener(new TextWatcher() {
                 Suprimer = (Button) dyaloge_modifier_supprimer_mes_charges.findViewById(R.id.btn_charge2);
                 Modifier = (Button) dyaloge_modifier_supprimer_mes_charges.findViewById(R.id.btn_charge1);
                 final TextView id_charge;
+
                 id_charge =(TextView)view.findViewById(R.id.Id_charge);
                 /**
                  * button Suprimer
@@ -451,6 +452,8 @@ Recherche.addTextChangedListener(new TextWatcher() {
                 boolean c = db.insert_charge(datech.getText().toString(),Integer.parseInt(montant.getText().toString()),modpay.toString(),design.getText().toString());
                 if (c){
                     Toast.makeText(mes_charges.this,"l'ajoute Reussi",Toast.LENGTH_LONG).show();
+                    finish();
+                    startActivity(getIntent());
                 } else{
                     Toast.makeText(mes_charges.this,"Erreur d'ajoute",Toast.LENGTH_LONG).show();
                 }
@@ -463,5 +466,8 @@ Recherche.addTextChangedListener(new TextWatcher() {
 
 
     }
+
+
+
 
 }

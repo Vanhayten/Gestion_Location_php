@@ -103,7 +103,7 @@ public class consulter_reparation extends Fragment {
 
         while (c.moveToNext())
         {
-            class_reparation list = new class_reparation ( "date : " + c.getString ( 4 ) + "      Matricule :" + c.getString ( 0 ),   "pièces : " + c.getString ( 1 ) + "         montant : " + c.getString ( 5 ),    "référence facture : " + c.getString ( 3 ) );
+            class_reparation list = new class_reparation ( "DATE : " + c.getString ( 4 ) + "       MATRICULE :" + c.getString ( 0 ),   "MONTANT : " + c.getString ( 5 ) + "          RÉFÉRENCE FACTURE : " + c.getString ( 3 ),    "PIÉCES : " + c.getString ( 1 ) );
             arrayList.add ( list );
         }
         Collections.reverse(arrayList);
@@ -153,7 +153,7 @@ public class consulter_reparation extends Fragment {
                          date3 = sdf.parse(c.getString(4));
 
                         if (date3.after(date1)  &&  date3.before(date2) ) {
-                            class_reparation list = new class_reparation ( "date : " + c.getString ( 4 ) + "      Matricule :" + c.getString ( 0 ),   "pièces : " + c.getString ( 1 ) + "         montant : " + c.getString ( 5 ),    "référence facture : " + c.getString ( 3 ) );
+                            class_reparation list = new class_reparation ( "DATE : " + c.getString ( 4 ) + "       MATRICULE :" + c.getString ( 0 ),   "MONTANT : " + c.getString ( 5 ) + "          RÉFÉRENCE FACTURE : " + c.getString ( 3 ),    "PIÉCES : " + c.getString ( 1 ) );
                             arrayList1.add ( list );
                             Toast.makeText(getActivity(), date3+"", Toast.LENGTH_SHORT).show();
                         }

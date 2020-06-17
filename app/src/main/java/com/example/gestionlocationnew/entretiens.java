@@ -195,6 +195,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
 
                             MyDyalog_ajou.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                             MyDyalog_ajou.show();
+                           Toast.makeText(entretiens.this, "Pour accéder à cette page, vous devez au moins remplir 1 réparation", Toast.LENGTH_LONG).show();
 
 
                         } else {
@@ -341,8 +342,12 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                                 Intent I = new Intent(entretiens.this, com.example.gestionlocationnew.Ajoute_vidange.class);
                                 Bundle B = new Bundle();
                                 B.putString("Matricule", Matricule.getText().toString());
+                                B.putString("nom", Nom);
+                                B.putString("prenom", Prenom);
+                                B.putString("role", role);
                                 I.putExtras(B);
                                 startActivity(I);
+                                finish();
                             }
                         });
 

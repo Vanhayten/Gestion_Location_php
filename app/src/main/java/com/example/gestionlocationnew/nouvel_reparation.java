@@ -90,6 +90,14 @@ Button b1;
                 boolean b = dp.insert_reparation(t1.getText().toString(), t2.getText().toString(), t3.getText().toString(), t4.getText().toString(), t5.getText().toString(), Integer.parseInt(t6.getText().toString()));
                  if(b) {
                      Toast.makeText(getActivity(), "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+
+                     t1.setText("");
+                     t2.setText("");
+                     t3.setText("");
+                     t4.setText("");
+                     t5.setText("");
+                     t6.setText("");
+
                  }else{
                     Toast.makeText(getActivity(),"l'enregistrement ne pas effectuer",Toast.LENGTH_SHORT).show();
                 }

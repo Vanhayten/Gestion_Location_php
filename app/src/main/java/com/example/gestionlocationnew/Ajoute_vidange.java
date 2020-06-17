@@ -3,6 +3,7 @@ package com.example.gestionlocationnew;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ public class Ajoute_vidange extends AppCompatActivity {
     EditText Date;
     CheckBox ch1,ch2,ch3;
     Bundle b;
+
+    String Nom,Prenom,role;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +46,9 @@ public class Ajoute_vidange extends AppCompatActivity {
 
         b = getIntent().getExtras();
         matr = b.getString ( "Matricule" );
+        Nom = b.getString ( "nom" );
+        Prenom = b.getString ( "prenom" );
+        role = b.getString ( "role" );
         matricule.setText(matr);
 
     }
@@ -62,7 +68,16 @@ public class Ajoute_vidange extends AppCompatActivity {
         boolean res = db.insert_vidange(matr , Date.getText().toString() , Integer.parseInt(kilomaitrage.getText().toString()) , choix , Integer.parseInt(type_spinner.getSelectedItem().toString()));
         if(res){
             Toast.makeText(this,"Bien Ajoute",Toast.LENGTH_LONG).show();
+
+            Intent I = new Intent(Ajoute_vidange.this, entretiens.class);
+            Bundle B = new Bundle();
+            B.putString("nom", Nom);
+            B.putString("prenom", Prenom);
+            B.putString("role", role);
+            I.putExtras(B);
+            startActivity(I);
             finish();
+
         }else{
             Toast.makeText(this,"erreur d'ajoute",Toast.LENGTH_LONG).show();
         }
