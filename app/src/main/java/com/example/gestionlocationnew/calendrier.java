@@ -46,6 +46,10 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendrier);
 
+
+        customCalendarView = findViewById(R.id.custom_calendar_view);
+
+
         /**
          * calander
          */
