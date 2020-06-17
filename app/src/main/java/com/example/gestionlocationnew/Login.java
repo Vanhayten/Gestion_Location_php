@@ -26,7 +26,7 @@ public class Login extends AppCompatActivity {
         login =(EditText)findViewById(R.id.editText6);
         Pass =(EditText)findViewById(R.id.editText7);
 
-        boolean result = db.insert_emp("vanhayten","vanhayten","Ayoub","chaib","Admin");
+        boolean result = db.insert_emp("root","toor","Ayoub","chaib","Admin");
 
     }
 

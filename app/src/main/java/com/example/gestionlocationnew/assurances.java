@@ -48,6 +48,8 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
     Dialog myDyalog;
     TextView matr;
 
+    Dialog dialog_asurance_dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,7 +188,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                                  * dialog detaile assurance
                                  */
 
-                                final Dialog dialog_asurance_dialog;
+
                                 dialog_asurance_dialog = new Dialog(assurances.this);
                                 dialog_asurance_dialog.setContentView(R.layout.dialog_detaille_asurance);
                                     TextView matr1,date1,date2,companie,prim;
@@ -242,8 +244,15 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                                 Intent I = new Intent(assurances.this, com.example.gestionlocationnew.ajouter_assurance.class);
                                 Bundle B= new Bundle();
                                 B.putString("matricule",matr.getText().toString());
+                                        //----------------
+                                B.putString("nom",Nom);
+                                B.putString("prenom",Prenom);
+                                B.putString("role",role);
                                 I.putExtras(B);
                                 startActivity(I);
+                                finish();
+
+
                             }
                         });
 

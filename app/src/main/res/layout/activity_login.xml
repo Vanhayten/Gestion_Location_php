@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="57.7dp"
-                    android:text="LOGIN"
+                    android:text="s'identifier"
                     android:textColor="#030303"
                     android:textSize="31.3sp" />
 
@@ -50,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="35dp"
-                    android:text="Email or Username"
+                    android:text="Nom d'utilisateur"
                     android:textColor="#c2c2c2"
                     android:textSize="13.3sp" />
 
@@ -76,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30.3dp"
-                    android:text="Password"
+                    android:text="Mot de passe"
                     android:textColor="#c2c2c2"
                     android:textSize="13.3sp" />
 
@@ -111,7 +111,7 @@
                     android:layout_gravity="right"
                     android:layout_marginTop="17.3dp"
                     android:layout_marginRight="44.3dp"
-                    android:text="Forgot Password?"
+                    android:text="Mot de passe oublié?"
                     android:textColor="#d5d5d5"
                     android:textSize="12.3sp" />
 
