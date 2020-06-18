@@ -3,10 +3,12 @@ package com.example.gestionlocationnew;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.CalendarContract;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -119,6 +121,10 @@ public class CustomCalendarView extends LinearLayout {
                 AddEvent.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+
+
+
                         SaveEvent(EventName.getText().toString(),EventTime.getText().toString(),date,month,year);
                         SetUpCalendar();
                         alertDialog.dismiss();
@@ -136,7 +142,7 @@ public class CustomCalendarView extends LinearLayout {
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String date = eventDateFormate.format(dates.get(position));
+                final String date = eventDateFormate.format(dates.get(position));
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setCancelable(true);
@@ -149,10 +155,15 @@ public class CustomCalendarView extends LinearLayout {
                         ,CollectEventByDate(date));
                 recyclerView.setAdapter(eventRecyclerAdapter);
                 eventRecyclerAdapter.notifyDataSetChanged();
-
                 builder.setView(showView);
                 alertDialog =builder.create();
                 alertDialog.show();
+                alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        SetUpCalendar();
+                    }
+                });
 
                 return true;
             }
@@ -205,6 +216,19 @@ public class CustomCalendarView extends LinearLayout {
         Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
 
     }
+
+    private void DeleteEvent(String event,String time,String date){
+
+        dbOpenHelper = new DBOpenHelper(context);
+        SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
+        dbOpenHelper.deleteEvent(event,date,time,database);
+        dbOpenHelper.close();
+        Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
+
+    }
+
+
+
 
 
 
