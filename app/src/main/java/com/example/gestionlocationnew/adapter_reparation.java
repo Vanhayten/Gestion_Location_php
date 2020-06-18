@@ -49,7 +49,7 @@ public class adapter_reparation extends BaseAdapter {
         public TextView text2;
         public TextView text3;
     }
-
+//yy
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         adapter_reparation.ViewHolder holder;
