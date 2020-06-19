@@ -133,7 +133,7 @@ public class ajouter_assurance extends AppCompatActivity {
 
         dbOpenHelper = new DBOpenHelper(this);
         SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
-        dbOpenHelper.SaveEvent(event,time,date,month,year,database);
+        dbOpenHelper.SaveEvent(event,time,date,month,year,"on",database);
         dbOpenHelper.close();
         Toast.makeText(this, "Event Saved", Toast.LENGTH_SHORT).show();
 
