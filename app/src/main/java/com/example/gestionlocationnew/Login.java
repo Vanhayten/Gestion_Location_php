@@ -26,27 +26,13 @@ public class Login extends AppCompatActivity {
         login =(EditText)findViewById(R.id.editText6);
         Pass =(EditText)findViewById(R.id.editText7);
 
-        boolean result = db.insert_emp("root","toor","Ayoub","chaib","Admin");
+        boolean result = db.insert_emp("1111","1111","Ayoub","chaib","Admin");
 
     }
 
 
     public void connection(View view) {
-        String str = "nod ta9ra 3la rasek";
-        NotificationCompat.Builder builder = new NotificationCompat.Builder ( Login.this
-        ).setSmallIcon ( R.drawable.ic_message_black_24dp )
-                .setContentTitle ( "l9raya 9rbat" )
-                .setContentText ( str )
-                .setAutoCancel ( true );
-        Intent intent=new Intent(Login.this, vehicules.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("message",str);
-        PendingIntent pendingIntent=PendingIntent.getActivity(Login.this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(pendingIntent);
-        NotificationManager notificationManager=(NotificationManager)getSystemService(
-                Context.NOTIFICATION_SERVICE
-        );
-        notificationManager.notify(0,builder.build());
+
         Cursor c = db.Get_connection();
         String str1,str2;
         while (c.moveToNext()) {
