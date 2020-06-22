@@ -1,9 +1,11 @@
-package com.example.gestionlocationnew;
+/*package com.example.gestionlocationnew;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -76,3 +78,74 @@ public class adapter_reparation extends BaseAdapter {
 
         return convertView;
 }}
+
+
+
+/**
+ *
+ * test adapter
+ */
+
+
+package com.example.gestionlocationnew;
+        import android.app.Activity;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.ArrayAdapter;
+        import android.widget.ImageView;
+        import android.widget.LinearLayout;
+        import android.widget.TextView;
+        import android.widget.Toast;
+
+        import androidx.core.content.ContextCompat;
+
+        import com.example.gestionlocationnew.R;
+        import com.example.gestionlocationnew.list_client;
+
+        import java.util.ArrayList;
+
+public class adapter_reparation extends ArrayAdapter<class_reparation> {
+
+    private int mColorResourceId;
+
+
+    private static final String LOG_TAG = adapter_reparation.class.getSimpleName();
+
+    public adapter_reparation(Activity context, ArrayList<class_reparation> resource) {
+        super(context, 0, resource);
+
+    }
+
+
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // Check if the existing view is being reused, otherwise inflate the view
+        View listItemView = convertView;
+        if(listItemView == null) {
+            listItemView = LayoutInflater.from(getContext()).inflate(
+                    R.layout.adapter_liste_reparation, parent, false);
+        }
+
+
+        final class_reparation currentAndroidFlavor = getItem(position);
+
+
+
+        TextView str1TextView = (TextView) listItemView.findViewById(R.id.text1);
+
+        str1TextView.setText(currentAndroidFlavor.getStr1());
+
+
+        TextView str2TextView = (TextView) listItemView.findViewById(R.id.text2);
+
+        str2TextView.setText(currentAndroidFlavor.getStr2());
+        TextView str3TextView = (TextView) listItemView.findViewById(R.id.text3);
+
+        str3TextView.setText(currentAndroidFlavor.getStr3());
+
+        return listItemView;
+    }
+
+
+}
+
