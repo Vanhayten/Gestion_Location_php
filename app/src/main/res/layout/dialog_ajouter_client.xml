@@ -6,6 +6,7 @@
     android:background="@color/colorPrimaryDark"
     android:padding="5dp"
     android:orientation="vertical"
+    android:scrollbars="horizontal"
     android:layout_gravity="center">
 
 
@@ -24,67 +25,130 @@
             android:layout_marginLeft="60dp">
 
             <EditText
+                android:id="@+id/text_nom1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:hint="Nom Client"
+                android:textColor="@color/NAVwhite"
+                android:textColorHint="@color/NAVwhite"
+                android:textSize="18dp" />
+
+            <EditText
                 android:id="@+id/text_prenom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
                 android:enabled="false"
+                android:hint="Prenom"
+                android:textColor="@color/NAVwhite"
+                android:textColorHint="@color/NAVwhite"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/text_cin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:hint="Cin ou Num passport"
+                android:textColor="@color/NAVwhite"
+                android:textColorHint="@color/NAVwhite"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/text_tel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:hint="Telephone"
+                android:textColor="@color/NAVwhite"
+                android:textColorHint="@color/NAVwhite"
+                android:textSize="18dp" />
+            <EditText
+                android:id="@+id/text_adr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:hint="Adresse "
+                android:textColor="@color/NAVwhite"
+                android:textColorHint="@color/NAVwhite"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/text_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:hint="Activité"
+                android:textColor="@color/NAVwhite"
+                android:textColorHint="@color/NAVwhite"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/text_dateDebut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:hint="Date Debut"
+                android:textColor="@color/NAVwhite"
+                android:textColorHint="@color/NAVwhite"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/text_dateFin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:hint="Date Fin"
+                android:textColor="@color/NAVwhite"
+                android:textColorHint="@color/NAVwhite"
+                android:textSize="18dp" />
+            <EditText
+                android:id="@+id/text_nbJour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:hint="Nobre jour"
+                android:textColor="@color/NAVwhite"
+                android:textColorHint="@color/NAVwhite"
+                android:textSize="18dp" />
+            <EditText
+                android:id="@+id/text_Prix"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:hint="Prix"
+                android:textColor="@color/NAVwhite"
+                android:textColorHint="@color/NAVwhite"
+                android:textSize="18dp" />
+
+            <Spinner
+                android:id="@+id/text_typePayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Type Payment"
+                android:textColorHint="@color/NAVwhite"
+                android:textColor="@color/NAVwhite"
+                android:layout_marginTop="5sp"
+                android:textSize="18dp" />
+            <Spinner
+                android:id="@+id/text_matriculeChoisi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="Matricule"
-                android:textColor="@color/NAVwhite"
-                android:textColorHint="@color/NAVwhite"
-                android:textSize="18dp" />
-            <EditText
-                android:id="@+id/text_piece"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                android:hint="Pieces changes"
-                android:textColor="@color/NAVwhite"
-                android:textColorHint="@color/NAVwhite"
-                android:textSize="18dp" />
-
-
-            <EditText
-                android:id="@+id/text_main"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Main douvre"
                 android:textColorHint="@color/NAVwhite"
                 android:textColor="@color/NAVwhite"
                 android:layout_marginTop="5sp"
-                android:textSize="18dp"
-                />
-            <EditText
-                android:id="@+id/text_ref_facture"
+                android:textSize="18dp" />
+            <TextView
+                android:id="@+id/les_matricules"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ref facture"
                 android:textColorHint="@color/NAVwhite"
                 android:textColor="@color/NAVwhite"
                 android:layout_marginTop="5sp"
                 android:textSize="18dp" />
 
-            <EditText
-                android:id="@+id/text_date_reparation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                android:hint="Date reparation"
-                android:inputType="date"
-                android:textColor="@color/NAVwhite"
-                android:textColorHint="@color/NAVwhite"
-                android:textSize="18dp" />
-
-            <EditText
-                android:id="@+id/text_Montant"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                android:hint="Montant reparation"
-                android:inputType="number"
-                android:textColor="@color/NAVwhite"
-                android:textColorHint="@color/NAVwhite"
-                android:textSize="18dp" />
 
         </LinearLayout>
         <LinearLayout
@@ -96,7 +160,7 @@
             android:layout_marginTop="20dp"
             >
             <Button
-                android:id="@+id/btn_modifier1"
+                android:id="@+id/btn_ajouterClient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Confirmer"

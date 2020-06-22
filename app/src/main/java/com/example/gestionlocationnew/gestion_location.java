@@ -27,6 +27,14 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_cin = "cin";
     private static final String Col_tel = "tel";
     private static final String Col_activité = "activité";
+    private static final String Col_date_début  = "date_début ";
+    private static final String Col_date_fin  = "date_fin ";
+    private static final String Col_nbJour = "Nombre_jour";
+    private static final String Col_prix_location = "prix";
+    private static final String Col_Type_Payement = "Type_Payement";
+    private static final String Col_vehicule = "vehicule";
+
+
 
     //declaration table véhicules
     private static final String Table3 = "véhicules";
@@ -106,6 +114,11 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_date_visite = "date_visite";
     private static final String Col_date_prch_visite  = "prch_visite";
 
+    //declaration table Vehucile_chosi
+    private static final String Table12 = "vehicule_choisi";
+    private static final String Col_id  = "id";
+    private static final String Col_idRecette = "id_Recette";
+    private static final String Col_matricule  = "Matricule";
 
 
 
@@ -117,7 +130,7 @@ public class gestion_location extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String table1 = "Create table "+Table1+" ("+Col_login+" text primary key ,"+Col_Mdp+" text,"+Col_Nom+" text,"+Col_Prenom+" text,"+Col_Role+" text)";
-        String table2 = "Create table "+Table2+" ("+Col_nom+" text  ,"+Col_prenom+" text,"+Col_adresse+" text,"+Col_cin+" text primary key,"+Col_tel+" text,"+Col_activité+" text)";
+        String table2 = "Create table "+Table2+" ("+Col_nom+" text  ,"+Col_prenom+" text,"+Col_adresse+" text,"+Col_cin+" text primary key,"+Col_tel+" text,"+Col_activité+" text,"+Col_date_début+" Date,"+Col_date_fin+" Date,"+Col_nbJour+" Integer,"+Col_prix_location+" Integer,"+Col_Type_Payement+" text,"+Col_vehicule+" text)";
         String table3 = "Create table "+Table3+" ("+Col_Marque_Vihicule+" text ,"+Col_DateCirculation+" date ,"+Col_immatriculation+" text primary key,"+Col_MarqueCombustion+" text,"+Col_ValeurDentrée+" Integer,"+Col_Date_Effet_Assurance+" date,"+Col_Date_Echeance+" date,"+Col_Couleur_Vehicule+" text)";
         String table4 = "Create table "+Table4+" ("+Col_IdRecette+" text primary key ,"+Col_NbJour+" integer,"+Col_prix+" integer,"+Col_DateEncaissement+" date,"+Col_MoyenPayment+" integer,"+Col_immatriculationR+" text)";
         String table5 = "Create table "+Table5+" ("+Col_IdCharge+" Integer PRIMARY KEY AUTOINCREMENT,"+Col_Date+" date,"+Col_Montant+" integer,"+Col_Payment+" text,"+Col_designation+" text)";
@@ -127,6 +140,7 @@ public class gestion_location extends SQLiteOpenHelper {
         String table9 = "Create table "+Table9+" ("+Col_id_sinistre+" Integer PRIMARY KEY AUTOINCREMENT , "+Col_imatriculation_sinistre+" text,"+Col_date_sinistre+" date,"+Col_ganre_daccident+" TEXT,"+Col_montant_reparation_sinistre+" Integer,"+Col_responsabilite+" Text,"+Col_MONTANT_PRIS_EN_CHARGE+" Integer)";
         String table10 = "Create table "+Table10+" ("+Col_imatriculation_vidange+" text , "+Col_date_vidange+" date , "+Col_kilomaitrage+" integer , "+Col_filtre+" TEXT , "+Col_type_vidage+" Integer)";
         String table11 = "Create table "+Table11+" ("+Col_imatriculation_visite+" text , "+Col_date_visite+" date , "+Col_date_prch_visite+" date)";
+        String table12 = "Create table "+Table12+" ("+Col_id+"Integer PRIMARY KEY AUTOINCREMENT , "+Col_idRecette+" Text , "+Col_matricule+" Text)";
 
 
 
@@ -141,6 +155,7 @@ public class gestion_location extends SQLiteOpenHelper {
         db.execSQL(table9);
         db.execSQL(table10);
         db.execSQL(table11);
+        db.execSQL(table12);
     }
 
     @Override
@@ -156,9 +171,9 @@ public class gestion_location extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+Table9);
         db.execSQL("DROP TABLE IF EXISTS "+Table10);
         db.execSQL("DROP TABLE IF EXISTS "+Table11);
+        db.execSQL("DROP TABLE IF EXISTS "+Table12);
         onCreate(db);
     }
-
     public boolean insert_emp(String Login ,String Pass,String nom,String prenom,String role){
         boolean res=false;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -178,7 +193,7 @@ public class gestion_location extends SQLiteOpenHelper {
         return res;
     }
 //insert client
-public boolean insert_client(String nom ,String prenom,String adr,String cin,String tel,String activi){
+public boolean insert_client(String nom , String prenom, String adr, String cin, String tel, String activi, String d1, String d2, int nb, int prix, String type, String vehiculeChosi){
     boolean res=false;
     SQLiteDatabase db = this.getWritableDatabase();
     ContentValues tab_ch = new ContentValues();
@@ -188,6 +203,12 @@ public boolean insert_client(String nom ,String prenom,String adr,String cin,Str
     tab_ch.put(Col_cin,cin);
     tab_ch.put(Col_tel,tel);
     tab_ch.put(Col_activité,activi);
+    tab_ch.put(Col_date_début,d1);
+    tab_ch.put(Col_date_fin,d2);
+    tab_ch.put(Col_nbJour,nb);
+    tab_ch.put(Col_prix_location,prix);
+    tab_ch.put(Col_Type_Payement,type);
+    tab_ch.put(Col_vehicule,vehiculeChosi);
     long result = db.insert(Table2,null,tab_ch);
     if(result == -1){
         res=false;

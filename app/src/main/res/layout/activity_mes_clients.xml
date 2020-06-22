@@ -85,6 +85,7 @@
                 android:layout_height="wrap_content">
 
                 <Button
+                    android:id="@+id/ajouterClient"
                     android:layout_width="102dp"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -93,8 +94,9 @@
                     android:drawableStart="@drawable/ic_add_black_24dp"
                     android:drawableLeft="@drawable/ic_add_black_24dp"
                     android:drawablePadding="4dp"
-                    android:text="Ajouter"
 
+                    android:onClick="ajouter"
+                    android:text="Ajouter"
                     android:textColor="@color/NAVwhite_theme50">
 
                 </Button>

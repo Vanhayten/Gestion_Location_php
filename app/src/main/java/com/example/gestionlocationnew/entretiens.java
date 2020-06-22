@@ -190,7 +190,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                             MyDyalog_ajou = new Dialog(entretiens.this);
                             MyDyalog_ajou.setContentView(R.layout.dialog_ajoute_reparation);
                             final EditText text1, text2, text3, text4, text5, text6;
-                            text1 = (EditText) MyDyalog_ajou.findViewById(R.id.text_matricule1);
+                            text1 = (EditText) MyDyalog_ajou.findViewById(R.id.text_prenom);
                             text2 = (EditText) MyDyalog_ajou.findViewById(R.id.text_piece);
                             text3 = (EditText) MyDyalog_ajou.findViewById(R.id.text_main);
                             text4 = (EditText) MyDyalog_ajou.findViewById(R.id.text_ref_facture);
@@ -462,7 +462,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                         final EditText matricule, date1, Date2;
                         Button confirme;
 
-                        matricule = (EditText) dialog_ajoute_visite.findViewById(R.id.text_matricule1);
+                        matricule = (EditText) dialog_ajoute_visite.findViewById(R.id.text_prenom);
                         date1 = (EditText) dialog_ajoute_visite.findViewById(R.id.text_date);
                         Date2 = (EditText) dialog_ajoute_visite.findViewById(R.id.text_date_proch);
                         confirme = (Button) dialog_ajoute_visite.findViewById(R.id.btn_modifier1);

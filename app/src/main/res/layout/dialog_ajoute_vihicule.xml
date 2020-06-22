@@ -34,7 +34,7 @@
             android:textSize="18dp" />
 
         <EditText
-            android:id="@+id/text_matricule1"
+            android:id="@+id/text_prenom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5sp"
@@ -44,7 +44,7 @@
             android:textColorHint="@color/NAVwhite"
             android:textSize="18dp" />
         <EditText
-            android:id="@+id/text_datecirulation1"
+            android:id="@+id/text_cin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Date Circulation"
@@ -64,7 +64,7 @@
             android:textSize="18dp" />
 
         <EditText
-            android:id="@+id/text_valeur_entrer1"
+            android:id="@+id/text_tel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5sp"
@@ -73,7 +73,7 @@
             android:textColorHint="@color/NAVwhite"
             android:textSize="18dp" />
         <EditText
-            android:id="@+id/text_dateeffet1"
+            android:id="@+id/text_activity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Date Effet Assurance"
@@ -82,7 +82,7 @@
             android:layout_marginTop="5sp"
             android:textSize="18dp" />
         <EditText
-            android:id="@+id/text_dateechance1"
+            android:id="@+id/text_dateDebut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Date Echeance"
@@ -92,7 +92,7 @@
             android:textSize="18dp"
             />
         <EditText
-            android:id="@+id/text_couleur1"
+            android:id="@+id/text_dateFin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Couleur Vehicule"

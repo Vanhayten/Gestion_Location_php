@@ -2,7 +2,6 @@ package com.example.gestionlocationnew;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,7 +11,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -194,13 +192,13 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                         AjouteDialog= new Dialog(vehicules.this);
                         AjouteDialog.setContentView(R.layout.dialog_ajoute_vihicule);
                         text11 = (EditText)AjouteDialog.findViewById(R.id.text_nom1);
-                        text22 = (EditText)AjouteDialog.findViewById(R.id.text_matricule1);
-                        text33 = (EditText)AjouteDialog.findViewById(R.id.text_datecirulation1);
+                        text22 = (EditText)AjouteDialog.findViewById(R.id.text_prenom);
+                        text33 = (EditText)AjouteDialog.findViewById(R.id.text_cin);
                         text44 = (Spinner)AjouteDialog.findViewById(R.id.text_marqueCombision1);
-                        text55 = (EditText)AjouteDialog.findViewById(R.id.text_valeur_entrer1);
-                        text66 = (EditText)AjouteDialog.findViewById(R.id.text_dateeffet1);
-                        text77 = (EditText)AjouteDialog.findViewById(R.id.text_dateechance1);
-                        text88 = (EditText)AjouteDialog.findViewById(R.id.text_couleur1);
+                        text55 = (EditText)AjouteDialog.findViewById(R.id.text_tel);
+                        text66 = (EditText)AjouteDialog.findViewById(R.id.text_activity);
+                        text77 = (EditText)AjouteDialog.findViewById(R.id.text_dateDebut);
+                        text88 = (EditText)AjouteDialog.findViewById(R.id.text_dateFin);
                         Confirmer =(Button)AjouteDialog.findViewById(R.id.btn_modifier1);
 
                         ArrayList<String> arrayList = new ArrayList<String>();

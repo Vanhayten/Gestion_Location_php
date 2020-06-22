@@ -6,16 +6,20 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.icu.text.Transliterator;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -23,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.bumptech.glide.util.ByteBufferUtil;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -39,10 +44,8 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
     PageAdapter_client listrep;
     gestion_location db;
     TextView Cin;
-    //Dialog myDyalog;
-   // Dialog AjouteDialog;
     EditText t1;
-
+    Spinner sp ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,16 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+        //-------------------------------------------client
+      sp= (Spinner) findViewById(R.id.text_typePayment);
+        ArrayList<String> arr  = new ArrayList<String>();
+        arr.add("Chéque");
+        arr.add("Virement");
+        arr.add("Espèce");
+        arr.add("Crédit");
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,arr);
+        sp.setAdapter(arrayAdapter);
+
         //-------------------------
 
 
@@ -75,7 +88,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         //charge liste view par les clients
 
         db= new gestion_location(this);
-        boolean h=db.insert_client("hadini","mohamed","fes","cn33820","06514665","etudiant");
+      //  boolean h=db.insert_client("hadini","mohamed","fes","cn33820","06514665","etudiant");
 
 
         ls=(ListView)findViewById(R.id.listClient);
@@ -241,4 +254,45 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         return false;
     }
 
+
+    public void ajouter(View view) {
+        final Dialog MyDyalog_ajou;
+        MyDyalog_ajou = new Dialog(mes_clients.this);
+        MyDyalog_ajou.setContentView(R.layout.dialog_ajouter_client);
+        final EditText text1, text2, text3, text4, text5, text6, text7, text8, text9,text13;
+        final Spinner text10,text11;
+        final TextView text12;
+        text1 = (EditText) MyDyalog_ajou.findViewById(R.id.text_nom1);
+        text2 = (EditText) MyDyalog_ajou.findViewById(R.id.text_prenom);
+        text3 = (EditText) MyDyalog_ajou.findViewById(R.id.text_cin);
+        text4 = (EditText) MyDyalog_ajou.findViewById(R.id.text_tel);
+        text5 = (EditText) MyDyalog_ajou.findViewById(R.id.text_activity);
+        text6 = (EditText) MyDyalog_ajou.findViewById(R.id.text_dateDebut);
+        text7 = (EditText) MyDyalog_ajou.findViewById(R.id.text_dateFin);
+        text8 = (EditText) MyDyalog_ajou.findViewById(R.id.text_nbJour);
+        text9 = (EditText) MyDyalog_ajou.findViewById(R.id.text_Prix);
+        text13 = (EditText) MyDyalog_ajou.findViewById(R.id.text_adr);
+        text10 = (Spinner) MyDyalog_ajou.findViewById(R.id.text_typePayment);
+        text11 = (Spinner) MyDyalog_ajou.findViewById(R.id.text_matriculeChoisi);
+        text12 = (TextView) MyDyalog_ajou.findViewById(R.id.les_matricules);
+        Button btn_ajoute;
+        btn_ajoute = (Button) MyDyalog_ajou.findViewById(R.id.btn_ajouterClient);
+        btn_ajoute.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                boolean b = db.insert_client(text1.getText().toString(),text2.getText().toString(),text13.getText().toString(),text3.getText().toString(),text4.getText().toString(),text5.getText().toString(),text6.getText().toString(),text7.getText().toString(),Integer.parseInt( text8.getText().toString()) ,Integer.parseInt( text9.getText().toString()),text10.getSelectedItem().toString(),text12.getText().toString());
+                if (b) {
+                    Toast.makeText(mes_clients.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+                    MyDyalog_ajou.dismiss();
+                } else {
+                    Toast.makeText(mes_clients.this, "l'enregistrement ne pas effectuer", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+    });
+        MyDyalog_ajou.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        MyDyalog_ajou.show();
+    }
 }
