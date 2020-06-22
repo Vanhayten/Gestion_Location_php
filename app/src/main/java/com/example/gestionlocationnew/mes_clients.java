@@ -45,7 +45,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
     gestion_location db;
     TextView Cin;
     EditText t1;
-    Spinner sp ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,14 +62,6 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         //-------------------------------------------client
-      sp= (Spinner) findViewById(R.id.text_typePayment);
-        ArrayList<String> arr  = new ArrayList<String>();
-        arr.add("Chéque");
-        arr.add("Virement");
-        arr.add("Espèce");
-        arr.add("Crédit");
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,arr);
-        sp.setAdapter(arrayAdapter);
 
         //-------------------------
 
@@ -262,6 +254,19 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         final EditText text1, text2, text3, text4, text5, text6, text7, text8, text9,text13;
         final Spinner text10,text11;
         final TextView text12;
+        Spinner sp ;
+
+        sp= (Spinner) MyDyalog_ajou.findViewById(R.id.text_typePayment);
+        ArrayList<String> arr  = new ArrayList<String>();
+        arr.add("Chéque");
+        arr.add("Virement");
+        arr.add("Espèce");
+        arr.add("Crédit");
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,arr);
+        sp.setAdapter(arrayAdapter);
+
+
+
         text1 = (EditText) MyDyalog_ajou.findViewById(R.id.text_nom1);
         text2 = (EditText) MyDyalog_ajou.findViewById(R.id.text_prenom);
         text3 = (EditText) MyDyalog_ajou.findViewById(R.id.text_cin);

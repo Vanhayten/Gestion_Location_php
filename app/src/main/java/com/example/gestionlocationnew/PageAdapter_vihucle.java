@@ -1,115 +1,94 @@
 package com.example.gestionlocationnew;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import java.util.ArrayList;
 
-public class PageAdapter_vihucle extends BaseAdapter
+
+public class PageAdapter_vihucle extends ArrayAdapter<list_vihcule>
 {
-    private Context context;
-    private ArrayList<list_vihcule> foodModelArrayList;
-public String col;
-    public PageAdapter_vihucle(Context context, ArrayList<list_vihcule> foodModelArrayList) {
-        this.context = context;
-        this.foodModelArrayList = foodModelArrayList;
-    }
+    private int mColorResourceId;
+    public String col;
 
-    @Override
-    public int getCount() {
-        return foodModelArrayList.size();
-    }
-    public int getViewTypeCount() {
-        return getCount();
-    }
-    @Override
-    public int getItemViewType(int position) {
+    private static final String LOG_TAG = PageAdapter_client.class.getSimpleName();
 
-        return foodModelArrayList.size();
-    }
-    @Override
-    public Object getItem(int position) {
-        return foodModelArrayList.get(position);
-    }
+    public PageAdapter_vihucle(Activity context, ArrayList<list_vihcule> resource) {
+        super(context, 0, resource);
 
-    @Override
-    public long getItemId(int position) {
-        int count;
-        if (foodModelArrayList.size() > 0) {
-            count = getCount();
-        } else {
-            count = 1;
-        }
-        return count;
-    }
-    static class ViewHolder{
-        public TextView matr;
-        public TextView color;
-        public TextView marq;
     }
 
 
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-
-        if (convertView == null) {
-            holder = new ViewHolder();
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.vicucule_rows, null, true);
-
-            holder.matr=(TextView)convertView.findViewById(R.id.matrV);
-            holder.marq=(TextView)convertView.findViewById(R.id.marqueV);
-           // holder.color=(TextView)convertView.findViewById(R.id.marqueV);
-
-
-
-
-            convertView.setTag(holder);
-        }else {
-            // the getTag returns the viewHolder object set as a tag to the view
-            holder = (ViewHolder)convertView.getTag();
+        // Check if the existing view is being reused, otherwise inflate the view
+        View listItemView = convertView;
+        if(listItemView == null) {
+            listItemView = LayoutInflater.from(getContext()).inflate(
+                    R.layout.vicucule_rows, parent, false);
         }
 
-        holder.matr.setText(foodModelArrayList.get(position).getMatr());
-        col=foodModelArrayList.get(position).getColor();
-      /*  if(col.equals("Vert")){  holder.matr.setTextColor(Color.GREEN);}
-        if(col.equals("Rouge")){  holder.matr.setTextColor(Color.RED);}*/
+
+        final list_vihcule currentAndroidFlavor = getItem(position);
+
+
+
+        TextView matrTextView = (TextView) listItemView.findViewById(R.id.matrV);
+
+        matrTextView.setText(currentAndroidFlavor.getMatr());
+
+
+        TextView marqueTextView = (TextView) listItemView.findViewById(R.id.marqueV);
+
+        marqueTextView.setText(currentAndroidFlavor.getMarque());
+
+        /*
+        col=currentAndroidFlavor.getColor();
         switch (col){
             case "Rouge":
-               holder.marq.setTextColor(Color.RED);
+                marqueTextView.setTextColor(Color.RED);
                 break;
             case "Vert":
-                holder.marq.setTextColor(Color.GREEN);
+                marqueTextView.setTextColor(Color.GREEN);
                 break;
             case "Noir":
-                holder.marq.setTextColor(Color.BLACK);
+                marqueTextView.setTextColor(Color.BLACK);
                 break;
             case "Jaune":
-                holder.marq.setTextColor(Color.YELLOW);
+                marqueTextView.setTextColor(Color.YELLOW);
                 break;
             case "Gris":
-                holder.marq.setTextColor(Color.GRAY);
+                marqueTextView.setTextColor(Color.GRAY);
                 break;
             case "Bleu":
-                holder.marq.setTextColor(Color.BLUE);
+                marqueTextView.setTextColor(Color.BLUE);
                 break;
             case "Blanc":
-                holder.marq.setTextColor(Color.WHITE);
+                marqueTextView.setTextColor(Color.WHITE);
                 break;
 
-        }
+        }*/
 
-        holder.marq.setText(foodModelArrayList.get(position).getMarque());
-       //holder.color.setText(foodModelArrayList.get(position).getColor());
 
-        return convertView;
+        int color = ContextCompat.getColor(getContext(), currentAndroidFlavor.getColor());
+        marqueTextView.setTextColor(color);
+
+
+
+
+        return listItemView;
     }
-    }
+
+
+}
+
+
 

@@ -12,16 +12,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.rtugeek.android.colorseekbar.ColorSeekBar;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 public class Ajoute_vihicule extends AppCompatActivity {
-EditText text1,text2,text3,text4,text5,text6,text7;
+EditText text1,text2,text3,text4,text5,text6;
+    ColorSeekBar text7;
 Spinner spinner;
 gestion_location DB;
 String Nom,Prenom,role;
+    int intColot;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +60,18 @@ String Nom,Prenom,role;
         text4 = (EditText)findViewById(R.id.vihicule_Valeur_entrer);
         text5 = (EditText)findViewById(R.id.vihicule_Date_effet);
         text6 = (EditText)findViewById(R.id.vihicule_Date_echeance);
-        text7 = (EditText)findViewById(R.id.vihicule_Couleur);
-        Boolean result = DB.insert_vehiucle(text1.getText().toString(),text2.getText().toString(),text3.getText().toString(),spinner.getSelectedItem().toString(), Integer.parseInt(text4.getText().toString()),text5.getText().toString(),text6.getText().toString(),text7.getText().toString());
+        text7 = findViewById(R.id.vihicule_Couleur);
+
+        text7.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
+            @Override
+            public void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color) {
+                intColot = color;
+            }
+        });
+
+
+
+        Boolean result = DB.insert_vehiucle(text1.getText().toString(),text2.getText().toString(),text3.getText().toString(),spinner.getSelectedItem().toString(), Integer.parseInt(text4.getText().toString()),text5.getText().toString(),text6.getText().toString(),intColot);
         if(result){
             Toast.makeText(this, "L'ajoute Effectué", Toast.LENGTH_SHORT).show();
             Intent I = new Intent(this,vehicules.class);

@@ -1,16 +1,16 @@
 package com.example.gestionlocationnew;
 
 public class list_vihcule {
-    private String color;
+    private int color;
     private String matr;
     private  String marque;
 
-    public String getColor() {
+    public int getColor() {
         return color;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setColor(int Color) {
+        this.color = Color;
     }
 
     public String getMatr() {
@@ -34,9 +34,10 @@ public class list_vihcule {
         this.marque = marque;
     }*/
 
-    public list_vihcule( String matr, String marque,String color) {
+    public list_vihcule( String matr, String marque,int color) {
         this.color = color;
         this.matr = matr;
         this.marque = marque;
     }
+
 }

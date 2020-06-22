@@ -101,7 +101,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                     arrayList1= new ArrayList<list_vihcule> ();
                     while (c.moveToNext ())
                     {
-                        list_vihcule list = new list_vihcule (c.getString(0),c.getString(2),c.getString(7));
+                        list_vihcule list = new list_vihcule (c.getString(0),c.getString(2),Integer.parseInt(c.getString(7)));
                         arrayList1.add ( list );
                     }
                     PageAdapter_vihucle adapter_vihucle = new PageAdapter_vihucle (vehicules.this,arrayList1);
@@ -135,9 +135,11 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                    }
                     arrayList = new ArrayList<list_vihcule> ();
                     arrayList.clear ();
-                    while (c1.moveToNext ())
+
+        while (c1.moveToNext ())
                     {
-                        list_vihcule list = new list_vihcule (c1.getString(0),c1.getString(2),c1.getString(7));
+
+                        list_vihcule list = new list_vihcule (c1.getString(0),c1.getString(2),Integer.parseInt(c1.getString(7)));
                         arrayList.add ( list );
                     }
                     listrep = new PageAdapter_vihucle ( this, arrayList );

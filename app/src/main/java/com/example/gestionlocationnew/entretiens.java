@@ -102,7 +102,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                     ls.clearChoices();
                     arrayList1 = new ArrayList<list_vihcule>();
                     while (c.moveToNext()) {
-                        list_vihcule list = new list_vihcule(c.getString(0), c.getString(2), c.getString(7));
+                        list_vihcule list = new list_vihcule(c.getString(0), c.getString(2),Integer.parseInt(c.getString(7)));
                         arrayList1.add(list);
                     }
                     PageAdapter_vihucle adapter_vihucle = new PageAdapter_vihucle(entretiens.this, arrayList1);
@@ -123,8 +123,12 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
         Cursor c = table.rawQuery(requet, null);
         arrayList = new ArrayList<list_vihcule>();
         arrayList.clear();
+
+
+
         while (c.moveToNext()) {
-            list_vihcule list = new list_vihcule(c.getString(0), c.getString(2), c.getString(7));
+
+            list_vihcule list = new list_vihcule(c.getString(0), c.getString(2),Integer.parseInt(c.getString(7)));
             arrayList.add(list);
         }
         listrep = new PageAdapter_vihucle(this, arrayList);
