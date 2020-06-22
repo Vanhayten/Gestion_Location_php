@@ -41,6 +41,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setContentTitle(event)
                 .setContentText(time)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setDeleteIntent(pendingIntent)
                 .setGroup("Group_calendar_view").build();
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);

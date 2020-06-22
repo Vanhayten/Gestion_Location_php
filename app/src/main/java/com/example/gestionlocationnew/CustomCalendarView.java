@@ -222,7 +222,13 @@ public class CustomCalendarView extends LinearLayout {
         return code;
     }
 
-
+    /**
+     *
+     * @param calendar hna katekhtar lwa9t fo9ax tla3 notification
+     * @param event
+     * @param time
+     * @param RequestCOde
+     */
     private void setAlarm(Calendar calendar,String event,String time , int RequestCOde ){
         Intent intent = new Intent(context.getApplicationContext(),AlarmReceiver.class);
         intent.putExtra("event",event);
