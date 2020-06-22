@@ -78,8 +78,8 @@ public class PageAdapter_vihucle extends ArrayAdapter<list_vihcule>
         }*/
 
 
-        int color = ContextCompat.getColor(getContext(), currentAndroidFlavor.getColor());
-        marqueTextView.setTextColor(color);
+       // int color = ContextCompat.getColor(getContext(), currentAndroidFlavor.getColor());
+        marqueTextView.setTextColor(currentAndroidFlavor.getColor());
 
 
 

@@ -464,7 +464,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
             list_vihcule list = new list_vihcule (c.getString(0),c.getString(2),Integer.parseInt(c.getString(7)));
             arrayList.add ( list );
         }
-       listrep = new PageAdapter_vihucle ( this, arrayList );
+       listrep = new PageAdapter_vihucle ( this, arrayList);
         ls.setAdapter ( listrep );
 
 

@@ -179,7 +179,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                       Cursor c;
                         SQLiteDatabase table = db.getReadableDatabase();
                         String requet = "select count(*) from reparation where imatriculation ='" + Matricule.getText().toString() + "' ";
-                      c= table.rawQuery(requet, null);
+                      c = table.rawQuery(requet, null);
 
 
                         /**
