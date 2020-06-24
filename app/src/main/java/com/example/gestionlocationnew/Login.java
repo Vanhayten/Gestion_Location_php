@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -35,6 +36,7 @@ public class Login extends AppCompatActivity {
 
         Cursor c = db.Get_connection();
         String str1,str2;
+        Boolean check = false;
         while (c.moveToNext()) {
 
             if (c.getString(0).equals(login.getText().toString()) && c.getString(1).equals(Pass.getText().toString())) {
@@ -44,11 +46,14 @@ public class Login extends AppCompatActivity {
                 b.putString("prenom",c.getString(3).toString());
                 b.putString("role",c.getString(4).toString());
                 T.putExtras(b);
-
+                check = true;
                 finish();
                 startActivity(T);
 
             }
+        }
+        if(check == false){
+            Toast.makeText(this, "nom d'utilisateur ou mot de passe incorrect", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -58,4 +63,8 @@ public class Login extends AppCompatActivity {
         Intent in=new Intent(this,creer_compte.class);
         startActivity(in);
     }
+
+
+
+
 }

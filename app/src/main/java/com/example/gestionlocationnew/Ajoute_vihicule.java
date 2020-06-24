@@ -32,6 +32,15 @@ String Nom,Prenom,role;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajoute_vihicule);
 
+        Colorseek = findViewById(R.id.vihicule_Couleur);
+        Colorseek.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
+            @Override
+            public void onColorChangeListener(int i) {
+                intColot = i;
+                Toast.makeText(Ajoute_vihicule.this, "hhh", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
 
         Bundle b = getIntent().getExtras();
@@ -61,31 +70,27 @@ String Nom,Prenom,role;
         text4 = (EditText)findViewById(R.id.vihicule_Valeur_entrer);
         text5 = (EditText)findViewById(R.id.vihicule_Date_effet);
         text6 = (EditText)findViewById(R.id.vihicule_Date_echeance);
-        Colorseek = findViewById(R.id.vihicule_Couleur);
 
-        Colorseek.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
-            @Override
-            public void onColorChangeListener(int i) {
 
-            intColot = i;
-                Toast.makeText(Ajoute_vihicule.this, "hhh", Toast.LENGTH_SHORT).show();
 
+        if(intColot != 0){
+            Boolean result = DB.insert_vehiucle(text1.getText().toString(),text2.getText().toString(),text3.getText().toString(),spinner.getSelectedItem().toString(), Integer.parseInt(text4.getText().toString()),text5.getText().toString(),text6.getText().toString(),intColot);
+            if(result){
+                Toast.makeText(Ajoute_vihicule.this, "L'ajoute Effectué", Toast.LENGTH_SHORT).show();
+                Intent I = new Intent(Ajoute_vihicule.this,vehicules.class);
+                Bundle b1 = new Bundle();
+                b1.putString("nom",Nom);
+                b1.putString("prenom",Prenom);
+                b1.putString("role",role);
+                I.putExtras(b1);
+                startActivity(I);
+            }else{
+                Toast.makeText(Ajoute_vihicule.this, "L'ajoute n'est pas Effectué", Toast.LENGTH_SHORT).show();
             }
-        });
-
-        Boolean result = DB.insert_vehiucle(text1.getText().toString(),text2.getText().toString(),text3.getText().toString(),spinner.getSelectedItem().toString(), Integer.parseInt(text4.getText().toString()),text5.getText().toString(),text6.getText().toString(),intColot);
-        if(result){
-            Toast.makeText(Ajoute_vihicule.this, "L'ajoute Effectué", Toast.LENGTH_SHORT).show();
-            Intent I = new Intent(Ajoute_vihicule.this,vehicules.class);
-            Bundle b1 = new Bundle();
-            b1.putString("nom",Nom);
-            b1.putString("prenom",Prenom);
-            b1.putString("role",role);
-            I.putExtras(b1);
-            startActivity(I);
         }else{
-            Toast.makeText(Ajoute_vihicule.this, "L'ajoute n'est pas Effectué", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Merci de choisire la couleur de la vihicule", Toast.LENGTH_SHORT).show();
         }
+
 
     }
 }
