@@ -192,6 +192,22 @@ public class gestion_location extends SQLiteOpenHelper {
         }
         return res;
     }
+    //insert
+    public boolean insert_mat(String idrecette,String mat){
+        boolean res=false;
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues tab_ch = new ContentValues();
+        tab_ch.put(Col_idRecette,idrecette);
+        tab_ch.put(Col_matricule,mat);
+        long result = db.insert(Table12,null,tab_ch);
+        if(result == -1){
+            res=false;
+        }
+        else{
+            res=true;
+        }
+        return res;
+    }
 //insert client
 public boolean insert_client(String nom , String prenom, String adr, String cin, String tel, String activi, String d1, String d2, int nb, int prix, String type, String vehiculeChosi){
     boolean res=false;

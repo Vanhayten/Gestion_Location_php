@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.icu.text.Transliterator;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,9 +26,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.bumptech.glide.util.ByteBufferUtil;
 import com.google.android.material.navigation.NavigationView;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 public class mes_clients extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,6 +44,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
     gestion_location db;
     TextView Cin;
     EditText t1;
+    Cursor c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +110,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                 }else{
                     ls.setAdapter (listrep);
                 }
-//
+
             }
 
             @Override
@@ -265,7 +265,20 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,arr);
         sp.setAdapter(arrayAdapter);
 
-
+        /*
+         //remplir spinner par les matricule
+         */
+        text11 = (Spinner) MyDyalog_ajou.findViewById(R.id.text_matriculeChoisi);
+        ArrayList<String> arrayListMatricule  = new ArrayList<String>();
+        SQLiteDatabase table = db.getReadableDatabase ();
+        String requet ="SELECT * FROM véhicules WHERE imatriculation not in  (SELECT * FROM vehicule_choisi WHERE véhicules.imatriculation= vehicule_choisi.Matricule)";
+        c= table.rawQuery ( requet, null );
+        while (c.moveToNext())
+        {
+        arrayListMatricule.add(c.getString(2));
+        }
+        ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,arrayListMatricule);
+        text11.setAdapter(arrayAdapter1);
 
         text1 = (EditText) MyDyalog_ajou.findViewById(R.id.text_nom1);
         text2 = (EditText) MyDyalog_ajou.findViewById(R.id.text_prenom);
@@ -278,17 +291,21 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         text9 = (EditText) MyDyalog_ajou.findViewById(R.id.text_Prix);
         text13 = (EditText) MyDyalog_ajou.findViewById(R.id.text_adr);
         text10 = (Spinner) MyDyalog_ajou.findViewById(R.id.text_typePayment);
-        text11 = (Spinner) MyDyalog_ajou.findViewById(R.id.text_matriculeChoisi);
         text12 = (TextView) MyDyalog_ajou.findViewById(R.id.les_matricules);
+      //  remplir les matricule
+        String a=text11.getSelectedItem().toString();
+     text12.setText(a );
+
         Button btn_ajoute;
         btn_ajoute = (Button) MyDyalog_ajou.findViewById(R.id.btn_ajouterClient);
         btn_ajoute.setOnClickListener(new View.OnClickListener() {
-
+            CharSequence s  = DateFormat.getDateInstance().format("MMMM d, yyyy ");
 
             @Override
             public void onClick(View v) {
                 boolean b = db.insert_client(text1.getText().toString(),text2.getText().toString(),text13.getText().toString(),text3.getText().toString(),text4.getText().toString(),text5.getText().toString(),text6.getText().toString(),text7.getText().toString(),Integer.parseInt( text8.getText().toString()) ,Integer.parseInt( text9.getText().toString()),text10.getSelectedItem().toString(),text12.getText().toString());
-                if (b) {
+                boolean f=db.insert_mat(s.toString(),text12.getText().toString());
+                if (b && f) {
                     Toast.makeText(mes_clients.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
                     MyDyalog_ajou.dismiss();
                 } else {
