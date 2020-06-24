@@ -28,8 +28,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class mes_clients extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -299,12 +300,15 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         Button btn_ajoute;
         btn_ajoute = (Button) MyDyalog_ajou.findViewById(R.id.btn_ajouterClient);
         btn_ajoute.setOnClickListener(new View.OnClickListener() {
-            CharSequence s  = DateFormat.getDateInstance().format("MMMM d, yyyy ");
+          //  CharSequence s  = DateFormat.getDateInstance().format("MMMM d, yyyy ");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd ");
+            String currentDateandTime = sdf.format(new Date());
+
 
             @Override
             public void onClick(View v) {
                 boolean b = db.insert_client(text1.getText().toString(),text2.getText().toString(),text13.getText().toString(),text3.getText().toString(),text4.getText().toString(),text5.getText().toString(),text6.getText().toString(),text7.getText().toString(),Integer.parseInt( text8.getText().toString()) ,Integer.parseInt( text9.getText().toString()),text10.getSelectedItem().toString(),text12.getText().toString());
-                boolean f=db.insert_mat(s.toString(),text12.getText().toString());
+                boolean f=db.insert_mat(currentDateandTime,text12.getText().toString());
                 if (b && f) {
                     Toast.makeText(mes_clients.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
                     MyDyalog_ajou.dismiss();
