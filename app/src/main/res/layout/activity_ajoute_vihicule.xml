@@ -107,7 +107,7 @@
 
         </TextView>
 
-        <com.rtugeek.android.colorseekbar.ColorSeekBar
+        <com.divyanshu.colorseekbar.ColorSeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -115,10 +115,10 @@
             android:layout_marginTop="16dp"
             android:gravity="center_horizontal"
             android:layout_centerInParent="true"
-            app:colorSeeds="@array/material_colors"
+            android:background="@android:color/white"
             android:id="@+id/vihicule_Couleur">
 
-        </com.rtugeek.android.colorseekbar.ColorSeekBar>
+        </com.divyanshu.colorseekbar.ColorSeekBar>
 
 
         <Button
