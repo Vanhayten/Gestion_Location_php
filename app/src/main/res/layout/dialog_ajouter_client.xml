@@ -39,7 +39,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
-                android:enabled="false"
                 android:hint="Prenom"
                 android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
@@ -108,7 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
-                android:hint="Nobre jour"
+                android:hint="Nombre jour"
                 android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
                 android:textSize="18dp" />
@@ -131,15 +130,31 @@
                 android:textColor="@color/NAVwhite"
                 android:layout_marginTop="5sp"
                 android:textSize="18dp" />
-            <Spinner
-                android:id="@+id/text_matriculeChoisi"
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Matricule"
-                android:textColorHint="@color/NAVwhite"
-                android:textColor="@color/NAVwhite"
-                android:layout_marginTop="5sp"
-                android:textSize="18dp" />
+                android:orientation="horizontal">
+                <Spinner
+                    android:id="@+id/text_matriculeChoisi"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Matricule"
+                    android:textColorHint="@color/NAVwhite"
+                    android:textColor="@color/NAVwhite"
+                    android:layout_marginTop="5sp"
+                    android:textSize="18dp" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ajt_vih"
+                    android:hint="Ajoute"
+                    android:layout_marginLeft="16dp">
+
+                </Button>
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/les_matricules"
                 android:layout_width="match_parent"
@@ -147,7 +162,8 @@
                 android:textColorHint="@color/NAVwhite"
                 android:textColor="@color/NAVwhite"
                 android:layout_marginTop="5sp"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:text=""/>
 
 
         </LinearLayout>

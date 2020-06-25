@@ -50,11 +50,7 @@ public class gestion_location extends SQLiteOpenHelper {
     //declarationtable recette
     private static final String Table4 = "Recette";
     private static final String Col_IdRecette= "Id_Recette";
-    private static final String Col_NbJour= "Nb_jour";
-    private static final String Col_prix= "Prix";
-    private static final String Col_DateEncaissement= "Date_Encaissement";
-    private static final String Col_MoyenPayment= "Moyen_payment";
-    private static final String Col_immatriculationR = "immatriculation";
+    private static final String Col_prix= "Prix_TT";
 
     //declaration table charge
     private static final String Table5 = "Charge";
@@ -132,7 +128,7 @@ public class gestion_location extends SQLiteOpenHelper {
         String table1 = "Create table "+Table1+" ("+Col_login+" text primary key ,"+Col_Mdp+" text,"+Col_Nom+" text,"+Col_Prenom+" text,"+Col_Role+" text)";
         String table2 = "Create table "+Table2+" ("+Col_nom+" text  ,"+Col_prenom+" text,"+Col_adresse+" text,"+Col_cin+" text primary key,"+Col_tel+" text,"+Col_activité+" text,"+Col_date_début+" Date,"+Col_date_fin+" Date,"+Col_nbJour+" Integer,"+Col_prix_location+" Integer,"+Col_Type_Payement+" text,"+Col_vehicule+" text)";
         String table3 = "Create table "+Table3+" ("+Col_Marque_Vihicule+" text ,"+Col_DateCirculation+" date ,"+Col_immatriculation+" text primary key,"+Col_MarqueCombustion+" text,"+Col_ValeurDentrée+" Integer,"+Col_Date_Effet_Assurance+" date,"+Col_Date_Echeance+" date,"+Col_Couleur_Vehicule+" Integer)";
-        String table4 = "Create table "+Table4+" ("+Col_IdRecette+" text primary key ,"+Col_NbJour+" integer,"+Col_prix+" integer,"+Col_DateEncaissement+" date,"+Col_MoyenPayment+" integer,"+Col_immatriculationR+" text)";
+        String table4 = "Create table "+Table4+" ("+Col_IdRecette+" text primary key ,"+Col_prix+" integer)";
         String table5 = "Create table "+Table5+" ("+Col_IdCharge+" Integer PRIMARY KEY AUTOINCREMENT,"+Col_Date+" date,"+Col_Montant+" integer,"+Col_Payment+" text,"+Col_designation+" text)";
         String table6 = "Create table "+Table6+" ("+Col_IdEvenement+" text primary key,"+Col_DateDebut+" date ,"+Col_DateFin+" date,"+Col_Rappel+" text,"+Col_Nature+" text,"+Col_Responsable+" text)";
         String table7 = "Create table "+Table7+" ("+Col_imatriculation_reparation+" text,"+Col_pieces_changes+" text,"+Col_main_douvre+" TEXT,"+Col_ref_facture+" TEXT,"+Col_date_reparation+"  DATE,"+Col_montant_reparation+" integer)";
@@ -290,6 +286,26 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
         tab_ch.put(Col_designation,designation);
 
         long result = db.insert(Table5,null,tab_ch);
+        if(result == -1){
+            res=false;
+        }
+        else{
+            res=true;
+        }
+        return res;
+    }
+
+    /**
+     *insert reccet
+     */
+
+    public boolean insert_Recette(String IDrecette ,Integer Prixtt){
+        boolean res=false;
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues tab_ch = new ContentValues();
+        tab_ch.put(Col_IdRecette,IDrecette);
+        tab_ch.put(Col_prix,Prixtt);
+        long result = db.insert(Table4,null,tab_ch);
         if(result == -1){
             res=false;
         }
