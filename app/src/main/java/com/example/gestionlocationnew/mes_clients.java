@@ -28,6 +28,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -293,22 +294,25 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         text13 = (EditText) MyDyalog_ajou.findViewById(R.id.text_adr);
         text10 = (Spinner) MyDyalog_ajou.findViewById(R.id.text_typePayment);
         text12 = (TextView) MyDyalog_ajou.findViewById(R.id.les_matricules);
+        String string;
       //  remplir les matricule
         String a=text11.getSelectedItem().toString();
-     text12.setText(a );
+     text12.setText(a);
 
         Button btn_ajoute;
         btn_ajoute = (Button) MyDyalog_ajou.findViewById(R.id.btn_ajouterClient);
         btn_ajoute.setOnClickListener(new View.OnClickListener() {
-          //  CharSequence s  = DateFormat.getDateInstance().format("MMMM d, yyyy ");
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd ");
-            String currentDateandTime = sdf.format(new Date());
-
-
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            Date date = new Date();
+            String[] parts = dateFormat.format(date).split("/");
+            String part1 = parts[0];
+            String part2 = parts[1];
+            String part3 = parts[2];
+            String s=part3+" "+part2+""+part1;
             @Override
             public void onClick(View v) {
                 boolean b = db.insert_client(text1.getText().toString(),text2.getText().toString(),text13.getText().toString(),text3.getText().toString(),text4.getText().toString(),text5.getText().toString(),text6.getText().toString(),text7.getText().toString(),Integer.parseInt( text8.getText().toString()) ,Integer.parseInt( text9.getText().toString()),text10.getSelectedItem().toString(),text12.getText().toString());
-                boolean f=db.insert_mat(currentDateandTime,text12.getText().toString());
+                boolean f=db.insert_mat(s,text12.getText().toString());
                 if (b && f) {
                     Toast.makeText(mes_clients.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
                     MyDyalog_ajou.dismiss();
