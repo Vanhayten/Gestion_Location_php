@@ -155,13 +155,14 @@
                 </Button>
             </LinearLayout>
 
-            <TextView
+            <ListView
                 android:id="@+id/les_matricules"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textColorHint="@color/NAVwhite"
                 android:textColor="@color/NAVwhite"
                 android:layout_marginTop="5sp"
+                android:scrollbars="none"
                 android:textSize="18dp"
                 android:text=""/>
 

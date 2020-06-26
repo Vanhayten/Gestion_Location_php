@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -46,6 +47,10 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
     gestion_location db;
     TextView Cin;
     EditText t1;
+
+    Page_Adapter_choix_matr page_adapter_choix_matr;
+    ArrayList<liste_choix_matr> arrayList_choix = new ArrayList<liste_choix_matr>();
+    String vihicule_choix ="";
 
 
     @Override
@@ -248,7 +253,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         return false;
     }
 
-    String vihicule_choix = "";
+
 
     public void ajouter(View view) {
         final Dialog MyDyalog_ajou;
@@ -257,7 +262,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
 
         final EditText text1, text2, text3, text4, text5, text6, text7, text8, text9,text13;
         final Spinner text10,text11;
-        final TextView text12;
+        final ListView text12;
         Spinner sp ;
 
         sp= (Spinner) MyDyalog_ajou.findViewById(R.id.text_typePayment);
@@ -307,27 +312,38 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         text9 = (EditText) MyDyalog_ajou.findViewById(R.id.text_Prix);
         text13 = (EditText) MyDyalog_ajou.findViewById(R.id.text_adr);
         text10 = (Spinner) MyDyalog_ajou.findViewById(R.id.text_typePayment);
-        text12 = (TextView) MyDyalog_ajou.findViewById(R.id.les_matricules);
+        text12 = (ListView) MyDyalog_ajou.findViewById(R.id.les_matricules);
+
 
 
       //  remplir les matricule
 
-        vihicule_choix = "";
+
         Button butonajouter_vehicule = MyDyalog_ajou.findViewById(R.id.ajt_vih);
         butonajouter_vehicule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                        vihicule_choix = vihicule_choix +" - "+ text11.getSelectedItem();
-                        text12.setText(vihicule_choix);
+                vihicule_choix =text11.getSelectedItem().toString();
+
+                liste_choix_matr liste_choix_matr =new liste_choix_matr(vihicule_choix);
+
+                arrayList_choix.add(liste_choix_matr);
+                page_adapter_choix_matr =  new Page_Adapter_choix_matr(mes_clients.this,arrayList_choix);
+                text12.setAdapter(page_adapter_choix_matr);
 
 
+                /**
+                 *
+                 * remove
+                 */
                         arrayListMatricule.remove(vihicule_choix);
                         arrayAdapter1.notifyDataSetChanged();
                         text11.setAdapter(arrayAdapter1);
 
             }
         });
+
 
 
 
@@ -348,8 +364,13 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
 
             @Override
             public void onClick(View v) {
-                boolean b = db.insert_client(text1.getText().toString(),text2.getText().toString(),text13.getText().toString(),text3.getText().toString(),text4.getText().toString(),text5.getText().toString(),text6.getText().toString(),text7.getText().toString(),Integer.parseInt( text8.getText().toString()) ,Integer.parseInt( text9.getText().toString()),text10.getSelectedItem().toString(),text12.getText().toString());
-                boolean f=db.insert_mat(s,text12.getText().toString());
+                boolean b = db.insert_client(text1.getText().toString(),text2.getText().toString(),text13.getText().toString(),text3.getText().toString(),text4.getText().toString(),text5.getText().toString(),text6.getText().toString(),text7.getText().toString(),Integer.parseInt( text8.getText().toString()) ,Integer.parseInt( text9.getText().toString()),text10.getSelectedItem().toString());
+                boolean f = false;
+                for(int i = text12.getCount() - 1; i >= 0; i--) {
+
+                    f=db.insert_mat(s,text3.getText().toString(),text12.getItemAtPosition(i).toString());
+                }
+
                 int total = Integer.parseInt(text8.getText().toString()) * Integer.parseInt(text9.getText().toString());
                 boolean d = db.insert_Recette(s,total);
 
