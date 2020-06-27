@@ -53,7 +53,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         //-------------------------
-
+db=new gestion_location(this);
 
         NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);
         View headerView = navigationView1.getHeaderView(0);
@@ -104,7 +104,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
             }
         });
         SQLiteDatabase table = db.getReadableDatabase ();
-        String requet = "SELECT v.id_Recette, r.Prix_TT, v.Matricule FROM vehicule_choisi v INNER JOIN Recette r on v.id_Recette=r.Id_Recette " ;
+        String requet = "SELECT v.id_Recette, r.Prix_TT, v.Matricule FROM vehicule_choisi v INNER JOIN Recette r on v.id_Recette=r.Id_Recette  " ;
         Cursor c = table.rawQuery ( requet, null );
         arrayList = new ArrayList<list_recette> ();
         arrayList.clear ();
