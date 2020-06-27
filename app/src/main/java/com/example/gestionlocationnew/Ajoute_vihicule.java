@@ -37,7 +37,6 @@ String Nom,Prenom,role;
             @Override
             public void onColorChangeListener(int i) {
                 intColot = i;
-                Toast.makeText(Ajoute_vihicule.this, "hhh", Toast.LENGTH_SHORT).show();
             }
         });
 

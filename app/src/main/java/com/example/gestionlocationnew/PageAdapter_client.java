@@ -13,17 +13,9 @@ package com.example.gestionlocationnew;
         import android.view.View;
         import android.view.ViewGroup;
         import android.widget.ArrayAdapter;
-        import android.widget.ImageView;
-        import android.widget.LinearLayout;
         import android.widget.TextView;
-        import android.widget.Toast;
-
-        import androidx.core.content.ContextCompat;
-
-        import com.example.gestionlocationnew.R;
-        import com.example.gestionlocationnew.list_client;
-
         import java.util.ArrayList;
+
 
 public class PageAdapter_client extends ArrayAdapter<list_client> {
 
