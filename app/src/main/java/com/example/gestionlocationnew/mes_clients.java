@@ -48,8 +48,12 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
     TextView Cin;
     EditText t1;
 
-    Page_Adapter_choix_matr page_adapter_choix_matr;
-    ArrayList<liste_choix_matr> arrayList_choix = new ArrayList<liste_choix_matr>();
+    /**
+     * list choix vehicule
+     */
+    //Page_Adapter_choix_matr page_adapter_choix_matr;
+    ArrayList<String> arrayList_choix = new ArrayList<String>();
+    ArrayAdapter<String> arrayAdapter2;
     String vihicule_choix ="";
 
 
@@ -255,6 +259,9 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
 
 
 
+
+    String itemsRemove="";
+
     public void ajouter(View view) {
         final Dialog MyDyalog_ajou;
         MyDyalog_ajou = new Dialog(mes_clients.this);
@@ -264,6 +271,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         final Spinner text10,text11;
         final ListView text12;
         Spinner sp ;
+
 
         sp= (Spinner) MyDyalog_ajou.findViewById(R.id.text_typePayment);
         ArrayList<String> arr  = new ArrayList<String>();
@@ -324,27 +332,43 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
             @Override
             public void onClick(View v) {
 
-                vihicule_choix =text11.getSelectedItem().toString();
+                if(arrayAdapter1.getCount() == 0){
+                    Toast.makeText(mes_clients.this, "aucun vehicule", Toast.LENGTH_SHORT).show();
+                }else{
+                    vihicule_choix = text11.getSelectedItem().toString();
+                    arrayList_choix.add(vihicule_choix);
+                    arrayAdapter2 =  new ArrayAdapter<String>(mes_clients.this,android.R.layout.simple_selectable_list_item,arrayList_choix);
+                    text12.setAdapter(arrayAdapter2);
 
-                liste_choix_matr liste_choix_matr =new liste_choix_matr(vihicule_choix);
 
-                arrayList_choix.add(liste_choix_matr);
-                page_adapter_choix_matr =  new Page_Adapter_choix_matr(mes_clients.this,arrayList_choix);
-                text12.setAdapter(page_adapter_choix_matr);
+                    /**
+                     *
+                     * remove
+                     */
+                    arrayListMatricule.remove(vihicule_choix);
+                    arrayAdapter1.notifyDataSetChanged();
 
+                }
 
-                /**
-                 *
-                 * remove
-                 */
-                        arrayListMatricule.remove(vihicule_choix);
-                        arrayAdapter1.notifyDataSetChanged();
-                        text11.setAdapter(arrayAdapter1);
 
             }
         });
 
 
+            text12.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    itemsRemove = text12.getItemAtPosition(position).toString();
+                    arrayList_choix.remove(itemsRemove);
+                    arrayAdapter2.notifyDataSetChanged();
+
+
+                    arrayListMatricule.add(itemsRemove);
+                    //arrayAdapter1.notifyDataSetChanged();
+                    ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<String>(mes_clients.this,R.layout.support_simple_spinner_dropdown_item,arrayListMatricule);
+                    text11.setAdapter(arrayAdapter1);
+                }
+            });
 
 
 

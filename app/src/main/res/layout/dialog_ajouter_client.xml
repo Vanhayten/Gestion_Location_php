@@ -158,11 +158,12 @@
             <ListView
                 android:id="@+id/les_matricules"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColorHint="@color/NAVwhite"
+                android:layout_height="200dp"
+                android:autoSizeTextType="uniform"
                 android:textColor="@color/NAVwhite"
+                android:background="@color/BlueDarck"
                 android:layout_marginTop="5sp"
-                android:scrollbars="none"
+                android:scrollbars="horizontal"
                 android:textSize="18dp"
                 android:text=""/>
 
