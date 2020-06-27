@@ -17,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -426,7 +425,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         String part1 = parts[0];
         String part2 = parts[1];
         String part3 = parts[2];
-        String s=part3+""+part2+""+part1;
+        String s=text3.getText().toString()+""+part3+""+part2+""+part1;
 
         Button btn_ajoute;
         btn_ajoute = (Button) MyDyalog_ajou.findViewById(R.id.btn_ajouterClient);
