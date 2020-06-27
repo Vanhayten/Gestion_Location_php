@@ -84,7 +84,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         arrayList1.clear ();
         while (c.moveToNext())
         {
-            list_recette list = new list_recette (c.getString(1),Integer.parseInt(c.getString(0)));
+            list_recette list = new list_recette (Integer.parseInt(c.getString(1)),c.getString(0));
             arrayList1.add (list);
         }
 
@@ -107,20 +107,20 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                ArrayList<list_recette> arrayList1;
+                ArrayList<list_recette> arrayList2;
                 SQLiteDatabase table = db.getReadableDatabase ();
-               // String requet = "select * from vehicule_choisi v , Recette r  where v.id_Recette=r.Id_Recette and id_Recette ='"+t1.getText()+"'";
+
                String requet = "SELECT * FROM  Recette where Id_Recette ='"+t1.getText()+"'" ;
                 Cursor c = table.rawQuery ( requet, null );
                 if(c.getCount()>=1){
                     ls.clearChoices();
-                    arrayList1= new ArrayList<list_recette> ();
+                    arrayList2= new ArrayList<list_recette> ();
                     while (c.moveToNext ())
                     {
-                        list_recette list = new list_recette (c.getString(0),Integer.parseInt(c.getString(1)));
-                        arrayList1.add ( list );
+                        list_recette list = new list_recette (Integer.parseInt(c.getString(1)),c.getString(0));
+                        arrayList2.add ( list );
                     }
-                    PageAdapter_recette adapter_recette = new PageAdapter_recette (mes_recettes.this,arrayList1);
+                    PageAdapter_recette adapter_recette = new PageAdapter_recette (mes_recettes.this,arrayList2);
                     ls.setAdapter ( adapter_recette );
                 }else{
                     ls.setAdapter (listeRecet);
@@ -142,8 +142,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         Intent T;
         Bundle b = new Bundle();
         switch (menuItem.getItemId()){
-            case R.id.flotte:
-                //  Toast.makeText(MainActivity.this,"Ma Flotte",Toast.LENGTH_SHORT).show();
+            case R.id.vihicule:
                 T = new Intent(this, vehicules.class);
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
@@ -152,8 +151,25 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 finish();
                 startActivity(T);
                 break;
+            case R.id.assurances:
+                T = new Intent(this, assurances.class);
+                b.putString("nom",Nom);
+                b.putString("prenom",Prenom);
+                b.putString("role",role);
+                T.putExtras(b);
+                finish();
+                startActivity(T);
+                break;
+            case R.id.entretiens:
+                T = new Intent(this, entretiens.class);
+                b.putString("nom",Nom);
+                b.putString("prenom",Prenom);
+                b.putString("role",role);
+                T.putExtras(b);
+                finish();
+                startActivity(T);
+                break;
             case R.id.recette:
-                Toast.makeText(mes_recettes.this,"Ma Recette",Toast.LENGTH_SHORT).show();
                 T = new Intent(this, mes_recettes.class);
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
@@ -189,6 +205,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 finish();
                 startActivity(T);
                 break;
+
         }
         return false;
     }

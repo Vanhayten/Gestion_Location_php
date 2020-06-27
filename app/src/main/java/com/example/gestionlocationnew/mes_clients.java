@@ -419,13 +419,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
 
 
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        Date date = new Date(System.currentTimeMillis());
-        String[] parts = dateFormat.format(date).split("/");
-        String part1 = parts[0];
-        String part2 = parts[1];
-        String part3 = parts[2];
-        String s=text3.getText().toString()+""+part3+""+part2+""+part1;
+
 
         Button btn_ajoute;
         btn_ajoute = (Button) MyDyalog_ajou.findViewById(R.id.btn_ajouterClient);
@@ -433,6 +427,29 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
 
             @Override
             public void onClick(View v) {
+
+
+                int count=0;
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                Date date = new Date(System.currentTimeMillis());
+                String[] parts = dateFormat.format(date).split("/");
+                String part1 = parts[0];
+                String part2 = parts[1];
+                String part3 = parts[2];
+                SQLiteDatabase table = db.getReadableDatabase();
+                String requet = "SELECT Id_Recette FROM  Recette";
+                Cursor c = table.rawQuery ( requet, null );
+                if(c.moveToLast()){
+                    String[] parts1 = c.getString(0).split("-");
+                    String part11 = parts1[0];
+                    String part22 = parts1[1];
+                    count = Integer.parseInt(part22);
+                }
+                count = count+1;
+                String s =part3+""+part2+""+part1+"-"+count;
+
+
+
                 boolean b = db.insert_client(text1.getText().toString(),text2.getText().toString(),text13.getText().toString(),text3.getText().toString(),text4.getText().toString(),text5.getText().toString(),text6.getText().toString(),text7.getText().toString(),Integer.parseInt( text8.getText().toString()) ,Integer.parseInt( text9.getText().toString()),text10.getSelectedItem().toString());
                 boolean f = false;
                 for(int i = text12.getCount() - 1; i >= 0; i--) {
@@ -444,7 +461,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                 int total = Integer.parseInt(text8.getText().toString()) * Integer.parseInt(text9.getText().toString());
                 boolean d = db.insert_Recette(s,total);
 
-                if (b && f && d) {
+                if (b  && f && d) {
                     Toast.makeText(mes_clients.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
 
                     MyDyalog_ajou.dismiss();

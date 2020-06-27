@@ -21,7 +21,7 @@ public class list_recette {
     }
 
 
-    public list_recette(String id, int prix) {
+    public list_recette( int prix,String id) {
         Id = id;
         Prix = prix;
     }

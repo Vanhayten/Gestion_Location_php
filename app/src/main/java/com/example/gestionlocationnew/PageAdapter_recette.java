@@ -35,14 +35,14 @@ public class PageAdapter_recette extends ArrayAdapter<list_recette> {
         final list_recette currentAndroidFlavor = getItem(position);
 
 
-        TextView cinTextView1 = (TextView) listItemView.findViewById(R.id.matrV);
+        TextView cinTextView1 = (TextView) listItemView.findViewById(R.id.marqueV);
 
 
-        cinTextView1.setText(currentAndroidFlavor.getId()+" DH");
+        cinTextView1.setText("ID = "+currentAndroidFlavor.getId());
 
 
-        TextView nomTextView1 = (TextView) listItemView.findViewById(R.id.marqueV);
-        String STR = "ID = "+String.valueOf(currentAndroidFlavor.getPrix());
+        TextView nomTextView1 = (TextView) listItemView.findViewById(R.id.matrV);
+        String STR = currentAndroidFlavor.getPrix()+" DH";
         nomTextView1.setText(STR);
 
         return listItemView;
