@@ -110,7 +110,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 ArrayList<list_recette> arrayList2;
                 SQLiteDatabase table = db.getReadableDatabase ();
 
-               String requet = "SELECT * FROM  Recette where Id_Recette ='"+t1.getText()+"'" ;
+               String requet = "SELECT * FROM  Recette where Id_Recette ='"+t1.getText()+"'";
                 Cursor c = table.rawQuery ( requet, null );
                 if(c.getCount()>=1){
                     ls.clearChoices();
