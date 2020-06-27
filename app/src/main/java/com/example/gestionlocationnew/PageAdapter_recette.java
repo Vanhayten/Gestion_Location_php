@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import java.util.ArrayList;
+
 
 public class PageAdapter_recette extends ArrayAdapter<list_recette> {
 
@@ -22,6 +22,7 @@ public class PageAdapter_recette extends ArrayAdapter<list_recette> {
     }
 
 
+
     public View getView(int position, View convertView, ViewGroup parent) {
         // Check if the existing view is being reused, otherwise inflate the view
         View listItemView = convertView;
@@ -34,15 +35,15 @@ public class PageAdapter_recette extends ArrayAdapter<list_recette> {
         final list_recette currentAndroidFlavor = getItem(position);
 
 
-
-        TextView cinTextView = (TextView) listItemView.findViewById(R.id.matrV);
-
-        cinTextView.setText(currentAndroidFlavor.getId());
+        TextView cinTextView1 = (TextView) listItemView.findViewById(R.id.matrV);
 
 
-        TextView nomTextView = (TextView) listItemView.findViewById(R.id.marqueV);
+        cinTextView1.setText(currentAndroidFlavor.getId()+" DH");
 
-        nomTextView.setText(currentAndroidFlavor.getPrix());
+
+        TextView nomTextView1 = (TextView) listItemView.findViewById(R.id.marqueV);
+        String STR = "ID = "+String.valueOf(currentAndroidFlavor.getPrix());
+        nomTextView1.setText(STR);
 
         return listItemView;
     }

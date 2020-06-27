@@ -131,6 +131,8 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
 
             }
         });
+
+
         SQLiteDatabase table = db.getReadableDatabase ();
         String requet = "select * from Clients ";
         Cursor c = table.rawQuery ( requet, null );
@@ -150,7 +152,6 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         while (c.moveToNext ())
         {
            list_client list = new list_client (c.getString(0)+" "+c.getString(1),c.getString(3));
-
             arrayList.add (list);
         }
         listrep = new PageAdapter_client ( this, arrayList );
@@ -425,7 +426,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         String part1 = parts[0];
         String part2 = parts[1];
         String part3 = parts[2];
-        String s=part3+" "+part2+""+part1;
+        String s=part3+""+part2+""+part1;
 
         Button btn_ajoute;
         btn_ajoute = (Button) MyDyalog_ajou.findViewById(R.id.btn_ajouterClient);
@@ -437,7 +438,8 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                 boolean f = false;
                 for(int i = text12.getCount() - 1; i >= 0; i--) {
 
-                    f=db.insert_mat(s,text3.getText().toString(),text12.getItemAtPosition(i).toString());
+                    f = db.insert_mat(s,text3.getText().toString(),text12.getItemAtPosition(i).toString());
+
                 }
 
                 int total = Integer.parseInt(text8.getText().toString()) * Integer.parseInt(text9.getText().toString());

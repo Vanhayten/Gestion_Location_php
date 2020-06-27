@@ -33,14 +33,18 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle toggle;
     gestion_location db;
     ListView ls;
-    ArrayList<list_recette> arrayList;
+    ArrayList<list_recette> arrayList1;
     EditText t1;
     PageAdapter_recette listeRecet;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mes_recettes);
+
+
+        db = new gestion_location(this);
 
         drawerLayout = findViewById(R.id.drawer);
         toolbar = findViewById(R.id.toolbar);
@@ -53,7 +57,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         //-------------------------
-db=new gestion_location(this);
+
 
         NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);
         View headerView = navigationView1.getHeaderView(0);
@@ -66,8 +70,34 @@ db=new gestion_location(this);
         role = b.getString("role");
         username.setText(Nom+" "+Prenom);
         role1.setText(role);
-//
+
+
+        /**
+         * remplire reccete
+         */
         ls=(ListView)findViewById(R.id.listRec);
+        SQLiteDatabase table = db.getReadableDatabase();
+        String requet = "SELECT * FROM  Recette";
+
+        Cursor c = table.rawQuery ( requet, null );
+        arrayList1 = new ArrayList<list_recette> ();
+        arrayList1.clear ();
+        while (c.moveToNext())
+        {
+            list_recette list = new list_recette (c.getString(1),Integer.parseInt(c.getString(0)));
+            arrayList1.add (list);
+        }
+
+        listeRecet = new PageAdapter_recette ( this, arrayList1 );
+        ls.setAdapter(listeRecet);
+
+
+
+        /**
+         * rechairche
+         */
+
+
         t1=(EditText)findViewById(R.id.chercherIdRe);
         t1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -80,14 +110,14 @@ db=new gestion_location(this);
                 ArrayList<list_recette> arrayList1;
                 SQLiteDatabase table = db.getReadableDatabase ();
                // String requet = "select * from vehicule_choisi v , Recette r  where v.id_Recette=r.Id_Recette and id_Recette ='"+t1.getText()+"'";
-               String requet = "SELECT v.id_Recette, r.Prix_TT, v.Matricule FROM vehicule_choisi v INNER JOIN Recette r on v.id_Recette=r.Id_Recette where id_Recette ='"+t1.getText()+"'" ;
+               String requet = "SELECT * FROM  Recette where Id_Recette ='"+t1.getText()+"'" ;
                 Cursor c = table.rawQuery ( requet, null );
                 if(c.getCount()>=1){
                     ls.clearChoices();
                     arrayList1= new ArrayList<list_recette> ();
                     while (c.moveToNext ())
                     {
-                        list_recette list = new list_recette (c.getString(1),Integer.parseInt(c.getString(2)),c.getString(3));
+                        list_recette list = new list_recette (c.getString(0),Integer.parseInt(c.getString(1)));
                         arrayList1.add ( list );
                     }
                     PageAdapter_recette adapter_recette = new PageAdapter_recette (mes_recettes.this,arrayList1);
@@ -103,18 +133,6 @@ db=new gestion_location(this);
 
             }
         });
-        SQLiteDatabase table = db.getReadableDatabase ();
-        String requet = "SELECT v.id_Recette, r.Prix_TT, v.Matricule FROM vehicule_choisi v INNER JOIN Recette r on v.id_Recette=r.Id_Recette  " ;
-        Cursor c = table.rawQuery ( requet, null );
-        arrayList = new ArrayList<list_recette> ();
-        arrayList.clear ();
-        while (c.moveToNext ())
-        {
-            list_recette list = new list_recette (c.getString(1),Integer.parseInt(c.getString(2)),c.getString(3));
-            arrayList.add (list);
-        }
-        listeRecet = new PageAdapter_recette ( this, arrayList );
-        ls.setAdapter ( listeRecet );
 
 
     }
