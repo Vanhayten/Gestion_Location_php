@@ -12,11 +12,13 @@
 
     <LinearLayout
         android:layout_width="350dp"
-        android:layout_height="475dp"
+        android:layout_height="match_parent"
         android:background="@color/colorPrimaryDark"
         android:padding="5dp"
         android:orientation="vertical"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -158,7 +160,7 @@
             <ListView
                 android:id="@+id/les_matricules"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:autoSizeTextType="uniform"
                 android:textColor="@color/NAVwhite"
                 android:background="@color/BlueDarck"

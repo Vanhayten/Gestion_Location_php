@@ -231,6 +231,16 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
     return res;
 }
 
+
+    /**
+     * detete clients
+     */
+    public Integer suprimer_client(String lb){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(Table2,""+Col_cin+"=?",new String[]{lb});
+    }
+
+
     //insert vidange
     public boolean insert_vidange(String matricule ,String Date,Integer km,String filter,Integer type){
         boolean res=false;

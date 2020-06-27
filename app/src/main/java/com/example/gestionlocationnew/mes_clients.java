@@ -1,6 +1,8 @@
 package com.example.gestionlocationnew;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -176,6 +178,49 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                         MyDyalog.dismiss();
                     }
                 });
+
+
+                /**
+                 * suprimer clients
+                 */
+                suprimer = MyDyalog.findViewById(R.id.btn_suprimer_clients);
+                suprimer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mes_clients.this);
+                        builder.setCancelable(true);
+                        builder.setTitle("suppression");
+                        builder.setMessage("voullez-vous vraiment suprimer ?");
+                        builder.setPositiveButton("Ok",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+
+                                        int i = db.suprimer_client(text_nom.getText().toString());
+                                        finish();
+                                        startActivity(getIntent());
+                                        MyDyalog.dismiss();
+                                    }
+                                });
+                        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(mes_clients.this, "close", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+
+                    }
+                });
+
+
+
+
 
                 MyDyalog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 MyDyalog.show();

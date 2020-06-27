@@ -54,7 +54,7 @@
             android:textColor="@color/NAVwhite" />
 
         <Button
-            android:id="@+id/btn_sinistres"
+            android:id="@+id/btn_suprimer_clients"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
