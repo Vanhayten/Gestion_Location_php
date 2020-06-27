@@ -1,9 +1,15 @@
 package com.example.gestionlocationnew;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +21,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+
 public class mes_recettes extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     String Nom,Prenom,role;
@@ -23,6 +31,11 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
+    gestion_location db;
+    ListView ls;
+    ArrayList<list_recette> arrayList;
+    EditText t1;
+    PageAdapter_recette listeRecet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +66,55 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         role = b.getString("role");
         username.setText(Nom+" "+Prenom);
         role1.setText(role);
+//
+        ls=(ListView)findViewById(R.id.listRec);
+        t1=(EditText)findViewById(R.id.chercherIdRe);
+        t1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                ArrayList<list_recette> arrayList1;
+                SQLiteDatabase table = db.getReadableDatabase ();
+               // String requet = "select * from vehicule_choisi v , Recette r  where v.id_Recette=r.Id_Recette and id_Recette ='"+t1.getText()+"'";
+               String requet = "SELECT v.id_Recette, r.Prix_TT, v.Matricule FROM vehicule_choisi v INNER JOIN Recette r on v.id_Recette=r.Id_Recette where id_Recette ='"+t1.getText()+"'" ;
+                Cursor c = table.rawQuery ( requet, null );
+                if(c.getCount()>=1){
+                    ls.clearChoices();
+                    arrayList1= new ArrayList<list_recette> ();
+                    while (c.moveToNext ())
+                    {
+                        list_recette list = new list_recette (c.getString(1),Integer.parseInt(c.getString(2)),c.getString(3));
+                        arrayList1.add ( list );
+                    }
+                    PageAdapter_recette adapter_recette = new PageAdapter_recette (mes_recettes.this,arrayList1);
+                    ls.setAdapter ( adapter_recette );
+                }else{
+                    ls.setAdapter (listeRecet);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        SQLiteDatabase table = db.getReadableDatabase ();
+        String requet = "SELECT v.id_Recette, r.Prix_TT, v.Matricule FROM vehicule_choisi v INNER JOIN Recette r on v.id_Recette=r.Id_Recette " ;
+        Cursor c = table.rawQuery ( requet, null );
+        arrayList = new ArrayList<list_recette> ();
+        arrayList.clear ();
+        while (c.moveToNext ())
+        {
+            list_recette list = new list_recette (c.getString(1),Integer.parseInt(c.getString(2)),c.getString(3));
+            arrayList.add (list);
+        }
+        listeRecet = new PageAdapter_recette ( this, arrayList );
+        ls.setAdapter ( listeRecet );
 
 
     }
