@@ -598,6 +598,15 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                 finish();
                 startActivity(T);
                 break;
+            case R.id.locations:
+                T = new Intent(this, mes_location.class);
+                b.putString("nom",Nom);
+                b.putString("prenom",Prenom);
+                b.putString("role",role);
+                T.putExtras(b);
+                finish();
+                startActivity(T);
+                break;
 
         }
         return false;

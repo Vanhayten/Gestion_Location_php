@@ -27,5 +27,8 @@
     <item
         android:id="@+id/clients"
         android:title="Mes Clients"/>
+    <item
+        android:id="@+id/locations"
+        android:title="Mes Locations"/>
 
 </menu>

@@ -1,10 +1,15 @@
 package com.example.gestionlocationnew;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -31,6 +36,16 @@ String Nom,Prenom,role;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajoute_vihicule);
+
+
+        SharedPreferences perfs1 = getSharedPreferences("perfs1",MODE_PRIVATE);
+        boolean firststart1 = perfs1.getBoolean("firststart1",true);
+        if(firststart1){
+            DialogFirstuse();
+
+        }
+
+
 
         Colorseek = findViewById(R.id.vihicule_Couleur);
         Colorseek.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
@@ -92,4 +107,22 @@ String Nom,Prenom,role;
 
 
     }
+  public void  DialogFirstuse(){
+
+        new AlertDialog.Builder(this)
+                .setTitle("cette message affiche une seule fois !!")
+                .setMessage("Remplire les champs de la véhicule pour la prochain fois tu peux navigé facillment")
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create().show();
+
+      SharedPreferences perfs = getSharedPreferences("perfs1",MODE_PRIVATE);
+      SharedPreferences.Editor editor = perfs.edit();
+      editor.putBoolean("firststart1",false);
+      editor.apply();
+  }
+
 }

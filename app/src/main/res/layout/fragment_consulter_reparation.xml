@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/aficher_reparat"
             android:layout_below="@id/linner1"
-            android:text="aficher"
+            android:text="afficher"
             android:layout_marginLeft="140dp">
 
         </Button>

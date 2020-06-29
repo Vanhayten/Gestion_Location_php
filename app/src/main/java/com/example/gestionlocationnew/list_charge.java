@@ -1,43 +1,57 @@
 package com.example.gestionlocationnew;
 
 public class list_charge {
-    private String color;
-    private String matr;
-    private  String marque;
+    private String IDCharge;
+    private String designation;
+    private String montant;
+    private  String mdpayer;
+    private  String date;
 
-    public String getColor() {
-        return color;
+    public String getIDCharge() {
+        return IDCharge;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setIDCharge(String IDCharge) {
+        this.IDCharge = IDCharge;
     }
 
-    public String getMatr() {
-        return matr;
+    public String getDesignation() {
+        return designation;
     }
 
-    public void setMatr(String matr) {
-        this.matr = matr;
+    public void setDesignation(String designation) {
+        this.designation = designation;
     }
 
-    public String getMarque() {
-        return marque;
+    public String getMontant() {
+        return montant;
     }
 
-    public void setMarque(String marque) {
-        this.marque = marque;
+    public void setMontant(String montant) {
+        this.montant = montant;
     }
 
+    public String getMdpayer() {
+        return mdpayer;
+    }
 
-   /* public list_vihcule(String matr, String marque) {
-        this.matr = matr;
-        this.marque = marque;
-    }*/
+    public void setMdpayer(String mdpayer) {
+        this.mdpayer = mdpayer;
+    }
 
-    public list_charge( String matr, String marque,String color) {
-        this.color = color;
-        this.matr = matr;
-        this.marque = marque;
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public list_charge(String IDCharge ,String designation, String montant, String mdpayer, String date) {
+        this.designation = designation;
+        this.montant = montant;
+        this.mdpayer = mdpayer;
+        this.date = date;
+        this.IDCharge = IDCharge;
     }
 }

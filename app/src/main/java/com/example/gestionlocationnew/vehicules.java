@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -13,6 +14,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -82,6 +85,26 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
         navigationView.setNavigationItemSelectedListener(this);
         ls=(ListView)findViewById(R.id.list1);
         t1=(EditText)findViewById(R.id.chercherMatr);
+
+        /**
+         * animation
+         * On first use
+         */
+        SharedPreferences perfs = getSharedPreferences("perfs",MODE_PRIVATE);
+        boolean firststart = perfs.getBoolean("firststart",true);
+        if(firststart){
+            Animation fromnav;
+            fromnav = AnimationUtils.loadAnimation(this,R.anim.fromnav);
+            navigationView.setAnimation(fromnav);
+            SharedPreferences perfs1 = getSharedPreferences("perfs",MODE_PRIVATE);
+            SharedPreferences.Editor editor = perfs1.edit();
+            editor.putBoolean("firststart",false);
+            editor.apply();
+        }
+
+
+
+
 
         // recherche par matrucule
         t1.addTextChangedListener(new TextWatcher() {
@@ -396,6 +419,15 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 break;
             case R.id.clients:
                 T = new Intent(this, mes_clients.class);
+                b.putString("nom",Nom);
+                b.putString("prenom",Prenom);
+                b.putString("role",role);
+                T.putExtras(b);
+                finish();
+                startActivity(T);
+                break;
+            case R.id.locations:
+                T = new Intent(this, mes_location.class);
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);

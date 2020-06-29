@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".mes_location"></activity>
         <activity android:name=".reparation" />
         <activity android:name=".Ajoute_vidange" />
         <activity android:name=".ajouter_assurance" />
@@ -20,10 +21,9 @@
         <activity android:name=".creer_compte" />
         <activity android:name=".Login">
             <intent-filter>
-
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".mes_clients" />
@@ -31,15 +31,14 @@
         <activity android:name=".mes_charges" />
         <activity android:name=".vehicules" />
 
-        <receiver android:name=".AlarmReceiver"
-            android:exported="true"
-            android:enabled="true">
+        <receiver
+            android:name=".AlarmReceiver"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-
         </receiver>
-
     </application>
 
 </manifest>

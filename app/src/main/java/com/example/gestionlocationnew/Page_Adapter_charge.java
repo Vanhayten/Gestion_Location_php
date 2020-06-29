@@ -1,84 +1,66 @@
 package com.example.gestionlocationnew;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import java.util.ArrayList;
 
-public class Page_Adapter_charge extends BaseAdapter
+public class Page_Adapter_charge extends ArrayAdapter<list_charge>
 {
-    private Context context;
-    private ArrayList<list_charge> foodModelArrayList;
-    public String col;
-    public Page_Adapter_charge(Context context, ArrayList<list_charge> foodModelArrayList) {
-        this.context = context;
-        this.foodModelArrayList = foodModelArrayList;
+
+    private static final String LOG_TAG = Page_Adapter_charge.class.getSimpleName();
+
+    public Page_Adapter_charge(Activity context, ArrayList<list_charge> resource) {
+        super(context, 0, resource);
+
     }
 
-    @Override
-    public int getCount() {
-        return foodModelArrayList.size();
-    }
-    public int getViewTypeCount() {
-        return getCount();
-    }
-    @Override
-    public int getItemViewType(int position) {
-
-        return position;
-    }
-    @Override
-    public Object getItem(int position) {
-        return foodModelArrayList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-    static class ViewHolder{
-        public TextView matr;
-        public TextView color;
-        public TextView marq;
-        public TextView id;
-    }
-
-
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-
-        if (convertView == null) {
-            holder = new ViewHolder();
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.charche_rows, null, true);
-
-            holder.matr=(TextView)convertView.findViewById(R.id.matrV);
-            holder.marq=(TextView)convertView.findViewById(R.id.marqueV);
-            holder.id=(TextView)convertView.findViewById(R.id.Id_charge);
-
-
-
-
-
-            convertView.setTag(holder);
-        }else {
-            // the getTag returns the viewHolder object set as a tag to the view
-            holder = (ViewHolder)convertView.getTag();
+        // Check if the existing view is being reused, otherwise inflate the view
+        View listItemView = convertView;
+        if(listItemView == null) {
+            listItemView = LayoutInflater.from(getContext()).inflate(
+                    R.layout.charge_rows, parent, false);
         }
 
-        holder.matr.setText(foodModelArrayList.get(position).getMatr());
-        holder.marq.setText(foodModelArrayList.get(position).getMarque());
-        holder.id.setText(foodModelArrayList.get(position).getColor());
-        //holder.color.setText(foodModelArrayList.get(position).getColor());
 
-        return convertView;
+        final list_charge currentAndroidFlavor = getItem(position);
+
+        TextView desTextView = (TextView) listItemView.findViewById(R.id.des);
+
+        String dest = currentAndroidFlavor.getDesignation();
+        desTextView.setText(dest);
+
+        TextView montantTextView = (TextView) listItemView.findViewById(R.id.mnt);
+
+        String montant = currentAndroidFlavor.getMontant()+" DH";
+        montantTextView.setText(montant);
+
+        TextView modepayTextView = (TextView) listItemView.findViewById(R.id.mdpay);
+
+        String modepay = currentAndroidFlavor.getMdpayer();
+        modepayTextView.setText(modepay);
+
+        TextView dateTextView = (TextView) listItemView.findViewById(R.id.dat);
+
+        String date = currentAndroidFlavor.getDate();
+        dateTextView.setText(date);
+
+        TextView idTextView = (TextView) listItemView.findViewById(R.id.Id_charge);
+
+        String charge = currentAndroidFlavor.getIDCharge();
+        idTextView.setText(charge);
+        idTextView.setVisibility(View.INVISIBLE);
+
+
+        return listItemView;
     }
 }
 

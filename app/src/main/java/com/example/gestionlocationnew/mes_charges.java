@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -91,7 +92,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
          *remplissage liste des charges
          */
 
-        ls=(ListView)findViewById(R.id.listcharges);
+        ls = (ListView)findViewById(R.id.listcharges);
         ArrayList<list_charge> arrayList1;
         SQLiteDatabase table = db.getReadableDatabase ();
         arrayList1= new ArrayList<list_charge> ();
@@ -103,7 +104,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
             while (c.moveToNext ())
             {
-                list_charge list = new list_charge (c.getString(1),c.getString(2)+"DH    "+c.getString(3)+"     "+c.getString(4),c.getString(0).toString());
+                list_charge list = new list_charge (c.getString(0),c.getString(4),c.getString(2),c.getString(3),c.getString(1));
                 arrayList1.add ( list );
             }
              adapter_vihucle = new Page_Adapter_charge (mes_charges.this,arrayList1);
@@ -159,8 +160,9 @@ Recherche.addTextChangedListener(new TextWatcher() {
 
                 if (date3.compareTo(date) == 0) {
                     i++;
-                    list_charge list = new list_charge (c.getString(1),c.getString(2)+"DH    "+c.getString(3)+"     "+c.getString(4),c.getString(0).toString());
+                    list_charge list = new list_charge (c.getString(0),c.getString(4),c.getString(2),c.getString(3),c.getString(1));
                     arrayList2.add ( list );
+                    // Log.i("TAG", "message "+c.getString(0)+"  "+c.getString(4)+"  "+c.getString(2)+"  "+c.getString(3)+"  "+c.getString(1));
                 }
 
             }
@@ -410,6 +412,15 @@ Recherche.addTextChangedListener(new TextWatcher() {
                 break;
             case R.id.clients:
                 T = new Intent(this, mes_clients.class);
+                b.putString("nom",Nom);
+                b.putString("prenom",Prenom);
+                b.putString("role",role);
+                T.putExtras(b);
+                finish();
+                startActivity(T);
+                break;
+            case R.id.locations:
+                T = new Intent(this, mes_location.class);
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);

@@ -1,50 +1,68 @@
 package com.example.gestionlocationnew;
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-public class mes_recettes extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class mes_location extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     String Nom,Prenom,role;
-
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
-    gestion_location db;
-    ListView ls;
-    ArrayList<list_recette> arrayList1;
-    EditText t1;
-    PageAdapter_recette listeRecet;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mes_recettes);
+        setContentView(R.layout.activity_mes_location);
+
+        NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);
+        View headerView = navigationView1.getHeaderView(0);
+        TextView username = headerView.findViewById(R.id.unser_name);
+        TextView role1 = headerView.findViewById(R.id.role);
+
+        Bundle b = getIntent().getExtras();
+        Nom = b.getString("nom");
+        Prenom =  b.getString("prenom");
+        role = ""+b.getString("role");
+        username.setText(Nom+" "+Prenom);
+        role1.setText(role);
 
 
-        db = new gestion_location(this);
+
 
         drawerLayout = findViewById(R.id.drawer);
         toolbar = findViewById(R.id.toolbar);
@@ -56,83 +74,6 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        //-------------------------
-
-
-        NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);
-        View headerView = navigationView1.getHeaderView(0);
-        TextView username = headerView.findViewById(R.id.unser_name);
-        TextView role1 = headerView.findViewById(R.id.role);
-
-        Bundle b = getIntent().getExtras();
-        Nom = b.getString("nom");
-        Prenom =  b.getString("prenom");
-        role = b.getString("role");
-        username.setText(Nom+" "+Prenom);
-        role1.setText(role);
-
-
-        /**
-         * remplire reccete
-         */
-        ls=(ListView)findViewById(R.id.listRec);
-        SQLiteDatabase table = db.getReadableDatabase();
-        String requet = "SELECT * FROM  Recette";
-
-        Cursor c = table.rawQuery ( requet, null );
-        arrayList1 = new ArrayList<list_recette> ();
-        arrayList1.clear ();
-        while (c.moveToNext())
-        {
-            list_recette list = new list_recette (Integer.parseInt(c.getString(1)),c.getString(0));
-            arrayList1.add (list);
-        }
-
-        listeRecet = new PageAdapter_recette ( this, arrayList1 );
-        ls.setAdapter(listeRecet);
-
-
-
-        /**
-         * rechairche
-         */
-
-
-        t1=(EditText)findViewById(R.id.chercherIdRe);
-        t1.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                ArrayList<list_recette> arrayList2;
-                SQLiteDatabase table = db.getReadableDatabase ();
-
-               String requet = "SELECT * FROM  Recette where Id_Recette ='"+t1.getText()+"'";
-                Cursor c = table.rawQuery ( requet, null );
-                if(c.getCount()>=1){
-                    ls.clearChoices();
-                    arrayList2= new ArrayList<list_recette> ();
-                    while (c.moveToNext ())
-                    {
-                        list_recette list = new list_recette (Integer.parseInt(c.getString(1)),c.getString(0));
-                        arrayList2.add ( list );
-                    }
-                    PageAdapter_recette adapter_recette = new PageAdapter_recette (mes_recettes.this,arrayList2);
-                    ls.setAdapter ( adapter_recette );
-                }else{
-                    ls.setAdapter (listeRecet);
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
 
     }
@@ -150,6 +91,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 T.putExtras(b);
                 finish();
                 startActivity(T);
+
                 break;
             case R.id.assurances:
                 T = new Intent(this, assurances.class);
@@ -159,6 +101,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 T.putExtras(b);
                 finish();
                 startActivity(T);
+
                 break;
             case R.id.entretiens:
                 T = new Intent(this, entretiens.class);
@@ -169,6 +112,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 finish();
                 startActivity(T);
                 break;
+
             case R.id.recette:
                 T = new Intent(this, mes_recettes.class);
                 b.putString("nom",Nom);
@@ -218,5 +162,4 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         }
         return false;
     }
-
 }

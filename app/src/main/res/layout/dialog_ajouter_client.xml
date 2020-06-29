@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
-                android:hint="Date Debut"
+                android:hint="Date Debut location"
                 android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
                 android:textSize="18dp" />
@@ -100,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
-                android:hint="Date Fin"
+                android:hint="Date Fin location"
                 android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
                 android:textSize="18dp" />
