@@ -45,7 +45,7 @@
             android:layout_marginTop="6dp"
             android:paddingLeft="60dp"
             android:text="#Administrateur"
-            android:textColor="@color/NAVgray_theme50"
+            android:textColor="@color/green"
             android:textSize="15dp"
             android:textStyle="italic" />
     </LinearLayout>

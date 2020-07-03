@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -88,7 +87,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         //charge liste view par les clients
 
         db= new gestion_location(this);
-      //  boolean h=db.insert_client("hadini","mohamed","fes","cn33820","06514665","etudiant");
+   //  boolean h=db.insert_client("hadini","mohamed","fes","cn33820","06514665","etudiant");
 
 
         ls=(ListView)findViewById(R.id.listClient);
@@ -204,7 +203,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(mes_clients.this, "close", Toast.LENGTH_SHORT).show();
+                              //  Toast.makeText(mes_clients.this, "close", Toast.LENGTH_SHORT).show();
 
                             }
                         });
