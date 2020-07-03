@@ -58,10 +58,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Marque Combustion"
-            android:textColorHint="@color/NAVwhite"
             android:textColor="@color/NAVwhite"
             android:layout_marginTop="5sp"
-            android:textSize="18dp" />
+            android:textSize="24dp"
+            android:background="@color/green"/>
 
         <EditText
             android:id="@+id/text_tel"
@@ -91,15 +91,18 @@
             android:layout_marginTop="5sp"
             android:textSize="18dp"
             />
-        <EditText
-            android:id="@+id/text_dateFin"
+        <com.divyanshu.colorseekbar.ColorSeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Couleur Vehicule"
-            android:textColorHint="@color/NAVwhite"
-            android:textColor="@color/NAVwhite"
-            android:layout_marginTop="5sp"
-            android:textSize="18dp" />
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:background="@android:color/white"
+            android:id="@+id/vihicule_Couleur">
+
+        </com.divyanshu.colorseekbar.ColorSeekBar>
 
     </LinearLayout>
     <LinearLayout

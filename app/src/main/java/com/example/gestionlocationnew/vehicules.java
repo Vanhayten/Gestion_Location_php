@@ -31,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.divyanshu.colorseekbar.ColorSeekBar;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -51,6 +52,9 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
     Dialog AjouteDialog;
     EditText t1;
     Cursor c,c1;
+
+    int intColot = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,6 +173,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                     ls.setAdapter ( listrep );
 
 
+
         //onclick on listner aficher le dialog
 
         ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -211,7 +216,8 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                         /**
                          * code modifier
                          */
-                        final EditText text11,text22,text33,text55,text66,text77,text88;
+                        final EditText text11,text22,text33,text55,text66,text77;
+                        ColorSeekBar Colorseek;;
                         final Spinner text44;
                         Button Confirmer;
                         AjouteDialog= new Dialog(vehicules.this);
@@ -223,8 +229,9 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                         text55 = (EditText)AjouteDialog.findViewById(R.id.text_tel);
                         text66 = (EditText)AjouteDialog.findViewById(R.id.text_activity);
                         text77 = (EditText)AjouteDialog.findViewById(R.id.text_dateDebut);
-                        text88 = (EditText)AjouteDialog.findViewById(R.id.text_dateFin);
+                        Colorseek = (ColorSeekBar)AjouteDialog.findViewById(R.id.vihicule_Couleur);
                         Confirmer =(Button)AjouteDialog.findViewById(R.id.btn_modifier1);
+
 
                         ArrayList<String> arrayList = new ArrayList<String>();
                         arrayList.add("Diesel");
@@ -244,8 +251,18 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                             text55.setText(c.getString(4));
                             text66.setText(c.getString(5));
                             text77.setText(c.getString(6));
-                            text88.setText(c.getString(7));
+                            intColot = Integer.parseInt(c.getString(7));
                         }
+                        /**
+                         * get color
+                         */
+                        Colorseek.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
+                            @Override
+                            public void onColorChangeListener(int i) {
+                                intColot = i;
+                            }
+                        });
+
 
                         Confirmer.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -265,8 +282,9 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                                                 /**
                                                  * confirmer
                                                  */
+
                                                 try {
-                                                    db.modifier_vihucle(text11.getText().toString(),text33.getText().toString(),text22.getText().toString(),text44.getSelectedItem().toString(),Integer.parseInt(text55.getText().toString()),text66.getText().toString(),text77.getText().toString(),text88.getText().toString());
+                                                        db.modifier_vihucle(text11.getText().toString(),text33.getText().toString(),text22.getText().toString(),text44.getSelectedItem().toString(),Integer.parseInt(text55.getText().toString()),text66.getText().toString(),text77.getText().toString(),intColot);
                                                     Toast.makeText(vehicules.this, "Modification Réussi", Toast.LENGTH_SHORT).show();
                                                     finish();
                                                     startActivity(getIntent());
@@ -342,7 +360,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                     text5.setText("Valeur d'entrée :  "+c.getString(4));
                     text6.setText("Date Effet Assurance :  "+c.getString(5));
                     text7.setText("Date Echeance :  "+c.getString(6));
-                    text8.setText("Couleur Vehicule :  "+c.getString(7));
+                    text8.setTextColor(Integer.parseInt(c.getString(7)));
                 }
 
 

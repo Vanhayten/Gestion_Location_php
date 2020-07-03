@@ -380,7 +380,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
 //methode modifier vihicule
 
 
-    public void modifier_vihucle(String Nom,String date , String imatricul, String marque, Integer valeur, String Date_Effet, String Date_echance, String couleur){
+    public void modifier_vihucle(String Nom,String date , String imatricul, String marque, Integer valeur, String Date_Effet, String Date_echance, Integer couleur){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues v = new ContentValues();
         v.put(Col_Marque_Vihicule,Nom);

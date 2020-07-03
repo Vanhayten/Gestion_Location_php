@@ -57,6 +57,7 @@
             android:hint="marque combustion"
             android:gravity="center_horizontal"
             android:layout_centerInParent="true"
+            android:background="@color/green"
             />
 
         <EditText
