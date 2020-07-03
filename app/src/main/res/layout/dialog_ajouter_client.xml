@@ -25,6 +25,15 @@
             android:orientation="vertical"
             android:layout_marginRight="60dp"
             android:layout_marginLeft="60dp">
+            <EditText
+                android:id="@+id/text_cin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:hint="Cin ou Num passport"
+                android:textColor="@color/NAVwhite"
+                android:textColorHint="@color/NAVwhite"
+                android:textSize="18dp" />
 
             <EditText
                 android:id="@+id/text_nom1"
@@ -46,15 +55,7 @@
                 android:textColorHint="@color/NAVwhite"
                 android:textSize="18dp" />
 
-            <EditText
-                android:id="@+id/text_cin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                android:hint="Cin ou Num passport"
-                android:textColor="@color/NAVwhite"
-                android:textColorHint="@color/NAVwhite"
-                android:textSize="18dp" />
+
 
             <EditText
                 android:id="@+id/text_tel"
@@ -84,32 +85,21 @@
                 android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
                 android:textSize="18dp" />
-
             <EditText
                 android:id="@+id/text_dateDebut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
-                android:hint="Date Debut location"
+                android:hint="Date Debut Location"
                 android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
                 android:textSize="18dp" />
-
             <EditText
                 android:id="@+id/text_dateFin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
-                android:hint="Date Fin location"
-                android:textColor="@color/NAVwhite"
-                android:textColorHint="@color/NAVwhite"
-                android:textSize="18dp" />
-            <EditText
-                android:id="@+id/text_nbJour"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                android:hint="Nombre jour"
+                android:hint="Date Fin Location"
                 android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
                 android:textSize="18dp" />
@@ -122,52 +112,38 @@
                 android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
                 android:textSize="18dp" />
-
-            <Spinner
-                android:id="@+id/text_typePayment"
+            <EditText
+                android:id="@+id/text_NombreJour"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Type Payment"
-                android:textColorHint="@color/NAVwhite"
-                android:textColor="@color/NAVwhite"
                 android:layout_marginTop="5sp"
+                android:hint="Nombre Jour"
+                android:textColor="@color/NAVwhite"
+                android:textColorHint="@color/NAVwhite"
                 android:textSize="18dp" />
+            <Spinner
+                android:id="@+id/text_typeP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:textColor="@color/NAVwhite"
+                android:textColorHint="@color/NAVwhite"
+                android:textSize="18dp" />
+            <Spinner
+                android:id="@+id/text_matric"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:textColor="@color/NAVwhite"
+                android:textColorHint="@color/NAVwhite"
+                android:textSize="18dp" />
+
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <Spinner
-                    android:id="@+id/text_matriculeChoisi"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Matricule"
-                    android:textColorHint="@color/NAVwhite"
-                    android:textColor="@color/NAVwhite"
-                    android:layout_marginTop="5sp"
-                    android:textSize="18dp" />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/ajt_vih"
-                    android:hint="Ajoute"
-                    android:layout_marginLeft="16dp">
-
-                </Button>
-            </LinearLayout>
-
-            <ListView
-                android:id="@+id/les_matricules"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:autoSizeTextType="uniform"
-                android:textColor="@color/NAVwhite"
-                android:background="@color/BlueDarck"
-                android:layout_marginTop="5sp"
-                android:scrollbars="horizontal"
-                android:textSize="18dp"
-                android:text=""/>
+                android:orientation="horizontal"/>
 
 
         </LinearLayout>

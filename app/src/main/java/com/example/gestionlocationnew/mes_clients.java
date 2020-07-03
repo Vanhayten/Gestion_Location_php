@@ -18,7 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,10 +29,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class mes_clients extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -313,178 +309,4 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
 
 
 
-
-    String itemsRemove="";
-
-    public void ajouter(View view) {
-        final Dialog MyDyalog_ajou;
-        MyDyalog_ajou = new Dialog(mes_clients.this);
-        MyDyalog_ajou.setContentView(R.layout.dialog_ajouter_client);
-
-        final EditText text1, text2, text3, text4, text5, text6, text7, text8, text9,text13;
-        final Spinner text10,text11;
-        final ListView text12;
-        Spinner sp ;
-
-
-        sp= (Spinner) MyDyalog_ajou.findViewById(R.id.text_typePayment);
-        ArrayList<String> arr  = new ArrayList<String>();
-        arr.add("Chéque");
-        arr.add("Virement");
-        arr.add("Espèce");
-        arr.add("Crédit");
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,arr);
-        sp.setAdapter(arrayAdapter);
-
-        /*
-         //remplir spinner par les matricule
-         */
-
-             Cursor c;
-            text11 = (Spinner) MyDyalog_ajou.findViewById(R.id.text_matriculeChoisi);
-            ArrayList<String> arrayListMatricule  = new ArrayList<String>();
-            SQLiteDatabase table = db.getReadableDatabase ();
-            String requet ="SELECT * FROM véhicules V WHERE  NOT EXISTS  (SELECT 1 FROM vehicule_choisi WHERE Matricule = v.immatriculation)";
-            c = table.rawQuery ( requet, null );
-            if(c.getCount() == 0){
-                Toast.makeText(this, "aucune vèhicule ", Toast.LENGTH_SHORT).show();
-            }else{
-                while (c.moveToNext())
-                {
-                    arrayListMatricule.add(c.getString(2));
-                }
-            }
-
-
-            ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,arrayListMatricule);
-            text11.setAdapter(arrayAdapter1);
-
-
-
-
-
-        text1 = (EditText) MyDyalog_ajou.findViewById(R.id.text_nom1);
-        text2 = (EditText) MyDyalog_ajou.findViewById(R.id.text_prenom);
-        text3 = (EditText) MyDyalog_ajou.findViewById(R.id.text_cin);
-        text4 = (EditText) MyDyalog_ajou.findViewById(R.id.text_tel);
-        text5 = (EditText) MyDyalog_ajou.findViewById(R.id.text_activity);
-        text6 = (EditText) MyDyalog_ajou.findViewById(R.id.text_dateDebut);
-        text7 = (EditText) MyDyalog_ajou.findViewById(R.id.text_dateFin);
-        text8 = (EditText) MyDyalog_ajou.findViewById(R.id.text_nbJour);
-        text9 = (EditText) MyDyalog_ajou.findViewById(R.id.text_Prix);
-        text13 = (EditText) MyDyalog_ajou.findViewById(R.id.text_adr);
-        text10 = (Spinner) MyDyalog_ajou.findViewById(R.id.text_typePayment);
-        text12 = (ListView) MyDyalog_ajou.findViewById(R.id.les_matricules);
-
-
-
-      //  remplir les matricule
-
-
-        Button butonajouter_vehicule = MyDyalog_ajou.findViewById(R.id.ajt_vih);
-        butonajouter_vehicule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(arrayAdapter1.getCount() == 0){
-                    Toast.makeText(mes_clients.this, "aucun vehicule", Toast.LENGTH_SHORT).show();
-                }else{
-                    vihicule_choix = text11.getSelectedItem().toString();
-                    arrayList_choix.add(vihicule_choix);
-                    arrayAdapter2 =  new ArrayAdapter<String>(mes_clients.this,android.R.layout.simple_selectable_list_item,arrayList_choix);
-                    text12.setAdapter(arrayAdapter2);
-
-
-                    /**
-                     *
-                     * remove
-                     */
-                    arrayListMatricule.remove(vihicule_choix);
-                    arrayAdapter1.notifyDataSetChanged();
-
-                }
-
-
-            }
-        });
-
-
-            text12.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    itemsRemove = text12.getItemAtPosition(position).toString();
-                    arrayList_choix.remove(itemsRemove);
-                    arrayAdapter2.notifyDataSetChanged();
-
-
-                    arrayListMatricule.add(itemsRemove);
-                    //arrayAdapter1.notifyDataSetChanged();
-                    ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<String>(mes_clients.this,R.layout.support_simple_spinner_dropdown_item,arrayListMatricule);
-                    text11.setAdapter(arrayAdapter1);
-                }
-            });
-
-
-
-
-
-
-
-        Button btn_ajoute;
-        btn_ajoute = (Button) MyDyalog_ajou.findViewById(R.id.btn_ajouterClient);
-        btn_ajoute.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-
-                int count=0;
-                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-                Date date = new Date(System.currentTimeMillis());
-                String[] parts = dateFormat.format(date).split("/");
-                String part1 = parts[0];
-                String part2 = parts[1];
-                String part3 = parts[2];
-                SQLiteDatabase table = db.getReadableDatabase();
-                String requet = "SELECT Id_Recette FROM  Recette";
-                Cursor c = table.rawQuery ( requet, null );
-                if(c.moveToLast()){
-                    String[] parts1 = c.getString(0).split("-");
-                    String part11 = parts1[0];
-                    String part22 = parts1[1];
-                    count = Integer.parseInt(part22);
-                }
-                count = count+1;
-                String s =part3+""+part2+""+part1+"-"+count;
-
-
-
-                boolean b = db.insert_client(text1.getText().toString(),text2.getText().toString(),text13.getText().toString(),text3.getText().toString(),text4.getText().toString(),text5.getText().toString(),text6.getText().toString(),text7.getText().toString(),Integer.parseInt( text8.getText().toString()) ,Integer.parseInt( text9.getText().toString()),text10.getSelectedItem().toString());
-                boolean f = false;
-                for(int i = text12.getCount() - 1; i >= 0; i--) {
-
-                    f = db.insert_mat(s,text3.getText().toString(),text12.getItemAtPosition(i).toString());
-
-                }
-
-                int total = Integer.parseInt(text8.getText().toString()) * Integer.parseInt(text9.getText().toString());
-                boolean d = db.insert_Recette(s,total);
-
-                if (b  && f && d) {
-                    Toast.makeText(mes_clients.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
-
-                    MyDyalog_ajou.dismiss();
-
-                    finish();
-                    startActivity(getIntent());
-                } else {
-
-                    Toast.makeText(mes_clients.this, "l'enregistrement ne pas effectuer", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-    });
-        MyDyalog_ajou.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        MyDyalog_ajou.show();
-    }
 }
