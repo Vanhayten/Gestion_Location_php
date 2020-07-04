@@ -317,9 +317,6 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
             }
         });
 
-
-
-
         Button btn_ajoute;
         btn_ajoute = (Button) MyDyalog_ajou.findViewById(R.id.btn_ajouterClient);
         btn_ajoute.setOnClickListener(new View.OnClickListener() {
@@ -358,7 +355,6 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                     d= db.insert_Recette(s,text6.getText().toString(),text7.getText().toString(),Integer.parseInt(text8.getText().toString()),Integer.parseInt(text9.getText().toString()),total,sp.getSelectedItem().toString(),text11.getSelectedItem().toString(),text3.getText().toString());
                     if (b && d ) {
                         Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
-                        // Toast.makeText(mes_recettes.this, "recette et client effecuter hhhhhhhhhh", Toast.LENGTH_SHORT).show();
                     }
                 }
                 // tester if lclient existe        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -368,28 +364,21 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
                         if (d) {
-                          //  Toast.makeText(mes_recettes.this, "recette effecuter", Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(mes_recettes.this, "l'enregistrement ne pas effecuter", Toast.LENGTH_SHORT).show();
                         }
-                     }
+                    }
                     if(!c1.getString(3).equals(text3.getText().toString())) {
                    b = db.insert_client(text1.getText().toString(), text2.getText().toString(), text13.getText().toString(), text3.getText().toString(), text4.getText().toString(), text5.getText().toString());
                    d= db.insert_Recette(s,text6.getText().toString(),text7.getText().toString(),Integer.parseInt(text8.getText().toString()),Integer.parseInt(text9.getText().toString()),total,sp.getSelectedItem().toString(),text11.getSelectedItem().toString(),text3.getText().toString());
-                        if (b && d ) {
-                            Toast.makeText(mes_recettes.this, "recette et client effecuter", Toast.LENGTH_SHORT).show();
-                        }
                     }
                 }
-
-                /*  if (b && d || d) {
-                        Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
-
-
-                    } else {
-
-                        Toast.makeText(mes_recettes.this, "l'enregistrement ne pas effectuer", Toast.LENGTH_SHORT).show();
-                    }*/
-
+                if(b && d ){
+                    Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(mes_recettes.this, "l'enregistrement ne pas effecuter", Toast.LENGTH_SHORT).show();
+                }
 
                 MyDyalog_ajou.dismiss();
 

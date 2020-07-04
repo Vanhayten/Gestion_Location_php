@@ -10,7 +10,11 @@
         android:orientation="horizontal"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:background="#102027">
+        android:background="#102027"
+       >
+
+
+
         <ImageButton
             android:layout_width="40dp"
             android:layout_height="40dp"
