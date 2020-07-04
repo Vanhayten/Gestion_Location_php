@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -28,6 +29,23 @@ public class Login extends AppCompatActivity {
         Pass =(EditText)findViewById(R.id.editText7);
 
         boolean result = db.insert_emp("1111","1111","Ayoub","chaib","Admin");
+        //login.setText("1111");
+        //Pass.setText("1111");
+
+login.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        login.setBackgroundResource(R.drawable.editext_baground_none);
+    }
+});
+
+        Pass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Pass.setBackgroundResource(R.drawable.editext_baground_none);
+            }
+        });
+
 
     }
 

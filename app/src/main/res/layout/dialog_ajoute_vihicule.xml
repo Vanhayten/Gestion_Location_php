@@ -29,66 +29,84 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5sp"
             android:hint="Marque Vehicule"
-            android:textColor="@color/NAVwhite"
-            android:textColorHint="@color/NAVwhite"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:textColor="@color/NAVblack_theme100"
+            android:textColorHint="@color/BlueDarck"
+            android:gravity="center"
+            android:background="@drawable/rounded_edit_text"/>
 
         <EditText
             android:id="@+id/text_prenom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5sp"
+            android:layout_marginTop="16dp"
             android:enabled="false"
             android:hint="Matricule"
-            android:textColor="@color/NAVwhite"
-            android:textColorHint="@color/NAVwhite"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:textColor="@color/green"
+            android:textColorHint="@color/BlueDarck"
+            android:gravity="center"
+            android:background="@drawable/rounded_edit_text" />
         <EditText
             android:id="@+id/text_cin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Date Circulation"
-            android:textColorHint="@color/NAVwhite"
-            android:textColor="@color/NAVwhite"
-            android:layout_marginTop="5sp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/NAVblack_theme100"
+            android:textColorHint="@color/BlueDarck"
+            android:gravity="center"
+            android:background="@drawable/rounded_edit_text"
             android:textSize="18dp"
             />
-        <Spinner
-            android:id="@+id/text_marqueCombision1"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Marque Combustion"
-            android:textColor="@color/NAVwhite"
-            android:layout_marginTop="5sp"
-            android:textSize="24dp"
-            android:background="@color/green"/>
+            android:layout_height="match_parent"
+            android:background="@color/NAVwhite"
+            android:layout_marginTop="16dp">
+            <Spinner
+                android:id="@+id/text_marqueCombision1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Marque Combustion"
+                android:textColor="@color/NAVwhite"
+                android:textSize="24dp" />
+        </LinearLayout>
+
 
         <EditText
             android:id="@+id/text_tel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5sp"
+            android:layout_marginTop="16dp"
             android:hint="Valeur d'entrée"
-            android:textColor="@color/NAVwhite"
-            android:textColorHint="@color/NAVwhite"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:textColor="@color/NAVblack_theme100"
+            android:textColorHint="@color/BlueDarck"
+            android:gravity="center"
+            android:background="@drawable/rounded_edit_text"/>
+
         <EditText
             android:id="@+id/text_activity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Date Effet Assurance"
-            android:textColorHint="@color/NAVwhite"
-            android:textColor="@color/NAVwhite"
-            android:layout_marginTop="5sp"
+            android:textColor="@color/NAVblack_theme100"
+            android:textColorHint="@color/BlueDarck"
+            android:gravity="center"
+            android:background="@drawable/rounded_edit_text"
+            android:layout_marginTop="16dp"
             android:textSize="18dp" />
         <EditText
             android:id="@+id/text_dateDebut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Date Echeance"
-            android:textColorHint="@color/NAVwhite"
-            android:textColor="@color/NAVwhite"
-            android:layout_marginTop="5sp"
+            android:textColor="@color/NAVblack_theme100"
+            android:textColorHint="@color/BlueDarck"
+            android:gravity="center"
+            android:background="@drawable/rounded_edit_text"
+            android:layout_marginTop="16dp"
             android:textSize="18dp"
             />
         <com.divyanshu.colorseekbar.ColorSeekBar

@@ -96,7 +96,7 @@
                 android:background="@drawable/rounded_edit_text"
                 android:textSize="18dp" />
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal">
@@ -109,17 +109,17 @@
                     android:textColorHint="@color/NAVwhite"
                     android:textSize="18dp" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/NAVwhite">
                 <Spinner
                     android:id="@+id/text_responsabilite2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Responsabilite"
-                    android:textColorHint="@color/NAVwhite"
-                    android:textColor="@color/NAVwhite"
-                    android:layout_marginTop="5sp"
-                    android:textSize="18dp"
-                    android:background="@color/green"
-                    android:layout_marginLeft="8dp"/>
+                    android:textSize="6dp" />
+                </LinearLayout>
             </LinearLayout>
 
 

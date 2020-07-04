@@ -17,7 +17,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/NAVwhite_theme50" />
+            android:background="@color/colorPrimary"
+            app:theme="@style/ToolbarColoredBackArrow"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +34,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:background="@color/NAVblack_theme75"
+                android:background="@color/colorPrimary"
                 android:orientation="vertical">
 
                 <TextView
@@ -47,22 +48,20 @@
                     android:textSize="28dp"></TextView>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:gravity="center">
                 <EditText
-                    style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
+                    android:id="@+id/chercherCharge"
+                    android:layout_width="300dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="8dp"
-                    android:gravity="center_horizontal"
                     android:hint="Recherche"
                     android:textAlignment="center"
-                    android:textColor="@color/NAVwhite_theme50"
-                    android:textColorHint="#FFFFFF"
-                    android:id="@+id/chercherCharge"
-
+                    android:textColor="@color/BlueDarck"
+                    android:textColorHint="@color/BlueDarck"
+                    android:background="@drawable/rounded_edit_text"
+                    android:layout_marginBottom="16dp"
                     />
 
                 </LinearLayout>

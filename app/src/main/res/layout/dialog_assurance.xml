@@ -51,7 +51,10 @@
             android:gravity="center"
             android:layout_marginTop="6dp"
             android:text="Prochaine Assurance : Null"
-            android:textColor="@color/NAVwhite" />
+            android:textColor="@color/NAVwhite"
+            android:padding="16dp"
+            android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24">
+        </Button>
 
     </LinearLayout>
     <LinearLayout

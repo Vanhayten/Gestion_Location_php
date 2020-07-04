@@ -31,8 +31,10 @@
                 android:layout_marginTop="16dp"
                 android:enabled="false"
                 android:hint="Matricule"
-                android:textColor="@color/NAVwhite"
-                android:textColorHint="@color/NAVwhite"
+                android:textColor="@color/green"
+                android:textColorHint="@color/BlueDarck"
+                android:gravity="center"
+                android:background="@drawable/rounded_edit_text"
                 android:textSize="18dp" />
 
             <EditText
@@ -42,9 +44,11 @@
                 android:layout_marginTop="16dp"
                 android:hint="Date Visite"
                 android:inputType="date"
-                android:textColor="@color/NAVwhite"
-                android:textColorHint="@color/NAVwhite"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:textColor="@color/NAVblack_theme100"
+                android:textColorHint="@color/BlueDarck"
+                android:gravity="center"
+                android:background="@drawable/rounded_edit_text"/>
 
             <EditText
                 android:id="@+id/text_date_proch"
@@ -53,9 +57,11 @@
                 android:layout_marginTop="16dp"
                 android:hint="Date prochaine visite"
                 android:inputType="date"
-                android:textColor="@color/NAVwhite"
-                android:textColorHint="@color/NAVwhite"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:textColor="@color/NAVblack_theme100"
+                android:textColorHint="@color/BlueDarck"
+                android:gravity="center"
+                android:background="@drawable/rounded_edit_text"/>
 
 
             <Button
@@ -67,8 +73,7 @@
                 android:gravity="center"
                 android:layout_marginTop="18dp"
                 android:background="@drawable/button_style"
-                android:textColor="@color/NAVwhite"
-                android:layout_marginRight="18dp"/>
+                android:textColor="@color/NAVwhite" />
 
 
         </LinearLayout>
