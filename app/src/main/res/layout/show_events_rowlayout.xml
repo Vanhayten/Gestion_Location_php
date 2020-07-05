@@ -34,7 +34,7 @@
                 android:id="@+id/eventname"
                 android:textStyle="bold"
                 android:text="Event"
-                android:textSize="40dp"
+                android:textSize="30dp"
                 />
 
             <TextView
@@ -66,7 +66,9 @@
                 android:id="@+id/delete"
                 android:text="Delete"
                 android:textAllCaps="false"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp"
+
+                />
 
         </LinearLayout>
 

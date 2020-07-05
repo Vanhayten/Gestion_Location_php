@@ -10,7 +10,9 @@
         android:orientation="horizontal"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:background="#102027"
+        android:background="@color/NAVwhite_theme50"
+>
+    //android:background="#102027"
        >
 
 
@@ -29,7 +31,7 @@
             android:layout_marginTop="4dp"
             android:text="CurrentDate"
             android:id="@+id/current_Date"
-            android:textColor="@android:color/white"
+            android:textColor="#000000"
             android:textStyle="bold"
             android:textSize="18sp"
             android:layout_weight="3"/>
@@ -49,78 +51,95 @@
         android:orientation="horizontal"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/NAVwhite_theme50"
+        >
+//        android:background="@color/colorPrimaryDark"
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Sun"
-            android:background="#62727b"
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:textStyle="bold"
+            android:background="@color/NAVwhite_theme50"
+
             />
+        //            android:background="#62727b"
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Mon"
-            android:background="#37474f"
+
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:textStyle="bold"
+            android:background="@color/NAVwhite_theme50"
             />
+        // android:background="#37474f"
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Tue"
-            android:background="#62727b"
+
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:textStyle="bold"
+            android:background="@color/NAVwhite_theme50"
             />
+        //      android:background="#62727b"
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Wed"
-            android:background="#37474f"
+
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:textStyle="bold"
+            android:background="@color/NAVwhite_theme50"
             />
+        // android:background="#37474f"
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Thu"
-            android:background="#62727b"
+
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:textStyle="bold"
+            android:background="@color/NAVwhite_theme50"
             />
+        //  android:background="#62727b"
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Fri"
-            android:background="#37474f"
+
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:textStyle="bold"
+            android:background="@color/NAVwhite_theme50"
             />
+        android:background="#37474f"
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Sat"
-            android:background="#62727b"
+
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:textStyle="bold"
+            android:background="@color/NAVwhite_theme50"
             />
+        //  android:background="#62727b"
 
     </LinearLayout>
 
@@ -128,7 +147,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/gridview"
-        android:numColumns="7"></GridView>
+        android:numColumns="7"
+        android:background="@color/NAVwhite_theme50"
+
+        ></GridView>
 
 
 

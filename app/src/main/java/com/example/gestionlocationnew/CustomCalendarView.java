@@ -9,15 +9,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.CalendarContract;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Checkable;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -164,15 +161,24 @@ public class CustomCalendarView extends LinearLayout {
 
             }
         });
+         /*
+        delete
+        */
 
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final String date = eventDateFormate.format(dates.get(position));
+
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setCancelable(true);
                 View showView = LayoutInflater.from(parent.getContext()).inflate(R.layout.show_events_layout,null);
+             //
+                final TextView EventName = showView.findViewById(R.id.eventname);
+                final TextView EventDate = showView.findViewById(R.id.eventdate);
+                final TextView EventTime = showView.findViewById(R.id.eventime);
+                final String date = eventDateFormate.format(dates.get(position));
+              //
                 RecyclerView recyclerView = showView.findViewById(R.id.EventsRV);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(showView.getContext());
                 recyclerView .setLayoutManager(layoutManager);
@@ -184,15 +190,31 @@ public class CustomCalendarView extends LinearLayout {
                 builder.setView(showView);
                 alertDialog =builder.create();
                 alertDialog.show();
+                //
+            /*
+                Button  deleteBtn = alertDialog.findViewById(R.id.delete);
+                //
+
+                deleteBtn.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DeleteEvent(EventName.getText().toString(),EventTime.getText().toString(),EventDate.getText().toString());
+                        SetUpCalendar();
+                    }
+                });*/
                 alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
                         SetUpCalendar();
                     }
+
+
                 });
+
 
                 return true;
             }
+
         });
 
 
