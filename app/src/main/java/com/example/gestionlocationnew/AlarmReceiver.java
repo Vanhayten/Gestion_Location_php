@@ -1,5 +1,4 @@
 package com.example.gestionlocationnew;
-
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -14,38 +13,33 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 public class AlarmReceiver extends BroadcastReceiver {
-
     @Override
     public void onReceive(Context context, Intent intent) {
         String event = intent.getStringExtra("event");
         String time = intent.getStringExtra("time");
         int notId = intent.getIntExtra("id",0);
-        /**
-         * activity li ayban mnha notification
-         */
         Intent activityIntent = new Intent(context,calendrier.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,0,activityIntent,PendingIntent.FLAG_ONE_SHOT);
 
         String channelId = "channel_id";
         CharSequence name = "channel_name";
-        String description= "description";
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ){
+        String descruption ="description";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channel = new NotificationChannel(channelId,name, NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription(description);
+            channel.setDescription(descruption);
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
-
         }
+
         Notification notification = new NotificationCompat.Builder(context,channelId)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setContentTitle(event)
                 .setContentText(time)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setDeleteIntent(pendingIntent)
-                .setGroup("Group_calendar_view").build();
+                .setGroup("Group_calendar_view")
+                .build();
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
         notificationManagerCompat.notify(notId,notification);
-
     }
 }

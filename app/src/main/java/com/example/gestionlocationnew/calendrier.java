@@ -53,7 +53,7 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
         /**
          * calander
          */
-       // calendarView = (CalendarView)findViewById(R.id.calendarView);
+        //calendarView = (CalendarView)findViewById(R.id.calendarView);
 
 
         drawerLayout = findViewById(R.id.drawer);

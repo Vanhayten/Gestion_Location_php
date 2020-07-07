@@ -1,9 +1,10 @@
 package com.example.gestionlocationnew;
 
+
 public class DBStructure {
-    public static final String DB_NAME =    "EVENTS_DB";
+    public static final String DB_NAME = "EVENTS_DB";
     public static final int DB_VERSION = 2;
-    public static final String EVENT_TABLE_NAME="eventstable"  ;
+    public static final String EVENT_TABLE_NAME="eventstable" ;
     public static final String EVENT = "event";
     public static final String TIME = "time";
     public static final String DATE = "date";

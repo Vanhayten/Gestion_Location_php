@@ -38,6 +38,9 @@ String id_sinistre;
         this.setRequestedOrientation ( ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE );
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historique_sinistre);
+
+        Toast.makeText(this, "appuyez et maintenez pour modification ou suppression", Toast.LENGTH_LONG).show();
+        
         db = new gestion_location(this);
         ls=(ListView)findViewById(R.id.list2);
         LayoutInflater inflater = getLayoutInflater();
@@ -53,10 +56,6 @@ String id_sinistre;
         SQLiteDatabase table = db.getReadableDatabase ();
         String requet = "select * from sinistre where imatriculation_sinistre ='"+matr+"'";
         Cursor c = table.rawQuery ( requet, null );
-        if(c.getCount()==0){
-            Toast.makeText(this,"Aucun Sinistre pour cette Vihucle",Toast.LENGTH_SHORT).show();
-
-        }
         while (c.moveToNext ()){
             liste_sinistre listeS= new liste_sinistre();
             listeS.setdate(c.getString(2));

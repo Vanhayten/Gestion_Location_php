@@ -1,6 +1,7 @@
 package com.example.gestionlocationnew;
 
-public class Events { String EVENT,TIME,DATE,MONTH,YEAR;
+public class Events {
+    String EVENT,TIME,DATE,MONTH,YEAR;
 
     public Events(String EVENT, String TIME, String DATE, String MONTH, String YEAR) {
         this.EVENT = EVENT;

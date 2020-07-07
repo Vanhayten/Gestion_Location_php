@@ -38,8 +38,7 @@ public class MyGridAdapter extends ArrayAdapter {
 
     @NonNull
     @Override
-    public View getView(int position,
-                        @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Date monthDate = dates.get(position);
         Calendar dateCalendar = Calendar.getInstance();
         dateCalendar.setTime(monthDate);
@@ -53,14 +52,12 @@ public class MyGridAdapter extends ArrayAdapter {
 
         View view = convertView;
         if (view ==null){
-            view = inflater.inflate(R.layout.single_cell_layout
-                    ,parent,false);
+            view = inflater.inflate(R.layout.single_cell_layout,parent,false);
 
         }
 
         if(displayMonth == currentMonth && displayYear == currentYear){
-            view.setBackgroundColor(getContext().getResources()
-                    .getColor(R.color.green));
+            view.setBackgroundColor(getContext().getResources().getColor(R.color.green));
 
         }
         else
@@ -92,8 +89,7 @@ public class MyGridAdapter extends ArrayAdapter {
 
 
     private Date ConvertStringToDate(String eventDate){
-        SimpleDateFormat format =
-                new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date date = null;
         try {
             date = format.parse(eventDate);
