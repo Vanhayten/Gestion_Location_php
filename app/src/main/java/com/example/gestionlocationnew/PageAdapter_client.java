@@ -35,7 +35,7 @@ public class PageAdapter_client extends ArrayAdapter<list_client> {
         View listItemView = convertView;
         if(listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.vicucule_rows, parent, false);
+                    R.layout.client_rows, parent, false);
         }
 
 

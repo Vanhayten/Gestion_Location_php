@@ -1,13 +1,16 @@
 package com.example.gestionlocationnew;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,13 +20,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
@@ -32,7 +39,7 @@ import java.util.ArrayList;
 
 public class mes_clients extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    String Nom,Prenom,role;
+    String Nom, Prenom, role;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     NavigationView navigationView;
@@ -50,7 +57,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
     //Page_Adapter_choix_matr page_adapter_choix_matr;
     ArrayList<String> arrayList_choix = new ArrayList<String>();
     ArrayAdapter<String> arrayAdapter2;
-    String vihicule_choix ="";
+    String vihicule_choix = "";
 
 
     @Override
@@ -64,7 +71,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawerOpen,R.string.drawerClose);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawerOpen, R.string.drawerClose);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
@@ -73,25 +80,25 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         //-------------------------
 
 
-        NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);
+        NavigationView navigationView1 = (NavigationView) findViewById(R.id.navigationView);
         View headerView = navigationView1.getHeaderView(0);
         TextView username = headerView.findViewById(R.id.unser_name);
         TextView role1 = headerView.findViewById(R.id.role);
 
         Bundle b = getIntent().getExtras();
         Nom = b.getString("nom");
-        Prenom =  b.getString("prenom");
-        role = ""+b.getString("role");
-        username.setText(Nom+" "+Prenom);
+        Prenom = b.getString("prenom");
+        role = "" + b.getString("role");
+        username.setText(Nom + " " + Prenom);
         role1.setText(role);
         //charge liste view par les clients
 
-        db= new gestion_location(this);
-   //  boolean h=db.insert_client("hadini","mohamed","fes","cn33820","06514665","etudiant");
+        db = new gestion_location(this);
+        //  boolean h=db.insert_client("hadini","mohamed","fes","cn33820","06514665","etudiant");
 
 
-        ls=(ListView)findViewById(R.id.listClient);
-        t1=(EditText)findViewById(R.id.chercherCharge);
+        ls = (ListView) findViewById(R.id.listClient);
+        t1 = (EditText) findViewById(R.id.chercherCharge);
         t1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -101,21 +108,20 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 ArrayList<list_client> arrayList1;
-                SQLiteDatabase table = db.getReadableDatabase ();
-                String requet = "select * from Clients where cin ='"+t1.getText()+"'";
-                Cursor c = table.rawQuery ( requet, null );
-                if(c.getCount()>=1){
+                SQLiteDatabase table = db.getReadableDatabase();
+                String requet = "select * from Clients where cin ='" + t1.getText() + "'";
+                Cursor c = table.rawQuery(requet, null);
+                if (c.getCount() >= 1) {
                     ls.clearChoices();
-                    arrayList1= new ArrayList<list_client> ();
-                    while (c.moveToNext ())
-                    {
-                        list_client list = new list_client (c.getString(0)+" "+c.getString(1),c.getString(3));
-                        arrayList1.add ( list );
+                    arrayList1 = new ArrayList<list_client>();
+                    while (c.moveToNext()) {
+                        list_client list = new list_client(c.getString(0) + " " + c.getString(1), c.getString(3));
+                        arrayList1.add(list);
                     }
-                    PageAdapter_client adapter_vihucle = new PageAdapter_client (mes_clients.this,arrayList1);
-                    ls.setAdapter ( adapter_vihucle );
-                }else{
-                    ls.setAdapter (listrep);
+                    PageAdapter_client adapter_vihucle = new PageAdapter_client(mes_clients.this, arrayList1);
+                    ls.setAdapter(adapter_vihucle);
+                } else {
+                    ls.setAdapter(listrep);
                 }
 
             }
@@ -127,10 +133,10 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         });
 
 
-        SQLiteDatabase table = db.getReadableDatabase ();
+        SQLiteDatabase table = db.getReadableDatabase();
         String requet = "select * from Clients ";
-        Cursor c = table.rawQuery ( requet, null );
-        if(c.getCount()==0){
+        Cursor c = table.rawQuery(requet, null);
+        if (c.getCount() == 0) {
             /*
             finish();
             Intent i=new Intent(this,Ajoute_vihicule.class);
@@ -141,84 +147,138 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
             i.putExtras(b1);
             startActivity(i);*/
         }
-        arrayList = new ArrayList<list_client> ();
-        arrayList.clear ();
-        while (c.moveToNext ())
-        {
-           list_client list = new list_client (c.getString(0)+" "+c.getString(1),c.getString(3));
-            arrayList.add (list);
+        arrayList = new ArrayList<list_client>();
+        arrayList.clear();
+        while (c.moveToNext()) {
+            list_client list = new list_client(c.getString(0) + " " + c.getString(1), c.getString(3));
+            arrayList.add(list);
         }
-        listrep = new PageAdapter_client ( this, arrayList );
-        ls.setAdapter ( listrep );
+        listrep = new PageAdapter_client(this, arrayList);
+        ls.setAdapter(listrep);
 
 /**
  * onselect from liste view
  */
+
         ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Cin = (TextView) view.findViewById(R.id.marqueV);
-                final Dialog MyDyalog;
 
-                MyDyalog = new Dialog(mes_clients.this);
-                MyDyalog.setContentView(R.layout.dialog_mise_jour_client);
-                Button modifier, suprimer;
-                TextView text1, text_nom;
-                text1 = (TextView) MyDyalog.findViewById(R.id.text_close);
-                text_nom = (TextView) MyDyalog.findViewById(R.id.text_nom);
-                text_nom.setText(Cin.getText().toString());
-                text1.setOnClickListener(new View.OnClickListener() {
+
+                ImageView imageView = (ImageView) view.findViewById(R.id.appele_client);
+                imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MyDyalog.dismiss();
+
+                        TextView cin = (TextView)view.findViewById(R.id.marqueV);
+                        SQLiteDatabase table = db.getReadableDatabase();
+                        String requet = "select tel from Clients where cin ='" + cin.getText() + "'";
+                        Cursor c = table.rawQuery(requet, null);
+                        String teephone = null;
+                        if(c.moveToNext()){
+                            teephone = c.getString(0);
+                        }
+
+
+                         final int REQUEST_PHONE_CALL = 1;
+                        Intent intent1 = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + teephone));
+                        if (ActivityCompat.checkSelfPermission(mes_clients.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            ActivityCompat.requestPermissions(mes_clients.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+                            return;
+                        }else {
+                            startActivity(intent1);
+                        }
+
+
                     }
                 });
 
 
                 /**
-                 * suprimer clients
+                 * on click dialog
                  */
-                suprimer = MyDyalog.findViewById(R.id.btn_suprimer_clients);
-                suprimer.setOnClickListener(new View.OnClickListener() {
+
+                LinearLayout app_layer = (LinearLayout) view.findViewById (R.id.layout_recet);
+                app_layer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
+                        /**
+                         * suprimer ----------
+                         */
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(mes_clients.this);
-                        builder.setCancelable(true);
-                        builder.setTitle("suppression");
-                        builder.setMessage("voullez-vous vraiment suprimer ?");
-                        builder.setPositiveButton("Ok",
-                                new DialogInterface.OnClickListener() {
+                        final Dialog MyDyalog;
+
+                        MyDyalog = new Dialog(mes_clients.this);
+                        MyDyalog.setContentView(R.layout.dialog_mise_jour_client);
+                        Button modifier, suprimer;
+                        TextView text1, text_nom;
+                        text1 = (TextView) MyDyalog.findViewById(R.id.text_close);
+                        text_nom = (TextView) MyDyalog.findViewById(R.id.text_nom);
+                        text_nom.setText(Cin.getText().toString());
+                        text1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                MyDyalog.dismiss();
+                            }
+                        });
+
+
+
+
+
+                        suprimer = MyDyalog.findViewById(R.id.btn_suprimer_clients);
+                        suprimer.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(mes_clients.this);
+                                builder.setCancelable(true);
+                                builder.setTitle("suppression");
+                                builder.setMessage("voullez-vous vraiment suprimer ?");
+                                builder.setPositiveButton("Ok",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+
+                                                int i = db.suprimer_client(text_nom.getText().toString());
+                                                finish();
+                                                startActivity(getIntent());
+                                                MyDyalog.dismiss();
+                                            }
+                                        });
+                                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        //  Toast.makeText(mes_clients.this, "close", Toast.LENGTH_SHORT).show();
 
-
-                                        int i = db.suprimer_client(text_nom.getText().toString());
-                                        finish();
-                                        startActivity(getIntent());
-                                        MyDyalog.dismiss();
                                     }
                                 });
-                        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                              //  Toast.makeText(mes_clients.this, "close", Toast.LENGTH_SHORT).show();
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
 
                             }
                         });
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
+
+
+
+
+                        MyDyalog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        MyDyalog.show();
 
                     }
                 });
 
-
-
-
-
-                MyDyalog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                MyDyalog.show();
             }
         });
 

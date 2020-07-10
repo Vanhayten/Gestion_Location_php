@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark"
+    android:padding="5dp"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+    <TextView
+        android:id="@+id/text_close"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textColor="@color/NAVwhite"
+        android:text="x"
+        android:textStyle="bold"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:background="@drawable/cercelbaground"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp">
+
+
+        <TextView
+            android:id="@+id/text_idreccet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Id  :"
+            android:textStyle="bold"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="16sp"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:id="@+id/text_Cin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16sp"
+            android:text="CIN :"
+            android:textColor="@color/NAVwhite"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_MAtrc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16sp"
+            android:text="Matricule :"
+            android:textColor="@color/NAVwhite"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/text_datedbt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date debut location :"
+            android:textStyle="bold"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="16sp"
+            android:textSize="18dp"/>
+        <TextView
+            android:id="@+id/text_datefin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date fin location :"
+            android:textStyle="bold"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="16sp"
+            android:textSize="18dp"/>
+        <TextView
+            android:id="@+id/text_nbJour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre Jour :"
+            android:textStyle="bold"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="16sp"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:id="@+id/text_prixt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prix :"
+            android:textStyle="bold"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="16sp"
+            android:textSize="18dp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        >
+        <Button
+            android:id="@+id/btn_modifier_reccet"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:text="Modifier"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/button_style"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginRight="18dp"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

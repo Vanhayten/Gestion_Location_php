@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@drawable/my_custom_vehicule_background"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/layout_recet"
+        android:layout_width="0dp"
+        android:layout_weight="10"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:id="@+id/marqueV"
+            android:textAlignment="center"
+            android:gravity="center_horizontal"
+            android:textColor="#000C5D"
+            android:textStyle="bold"
+            ></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:id="@+id/matrV"
+            android:textColor="#ADADAD"
+            android:layout_marginTop="8dp"
+            android:textAlignment="center"
+            android:gravity="center_horizontal"
+            ></TextView>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_baseline_phone_24"
+        android:layout_marginRight="16dp"
+        android:id="@+id/appele_client"
+        >
+
+    </ImageView>
+
+
+</LinearLayout>

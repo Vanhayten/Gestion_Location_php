@@ -42,7 +42,7 @@ public class PageAdapter_recette extends ArrayAdapter<list_recette> {
 
 
         TextView nomTextView1 = (TextView) listItemView.findViewById(R.id.matrV);
-        String STR = currentAndroidFlavor.getPrix()+" DH";
+        String STR = "TOTAL = "+currentAndroidFlavor.getPrix()+" DH";
         nomTextView1.setText(STR);
 
         return listItemView;

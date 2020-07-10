@@ -11,6 +11,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +31,9 @@ import com.google.android.material.navigation.NavigationView;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class mes_recettes extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -45,6 +48,10 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
     ArrayList<list_recette> arrayList1;
     EditText t1;
     PageAdapter_recette listeRecet;
+
+
+
+    String Idd,cin,Matr,datedb,datefn,nbjour,prix,Typ_Payment,prix_01;
 
 
     @Override
@@ -100,6 +107,123 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         listeRecet = new PageAdapter_recette ( this, arrayList1 );
         ls.setAdapter(listeRecet);
 
+
+
+
+        /**
+         * on click liste
+         */
+
+        ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                final Dialog MyDyalog_detaille;
+                MyDyalog_detaille = new Dialog(mes_recettes.this);
+                MyDyalog_detaille.setContentView(R.layout.dialog_detaille_recette);
+                final TextView text1, text2, text3, text4, text5, text6,text7;
+
+                text1 = (TextView)MyDyalog_detaille.findViewById(R.id.text_idreccet);
+                text2 = (TextView)MyDyalog_detaille.findViewById(R.id.text_Cin);
+                text3 = (TextView)MyDyalog_detaille.findViewById(R.id.text_MAtrc);
+                text4 = (TextView)MyDyalog_detaille.findViewById(R.id.text_datedbt);
+                text5 = (TextView)MyDyalog_detaille.findViewById(R.id.text_datefin);
+                text6 = (TextView)MyDyalog_detaille.findViewById(R.id.text_nbJour);
+                text7 = (TextView)MyDyalog_detaille.findViewById(R.id.text_prixt);
+
+                TextView id1 = (TextView)view.findViewById(R.id.marqueV);
+                String[] idreccet = id1.getText().toString().split(" ");
+
+                try {
+
+                    SQLiteDatabase table = db.getReadableDatabase();
+                    String requet = "SELECT * FROM  Recette where Id_Recette = '"+idreccet[2]+"'";
+
+                    Cursor c = table.rawQuery ( requet, null );
+                    while (c.moveToNext()){
+                        text1.setText(text1.getText()+" "+c.getString(0));
+                        text2.setText(text2.getText()+" "+c.getString(8));
+                        text3.setText(text3.getText()+" "+c.getString(7));
+                        text4.setText(text4.getText()+" "+c.getString(1));
+                        text5.setText(text5.getText()+" "+c.getString(2));
+                        text6.setText(text6.getText()+" "+c.getString(3));
+                        text7.setText(text7.getText()+" "+c.getString(4));
+
+                        Idd = c.getString(0);
+                        cin = c.getString(8);
+                        Matr = c.getString(7);
+                        datedb = c.getString(1);
+                        datefn = c.getString(2);
+                        nbjour = c.getString(3);
+                        prix = c.getString(4);
+                        Typ_Payment = c.getString(6);
+                        prix_01 = c.getString(5);
+                    }
+
+                }catch (Exception ex){
+                    Toast.makeText(mes_recettes.this, ""+ex, Toast.LENGTH_LONG).show();
+                }
+
+
+                Button modifier = (Button)MyDyalog_detaille.findViewById(R.id.btn_modifier_reccet);
+                modifier.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final Dialog MyDyalog_modifier;
+                        MyDyalog_modifier = new Dialog(mes_recettes.this);
+                        MyDyalog_modifier.setContentView(R.layout.dialog_modifier_reccete);
+                        final EditText text1, text2, text3, text4, text5, text6,text7;
+
+                        text1 = (EditText)MyDyalog_modifier.findViewById(R.id.text_Idrc);
+                        text2 = (EditText)MyDyalog_modifier.findViewById(R.id.text_cin1);
+                        text3 = (EditText)MyDyalog_modifier.findViewById(R.id.text_matrr);
+                        text4 = (EditText)MyDyalog_modifier.findViewById(R.id.text_datrdbb);
+                        text5 = (EditText)MyDyalog_modifier.findViewById(R.id.text_datfinn);
+                        text6 = (EditText)MyDyalog_modifier.findViewById(R.id.text_nbbjour);
+                        text7 = (EditText)MyDyalog_modifier.findViewById(R.id.text_prixtt);
+
+                            text1.setText(Idd);
+                            text2.setText(cin);
+                            text3.setText(Matr);
+                            text4.setText(datedb);
+                            text5.setText(datefn);
+                            text6.setText(nbjour);
+                            text7.setText(prix);
+
+                        /**
+                         * confirmation
+                         */
+
+                        Button Confirmer_modif;
+                        Confirmer_modif = (Button)MyDyalog_modifier.findViewById(R.id.btn_modifierreccet);
+                        Confirmer_modif.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Integer prix_TT = Integer.parseInt(text7.getText().toString())*Integer.parseInt(text6.getText().toString());
+
+                                db.modifier_reccete(text1.getText().toString(),text4.getText().toString(),text5.getText().toString(),text6.getText().toString(),text7.getText().toString(),prix_TT.toString(),Typ_Payment,text3.getText().toString(),text2.getText().toString());
+                                Toast.makeText(mes_recettes.this, "Modification Réussi", Toast.LENGTH_SHORT).show();
+                                finish();
+                                startActivity(getIntent());
+
+
+                            }
+                        });
+
+
+
+                        MyDyalog_modifier.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        MyDyalog_modifier.show();
+                    }
+                });
+
+
+
+                MyDyalog_detaille.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                MyDyalog_detaille.show();
+
+            }
+        });
 
 
         /**
@@ -250,10 +374,13 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
        //  remplir spinner par les matricule
 
-
+/**
+ * --------------------------------- filtrer les vehicule ---------------------------
+ */
+/*
              Cursor c;
-            text11 = (Spinner) MyDyalog_ajou.findViewById(R.id.text_matric);
-            ArrayList<String> arrayListMatricule  = new ArrayList<String>();
+
+
             SQLiteDatabase table = db.getReadableDatabase ();
             //V WHERE  NOT EXISTS  (SELECT 1 FROM vehicule_choisi WHERE Matricule = v.immatriculation)";
             String requet ="SELECT * FROM véhicules ";
@@ -266,7 +393,11 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                     arrayListMatricule.add(c.getString(2));
                 }
             }
+            */
 
+        text11 = (Spinner) MyDyalog_ajou.findViewById(R.id.text_matric);
+        ArrayList<String> arrayListMatricule  = new ArrayList<String>();
+            arrayListMatricule = filter_vehicule();
 
             ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,arrayListMatricule);
             text11.setAdapter(arrayAdapter1);
@@ -390,4 +521,38 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         MyDyalog_ajou.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         MyDyalog_ajou.show();
     }
+
+
+    public ArrayList filter_vehicule(){
+
+        ArrayList<String> arrayListfilter  = new ArrayList<String>();
+        ArrayList<String> arrayListfinal  = new ArrayList<String>();
+
+
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String formattedDate = df.format(c);
+
+        String requet_reccete ="SELECT Matricule_choisi FROM Recette where date_fin > '"+formattedDate+"'";
+        String requet_vehicule ="SELECT immatriculation FROM véhicules";
+
+       SQLiteDatabase table = db.getReadableDatabase ();
+       Cursor vehicule = table.rawQuery ( requet_vehicule, null );
+       Cursor  reccete = table.rawQuery ( requet_reccete, null );
+
+       while (vehicule.moveToNext()){
+           arrayListfinal.add(vehicule.getString(0));
+       }
+        while (reccete.moveToNext()){
+            arrayListfilter.add(reccete.getString(0));
+        }
+        arrayListfinal.removeAll(arrayListfilter);
+
+        if(arrayListfinal.size() == 0){
+            Toast.makeText(this, "Toutes les vehicule sont réservées", Toast.LENGTH_SHORT).show();
+        }
+
+        return arrayListfinal;
+    }
+
 }

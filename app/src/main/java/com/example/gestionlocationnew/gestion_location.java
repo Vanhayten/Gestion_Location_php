@@ -53,7 +53,6 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_prixTotal_location = "prix_total";
     private static final String Col_Type = "Type_Payment";
     private static final String Col_matr = "Matricule_choisi";
-
     private static final String Col_CinCl = "Cin";
 
 
@@ -392,6 +391,26 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
         v.put(Col_Couleur_Vehicule,couleur);
         db.update(Table3,v,""+Col_immatriculation+"=?",new String[]{imatricul});
     }
+
+
+    /**
+     * modifier reccete
+     * @return
+     */
+    public void modifier_reccete(String id_reccete, String datedb, String datefn, String nbjr, String prix01, String prixtt,String typp,String matrr,String cinn){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues v = new ContentValues();
+        v.put(Col_date_début,datedb);
+        v.put(Col_date_fin,datefn);
+        v.put(Col_nbJour,nbjr);
+        v.put(Col_prix_location,prix01);
+        v.put(Col_prixTotal_location,prixtt);
+        v.put(Col_Type,typp);
+        v.put(Col_matr,matrr);
+        v.put(Col_CinCl,cinn);
+        db.update(Table4,v,""+Col_IdRecette+"=?",new String[]{id_reccete});
+    }
+
 
     //methode aficher les vihicule
     public Cursor Get_attvihucle(){
