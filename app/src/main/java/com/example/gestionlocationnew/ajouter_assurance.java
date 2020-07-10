@@ -1,8 +1,5 @@
 package com.example.gestionlocationnew;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,10 +11,10 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.nio.BufferUnderflowException;
-import java.text.DateFormatSymbols;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.text.SimpleDateFormat;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -122,8 +119,10 @@ public class ajouter_assurance extends AppCompatActivity {
 
         String Events = "Payment assurance "+discription;
         //t1.getText().toString();
-
-        SaveEvent(Events,null,DateF,monthString,part3);
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+        SaveEvent(Events,formattedDate,DateF,monthString,part3);
         SetUpCalendar();
 
     }

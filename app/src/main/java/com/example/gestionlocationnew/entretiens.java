@@ -644,8 +644,13 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
 
         String Events = discription;
         //t1.getText().toString();
+        Calendar c = Calendar.getInstance();
 
-        SaveEvent(Events,null,DateF,monthString,part3);
+
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+
+        SaveEvent(Events,formattedDate,DateF,monthString,part3);
         SetUpCalendar();
 
     }
