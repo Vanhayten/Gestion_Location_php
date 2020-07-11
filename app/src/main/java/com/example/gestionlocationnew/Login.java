@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,10 +20,13 @@ public class Login extends AppCompatActivity {
     EditText login;
     EditText Pass;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
 
         db = new gestion_location(this);
         login =(EditText)findViewById(R.id.editText6);
