@@ -300,7 +300,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                             while (c.moveToNext()) {
                                 kilom = Integer.parseInt(c.getString(0)) + Integer.parseInt(c.getString(1));
                             }
-                            btn_atende.setText("Vidange en atente : " + kilom + " KM");
+                            btn_atende.setText("Prochaine Vidange : " + kilom + " KM");
                         } catch (Exception EX) {
                             Toast.makeText(entretiens.this, "Aucun vidage", Toast.LENGTH_SHORT).show();
                         }

@@ -53,6 +53,7 @@
             android:layout_height="wrap_content"
             android:hint="Date Circulation"
             android:layout_marginTop="16dp"
+            android:inputType="date"
             android:textColor="@color/NAVblack_theme100"
             android:textColorHint="@color/BlueDarck"
             android:gravity="center"
@@ -94,6 +95,7 @@
             android:textColor="@color/NAVblack_theme100"
             android:textColorHint="@color/BlueDarck"
             android:gravity="center"
+            android:inputType="date"
             android:background="@drawable/rounded_edit_text"
             android:layout_marginTop="16dp"
             android:textSize="18dp" />
@@ -107,6 +109,7 @@
             android:gravity="center"
             android:background="@drawable/rounded_edit_text"
             android:layout_marginTop="16dp"
+            android:inputType="date"
             android:textSize="18dp"
             />
         <com.divyanshu.colorseekbar.ColorSeekBar

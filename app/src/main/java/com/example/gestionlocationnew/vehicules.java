@@ -198,7 +198,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 Modifier =(Button)myDyalog.findViewById(R.id.btn_modifier);
 
 
-                matr =(TextView)view.findViewById(R.id.marqueV);
+                matr =(TextView)view.findViewById(R.id.matrV);
 
                 //Onclose dyalog
                 text9.setOnClickListener(new View.OnClickListener() {
@@ -346,6 +346,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
 
                     }
                 });
+
 
                 //inisialise les donner from bas donner
                 SQLiteDatabase table = db.getReadableDatabase ();

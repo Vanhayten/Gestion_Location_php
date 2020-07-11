@@ -32,7 +32,7 @@
         android:layout_below="@id/textView22"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="30dp"
-        android:text="Date Debut" />
+        android:text="Date Debut assurance" />
 
 
     <EditText
@@ -51,7 +51,7 @@
         android:layout_below="@id/editText9"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="30dp"
-        android:text="Date Fin" />
+        android:text="Date Fin assurance" />
 
     <EditText
         android:id="@+id/editText16"

@@ -54,6 +54,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
     /**
      * list choix vehicule
      */
+
     //Page_Adapter_choix_matr page_adapter_choix_matr;
     ArrayList<String> arrayList_choix = new ArrayList<String>();
     ArrayAdapter<String> arrayAdapter2;
@@ -93,6 +94,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         role1.setText(role);
         //charge liste view par les clients
 
+
         db = new gestion_location(this);
         //  boolean h=db.insert_client("hadini","mohamed","fes","cn33820","06514665","etudiant");
 
@@ -109,7 +111,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 ArrayList<list_client> arrayList1;
                 SQLiteDatabase table = db.getReadableDatabase();
-                String requet = "select * from Clients where cin ='" + t1.getText() + "'";
+                String requet = "select * from Clients where nom ='" + t1.getText() + "' or prenom ='" + t1.getText() + "'";
                 Cursor c = table.rawQuery(requet, null);
                 if (c.getCount() >= 1) {
                     ls.clearChoices();

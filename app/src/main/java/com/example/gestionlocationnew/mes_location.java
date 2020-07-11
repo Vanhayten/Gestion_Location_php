@@ -33,7 +33,11 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class mes_location extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,6 +46,15 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
+    gestion_location db;
+    ArrayList<list_client> arrayList;
+    PageAdapter_client listrep;
+    ListView ls;
+    EditText t1;
+
+    ArrayList<String> arrayList_choix = new ArrayList<String>();
+    ArrayAdapter<String> arrayAdapter2;
+    String vihicule_choix = "";
 
 
     @Override
@@ -74,6 +87,81 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+
+        db = new gestion_location(this);
+        ls = (ListView) findViewById(R.id.listLocation);
+        t1 = (EditText) findViewById(R.id.chercherLocation);
+
+        /*
+        t1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                ArrayList<list_client> arrayList1;
+                SQLiteDatabase table = db.getReadableDatabase();
+                String requet = "select * from Recette where nom ='" + t1.getText() + "' or prenom ='" + t1.getText() + "'";
+                Cursor c = table.rawQuery(requet, null);
+                if (c.getCount() >= 1) {
+                    ls.clearChoices();
+                    arrayList1 = new ArrayList<list_client>();
+                    while (c.moveToNext()) {
+                        list_client list = new list_client(c.getString(0) + " " + c.getString(1), c.getString(3));
+                        arrayList1.add(list);
+                    }
+                    PageAdapter_client adapter_vihucle = new PageAdapter_client(mes_clients.this, arrayList1);
+                    ls.setAdapter(adapter_vihucle);
+                } else {
+                    ls.setAdapter(listrep);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });*/
+
+        Date c1 = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String formattedDate = df.format(c1);
+
+        SQLiteDatabase table = db.getReadableDatabase();
+        String requet = "select * from Recette where date_fin > '"+formattedDate+"'";
+
+        Cursor c = table.rawQuery(requet, null);
+
+
+        arrayList = new ArrayList<list_client>();
+        arrayList.clear();
+        while (c.moveToNext()) {
+
+            String requetclient = "select * from Clients where cin = '"+c.getString(8)+"'";
+            Cursor cclint = table.rawQuery(requetclient, null);
+
+            String requetvehicule = "select * from véhicules where immatriculation = '"+c.getString(7)+"'";
+            Cursor cvhcl = table.rawQuery(requetvehicule, null);
+
+
+
+            if(cclint.moveToNext() && cvhcl.moveToNext()){
+                list_client list = new list_client(cclint.getString(0) + " " + cclint.getString(1), cvhcl.getString(0));
+                arrayList.add(list);
+            }
+        }
+        listrep = new PageAdapter_client(this, arrayList);
+        ls.setAdapter(listrep);
+
+
+
+
 
 
     }

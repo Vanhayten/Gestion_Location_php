@@ -33,36 +33,62 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginBottom="26dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:gravity="center_horizontal"
                     android:text="Mes charges"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textSize="28dp"></TextView>
 
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="recherche entre deux date"
+                    android:layout_gravity="center"
+                    android:id="@+id/visiblecharche"
+                    android:onClick="recherche"
+                    >
+
+                </Button>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:id="@+id/layout_recherche">
                 <EditText
                     android:id="@+id/chercherCharge"
                     android:layout_width="300dp"
                     android:layout_height="40dp"
-                    android:layout_marginTop="8dp"
-                    android:hint="Recherche"
+                    android:hint="Date de début"
                     android:textAlignment="center"
+                    android:inputType="date"
                     android:textColor="@color/BlueDarck"
                     android:textColorHint="@color/BlueDarck"
                     android:background="@drawable/rounded_edit_text"
                     android:layout_marginBottom="16dp"
                     />
+                    <EditText
+                        android:id="@+id/chercherCharge1"
+                        android:layout_width="300dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:hint="Date de fin"
+                        android:inputType="date"
+                        android:textAlignment="center"
+                        android:textColor="@color/BlueDarck"
+                        android:textColorHint="@color/BlueDarck"
+                        android:background="@drawable/rounded_edit_text"
+                        android:layout_marginBottom="16dp"
+                        />
 
                 </LinearLayout>
 

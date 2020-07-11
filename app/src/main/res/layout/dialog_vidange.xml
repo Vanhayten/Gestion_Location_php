@@ -50,7 +50,7 @@
             android:layout_marginTop="6dp"
             android:background="@drawable/button_style"
             android:gravity="center"
-            android:text="Vidange on atende : Null"
+            android:text="Prochaine vidange : Null"
             android:textColor="@color/NAVwhite"
             android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"/>
 

@@ -372,28 +372,11 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         sp.setAdapter(arrayAdapter);
 
 
-       //  remplir spinner par les matricule
 
 /**
  * --------------------------------- filtrer les vehicule ---------------------------
  */
-/*
-             Cursor c;
 
-
-            SQLiteDatabase table = db.getReadableDatabase ();
-            //V WHERE  NOT EXISTS  (SELECT 1 FROM vehicule_choisi WHERE Matricule = v.immatriculation)";
-            String requet ="SELECT * FROM véhicules ";
-            c = table.rawQuery ( requet, null );
-            if(c.getCount() == 0){
-                Toast.makeText(this, "aucune vèhicule ", Toast.LENGTH_SHORT).show();
-            }else{
-                while (c.moveToNext())
-                {
-                    arrayListMatricule.add(c.getString(2));
-                }
-            }
-            */
 
         text11 = (Spinner) MyDyalog_ajou.findViewById(R.id.text_matric);
         ArrayList<String> arrayListMatricule  = new ArrayList<String>();
@@ -482,7 +465,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 boolean d = false;
                 int total = Integer.parseInt(text8.getText().toString()) * Integer.parseInt(text9.getText().toString());
                 if (c1.getCount()==0){
-                    b = db.insert_client(text1.getText().toString(), text2.getText().toString(), text13.getText().toString(), text3.getText().toString(), text4.getText().toString(), text5.getText().toString());
+                    b = db.insert_client(text1.getText().toString().toUpperCase(), text2.getText().toString().toUpperCase(), text13.getText().toString(), text3.getText().toString().toUpperCase(), text4.getText().toString(), text5.getText().toString());
                     d= db.insert_Recette(s,text6.getText().toString(),text7.getText().toString(),Integer.parseInt(text8.getText().toString()),Integer.parseInt(text9.getText().toString()),total,sp.getSelectedItem().toString(),text11.getSelectedItem().toString(),text3.getText().toString());
                     if (b && d ) {
                         Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
@@ -490,6 +473,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 }
                 // tester if lclient existe        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                 if(c1.moveToFirst()) {
+
                     if(c1.getString(3).equals(text3.getText().toString())) {
                           d= db.insert_Recette(s,text6.getText().toString(),text7.getText().toString(),Integer.parseInt(text8.getText().toString()),Integer.parseInt(text9.getText().toString()),total,sp.getSelectedItem().toString(),text11.getSelectedItem().toString(),text3.getText().toString());
 

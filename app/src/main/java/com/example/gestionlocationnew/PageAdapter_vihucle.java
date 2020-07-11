@@ -43,12 +43,12 @@ public class PageAdapter_vihucle extends ArrayAdapter<list_vihcule>
 
         TextView matrTextView = (TextView) listItemView.findViewById(R.id.matrV);
 
-        matrTextView.setText(currentAndroidFlavor.getMatr());
+        matrTextView.setText(currentAndroidFlavor.getMarque());
 
 
         TextView marqueTextView = (TextView) listItemView.findViewById(R.id.marqueV);
 
-        marqueTextView.setText(currentAndroidFlavor.getMarque());
+        marqueTextView.setText(currentAndroidFlavor.getMatr());
 
         /*
         col=currentAndroidFlavor.getColor();

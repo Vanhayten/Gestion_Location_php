@@ -16,10 +16,12 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +39,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static android.view.View.GONE;
+
 public class mes_charges extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
 
     String Nom,Prenom,role;
     DrawerLayout drawerLayout;
@@ -51,12 +56,21 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
     Page_Adapter_charge listrep;
     ListView ls;
     Page_Adapter_charge adapter_vihucle;
+    EditText Recherche;
+    EditText Recherche1;
+
 
     Cursor c;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mes_charge);
+
+        Recherche =(EditText)findViewById(R.id.chercherCharge);
+        Recherche1 =(EditText)findViewById(R.id.chercherCharge1);
+
 
         drawerLayout = findViewById(R.id.drawer);
         toolbar = findViewById(R.id.toolbar);
@@ -113,9 +127,28 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
             ls.setAdapter (listrep);
         }
 
-         final EditText Recherche;
-        Recherche =(EditText)findViewById(R.id.chercherCharge);
-Recherche.addTextChangedListener(new TextWatcher() {
+/**
+ * recherche
+ */
+        Recherche.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                rechercheEntreDeuxDate();
+
+            }
+        });
+
+        Recherche1.addTextChangedListener(new TextWatcher() {
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -128,61 +161,11 @@ Recherche.addTextChangedListener(new TextWatcher() {
 
     @Override
     public void afterTextChanged(Editable s) {
-        ArrayList<list_charge> arrayList2;
-        SQLiteDatabase table = db.getReadableDatabase();
-        String requet = "select * from Charge";
-
-        try {
-
-
-            Cursor c = table.rawQuery(requet, null);
-
-
-            arrayList2 = new ArrayList<list_charge>();
-
-
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            String dateEditext = Recherche.getText().toString();
-            Date date = null;
-
-            date = sdf.parse(dateEditext);
-            //   Toast.makeText(this, ""+date, Toast.LENGTH_SHORT).show();
-
-            Date date3;
-            int i = 0;
-
-
-            while (c.moveToNext()) {
-                date3 = null;
-
-                  date3 = sdf.parse(c.getString(1));
-                //Toast.makeText(this, ""+date3, Toast.LENGTH_SHORT).show();
-
-                if (date3.compareTo(date) == 0) {
-                    i++;
-                    list_charge list = new list_charge (c.getString(0),c.getString(4),c.getString(2),c.getString(3),c.getString(1));
-                    arrayList2.add ( list );
-                    // Log.i("TAG", "message "+c.getString(0)+"  "+c.getString(4)+"  "+c.getString(2)+"  "+c.getString(3)+"  "+c.getString(1));
-                }
-
-            }
-
-            Page_Adapter_charge adapter_vihucle1 = new Page_Adapter_charge(mes_charges.this, arrayList2);
-
-            if (i > 0) {
-                ls.setAdapter(adapter_vihucle1);
-
-            } else {
-                ls.setAdapter(adapter_vihucle);
-            }
-
-
-        } catch (Exception Ex) {
-
-        }
+        rechercheEntreDeuxDate();
 
     }
 });
+
         //modifer supprimer charge
         ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -479,6 +462,80 @@ Recherche.addTextChangedListener(new TextWatcher() {
     }
 
 
+    public void recherche(View view) {
+
+        LinearLayout propLayout = (LinearLayout)findViewById(R.id.layout_recherche);
+        Button btnrecherche =(Button)findViewById(R.id.visiblecharche);
+        btnrecherche.setVisibility(View.INVISIBLE);
+        if (propLayout.getVisibility() == View.VISIBLE)
+        {
+            propLayout.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            propLayout.setVisibility(View.VISIBLE);
+        }
 
 
+    }
+
+    public void rechercheEntreDeuxDate(){
+
+        ArrayList<list_charge> arrayList2;
+        SQLiteDatabase table = db.getReadableDatabase();
+        String requet = "select * from Charge";
+
+        try {
+
+
+            Cursor c = table.rawQuery(requet, null);
+
+
+            arrayList2 = new ArrayList<list_charge>();
+
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String dateEditext = Recherche.getText().toString();
+            String dateEditext1 = Recherche1.getText().toString();
+            Date date = null;
+            Date date1 = null;
+
+            date = sdf.parse(dateEditext);
+            date1 = sdf.parse(dateEditext1);
+
+            //   Toast.makeText(this, ""+date, Toast.LENGTH_SHORT).show();
+
+            Date date3;
+            int i = 0;
+
+
+            while (c.moveToNext()) {
+                date3 = null;
+
+                date3 = sdf.parse(c.getString(1));
+                //Toast.makeText(this, ""+date3, Toast.LENGTH_SHORT).show();
+
+                if (date3.after(date)  &&  date3.before(date1)) {
+                    i++;
+                    list_charge list = new list_charge (c.getString(0),c.getString(4),c.getString(2),c.getString(3),c.getString(1));
+                    arrayList2.add ( list );
+                    // Log.i("TAG", "message "+c.getString(0)+"  "+c.getString(4)+"  "+c.getString(2)+"  "+c.getString(3)+"  "+c.getString(1));
+                }
+
+            }
+
+            Page_Adapter_charge adapter_vihucle1 = new Page_Adapter_charge(mes_charges.this, arrayList2);
+
+            if (i > 0) {
+                ls.setAdapter(adapter_vihucle1);
+
+            } else {
+                ls.setAdapter(adapter_vihucle);
+            }
+
+
+        } catch (Exception Ex) {
+
+        }
+    }
 }
