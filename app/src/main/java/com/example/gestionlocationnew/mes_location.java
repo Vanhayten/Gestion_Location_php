@@ -1,35 +1,23 @@
 package com.example.gestionlocationnew;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -95,18 +83,21 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
         ls = (ListView) findViewById(R.id.listLocation);
         t1 = (EditText) findViewById(R.id.chercherLocation);
 
-        /*
+
         t1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
                 ArrayList<list_client> arrayList1;
                 SQLiteDatabase table = db.getReadableDatabase();
-                String requet = "select * from Recette where nom ='" + t1.getText() + "' or prenom ='" + t1.getText() + "'";
+                String requet = "select * from Clients where nom ='" + t1.getText() + "'";
                 Cursor c = table.rawQuery(requet, null);
                 if (c.getCount() >= 1) {
                     ls.clearChoices();
@@ -115,19 +106,13 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
                         list_client list = new list_client(c.getString(0) + " " + c.getString(1), c.getString(3));
                         arrayList1.add(list);
                     }
-                    PageAdapter_client adapter_vihucle = new PageAdapter_client(mes_clients.this, arrayList1);
+                    PageAdapter_client adapter_vihucle = new PageAdapter_client(mes_location.this, arrayList1);
                     ls.setAdapter(adapter_vihucle);
                 } else {
                     ls.setAdapter(listrep);
                 }
-
             }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });*/
+        });
 
         Date c1 = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
