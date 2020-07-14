@@ -211,7 +211,6 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                         });
 
 
-
                         MyDyalog_modifier.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         MyDyalog_modifier.show();
                     }

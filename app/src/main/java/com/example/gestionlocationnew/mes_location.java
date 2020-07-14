@@ -1,26 +1,40 @@
 package com.example.gestionlocationnew;
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.material.navigation.NavigationView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,6 +50,7 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle toggle;
     gestion_location db;
     ArrayList<list_client> arrayList;
+    ArrayList<list_client> arrayList1;
     PageAdapter_client listrep;
     ListView ls;
     EditText t1;
@@ -49,6 +64,8 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mes_location);
+
+
 
         NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);
         View headerView = navigationView1.getHeaderView(0);
@@ -80,66 +97,87 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
 
 
         db = new gestion_location(this);
+
         ls = (ListView) findViewById(R.id.listLocation);
         t1 = (EditText) findViewById(R.id.chercherLocation);
 
+        Date c1 = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
+        String formattedDate = df.format(c1);
 
         t1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                ArrayList<list_client> arrayList1;
-                SQLiteDatabase table = db.getReadableDatabase();
-                String requet = "select * from Clients where nom ='" + t1.getText() + "'";
-                Cursor c = table.rawQuery(requet, null);
-                if (c.getCount() >= 1) {
-                    ls.clearChoices();
-                    arrayList1 = new ArrayList<list_client>();
-                    while (c.moveToNext()) {
-                        list_client list = new list_client(c.getString(0) + " " + c.getString(1), c.getString(3));
-                        arrayList1.add(list);
-                    }
-                    PageAdapter_client adapter_vihucle = new PageAdapter_client(mes_location.this, arrayList1);
-                    ls.setAdapter(adapter_vihucle);
-                } else {
-                    ls.setAdapter(listrep);
-                }
+
             }
+
+
         });
 
-        Date c1 = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        String formattedDate = df.format(c1);
 
-        SQLiteDatabase table = db.getReadableDatabase();
-        String requet = "select * from Recette where date_fin > '"+formattedDate+"'";
-
-        Cursor c = table.rawQuery(requet, null);
+/**
+ * initialisation location
+ */
 
 
         arrayList = new ArrayList<list_client>();
         arrayList.clear();
+
+
+        SQLiteDatabase table = db.getReadableDatabase();
+        String requet = "select * from Recette";
+        Cursor c = table.rawQuery(requet, null);
+
+        Date dateNow=null;
+        Date datereccet=null;
+        try {
+             dateNow = df.parse(formattedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
         while (c.moveToNext()) {
-
-            String requetclient = "select * from Clients where cin = '"+c.getString(8)+"'";
-            Cursor cclint = table.rawQuery(requetclient, null);
-
-            String requetvehicule = "select * from véhicules where immatriculation = '"+c.getString(7)+"'";
-            Cursor cvhcl = table.rawQuery(requetvehicule, null);
-
-
-
-            if(cclint.moveToNext() && cvhcl.moveToNext()){
-                list_client list = new list_client(cclint.getString(0) + " " + cclint.getString(1), cvhcl.getString(0));
-                arrayList.add(list);
+            try {
+                datereccet = df.parse(c.getString(2));
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+
+
+
+            if(dateNow.compareTo(datereccet) < 0){
+
+
+                SQLiteDatabase table1 = db.getReadableDatabase();
+                String requetclient = "select * from Clients where cin = '"+c.getString(8).toUpperCase()+"'";
+                Cursor cclint = table1.rawQuery(requetclient, null);
+
+                String requetvehicule = "select * from véhicules where immatriculation = '"+c.getString(7)+"'";
+                Cursor cvhcl = table1.rawQuery(requetvehicule, null);
+
+
+
+                while (cclint.moveToNext() && cvhcl.moveToNext()){
+
+                    list_client list = new list_client(cclint.getString(0) + " " + cclint.getString(1), cvhcl.getString(0));
+                    arrayList.add(list);
+                }
+
+
+            }
+
         }
         listrep = new PageAdapter_client(this, arrayList);
         ls.setAdapter(listrep);
