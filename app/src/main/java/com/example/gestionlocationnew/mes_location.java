@@ -4,17 +4,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,6 +31,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -183,6 +189,48 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
         ls.setAdapter(listrep);
 
 
+        ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+                ImageView imageView = (ImageView) view.findViewById(R.id.appele_client);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        TextView cin = (TextView)view.findViewById(R.id.matrV);
+
+                        String[] fullname = cin.getText().toString().split(" ");
+
+                        SQLiteDatabase table = db.getReadableDatabase();
+                        String requet = "select tel from Clients where nom ='" +fullname[0]+ "' and prenom ='"+fullname[1]+"'";
+                        Cursor c = table.rawQuery(requet, null);
+                        String teephone = null;
+                        if(c.moveToNext()){
+                            teephone = c.getString(0);
+                        }
+
+
+                        final int REQUEST_PHONE_CALL = 1;
+                        Intent intent1 = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + teephone));
+                        if (ActivityCompat.checkSelfPermission(mes_location.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+
+
+                            ActivityCompat.requestPermissions(mes_location.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+                            return;
+                        }else {
+                            startActivity(intent1);
+                        }
+
+                    }
+                });
+
+            }
+        });
 
 
 
