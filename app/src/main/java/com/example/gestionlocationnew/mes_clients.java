@@ -111,7 +111,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 ArrayList<list_client> arrayList1;
                 SQLiteDatabase table = db.getReadableDatabase();
-                String requet = "select * from Clients where nom ='" + t1.getText() + "' or prenom ='" + t1.getText() + "'";
+                String requet = "select * from Clients where nom ='" + t1.getText().toString().toUpperCase() + "' or prenom ='" + t1.getText().toString().toUpperCase() + "'";
                 Cursor c = table.rawQuery(requet, null);
                 if (c.getCount() >= 1) {
                     ls.clearChoices();

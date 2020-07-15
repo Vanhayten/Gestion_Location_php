@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -29,7 +31,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -48,12 +54,13 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
     ArrayList<list_recette> arrayList1;
     EditText t1;
     PageAdapter_recette listeRecet;
-
+    TextView totale;
 
 
     String Idd,cin,Matr,datedb,datefn,nbjour,prix,Typ_Payment,prix_01;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,14 +105,39 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         Cursor c = table.rawQuery ( requet, null );
         arrayList1 = new ArrayList<list_recette> ();
         arrayList1.clear ();
+        int somme = 0;
+        totale =(TextView)findViewById(R.id.ttg);
+
+        LocalDate now = LocalDate.now();
+       String dateYear = now.format(DateTimeFormatter.ofPattern("yyyy"));
+       String dateMonth = now.format(DateTimeFormatter.ofPattern("MM"));
+
+
+        DateTimeFormatter formatterY = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+
+        String dateYearcon =null ;
+        String dateMonthcon =null;
+
         while (c.moveToNext())
         {
+
+            dateYearcon =c.getString(1).split("/")[2];
+            dateMonthcon = c.getString(1).split("/")[1];
+
+            if(dateYear.equals(dateYearcon) && dateMonth.equals(dateMonthcon)){
+                somme = somme+Integer.parseInt(c.getString(5));
+            }
+
+
             list_recette list = new list_recette (Integer.parseInt(c.getString(5)),c.getString(0));
             arrayList1.add (list);
         }
 
         listeRecet = new PageAdapter_recette ( this, arrayList1 );
         ls.setAdapter(listeRecet);
+
+        totale.setText("Total generale par mois: "+somme+" DH");
 
 
 

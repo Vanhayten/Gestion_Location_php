@@ -83,27 +83,35 @@
                 android:dividerHeight="10.0sp">
 
             </ListView>
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
                 <Button
+                    android:layout_gravity="center"
                     android:id="@+id/ajouterClient"
-                    android:layout_width="102dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="16dp"
                     android:background="@drawable/rounded_buttom"
                     android:drawableStart="@drawable/ic_add_black_24dp"
                     android:drawableLeft="@drawable/ic_add_black_24dp"
-                    android:drawablePadding="4dp"
-
                     android:onClick="ajouter"
                     android:text="Ajouter"
-                    android:textColor="@color/NAVwhite_theme50">
-
+                    android:textColor="@color/NAVwhite_theme50"
+                    android:layout_marginRight="25dp">
                 </Button>
-            </RelativeLayout>
+                <TextView
+                    android:id="@+id/ttg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Total generale par mois: 0DH"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
