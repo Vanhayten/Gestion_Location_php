@@ -146,13 +146,8 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
                 day = Integer.parseInt(dateDaycon1);
                 prixx = Integer.parseInt(c1.getString(5));
-                Toast.makeText(this, ""+day+" "+prixx, Toast.LENGTH_SHORT).show();
-
-
-
+                //Toast.makeText(this, ""+day+" "+prixx, Toast.LENGTH_SHORT).show();
                 yValues.add(new Entry(day,prixx));
-
-
 
             }
 
@@ -162,7 +157,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
 
-        LineDataSet set1 = new LineDataSet(yValues,"Data set 1");
+        LineDataSet set1 = new LineDataSet(yValues,"Prix par jour");
 
         set1.setFillAlpha(110);
         set1.setColor(Color.GREEN);
