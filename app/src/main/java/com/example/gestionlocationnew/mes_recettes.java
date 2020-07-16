@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.service.autofill.Dataset;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
@@ -28,6 +29,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.bumptech.glide.util.LogTime;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.google.android.material.navigation.NavigationView;
 
 import java.text.DateFormat;
@@ -42,6 +54,11 @@ import java.util.Date;
 import java.util.Locale;
 
 public class mes_recettes extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    private static final String TAG = "mes_recettes";
+
+    private LineChart mChart;
 
     String Nom,Prenom,role;
 
@@ -65,9 +82,110 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mes_recettes);
-
-
         db = new gestion_location(this);
+
+        /**
+         * create CHART -------------------------------------------
+         */
+        mChart = (LineChart)findViewById(R.id.Linechart);
+       // mChart.setOnChartGestureListener(mes_recettes.this);
+       // mChart.setOnChartValueSelectedListener((OnChartValueSelectedListener) mes_recettes.this);
+
+        mChart.setDragEnabled(true);
+        mChart.setScaleEnabled(true);
+
+
+
+        YAxis leftAxis = mChart.getAxisLeft();
+
+        leftAxis.removeAllLimitLines();
+        //leftAxis.setAxisMaximum(100f);
+        leftAxis.enableGridDashedLine(10f,10f,0);
+        leftAxis.setDrawGridLinesBehindData(true);
+
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+
+        mChart.getAxisRight().setEnabled(false);
+
+
+        ArrayList<Entry> yValues =new ArrayList<>();
+
+
+        /**
+         * initialitation les donner don chart
+         */
+
+        SQLiteDatabase table1 = db.getReadableDatabase();
+        String requet1 = "SELECT * FROM  Recette ORDER BY date_début ASC";
+        Cursor c1 = table1.rawQuery ( requet1, null);
+
+
+        LocalDate now1 = LocalDate.now();
+        String dateYear1 = now1.format(DateTimeFormatter.ofPattern("yyyy"));
+        String dateMonth1 = now1.format(DateTimeFormatter.ofPattern("MM"));
+
+
+        String dateYearcon1 =null ;
+        String dateMonthcon1 =null;
+        String dateDaycon1 =null;
+        int day =0;
+        int prixx = 0;
+
+        yValues.add(new Entry(0,0));
+        while (c1.moveToNext())
+        {
+
+            dateYearcon1 =c1.getString(1).split("/")[2];
+            dateMonthcon1 = c1.getString(1).split("/")[1];
+            dateDaycon1 = c1.getString(1).split("/")[0];
+
+            if(dateYear1.equals(dateYearcon1) && dateMonth1.equals(dateMonthcon1)){
+
+
+                day = Integer.parseInt(dateDaycon1);
+                prixx = Integer.parseInt(c1.getString(5));
+                Toast.makeText(this, ""+day+" "+prixx, Toast.LENGTH_SHORT).show();
+
+
+
+                yValues.add(new Entry(day,prixx));
+
+
+
+            }
+
+        }
+
+
+
+
+
+        LineDataSet set1 = new LineDataSet(yValues,"Data set 1");
+
+        set1.setFillAlpha(110);
+        set1.setColor(Color.GREEN);
+        set1.setLineWidth(2f);
+        set1.setValueTextSize(8f);
+        set1.setValueTextColor(Color.GRAY);
+
+        ArrayList<ILineDataSet> datasets = new ArrayList<>();
+        datasets.add(set1);
+        LineData data = new LineData(datasets);
+
+        mChart.setData(data);
+
+
+
+
+
+
+
+
+
+
+
 
         drawerLayout = findViewById(R.id.drawer);
         toolbar = findViewById(R.id.toolbar);
@@ -447,7 +565,8 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
             @Override
             public void afterTextChanged(Editable s) {
                 SQLiteDatabase table = db.getReadableDatabase ();
-                String requet = "select * from Clients where cin ='"+text3.getText()+"'";
+                String Cintext = text3.getText().toString().toUpperCase();
+                String requet = "select * from Clients where cin ='"+Cintext.toUpperCase()+"'";
                 Cursor c = table.rawQuery ( requet, null );
 
                 if(c.moveToFirst()){

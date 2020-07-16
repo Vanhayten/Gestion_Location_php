@@ -31,7 +31,8 @@
         <activity android:name=".Login">
         </activity>
         <activity android:name=".mes_clients" />
-        <activity android:name=".mes_recettes" />
+        <activity android:name=".mes_recettes"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".mes_charges" />
         <activity android:name=".vehicules" />
 
