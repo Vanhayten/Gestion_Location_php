@@ -169,9 +169,20 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         int day =0;
         int prixx = 0;
 
-       // yValues.add(new Entry(0,0));
+
+        Integer test1 =0;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date date4;
+        Date date5;
+
+
         while (c1.moveToNext())
         {
+
+            date5 = null;
+            date4 = null;
+            prixx=0;
+
             dateYearcon1 =c1.getString(1).split("/")[2];
             dateMonthcon1 = c1.getString(1).split("/")[1];
             dateDaycon1 = c1.getString(1).split("/")[0];
@@ -179,10 +190,41 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
             if(dateYear1.equals(dateYearcon1) && dateMonth1.equals(dateMonthcon1)){
 
 
+                /**
+                 * test test test test test test ------------------
+                 */
+
+                String requet2 = "SELECT * FROM  Recette";
+                Cursor c2 = table1.rawQuery ( requet2, null);
+                test1 =0;
+                try {
+                    date4 = sdf.parse(c1.getString(1));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                while (c2.moveToNext()){
+                    try {
+                        date5 = sdf.parse(c2.getString(1));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    if(date5.compareTo(date4) == 0){
+                        test1 = test1+Integer.parseInt(c2.getString(5));
+                    }
+
+                }
+
+                prixx = test1;
+
+
+
                 day = Integer.parseInt(dateDaycon1);
-                prixx = Integer.parseInt(c1.getString(5));
-                //Toast.makeText(this, ""+day+" "+prixx, Toast.LENGTH_SHORT).show();
+                //prixx = Integer.parseInt(c1.getString(5));
                 yValues.add(new Entry(day,prixx));
+
+
             }
 
         }
@@ -832,14 +874,22 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
         date = sdf.parse(dateEditext);
         date1 = sdf.parse(dateEditext1);
 
-        //   Toast.makeText(this, ""+date, Toast.LENGTH_SHORT).show();
+
 
         Date date3;
         int i = 0;
 
+        Integer test1 =0;
+        Date date4;
+        Date date5;
+
+
         while (c1.moveToNext())
         {
             date3 = null;
+            date5 = null;
+            date4 = null;
+            prixx=0;
 
             date3 = sdf.parse(c1.getString(1));
 
@@ -850,9 +900,40 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
 
             if(date3.after(date)  &&  date3.before(date1)){
 
+                /**
+                 * test test test test test test ------------------
+                 */
+
+                String requet2 = "SELECT * FROM  Recette";
+                Cursor c2 = table1.rawQuery ( requet2, null);
+                test1 =0;
+                try {
+                    date4 = sdf.parse(c1.getString(1));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                while (c2.moveToNext()){
+                    try {
+                        date5 = sdf.parse(c2.getString(1));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    if(date5.compareTo(date4) == 0){
+                        test1 = test1+Integer.parseInt(c2.getString(5));
+                    }
+
+                }
+
+                prixx = test1;
+
+
+
+
 
                 day = Integer.parseInt(dateDaycon1);
-                prixx = Integer.parseInt(c1.getString(5));
+                //prixx = Integer.parseInt(c1.getString(5));
                 //Toast.makeText(this, ""+day+" "+prixx, Toast.LENGTH_SHORT).show();
                 yValues.add(new Entry(day,prixx));
 

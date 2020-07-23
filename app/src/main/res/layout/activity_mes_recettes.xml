@@ -148,6 +148,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:background="@drawable/rounded_edit_text"
         android:layout_width="0dp"
         android:layout_weight="1"
+        android:inputType="date"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="18dp"
         android:layout_height="34dp"
@@ -163,6 +164,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_weight="1"
         android:layout_marginRight="15dp"
         android:layout_height="34dp"
+        android:inputType="date"
         android:id="@+id/textrecherche1">
 
     </EditText>
