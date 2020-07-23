@@ -110,8 +110,8 @@ String Nom,Prenom,role;
   public void  DialogFirstuse(){
 
         new AlertDialog.Builder(this)
-                .setTitle("cette message affiche une seule fois !!")
-                .setMessage("Remplire les champs de la véhicule pour la prochain fois tu peux navigé facillment")
+                .setTitle("Ce Messages il s'affiche une seule fois !!")
+                .setMessage("veuillez remplir les champs de véhicule  pour consulter les données de votre véhicule prochainement très facilement")
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Ganre daccident :"
-                android:textColor="@color/NAVgray_theme50"
+                android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
                 android:textSize="18dp" />
             <LinearLayout
@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5sp"
                     android:text="Responsabiliter :"
-                    android:textColor="@color/NAVgray_theme50"
+                    android:textColor="@color/NAVwhite"
                     android:textColorHint="@color/NAVwhite"
                     android:textSize="18dp" />
 

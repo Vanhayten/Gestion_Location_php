@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.Editable;
@@ -27,15 +29,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.Utils;
 import com.google.android.material.navigation.NavigationView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -58,15 +73,139 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
     Page_Adapter_charge adapter_vihucle;
     EditText Recherche;
     EditText Recherche1;
+    private LineChart mChart;
 
 
     Cursor c;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mes_charge);
+        db = new gestion_location(this);
+
+
+        /**
+         * create CHART -------------------------------------------        start
+         */
+
+
+                mChart = findViewById(R.id.Linecharcherge);
+        mChart.setDragEnabled(true);
+        mChart.setScaleEnabled(true);
+
+
+        LimitLine ll1 = new LimitLine(30f,"Title");
+        ll1.setLineColor(getResources().getColor(R.color.NAVblack_theme75));
+        ll1.setLineWidth(4f);
+        ll1.enableDashedLine(10f, 10f, 0f);
+        ll1.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+        ll1.setTextSize(10f);
+
+        LimitLine ll2 = new LimitLine(35f, "");
+        ll2.setLineWidth(4f);
+        ll2.enableDashedLine(10f, 10f, 0f);
+
+
+        YAxis leftAxis = mChart.getAxisLeft();
+        XAxis xAxis = mChart.getXAxis();
+
+
+        leftAxis.setValueFormatter(new ClaimsYAxisValueFormatter());
+
+
+
+        XAxis.XAxisPosition position = XAxis.XAxisPosition.BOTTOM;
+        xAxis.setPosition(position);
+
+
+
+        mChart.getDescription().setEnabled(true);
+        Description description = new Description();
+
+
+        description.setText("Jour");
+        description.setTextSize(15f);
+        mChart.getDescription().setPosition(0f, 0f);
+        mChart.setDescription(description);
+        mChart.getAxisRight().setEnabled(false);
+
+        ArrayList<Entry> yValues =new ArrayList<>();
+        String requet1 = "select * from charge ORDER BY Date ASC";
+        SQLiteDatabase table1 = db.getReadableDatabase ();
+        Cursor c1 = table1.rawQuery ( requet1, null);
+
+
+        LocalDate now1 = LocalDate.now();
+        String dateYear1 = now1.format(DateTimeFormatter.ofPattern("yyyy"));
+        String dateMonth1 = now1.format(DateTimeFormatter.ofPattern("MM"));
+
+
+        String dateYearcon1 =null ;
+        String dateMonthcon1 =null;
+        String dateDaycon1 =null;
+        int day =0;
+        int prixx = 0;
+
+
+        if (c1.getCount() ==0) {
+            Toast.makeText(this, "table vide", Toast.LENGTH_SHORT).show();
+        }else {
+            while (c1.moveToNext())
+            {
+                dateYearcon1 =c1.getString(1).split("/")[2];
+                dateMonthcon1 = c1.getString(1).split("/")[1];
+                dateDaycon1 = c1.getString(1).split("/")[0];
+
+                if(dateYear1.equals(dateYearcon1) && dateMonth1.equals(dateMonthcon1)){
+
+
+                    day = Integer.parseInt(dateDaycon1);
+                    prixx = Integer.parseInt(c1.getString(2));
+                    yValues.add(new Entry(day,prixx));
+                }
+
+            }
+        }
+
+
+        LineDataSet set1 = new LineDataSet(yValues,"Prix par jour");
+        set1.setColor(getResources().getColor(R.color.green));
+        set1.setCircleColor(getResources().getColor(R.color.green));
+        set1.setLineWidth(2f);//line size
+        set1.setCircleRadius(5f);
+        set1.setDrawCircleHole(true);
+        set1.setValueTextSize(10f);
+        set1.setDrawFilled(true);
+        set1.setFormLineWidth(5f);
+        set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
+        set1.setFormSize(5.f);
+
+        if (Utils.getSDKInt() >= 18) {
+//                Drawable drawable = ContextCompat.getDrawable(this, R.drawable.blue_bg);
+//                set1.setFillDrawable(drawable);
+            set1.setFillColor(Color.WHITE);
+
+        } else {
+            set1.setFillColor(Color.WHITE);
+        }
+        set1.setDrawValues(true);
+
+
+        ArrayList<ILineDataSet> datasets = new ArrayList<>();
+        datasets.add(set1);
+        LineData data = new LineData(datasets);
+
+        mChart.setData(data);
+
+
+
+
+        /**
+         * create CHART -------------------------------------------     end
+         */
 
         Recherche =(EditText)findViewById(R.id.chercherCharge);
         Recherche1 =(EditText)findViewById(R.id.chercherCharge1);
@@ -99,7 +238,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         role1.setText(role);
 
 
-        db = new gestion_location(this);
+
 
 
         /**
@@ -110,7 +249,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         ArrayList<list_charge> arrayList1;
         SQLiteDatabase table = db.getReadableDatabase ();
         arrayList1= new ArrayList<list_charge> ();
-        String requet = "select * from charge";
+        String requet = "select * from Charge";
         c = table.rawQuery ( requet, null );
         arrayList1.clear();
         if(c.getCount()>=1){
@@ -157,6 +296,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+
     }
 
     @Override
@@ -164,7 +304,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         rechercheEntreDeuxDate();
 
     }
-});
+        });
 
         //modifer supprimer charge
         ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -479,16 +619,32 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void rechercheEntreDeuxDate(){
+
+        ArrayList<Entry> yValues =new ArrayList<>();
+
 
         ArrayList<list_charge> arrayList2;
         SQLiteDatabase table = db.getReadableDatabase();
-        String requet = "select * from Charge";
+        String requet = "select * from Charge  ORDER BY Date ASC";
 
         try {
 
 
             Cursor c = table.rawQuery(requet, null);
+
+            LocalDate now1 = LocalDate.now();
+            String dateYear1 = now1.format(DateTimeFormatter.ofPattern("yyyy"));
+            String dateMonth1 = now1.format(DateTimeFormatter.ofPattern("MM"));
+
+
+            String dateYearcon1 =null ;
+            String dateMonthcon1 =null;
+            String dateDaycon1 =null;
+            int day =0;
+            int prixx = 0;
+
 
 
             arrayList2 = new ArrayList<list_charge>();
@@ -514,8 +670,16 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
                 date3 = sdf.parse(c.getString(1));
                 //Toast.makeText(this, ""+date3, Toast.LENGTH_SHORT).show();
+                dateDaycon1 = c.getString(1).split("/")[0];
+
 
                 if (date3.after(date)  &&  date3.before(date1)) {
+                    day = Integer.parseInt(dateDaycon1);
+                    prixx = Integer.parseInt(c.getString(2));
+                    //Toast.makeText(this, ""+day+" "+prixx, Toast.LENGTH_SHORT).show();
+                    yValues.add(new Entry(day,prixx));
+
+
                     i++;
                     list_charge list = new list_charge (c.getString(0),c.getString(4),c.getString(2),c.getString(3),c.getString(1));
                     arrayList2.add ( list );
@@ -534,8 +698,46 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
             }
 
 
+            LineDataSet set1 = new LineDataSet(yValues,"Prix par jour");
+            set1.setColor(getResources().getColor(R.color.green));
+            set1.setCircleColor(getResources().getColor(R.color.green));
+            set1.setLineWidth(2f);//line size
+            set1.setCircleRadius(5f);
+            set1.setDrawCircleHole(true);
+            set1.setValueTextSize(10f);
+            set1.setDrawFilled(true);
+            set1.setFormLineWidth(5f);
+            set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
+            set1.setFormSize(5.f);
+
+            if (Utils.getSDKInt() >= 18) {
+
+                set1.setFillColor(Color.WHITE);
+
+            } else {
+                set1.setFillColor(Color.WHITE);
+            }
+            set1.setDrawValues(true);
+
+
+            ArrayList<ILineDataSet> datasets = new ArrayList<>();
+            datasets.add(set1);
+            LineData data = new LineData(datasets);
+
+
+            mChart.setData(data);
+
+
+
+
+
+
+
+
+
         } catch (Exception Ex) {
 
         }
+
     }
 }

@@ -91,7 +91,7 @@ Button b1;
                  if(b) {
                      Toast.makeText(getActivity(), "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
 
-                     t1.setText("");
+                     //t1.setText("");
                      t2.setText("");
                      t3.setText("");
                      t4.setText("");

@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class gestion_location extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME="Location.db";
+    SQLiteDatabase db;
 
     //declaration table Identifie
     private static final String Table1 = "Identifie";
@@ -125,7 +126,7 @@ public class gestion_location extends SQLiteOpenHelper {
 
     public gestion_location(Context context) {
         super(context, DATABASE_NAME, null, 2);
-        SQLiteDatabase db = this.getWritableDatabase();
+            db = this.getWritableDatabase();
     }
 
     @Override

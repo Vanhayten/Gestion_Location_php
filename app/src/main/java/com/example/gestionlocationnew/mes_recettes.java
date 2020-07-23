@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.service.autofill.Dataset;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,18 +33,29 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.util.LogTime;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.Utils;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.android.material.navigation.NavigationView;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -51,6 +64,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class mes_recettes extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -72,7 +86,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
     EditText t1;
     PageAdapter_recette listeRecet;
     TextView totale;
-
+    EditText Recherche,Recherche1;
 
     String Idd,cin,Matr,datedb,datefn,nbjour,prix,Typ_Payment,prix_01;
 
@@ -87,36 +101,58 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         /**
          * create CHART -------------------------------------------
          */
-        mChart = (LineChart)findViewById(R.id.Linechart);
-       // mChart.setOnChartGestureListener(mes_recettes.this);
-       // mChart.setOnChartValueSelectedListener((OnChartValueSelectedListener) mes_recettes.this);
 
+        mChart = findViewById(R.id.Linechart);
         mChart.setDragEnabled(true);
         mChart.setScaleEnabled(true);
 
 
+        LimitLine ll1 = new LimitLine(30f,"Title");
+        ll1.setLineColor(getResources().getColor(R.color.NAVblack_theme75));
+        ll1.setLineWidth(4f);
+        ll1.enableDashedLine(10f, 10f, 0f);
+        ll1.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+        ll1.setTextSize(10f);
+
+        LimitLine ll2 = new LimitLine(35f, "");
+        ll2.setLineWidth(4f);
+        ll2.enableDashedLine(10f, 10f, 0f);
+
 
         YAxis leftAxis = mChart.getAxisLeft();
-
-        leftAxis.removeAllLimitLines();
-        //leftAxis.setAxisMaximum(100f);
-        leftAxis.enableGridDashedLine(10f,10f,0);
-        leftAxis.setDrawGridLinesBehindData(true);
-
         XAxis xAxis = mChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
 
+        leftAxis.setValueFormatter(new ClaimsYAxisValueFormatter());
+
+
+
+        XAxis.XAxisPosition position = XAxis.XAxisPosition.BOTTOM;
+        xAxis.setPosition(position);
+
+
+
+        mChart.getDescription().setEnabled(true);
+        Description description = new Description();
+        // description.setText(UISetters.getFullMonthName());//commented for weekly reporting
+        description.setText("Jour");
+        description.setTextSize(15f);
+        mChart.getDescription().setPosition(0f, 0f);
+        mChart.setDescription(description);
         mChart.getAxisRight().setEnabled(false);
 
 
-        ArrayList<Entry> yValues =new ArrayList<>();
+
+
+
+
+
 
 
         /**
          * initialitation les donner don chart
          */
-
+        ArrayList<Entry> yValues =new ArrayList<>();
         SQLiteDatabase table1 = db.getReadableDatabase();
         String requet1 = "SELECT * FROM  Recette ORDER BY date_début ASC";
         Cursor c1 = table1.rawQuery ( requet1, null);
@@ -133,10 +169,9 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         int day =0;
         int prixx = 0;
 
-        yValues.add(new Entry(0,0));
+       // yValues.add(new Entry(0,0));
         while (c1.moveToNext())
         {
-
             dateYearcon1 =c1.getString(1).split("/")[2];
             dateMonthcon1 = c1.getString(1).split("/")[1];
             dateDaycon1 = c1.getString(1).split("/")[0];
@@ -148,7 +183,6 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 prixx = Integer.parseInt(c1.getString(5));
                 //Toast.makeText(this, ""+day+" "+prixx, Toast.LENGTH_SHORT).show();
                 yValues.add(new Entry(day,prixx));
-
             }
 
         }
@@ -157,22 +191,98 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
 
-        LineDataSet set1 = new LineDataSet(yValues,"Prix par jour");
 
+
+        LineDataSet set1 = new LineDataSet(yValues,"Prix par jour");
+        set1.setColor(getResources().getColor(R.color.green));
+        set1.setCircleColor(getResources().getColor(R.color.green));
+        set1.setLineWidth(2f);//line size
+        set1.setCircleRadius(5f);
+        set1.setDrawCircleHole(true);
+        set1.setValueTextSize(10f);
+        set1.setDrawFilled(true);
+        set1.setFormLineWidth(5f);
+        set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
+        set1.setFormSize(5.f);
+
+        if (Utils.getSDKInt() >= 18) {
+//                Drawable drawable = ContextCompat.getDrawable(this, R.drawable.blue_bg);
+//                set1.setFillDrawable(drawable);
+            set1.setFillColor(Color.WHITE);
+
+        } else {
+            set1.setFillColor(Color.WHITE);
+        }
+        set1.setDrawValues(true);
+/*
         set1.setFillAlpha(110);
         set1.setColor(Color.GREEN);
         set1.setLineWidth(2f);
         set1.setValueTextSize(8f);
         set1.setValueTextColor(Color.GRAY);
 
+ */
+
         ArrayList<ILineDataSet> datasets = new ArrayList<>();
         datasets.add(set1);
         LineData data = new LineData(datasets);
 
+
+
+
+
         mChart.setData(data);
 
 
+/**
+ * recherche entre deux date nChqrt
+ */
+Recherche = (EditText)findViewById(R.id.textrecherche);
+Recherche1 = (EditText)findViewById(R.id.textrecherche1);
 
+        Recherche.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                /**
+                 * methode recherche
+                 */
+
+
+            }
+        });
+
+        Recherche1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    rechercheEntreDeuxDate();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
 
 
@@ -684,5 +794,131 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
         return arrayListfinal;
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void rechercheEntreDeuxDate() throws ParseException {
+
+        ArrayList<list_recette> arrayList2;
+        arrayList2 = new ArrayList<list_recette> ();
+
+
+        ArrayList<Entry> yValues =new ArrayList<>();
+        SQLiteDatabase table1 = db.getReadableDatabase();
+        String requet1 = "SELECT * FROM  Recette ORDER BY date_début ASC";
+
+
+        Cursor c1 = table1.rawQuery ( requet1, null);
+
+
+        LocalDate now1 = LocalDate.now();
+        String dateYear1 = now1.format(DateTimeFormatter.ofPattern("yyyy"));
+        String dateMonth1 = now1.format(DateTimeFormatter.ofPattern("MM"));
+
+
+        String dateYearcon1 =null ;
+        String dateMonthcon1 =null;
+        String dateDaycon1 =null;
+        int day =0;
+        int prixx = 0;
+
+        // yValues.add(new Entry(0,0));
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String dateEditext = Recherche.getText().toString();
+        String dateEditext1 = Recherche1.getText().toString();
+        Date date = null;
+        Date date1 = null;
+
+        date = sdf.parse(dateEditext);
+        date1 = sdf.parse(dateEditext1);
+
+        //   Toast.makeText(this, ""+date, Toast.LENGTH_SHORT).show();
+
+        Date date3;
+        int i = 0;
+
+        while (c1.moveToNext())
+        {
+            date3 = null;
+
+            date3 = sdf.parse(c1.getString(1));
+
+            dateYearcon1 =c1.getString(1).split("/")[2];
+            dateMonthcon1 = c1.getString(1).split("/")[1];
+
+            dateDaycon1 = c1.getString(1).split("/")[0];
+
+            if(date3.after(date)  &&  date3.before(date1)){
+
+
+                day = Integer.parseInt(dateDaycon1);
+                prixx = Integer.parseInt(c1.getString(5));
+                //Toast.makeText(this, ""+day+" "+prixx, Toast.LENGTH_SHORT).show();
+                yValues.add(new Entry(day,prixx));
+
+
+                i++;
+                list_recette list = new list_recette (Integer.parseInt(c1.getString(5)),c1.getString(0));
+                arrayList2.add (list);
+
+
+            }
+
+        }
+
+
+        PageAdapter_recette   adapter_vihucle1 = new PageAdapter_recette ( this, arrayList2 );
+
+
+        if (i > 0) {
+            ls.setAdapter(adapter_vihucle1);
+
+        } else {
+            ls.setAdapter(listeRecet);
+        }
+
+
+
+
+
+
+        LineDataSet set1 = new LineDataSet(yValues,"Prix par jour");
+        set1.setColor(getResources().getColor(R.color.green));
+        set1.setCircleColor(getResources().getColor(R.color.green));
+        set1.setLineWidth(2f);//line size
+        set1.setCircleRadius(5f);
+        set1.setDrawCircleHole(true);
+        set1.setValueTextSize(10f);
+        set1.setDrawFilled(true);
+        set1.setFormLineWidth(5f);
+        set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
+        set1.setFormSize(5.f);
+
+        if (Utils.getSDKInt() >= 18) {
+//                Drawable drawable = ContextCompat.getDrawable(this, R.drawable.blue_bg);
+//                set1.setFillDrawable(drawable);
+            set1.setFillColor(Color.WHITE);
+
+        } else {
+            set1.setFillColor(Color.WHITE);
+        }
+        set1.setDrawValues(true);
+/*
+        set1.setFillAlpha(110);
+        set1.setColor(Color.GREEN);
+        set1.setLineWidth(2f);
+        set1.setValueTextSize(8f);
+        set1.setValueTextColor(Color.GRAY);
+
+ */
+
+        ArrayList<ILineDataSet> datasets = new ArrayList<>();
+        datasets.add(set1);
+        LineData data = new LineData(datasets);
+
+
+        mChart.setData(data);
+    }
+
 
 }

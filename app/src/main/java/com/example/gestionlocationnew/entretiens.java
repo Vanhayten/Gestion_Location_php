@@ -166,7 +166,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                 img3_visite = (ImageButton) MyDyalog.findViewById(R.id.visite_technique);
 
 
-                Matricule = (TextView) view.findViewById(R.id.marqueV);
+                Matricule = (TextView) view.findViewById(R.id.matrV);
 
 
                 /**

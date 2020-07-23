@@ -124,7 +124,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                  * get matricule to dialog
                  */
 
-                matr =(TextView)view.findViewById(R.id.marqueV);
+                matr =(TextView)view.findViewById(R.id.matrV);
                 textnom.setText("le matricule : "+matr.getText());
 
 
@@ -205,9 +205,9 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                                 Cursor c = table.rawQuery ( requet, null );
                                 if (c.moveToLast()){
                                     date1.setText("Date debut :"+c.getString(1).toString());
-                                    date2.setText("Date fin :"+c.getString(2).toString());
-                                    companie.setText("Compagnie assurance :"+c.getString(3).toString());
-                                    prim.setText("prime assurance :"+c.getString(4).toString());
+                                    date2.setText("Date fin : "+c.getString(2).toString());
+                                    companie.setText("Compagnie assurance : "+c.getString(3).toString());
+                                    prim.setText("prime assurance : "+c.getString(4).toString()+" DH");
                                 }
 
                                 /**
