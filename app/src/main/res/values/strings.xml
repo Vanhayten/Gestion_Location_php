@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Gestion Location New</string>
+    <string name="app_name">Gestloc</string>
     <string name="drawerOpen">drawerOpen</string>
     <string name="drawerClose">drawerClose</string>
     <string name="title_activity_login">Sign in</string>
