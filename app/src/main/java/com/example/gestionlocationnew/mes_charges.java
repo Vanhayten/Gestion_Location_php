@@ -12,13 +12,10 @@ import android.graphics.DashPathEffect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -53,8 +50,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
-
-import static android.view.View.GONE;
 
 public class mes_charges extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -487,7 +482,9 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                                 AlertDialog dialog = builder.create();
                                 dialog.show();
                             }
+
                         });
+
 
 
 
@@ -497,12 +494,20 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
                     }
                 });
-
+                TextView close;
+                close = (TextView) dyaloge_modifier_supprimer_mes_charges.findViewById(R.id.text_close);
+                close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dyaloge_modifier_supprimer_mes_charges.dismiss();
+                    }
+                });
 
                 dyaloge_modifier_supprimer_mes_charges.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dyaloge_modifier_supprimer_mes_charges.show();
             }
         });
+
 
 
 
