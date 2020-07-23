@@ -34,7 +34,7 @@
             android:layout_marginRight="18dp"
             android:background="@drawable/button_style"
             android:gravity="center"
-            android:text="Nodifier"
+            android:text="Modifier"
             android:textColor="@color/NAVwhite" />
 
         <Button
