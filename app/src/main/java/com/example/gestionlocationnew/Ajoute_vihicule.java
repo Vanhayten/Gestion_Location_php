@@ -1,31 +1,28 @@
 package com.example.gestionlocationnew;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.divyanshu.colorseekbar.ColorSeekBar;
-import com.google.android.material.navigation.NavigationView;
-
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class Ajoute_vihicule extends AppCompatActivity {
-EditText text1,text2,text3,text4,text5,text6;
+EditText text1,text2,text3,text4,text5,text6,text;
     ColorSeekBar Colorseek;
 Spinner spinner;
 gestion_location DB;
@@ -36,7 +33,7 @@ String Nom,Prenom,role;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajoute_vihicule);
-
+         text = (EditText)findViewById(R.id.vihicule_Imatricule);
 
         SharedPreferences perfs1 = getSharedPreferences("perfs1",MODE_PRIVATE);
         boolean firststart1 = perfs1.getBoolean("firststart1",true);
@@ -45,7 +42,22 @@ String Nom,Prenom,role;
 
         }
 
+        text.addTextChangedListener(new TextWatcher() {
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+confirmerMatricule(text.getText().toString());
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+});
 
         Colorseek = findViewById(R.id.vihicule_Couleur);
         Colorseek.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
@@ -124,5 +136,31 @@ String Nom,Prenom,role;
       editor.putBoolean("firststart1",false);
       editor.apply();
   }
+  public void confirmerMatricule(String mat ){
+      Pattern con=Pattern.compile("[0-9]{5}/[A-Z]{1}/[0-9]{2}");
+      Pattern con1=Pattern.compile("[0-9]{4}/[A-Z]{1}/[0-9]{2}");
+      Pattern con2=Pattern.compile("[0-9]{3}/[A-Z]{1}/[0-9]{2}");
+      if(!con.matcher(mat).find() ){
+         // text.setTextColor(Color.RED);
+          text.setBackgroundColor(Color.RED);
+
+      }else {
+          text.setBackgroundColor(Color.GREEN);
+      }
+      if(!con1.matcher(mat).find() ){
+          // text.setTextColor(Color.RED);
+          text.setBackgroundColor(Color.RED);
+      }else {
+          text.setBackgroundColor(Color.GREEN);
+      }
+      if(!con2.matcher(mat).find() ){
+          // text.setTextColor(Color.RED);
+          text.setBackgroundColor(Color.RED);
+      }else {
+          text.setBackgroundColor(Color.GREEN);
+      }
+
+  }
+
 
 }
