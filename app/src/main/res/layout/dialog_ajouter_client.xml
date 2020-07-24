@@ -61,18 +61,19 @@
                 android:textSize="18dp" />
 
 
-
             <EditText
                 android:id="@+id/text_tel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Telephone"
-                android:textSize="18dp"
-                android:textColor="@color/NAVblack_theme100"
-                android:textColorHint="@color/BlueDarck"
+                android:background="@drawable/rounded_edit_text"
                 android:gravity="center"
-                android:background="@drawable/rounded_edit_text"/>
+                android:hint="Telephone"
+                android:inputType="number"
+                android:textColor="@color/NAVblack_theme100"
+
+                android:textColorHint="@color/BlueDarck"
+                android:textSize="18dp" />
             <EditText
                 android:id="@+id/text_adr"
                 android:layout_width="match_parent"

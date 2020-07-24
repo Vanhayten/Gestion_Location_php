@@ -3,7 +3,7 @@ package com.example.gestionlocationnew;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -141,23 +141,22 @@ confirmerMatricule(text.getText().toString());
       Pattern con1=Pattern.compile("[0-9]{4}/[A-Z]{1}/[0-9]{2}");
       Pattern con2=Pattern.compile("[0-9]{3}/[A-Z]{1}/[0-9]{2}");
       if(!con.matcher(mat).find() ){
-         // text.setTextColor(Color.RED);
-          text.setBackgroundColor(Color.RED);
+
+          text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Red), PorterDuff.Mode.SRC_ATOP);
+      }else {
+          text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Green), PorterDuff.Mode.SRC_ATOP);
+
+      }
+     if(!con1.matcher(mat).find() ){
+                 text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Red), PorterDuff.Mode.SRC_ATOP);
 
       }else {
-          text.setBackgroundColor(Color.GREEN);
-      }
-      if(!con1.matcher(mat).find() ){
-          // text.setTextColor(Color.RED);
-          text.setBackgroundColor(Color.RED);
-      }else {
-          text.setBackgroundColor(Color.GREEN);
+         text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Green), PorterDuff.Mode.SRC_ATOP);
       }
       if(!con2.matcher(mat).find() ){
-          // text.setTextColor(Color.RED);
-          text.setBackgroundColor(Color.RED);
+                  text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Red), PorterDuff.Mode.SRC_ATOP);
       }else {
-          text.setBackgroundColor(Color.GREEN);
+          text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Green), PorterDuff.Mode.SRC_ATOP);
       }
 
   }
