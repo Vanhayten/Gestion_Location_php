@@ -24,13 +24,12 @@
             android:layout_marginLeft="60dp">
 
             <EditText
-                android:id="@+id/text_datecha"
+                android:id="@+id/text_design"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
-                android:clickable="true"
-                android:hint="Date"
-                android:inputType="date"
+                android:hint="designation"
+                android:inputType="none"
                 android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
                 android:textSize="18dp" />
@@ -47,15 +46,17 @@
                 android:textSize="18dp" />
 
             <EditText
-                android:id="@+id/text_design"
+                android:id="@+id/text_datecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
-                android:hint="designation"
-                android:inputType="none"
+                android:clickable="true"
+                android:hint="Date"
+                android:inputType="date"
                 android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
                 android:textSize="18dp" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

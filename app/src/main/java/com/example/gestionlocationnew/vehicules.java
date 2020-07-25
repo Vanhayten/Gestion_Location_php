@@ -90,25 +90,21 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
         ls=(ListView)findViewById(R.id.list1);
         t1=(EditText)findViewById(R.id.chercherMatr);
 
+        t1.setSelected(false);
+        t1.setFocusable(false);
+
+
         /**
          * animation
          * On first use
          */
 
-
-        SharedPreferences perfs1 = getSharedPreferences("perfs1",MODE_PRIVATE);
-        boolean firststar = perfs1.getBoolean("firststar",true);
-        if(firststar){
-
-            Animation  fromnav = AnimationUtils.loadAnimation(this,R.anim.fromnav);
-            navigationView.setAnimation(fromnav);
+        Animation  fromnav = AnimationUtils.loadAnimation(this,R.anim.fromnav);
+        navigationView.setAnimation(fromnav);
 
 
-            SharedPreferences perfs = getSharedPreferences("perf",MODE_PRIVATE);
-            SharedPreferences.Editor editor = perfs.edit();
-            editor.putBoolean("firststar",false);
-            editor.apply();
-        }
+
+
 
 
 
@@ -472,4 +468,9 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
         Ajouter.putExtras(b);
         startActivity(Ajouter);
     }
+
+
+
 }
+
+

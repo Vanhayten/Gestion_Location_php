@@ -45,6 +45,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -789,6 +790,7 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public ArrayList filter_vehicule(){
 
         ArrayList<String> arrayListfilter  = new ArrayList<String>();
@@ -799,18 +801,42 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String formattedDate = df.format(c);
 
-        String requet_reccete ="SELECT Matricule_choisi FROM Recette where date_fin > '"+formattedDate+"'";
+        String requet_reccete ="SELECT Matricule_choisi,date_fin FROM Recette";
         String requet_vehicule ="SELECT immatriculation FROM véhicules";
 
-       SQLiteDatabase table = db.getReadableDatabase ();
-       Cursor vehicule = table.rawQuery ( requet_vehicule, null );
-       Cursor  reccete = table.rawQuery ( requet_reccete, null );
+        SQLiteDatabase table = db.getReadableDatabase ();
+        Cursor vehicule = table.rawQuery ( requet_vehicule, null );
+        Cursor  reccete = table.rawQuery ( requet_reccete, null );
 
-       while (vehicule.moveToNext()){
-           arrayListfinal.add(vehicule.getString(0));
-       }
+        Date datenow = null;
+        Date datereccete = null;
+        try {
+             datenow = df.parse(formattedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+
+        while (vehicule.moveToNext()){
+            arrayListfinal.add(vehicule.getString(0));
+        }
         while (reccete.moveToNext()){
-            arrayListfilter.add(reccete.getString(0));
+
+            datereccete = null;
+            try {
+                datereccete = df.parse(reccete.getString(1));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if(datereccete.compareTo(datenow) > 0 ){
+                arrayListfilter.add(reccete.getString(0));
+            }
+
+
+
+
         }
         arrayListfinal.removeAll(arrayListfilter);
 
@@ -820,6 +846,7 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
 
         return arrayListfinal;
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void rechercheEntreDeuxDate() throws ParseException {

@@ -136,6 +136,7 @@ confirmerMatricule(text.getText().toString());
       editor.putBoolean("firststart1",false);
       editor.apply();
   }
+
   public void confirmerMatricule(String mat ){
       Pattern con=Pattern.compile("[0-9]{5}/[A-Z]{1}/[0-9]{2}");
       Pattern con1=Pattern.compile("[0-9]{4}/[A-Z]{1}/[0-9]{2}");
