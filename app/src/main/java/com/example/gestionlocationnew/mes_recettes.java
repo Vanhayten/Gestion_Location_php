@@ -731,14 +731,32 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                 SQLiteDatabase table = db.getReadableDatabase();
                 String requet = "SELECT Id_Recette FROM  Recette";
                 Cursor c = table.rawQuery ( requet, null );
+
+
+                String input = null;     //input string
+                String firstFourChars = "";     //substring containing first 4 characters
+
                 if(c.moveToLast()){
+                    input = c.getString(0);
+                    firstFourChars = input.substring(0, 2);
+
+                    Toast.makeText(mes_recettes.this, ""+firstFourChars+"  "+part3, Toast.LENGTH_SHORT).show();
+
+                 /*   if(firstFourChars.equals(part3)){
+
+                    }else {
+                        count = 0;
+                    }*/
+
                     String[] parts1 = c.getString(0).split("-");
-                    String part11 = parts1[0];
                     String part22 = parts1[1];
                     count = Integer.parseInt(part22);
+
                 }
                 count = count+1;
                 String s =part3+""+part2+""+part1+"-"+count;
+
+                Toast.makeText(mes_recettes.this, ""+s, Toast.LENGTH_SHORT).show();
 
                 SQLiteDatabase table1 = db.getReadableDatabase ();
                 String requet1 = "select * from Clients where cin ='"+text3.getText()+"'";
