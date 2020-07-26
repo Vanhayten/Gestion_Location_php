@@ -186,6 +186,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                          *
                          * if list reparation vide most be remplire
                          */
+                        
                        if (c.moveToNext()) {
 
                        if (Integer.parseInt(c.getString(0)) == 0) {
@@ -206,9 +207,12 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                             btn_ajoute.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    boolean b = false;
+                                        try {
+                                            b = db.insert_reparation(Matricule.getText().toString(), text2.getText().toString(), text3.getText().toString(), text4.getText().toString(), text5.getText().toString(), Integer.parseInt(text6.getText().toString()));
+                                        }catch (Exception E){
 
-
-                                    boolean b = db.insert_reparation(Matricule.getText().toString(), text2.getText().toString(), text3.getText().toString(), text4.getText().toString(), text5.getText().toString(), Integer.parseInt(text6.getText().toString()));
+                                        }
                                     if (b) {
                                         Toast.makeText(entretiens.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
                                         MyDyalog_ajou.dismiss();
@@ -243,10 +247,12 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                 });
 
                 text_nom.setText("Matricule : " + Matricule.getText().toString());
+                
                 /**
                  *
                  * on click close
                  */
+                
                 text1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -417,6 +423,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                         /**
                          * recupiration date prochaine
                          */
+                        
                         try {
 
                             SQLiteDatabase table = db.getReadableDatabase();
@@ -438,6 +445,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                 /**
                  * on click close
                  */
+                
                 TextView close;
                 close = (TextView) dialog_visite.findViewById(R.id.text_close);
                 close.setOnClickListener(new View.OnClickListener() {
@@ -475,6 +483,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                         /**
                          * confirmation dajoute
                          */
+                        
                         confirme.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

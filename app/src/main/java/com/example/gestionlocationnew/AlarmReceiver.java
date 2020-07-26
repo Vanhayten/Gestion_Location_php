@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
@@ -24,12 +25,14 @@ public class AlarmReceiver extends BroadcastReceiver {
         String channelId = "channel_id";
         CharSequence name = "channel_name";
         String descruption ="description";
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channel = new NotificationChannel(channelId,name, NotificationManager.IMPORTANCE_HIGH);
             channel.setDescription(descruption);
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+
 
         Notification notification = new NotificationCompat.Builder(context,channelId)
                 .setSmallIcon(R.mipmap.ic_launcher)

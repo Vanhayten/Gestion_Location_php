@@ -632,6 +632,7 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
         }
         return false;
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void ajouter(View view) {
         final Dialog MyDyalog_ajou;
         MyDyalog_ajou = new Dialog(mes_recettes.this);
@@ -744,7 +745,7 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                     input = c.getString(0);
                     firstFourChars = input.substring(0, 2);
 
-                 //   Toast.makeText(mes_recettes.this, ""+firstFourChars+"  "+part3day, Toast.LENGTH_SHORT).show();
+
 
                     String[] parts1 = c.getString(0).split("-");
                     String part22 = parts1[1];

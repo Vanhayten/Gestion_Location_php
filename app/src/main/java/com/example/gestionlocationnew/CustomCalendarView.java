@@ -103,6 +103,11 @@ public class CustomCalendarView extends LinearLayout {
                 ImageButton SetTime = addView.findViewById(R.id.seteventtime);
                 final CheckBox alarmMe = addView.findViewById(R.id.alarmme);
                 Calendar dateCalendar = Calendar.getInstance();
+
+
+
+
+
                 dateCalendar.setTime(dates.get(position));
                 alarmYear = dateCalendar.get(Calendar.YEAR);
                 alarmMonth = dateCalendar.get(Calendar.MONTH);
@@ -146,15 +151,24 @@ public class CustomCalendarView extends LinearLayout {
                             SaveEvent(EventName.getText().toString(),EventTime.getText().toString(),date,month,year,"on");
                             SetUpCalendar();
                             Calendar calendar = Calendar.getInstance();
+
                             calendar.set(alarmYear,alarmMonth,alarmDay,alarmHour,alarmMinuit);
+
+                            //calendar.add(Calendar.DAY_OF_MONTH, -2); //add 15 jour
+
+
 
                             setAlarm(calendar,EventName.getText().toString(),EventTime.getText().toString(),getRequestCode(date
                                     ,EventName.getText().toString(),EventTime.getText().toString()));
+
                             alertDialog.dismiss();
+
                         }else{
+
                             SaveEvent(EventName.getText().toString(),EventTime.getText().toString(),date,month,year,"off");
                             SetUpCalendar();
                             alertDialog.dismiss();
+
                         }
 
 
@@ -233,10 +247,14 @@ public class CustomCalendarView extends LinearLayout {
     }
 
     private void setAlarm(Calendar calendar,String event,String time,int RequestCOde){
+
+        calendar.add(Calendar.DAY_OF_MONTH, -15); //add 15 jour
+
         Intent intent = new Intent(context.getApplicationContext(),AlarmReceiver.class);
         intent.putExtra("event",event);
         intent.putExtra("time",time);
         intent.putExtra("id",RequestCOde);
+
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,RequestCOde,intent,PendingIntent.FLAG_ONE_SHOT);
         AlarmManager alarmManager = (AlarmManager)context.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);

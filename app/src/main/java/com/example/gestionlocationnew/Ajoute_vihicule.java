@@ -102,7 +102,13 @@ String Nom,Prenom,role;
         if(intColot != 0){
             if(confirmerMatricule(text3.getText().toString())==false) {
 
-                Boolean result = DB.insert_vehiucle(text1.getText().toString(), text2.getText().toString(), text3.getText().toString(), spinner.getSelectedItem().toString(), Integer.parseInt(text4.getText().toString()), text5.getText().toString(), text6.getText().toString(), intColot);
+                Boolean result = null;
+                try {
+                    result = DB.insert_vehiucle(text1.getText().toString(), text2.getText().toString(), text3.getText().toString(), spinner.getSelectedItem().toString(), Integer.parseInt(text4.getText().toString()), text5.getText().toString(), text6.getText().toString(), intColot);
+
+                }catch (Exception E){
+                   
+                }
                 if (result) {
                     Toast.makeText(Ajoute_vihicule.this, "L'ajoute Effectué", Toast.LENGTH_SHORT).show();
                     Intent I = new Intent(Ajoute_vihicule.this, vehicules.class);

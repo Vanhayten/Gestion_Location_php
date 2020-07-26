@@ -92,7 +92,14 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
                 else {
                     holder.setAlarm.setImageResource(R.drawable.ic_action_notification_on);
                     Calendar alarmCalendar = Calendar.getInstance();
+
+
+
+
                     alarmCalendar.set(alarmYear,alarmMonth,alarmDay,alarmHour,alarmMinuit);
+
+
+
                     setAlarm(alarmCalendar,events.getEVENT(),events.getTIME(),getRequestCode(events.getDATE(),
                             events.getEVENT(),events.getTIME()));
                     updateEvent(events.getDATE(),events.getEVENT(),events.getTIME(),"on");
@@ -182,6 +189,9 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
     }
 
     private void setAlarm(Calendar calendar,String event,String time,int RequestCOde){
+
+        calendar.add(Calendar.DAY_OF_MONTH, -15); //add 15 jour
+
         Intent intent = new Intent(context.getApplicationContext(),AlarmReceiver.class);
         intent.putExtra("event",event);
         intent.putExtra("time",time);
