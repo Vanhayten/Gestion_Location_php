@@ -290,7 +290,7 @@ public class CustomCalendarView extends LinearLayout {
 
     private void SetUpCalendar(){
         String currwntDate = dateFormat.format(calendar.getTime());
-        CurrentDate.setText(currwntDate);
+       CurrentDate.setText(currwntDate);
         dates.clear();
         Calendar monthCalendar= (Calendar) calendar.clone();
         monthCalendar.set(Calendar.DAY_OF_MONTH,1);
