@@ -413,6 +413,22 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
     }
 
 
+
+
+    public void modifier_clients(String cin, String nom, String prenom, String tele, String adress, String activity){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues v = new ContentValues();
+        v.put(Col_nom,nom);
+        v.put(Col_prenom,prenom);
+        v.put(Col_adresse,adress);
+        v.put(Col_tel,tele);
+        v.put(Col_activité,activity);
+        db.update(Table2,v,""+Col_cin+"=?",new String[]{cin});
+    }
+
+
+
+
     //methode aficher les vihicule
     public Cursor Get_attvihucle(){
         SQLiteDatabase db=this.getWritableDatabase();

@@ -220,8 +220,10 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                         ColorSeekBar Colorseek;;
                         final Spinner text44;
                         Button Confirmer;
+
                         AjouteDialog= new Dialog(vehicules.this);
                         AjouteDialog.setContentView(R.layout.dialog_ajoute_vihicule);
+
                         text11 = (EditText)AjouteDialog.findViewById(R.id.text_nom1);
                         text22 = (EditText)AjouteDialog.findViewById(R.id.text_prenom);
                         text33 = (EditText)AjouteDialog.findViewById(R.id.text_cin);

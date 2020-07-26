@@ -50,6 +50,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
     gestion_location db;
     TextView Cin;
     EditText t1;
+    String cinlist;
 
     /**
      * list choix vehicule
@@ -166,6 +167,8 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Cin = (TextView) view.findViewById(R.id.marqueV);
+               cinlist = Cin.getText().toString();
+
 
 
                 ImageView imageView = (ImageView) view.findViewById(R.id.appele_client);
@@ -271,6 +274,99 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
 
                             }
                         });
+
+                        modifier = MyDyalog.findViewById(R.id.btn_assurance);
+                        modifier.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                Dialog ModifierDialog;
+                                ModifierDialog= new Dialog(mes_clients.this);
+                                ModifierDialog.setContentView(R.layout.dialog_modifier_client);
+
+                                EditText cinndialog,nomdialog,prenomdialog,adressdialog,nemerodialog,activiterdialog;
+
+                               cinndialog = (EditText)ModifierDialog.findViewById(R.id.text_Cinnn);
+                               nomdialog = (EditText)ModifierDialog.findViewById(R.id.text_nomclient);
+                               prenomdialog = (EditText)ModifierDialog.findViewById(R.id.text_prenomclient);
+                               adressdialog = (EditText)ModifierDialog.findViewById(R.id.text_Adress);
+                               nemerodialog = (EditText)ModifierDialog.findViewById(R.id.text_num_tele);
+                               activiterdialog = (EditText)ModifierDialog.findViewById(R.id.text_activ);
+
+
+                               SQLiteDatabase table = db.getReadableDatabase();
+                               String requette = "select * from Clients where cin ='"+cinlist+"'";
+                               Cursor c = table.rawQuery(requette,null);
+
+                               while (c.moveToNext()){
+
+                                   cinndialog.setText(c.getString(3));
+                                   nomdialog.setText(c.getString(0));
+                                   prenomdialog.setText(c.getString(1));
+                                   adressdialog.setText(c.getString(2));
+                                   nemerodialog.setText(c.getString(4));
+                                   activiterdialog.setText(c.getString(5));
+
+                               }
+
+
+
+                               Button confirmer = (Button)ModifierDialog.findViewById(R.id.btn_modifier1);
+                                confirmer.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(mes_clients.this);
+                                        builder.setCancelable(true);
+                                        builder.setTitle("Confirmation");
+                                        builder.setMessage("Voulez-vous vraiment modifier ?");
+                                        builder.setPositiveButton("Ok",
+                                                new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        /**
+                                                         * confirmer
+                                                         */
+
+                                                        try {
+                                                            db.modifier_clients(cinndialog.getText().toString(),nomdialog.getText().toString(),prenomdialog.getText().toString(),nemerodialog.getText().toString(),adressdialog.getText().toString(),activiterdialog.getText().toString());
+                                                            Toast.makeText(mes_clients.this, "Modification Réussi", Toast.LENGTH_SHORT).show();
+                                                            finish();
+                                                            startActivity(getIntent());
+
+                                                        }catch (Exception Ex){
+                                                            Toast.makeText(mes_clients.this, "Modifiction n'est pas Effectué", Toast.LENGTH_SHORT).show();
+                                                        }
+
+
+                                                    }
+                                                });
+                                        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                /**
+                                                 * not confirmer
+                                                 */
+                                                ModifierDialog.dismiss();
+                                            }
+                                        });
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+
+
+
+                                    }
+                                });
+
+                                ModifierDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                ModifierDialog.show();
+
+                            }
+                        });
+
+
+
+
 
 
 
