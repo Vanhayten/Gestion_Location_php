@@ -150,21 +150,21 @@ boolean k=false;
       if(!con.matcher(mat).find() ){
         k=true;
           text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Red), PorterDuff.Mode.SRC_ATOP);
-      }else {
+      }else if(con.matcher(mat).find()) {
           text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Green), PorterDuff.Mode.SRC_ATOP);
           k=false;
       }
      if(!con1.matcher(mat).find() ){
                  text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Red), PorterDuff.Mode.SRC_ATOP);
          k=true;
-      }else {
+      }else if(con1.matcher(mat).find())  {
          k=false;
          text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Green), PorterDuff.Mode.SRC_ATOP);
       }
       if(!con2.matcher(mat).find() ){
           k=true;
                   text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Red), PorterDuff.Mode.SRC_ATOP);
-      }else {
+      }else if(con2.matcher(mat).find()){
           k=false;
           text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Green), PorterDuff.Mode.SRC_ATOP);
       }
