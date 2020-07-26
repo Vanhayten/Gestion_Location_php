@@ -744,7 +744,7 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                     input = c.getString(0);
                     firstFourChars = input.substring(0, 2);
 
-                    Toast.makeText(mes_recettes.this, ""+firstFourChars+"  "+part3day, Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(mes_recettes.this, ""+firstFourChars+"  "+part3day, Toast.LENGTH_SHORT).show();
 
                     String[] parts1 = c.getString(0).split("-");
                     String part22 = parts1[1];
@@ -785,18 +785,20 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                         if (d) {
                             Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(mes_recettes.this, "l'enregistrement ne pas effecuter", Toast.LENGTH_SHORT).show();
-                        }
+                           Toast.makeText(mes_recettes.this, "l'enregistrement ne pas effecuter", Toast.LENGTH_SHORT).show();
+                       }
                     }
                     if(!c1.getString(3).equals(text3.getText().toString())) {
                    b = db.insert_client(text1.getText().toString(), text2.getText().toString(), text13.getText().toString(), text3.getText().toString(), text4.getText().toString(), text5.getText().toString());
                    d= db.insert_Recette(s,text6.getText().toString(),text7.getText().toString(),Integer.parseInt(text8.getText().toString()),Integer.parseInt(text9.getText().toString()),total,sp.getSelectedItem().toString(),text11.getSelectedItem().toString(),text3.getText().toString());
+
+                        if(b && d ){
+                            Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(mes_recettes.this, "l'enregistrement ne pas effecuter", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    if(b && d ){
-                        Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(mes_recettes.this, "l'enregistrement ne pas effecuter", Toast.LENGTH_SHORT).show();
-                    }
+
                 }
 
 
