@@ -721,13 +721,15 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
             public void onClick(View v) {
 
 
-                int count=0;
+                int count = 0;
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
                 Date date = new Date(System.currentTimeMillis());
                 String[] parts = dateFormat.format(date).split("/");
-                String part1 = parts[0];
-                String part2 = parts[1];
-                String part3 = parts[2];
+
+                String part1year = parts[0];
+                String part2month = parts[1];
+                String part3day = parts[2];
+
                 SQLiteDatabase table = db.getReadableDatabase();
                 String requet = "SELECT Id_Recette FROM  Recette";
                 Cursor c = table.rawQuery ( requet, null );
@@ -737,24 +739,26 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                 String firstFourChars = "";     //substring containing first 4 characters
 
                 if(c.moveToLast()){
+
+                    input = null;
                     input = c.getString(0);
                     firstFourChars = input.substring(0, 2);
 
-                    Toast.makeText(mes_recettes.this, ""+firstFourChars+"  "+part3, Toast.LENGTH_SHORT).show();
-
-                 /*   if(firstFourChars.equals(part3)){
-
-                    }else {
-                        count = 0;
-                    }*/
+                    Toast.makeText(mes_recettes.this, ""+firstFourChars+"  "+part3day, Toast.LENGTH_SHORT).show();
 
                     String[] parts1 = c.getString(0).split("-");
                     String part22 = parts1[1];
-                    count = Integer.parseInt(part22);
+
+                    if( Integer.parseInt(firstFourChars) == Integer.parseInt(part3day) ){
+                        count = Integer.parseInt(part22);
+                    }else {
+                        count = 0;
+                    }
 
                 }
-                count = count+1;
-                String s =part3+""+part2+""+part1+"-"+count;
+                count++;
+
+                String s =part3day+""+part2month+""+part1year+"-"+count;
 
                 Toast.makeText(mes_recettes.this, ""+s, Toast.LENGTH_SHORT).show();
 
