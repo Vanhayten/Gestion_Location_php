@@ -50,7 +50,7 @@ String Nom,Prenom,role;
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-confirmerMatricule(text.getText().toString());
+         confirmerMatricule(text.getText().toString());
     }
 
     @Override
@@ -100,18 +100,24 @@ confirmerMatricule(text.getText().toString());
 
 
         if(intColot != 0){
-            Boolean result = DB.insert_vehiucle(text1.getText().toString(),text2.getText().toString(),text3.getText().toString(),spinner.getSelectedItem().toString(), Integer.parseInt(text4.getText().toString()),text5.getText().toString(),text6.getText().toString(),intColot);
-            if(result){
-                Toast.makeText(Ajoute_vihicule.this, "L'ajoute Effectué", Toast.LENGTH_SHORT).show();
-                Intent I = new Intent(Ajoute_vihicule.this,vehicules.class);
-                Bundle b1 = new Bundle();
-                b1.putString("nom",Nom);
-                b1.putString("prenom",Prenom);
-                b1.putString("role",role);
-                I.putExtras(b1);
-                startActivity(I);
+            if(confirmerMatricule(text3.getText().toString())==false) {
+
+                Boolean result = DB.insert_vehiucle(text1.getText().toString(), text2.getText().toString(), text3.getText().toString(), spinner.getSelectedItem().toString(), Integer.parseInt(text4.getText().toString()), text5.getText().toString(), text6.getText().toString(), intColot);
+                if (result) {
+                    Toast.makeText(Ajoute_vihicule.this, "L'ajoute Effectué", Toast.LENGTH_SHORT).show();
+                    Intent I = new Intent(Ajoute_vihicule.this, vehicules.class);
+                    Bundle b1 = new Bundle();
+                    b1.putString("nom", Nom);
+                    b1.putString("prenom", Prenom);
+                    b1.putString("role", role);
+                    I.putExtras(b1);
+                    startActivity(I);
+                } else {
+                    Toast.makeText(Ajoute_vihicule.this, "L'ajoute n'est pas Effectué", Toast.LENGTH_SHORT).show();
+                }
             }else{
-                Toast.makeText(Ajoute_vihicule.this, "L'ajoute n'est pas Effectué", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Ajoute_vihicule.this, "Respecte la forme de la matricule", Toast.LENGTH_SHORT).show();
+
             }
         }else{
             Toast.makeText(this, "Merci de choisire la couleur de la vihicule", Toast.LENGTH_SHORT).show();
@@ -136,30 +142,33 @@ confirmerMatricule(text.getText().toString());
       editor.putBoolean("firststart1",false);
       editor.apply();
   }
-
-  public void confirmerMatricule(String mat ){
+boolean k=false;
+  public boolean confirmerMatricule(String mat ){
       Pattern con=Pattern.compile("[0-9]{5}/[A-Z]{1}/[0-9]{2}");
       Pattern con1=Pattern.compile("[0-9]{4}/[A-Z]{1}/[0-9]{2}");
       Pattern con2=Pattern.compile("[0-9]{3}/[A-Z]{1}/[0-9]{2}");
       if(!con.matcher(mat).find() ){
-
+        k=true;
           text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Red), PorterDuff.Mode.SRC_ATOP);
       }else {
           text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Green), PorterDuff.Mode.SRC_ATOP);
-
+          k=false;
       }
      if(!con1.matcher(mat).find() ){
                  text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Red), PorterDuff.Mode.SRC_ATOP);
-
+         k=true;
       }else {
+         k=false;
          text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Green), PorterDuff.Mode.SRC_ATOP);
       }
       if(!con2.matcher(mat).find() ){
+          k=true;
                   text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Red), PorterDuff.Mode.SRC_ATOP);
       }else {
+          k=false;
           text.getBackground().mutate().setColorFilter(getResources().getColor(R.color.Green), PorterDuff.Mode.SRC_ATOP);
       }
-
+return k;
   }
 
 
