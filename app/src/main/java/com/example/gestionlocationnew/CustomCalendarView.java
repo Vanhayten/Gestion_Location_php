@@ -154,6 +154,8 @@ public class CustomCalendarView extends LinearLayout {
 
                             calendar.set(alarmYear,alarmMonth,alarmDay,alarmHour,alarmMinuit);
 
+                            Toast.makeText(context, ""+alarmYear+" "+" "+alarmMonth+" "+alarmDay, Toast.LENGTH_SHORT).show();
+
                             //calendar.add(Calendar.DAY_OF_MONTH, -2); //add 15 jour
 
 

@@ -1,10 +1,14 @@
 package com.example.gestionlocationnew;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -20,6 +24,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import static android.content.ContentValues.TAG;
 
 public class ajouter_assurance extends AppCompatActivity {
     EditText t1,t2,t3,t4,t5;
@@ -38,6 +44,9 @@ public class ajouter_assurance extends AppCompatActivity {
     SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM",Locale.ENGLISH);
     SimpleDateFormat yearFormate = new SimpleDateFormat("yyyy",Locale.ENGLISH);
     SimpleDateFormat eventDateFormate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
+
+    int alarmYear,alarmMonth,alarmDay,alarmHour,alarmMinuit;
+
 
 
     @Override
@@ -120,12 +129,69 @@ public class ajouter_assurance extends AppCompatActivity {
         String Events = "Payment assurance "+discription;
         //t1.getText().toString();
         Calendar c = Calendar.getInstance();
+
         SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
         String formattedDate = df.format(c.getTime());
         SaveEvent(Events,formattedDate,DateF,monthString,part3);
         SetUpCalendar();
 
+        alarmHour = c.get(Calendar.HOUR_OF_DAY);
+        alarmMinuit = c.get(Calendar.MINUTE);
+
+        String[] dateslp = sdate.split("/");
+
+        alarmYear = Integer.parseInt(dateslp[2]);
+        alarmMonth = Integer.parseInt(dateslp[1]);
+        alarmDay = Integer.parseInt(dateslp[0]);
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(alarmYear,alarmMonth,alarmDay,alarmHour,alarmMinuit);
+
+        //calendar.add(Calendar.DAY_OF_MONTH, -2); //add 15 jour
+
+        setAlarm(calendar,Events,formattedDate,getRequestCode(DateF
+                ,Events,formattedDate));
+
+
+
+
+
     }
+
+    private int getRequestCode(String date,String event,String time){
+        int code = 0;
+        dbOpenHelper = new DBOpenHelper(this);
+        SQLiteDatabase database = dbOpenHelper.getReadableDatabase();
+        Cursor cursor = dbOpenHelper.ReadIDEvents(date,event,time,database);
+        while (cursor.moveToNext()){
+            code = cursor.getInt(cursor.getColumnIndex(DBStructure.ID));
+        }
+        cursor.close();
+        dbOpenHelper.close();
+        Log.d(TAG, "getRequestCode: "+code);
+
+        return code;
+    }
+
+
+
+    private void setAlarm(Calendar calendar,String event,String time,int RequestCOde){
+
+        calendar.add(Calendar.DAY_OF_MONTH, -15); //add 15 jour
+        //calendar.add(Calendar.MINUTE, +3); //add 15 jour
+
+        Intent intent = new Intent(this,AlarmReceiver.class);
+        intent.putExtra("event",event);
+        intent.putExtra("time",time);
+        intent.putExtra("id",RequestCOde);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,RequestCOde,intent,PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager alarmManager = (AlarmManager)this.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
+    }
+
+
 
 
     private void SaveEvent(String event,String time,String date, String month,String year){
@@ -179,6 +245,14 @@ public class ajouter_assurance extends AppCompatActivity {
         cursor.close();
         dbOpenHelper.close();
 
+    }
+
+
+    private void updateEvent(String date,String event,String time,String notify ){
+        dbOpenHelper = new DBOpenHelper(this);
+        SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
+        dbOpenHelper.updateEvent(date,event,time,notify,database);
+        dbOpenHelper.close();
     }
 
 

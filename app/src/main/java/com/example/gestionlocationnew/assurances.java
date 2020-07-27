@@ -275,6 +275,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 /**
                  * button sinistre
                  */
+
                 sinistre.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
