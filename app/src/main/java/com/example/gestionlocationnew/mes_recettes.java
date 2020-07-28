@@ -1,5 +1,6 @@
 package com.example.gestionlocationnew;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -75,12 +77,23 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
     String Idd,cin,Matr,datedb,datefn,nbjour,prix,Typ_Payment,prix_01;
 
+    private DatePickerDialog.OnDateSetListener mDateSetListenerrecherche1;
+    private DatePickerDialog.OnDateSetListener mDateSetListenerrecherche2;
+
+    private DatePickerDialog.OnDateSetListener mDateSetListenerdebut;
+    private DatePickerDialog.OnDateSetListener mDateSetListenerfin;
+
+
+    private DatePickerDialog.OnDateSetListener mDateSetListenermodif;
+    private DatePickerDialog.OnDateSetListener mDateSetListenermodif1;
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mes_recettes);
+
         db = new gestion_location(this);
 
         /**
@@ -314,7 +327,68 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
 
 
 
+        /**
+         * get date recherche
+         */
 
+        Recherche.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int Year = cal.get(Calendar.YEAR);
+                int Month = cal.get(Calendar.MONTH);
+                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialogDate = new DatePickerDialog(mes_recettes.this
+                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                        ,mDateSetListenerrecherche1,Year, Month,Day);
+
+                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialogDate.show();
+
+            }
+        });
+
+        mDateSetListenerrecherche1 = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month =month+1;
+                String datefin = dayOfMonth+"/"+month+"/"+year;
+                Recherche.setText(datefin);
+            }
+        };
+
+
+        /**
+         * get date recherche
+         */
+
+        Recherche1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int Year = cal.get(Calendar.YEAR);
+                int Month = cal.get(Calendar.MONTH);
+                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialogDate = new DatePickerDialog(mes_recettes.this
+                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                        ,mDateSetListenerrecherche2,Year, Month,Day);
+
+                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialogDate.show();
+
+            }
+        });
+
+        mDateSetListenerrecherche2 = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month =month+1;
+                String datefin = dayOfMonth+"/"+month+"/"+year;
+                Recherche1.setText(datefin);
+            }
+        };
 
 
 
@@ -471,6 +545,77 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                             text5.setText(datefn);
                             text6.setText(nbjour);
                             text7.setText(prix);
+
+
+                        /**
+                         * gete date modifier date debute
+                         */
+
+
+                        text4.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Calendar cal = Calendar.getInstance();
+                                int Year = cal.get(Calendar.YEAR);
+                                int Month = cal.get(Calendar.MONTH);
+                                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                                DatePickerDialog dialogDate = new DatePickerDialog(mes_recettes.this
+                                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                                        ,mDateSetListenermodif,Year, Month,Day);
+
+                                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                dialogDate.show();
+
+                            }
+                        });
+
+                        mDateSetListenermodif = new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                month =month+1;
+                                String datefin = dayOfMonth+"/"+month+"/"+year;
+                                text4.setText(datefin);
+                            }
+                        };
+
+
+
+
+                        /**
+                         * gete date modifier date debute
+                         */
+
+
+                        text5.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Calendar cal = Calendar.getInstance();
+                                int Year = cal.get(Calendar.YEAR);
+                                int Month = cal.get(Calendar.MONTH);
+                                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                                DatePickerDialog dialogDate = new DatePickerDialog(mes_recettes.this
+                                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                                        ,mDateSetListenermodif1,Year, Month,Day);
+
+                                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                dialogDate.show();
+
+                            }
+                        });
+
+                        mDateSetListenermodif1 = new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                month =month+1;
+                                String datefin = dayOfMonth+"/"+month+"/"+year;
+                                text5.setText(datefin);
+                            }
+                        };
+
+
+
 
                         /**
                          * confirmation
@@ -681,6 +826,78 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
         text7 = (EditText) MyDyalog_ajou.findViewById(R.id.text_dateFin);
         text8 = (EditText) MyDyalog_ajou.findViewById(R.id.text_NombreJour);
         text9 = (EditText) MyDyalog_ajou.findViewById(R.id.text_Prix);
+
+
+
+        /**
+         * gete date debute
+         */
+
+        text6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int Year = cal.get(Calendar.YEAR);
+                int Month = cal.get(Calendar.MONTH);
+                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialogDate = new DatePickerDialog(mes_recettes.this
+                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                        ,mDateSetListenerdebut,Year, Month,Day);
+
+                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialogDate.show();
+
+            }
+        });
+
+        mDateSetListenerdebut = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month =month+1;
+                String datefin = dayOfMonth+"/"+month+"/"+year;
+                text6.setText(datefin);
+            }
+        };
+
+
+
+        /**
+         * gete date fin
+         */
+
+        text7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int Year = cal.get(Calendar.YEAR);
+                int Month = cal.get(Calendar.MONTH);
+                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialogDate = new DatePickerDialog(mes_recettes.this
+                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                        ,mDateSetListenerfin,Year, Month,Day);
+
+                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialogDate.show();
+
+            }
+        });
+
+        mDateSetListenerfin = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month =month+1;
+                String datefin = dayOfMonth+"/"+month+"/"+year;
+                text7.setText(datefin);
+            }
+        };
+
+
+
+
+
+
 
 
         //Importier les information de Client par Cin

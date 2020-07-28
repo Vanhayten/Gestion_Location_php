@@ -1,15 +1,19 @@
 package com.example.gestionlocationnew;
 
 import android.app.AlarmManager;
+import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -48,6 +52,8 @@ public class ajouter_assurance extends AppCompatActivity {
     int alarmYear,alarmMonth,alarmDay,alarmHour,alarmMinuit;
 
 
+    private DatePickerDialog.OnDateSetListener mDateSetListenerdatedebute;
+    private DatePickerDialog.OnDateSetListener mDateSetListenerdatefin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +71,75 @@ public class ajouter_assurance extends AppCompatActivity {
         Nom = b.getString("nom");
         Prenom = b.getString("prenom");
         role = b.getString("role");
+
+
+        /**
+         * get date debut assurance
+         */
+        t2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int Year = cal.get(Calendar.YEAR);
+                int Month = cal.get(Calendar.MONTH);
+                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialogDate = new DatePickerDialog(ajouter_assurance.this
+                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                        ,mDateSetListenerdatedebute,Year, Month,Day);
+
+                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialogDate.show();
+
+            }
+        });
+
+        mDateSetListenerdatedebute = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month =month+1;
+                String datefin = dayOfMonth+"/"+month+"/"+year;
+                t2.setText(datefin);
+            }
+        };
+
+
+
+        /**
+         * get date fin assurance
+         */
+        t3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int Year = cal.get(Calendar.YEAR);
+                int Month = cal.get(Calendar.MONTH);
+                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialogDate = new DatePickerDialog(ajouter_assurance.this
+                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                        ,mDateSetListenerdatefin,Year, Month,Day);
+
+                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialogDate.show();
+
+            }
+        });
+
+        mDateSetListenerdatefin = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month =month+1;
+                String datefin = dayOfMonth+"/"+month+"/"+year;
+                t3.setText(datefin);
+            }
+        };
+
+
+
+
+
+
 
     }
     @RequiresApi(api = Build.VERSION_CODES.O)

@@ -1,6 +1,7 @@
 
 package com.example.gestionlocationnew;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -65,6 +67,11 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
     SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM",Locale.ENGLISH);
     SimpleDateFormat yearFormate = new SimpleDateFormat("yyyy",Locale.ENGLISH);
     SimpleDateFormat eventDateFormate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
+
+
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private DatePickerDialog.OnDateSetListener mDateSetListenervisite;
+    private DatePickerDialog.OnDateSetListener mDateSetListenerfinvisite;
 
 
     @Override
@@ -202,6 +209,44 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                             text5 = (EditText) MyDyalog_ajou.findViewById(R.id.text_date_reparation);
                             text6 = (EditText) MyDyalog_ajou.findViewById(R.id.text_Montant);
                             text1.setText(Matricule.getText().toString());
+
+
+                           /**
+                            * gete date reparation
+                            */
+
+
+                           text5.setOnClickListener(new View.OnClickListener() {
+                               @Override
+                               public void onClick(View v) {
+                                   Calendar cal = Calendar.getInstance();
+                                   int Year = cal.get(Calendar.YEAR);
+                                   int Month = cal.get(Calendar.MONTH);
+                                   int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                                   DatePickerDialog dialogDate = new DatePickerDialog(entretiens.this
+                                           ,android.R.style.Theme_Holo_Dialog_MinWidth
+                                           ,mDateSetListener,Year, Month,Day);
+
+                                   dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                   dialogDate.show();
+
+                               }
+                           });
+
+                           mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+                               @Override
+                               public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                   month =month+1;
+                                   String datefin = dayOfMonth+"/"+month+"/"+year;
+                                   text5.setText(datefin);
+                               }
+                           };
+
+
+
+
+
                             Button btn_ajoute;
                             btn_ajoute = (Button) MyDyalog_ajou.findViewById(R.id.btn_modifier1);
                             btn_ajoute.setOnClickListener(new View.OnClickListener() {
@@ -383,10 +428,6 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                                 finish();
 
 
-
-
-
-
                             }
                         });
 
@@ -479,6 +520,82 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                         Date2 = (EditText) dialog_ajoute_visite.findViewById(R.id.text_date_proch);
                         confirme = (Button) dialog_ajoute_visite.findViewById(R.id.btn_modifier1);
                         matricule.setText(Matricule.getText().toString());
+
+
+                        /**
+                         * gete date visite
+                         */
+
+
+                        date1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Calendar cal = Calendar.getInstance();
+                                int Year = cal.get(Calendar.YEAR);
+                                int Month = cal.get(Calendar.MONTH);
+                                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                                DatePickerDialog dialogDate = new DatePickerDialog(entretiens.this
+                                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                                        ,mDateSetListenervisite,Year, Month,Day);
+
+                                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                dialogDate.show();
+
+                            }
+                        });
+
+                        mDateSetListenervisite = new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                month =month+1;
+                                String datefin = dayOfMonth+"/"+month+"/"+year;
+                                date1.setText(datefin);
+                            }
+                        };
+
+
+
+
+
+                        /**
+                         * gete date fin visite
+                         */
+
+                        Date2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Calendar cal = Calendar.getInstance();
+                                int Year = cal.get(Calendar.YEAR);
+                                int Month = cal.get(Calendar.MONTH);
+                                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                                DatePickerDialog dialogDate = new DatePickerDialog(entretiens.this
+                                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                                        ,mDateSetListenerfinvisite,Year, Month,Day);
+
+                                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                dialogDate.show();
+
+                            }
+                        });
+
+                        mDateSetListenerfinvisite = new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                month =month+1;
+                                String datefin = dayOfMonth+"/"+month+"/"+year;
+                                Date2.setText(datefin);
+                            }
+                        };
+
+
+
+
+
+
+
+
 
                         /**
                          * confirmation dajoute

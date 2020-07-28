@@ -1,6 +1,7 @@
 package com.example.gestionlocationnew;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -35,6 +37,7 @@ import com.divyanshu.colorseekbar.ColorSeekBar;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class vehicules extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -54,6 +57,11 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
     Cursor c,c1;
 
     int intColot = 0;
+
+
+    private DatePickerDialog.OnDateSetListener mDateSetListenerdebute;
+    private DatePickerDialog.OnDateSetListener mDateSetListenerfin;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,6 +208,11 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
 
                 matr =(TextView)view.findViewById(R.id.matrV);
 
+
+
+
+
+
                 //Onclose dyalog
                 text9.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -233,6 +246,107 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                         text77 = (EditText)AjouteDialog.findViewById(R.id.text_dateDebut);
                         Colorseek = (ColorSeekBar)AjouteDialog.findViewById(R.id.vihicule_Couleur);
                         Confirmer =(Button)AjouteDialog.findViewById(R.id.btn_modifier1);
+
+
+
+                        /**
+                         * get date debute
+                         */
+                        text33.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Calendar cal = Calendar.getInstance();
+                                int Year = cal.get(Calendar.YEAR);
+                                int Month = cal.get(Calendar.MONTH);
+                                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                                DatePickerDialog dialogDate = new DatePickerDialog(vehicules.this
+                                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                                        ,mDateSetListener,Year, Month,Day);
+
+                                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                dialogDate.show();
+
+                            }
+                        });
+
+                        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                month =month+1;
+                                String datefin = dayOfMonth+"/"+month+"/"+year;
+                                text33.setText(datefin);
+                            }
+                        };
+
+
+
+
+
+                        /**
+                         * get date debute
+                         */
+                        text66.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Calendar cal = Calendar.getInstance();
+                                int Year = cal.get(Calendar.YEAR);
+                                int Month = cal.get(Calendar.MONTH);
+                                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                                DatePickerDialog dialogDate = new DatePickerDialog(vehicules.this
+                                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                                        ,mDateSetListenerdebute,Year, Month,Day);
+
+                                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                dialogDate.show();
+
+                            }
+                        });
+
+                        mDateSetListenerdebute = new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                month =month+1;
+                                String datefin = dayOfMonth+"/"+month+"/"+year;
+                                text66.setText(datefin);
+                            }
+                        };
+
+
+
+                        /**
+                         * get date debute
+                         */
+                        text77.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Calendar cal = Calendar.getInstance();
+                                int Year = cal.get(Calendar.YEAR);
+                                int Month = cal.get(Calendar.MONTH);
+                                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                                DatePickerDialog dialogDate = new DatePickerDialog(vehicules.this
+                                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                                        ,mDateSetListenerfin,Year, Month,Day);
+
+                                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                dialogDate.show();
+
+                            }
+                        });
+
+                        mDateSetListenerfin = new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                month =month+1;
+                                String datefin = dayOfMonth+"/"+month+"/"+year;
+                                text77.setText(datefin);
+                            }
+                        };
+
+
+
 
 
                         ArrayList<String> arrayList = new ArrayList<String>();

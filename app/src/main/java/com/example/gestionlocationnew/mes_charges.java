@@ -1,6 +1,7 @@
 package com.example.gestionlocationnew;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -49,6 +51,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class mes_charges extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -69,6 +72,12 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
     EditText Recherche;
     EditText Recherche1;
     private LineChart mChart;
+
+
+    private DatePickerDialog.OnDateSetListener mDateSetListenerRecherche;
+    private DatePickerDialog.OnDateSetListener mDateSetListenerRecherche1;
+    private DatePickerDialog.OnDateSetListener DateSetListenerche;
+    private DatePickerDialog.OnDateSetListener DateSetListenerche1;
 
 
     Cursor c;
@@ -240,6 +249,77 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
         Recherche =(EditText)findViewById(R.id.chercherCharge);
         Recherche1 =(EditText)findViewById(R.id.chercherCharge1);
+
+
+        /**
+         * get date recherche
+         */
+        Recherche.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int Year = cal.get(Calendar.YEAR);
+                int Month = cal.get(Calendar.MONTH);
+                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialogDate = new DatePickerDialog(mes_charges.this
+                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                        ,mDateSetListenerRecherche,Year, Month,Day);
+
+                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialogDate.show();
+
+            }
+        });
+
+        mDateSetListenerRecherche = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month =month+1;
+                String datefin = dayOfMonth+"/"+month+"/"+year;
+                Recherche.setText(datefin);
+            }
+        };
+
+
+
+        /**
+         * get date recherche
+         */
+        Recherche1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int Year = cal.get(Calendar.YEAR);
+                int Month = cal.get(Calendar.MONTH);
+                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialogDate = new DatePickerDialog(mes_charges.this
+                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                        ,mDateSetListenerRecherche1,Year, Month,Day);
+
+                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialogDate.show();
+
+            }
+        });
+
+        mDateSetListenerRecherche1 = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month =month+1;
+                String datefin = dayOfMonth+"/"+month+"/"+year;
+                Recherche1.setText(datefin);
+            }
+        };
+
+
+
+
+
+
+
+
 
 
         drawerLayout = findViewById(R.id.drawer);
@@ -417,6 +497,41 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                         chéque= (CheckBox) dyaloge_modifier_mes_charges.findViewById(R.id.mode_chèque);
                         virment= (CheckBox) dyaloge_modifier_mes_charges.findViewById(R.id.mode_virement);
                         design= (TextView) dyaloge_modifier_mes_charges.findViewById(R.id.text_design);
+
+
+
+                        /**
+                         * get date modif
+                         */
+                        datech.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Calendar cal = Calendar.getInstance();
+                                int Year = cal.get(Calendar.YEAR);
+                                int Month = cal.get(Calendar.MONTH);
+                                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                                DatePickerDialog dialogDate = new DatePickerDialog(mes_charges.this
+                                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                                        ,DateSetListenerche,Year, Month,Day);
+
+                                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                dialogDate.show();
+
+                            }
+                        });
+
+                        DateSetListenerche = new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                month =month+1;
+                                String datefin = dayOfMonth+"/"+month+"/"+year;
+                                datech.setText(datefin);
+                            }
+                        };
+
+
+
 
                         confirm_modifier =(Button)dyaloge_modifier_mes_charges.findViewById(R.id.btn_confirmer);
                         confirm_modifier.setOnClickListener(new View.OnClickListener() {
@@ -608,6 +723,39 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         chéque= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_chèque);
        virment= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_virement);
         design= (TextView) dyalog_mes_charges.findViewById(R.id.text_design);
+
+
+        /**
+         * get date ajoute
+         */
+        datech.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int Year = cal.get(Calendar.YEAR);
+                int Month = cal.get(Calendar.MONTH);
+                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialogDate = new DatePickerDialog(mes_charges.this
+                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                        ,DateSetListenerche1,Year, Month,Day);
+
+                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialogDate.show();
+
+            }
+        });
+
+        DateSetListenerche1 = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month =month+1;
+                String datefin = dayOfMonth+"/"+month+"/"+year;
+                datech.setText(datefin);
+            }
+        };
+
+
 
 
         Button confirmer;

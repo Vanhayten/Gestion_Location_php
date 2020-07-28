@@ -1,16 +1,21 @@
 package com.example.gestionlocationnew;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -18,7 +23,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.divyanshu.colorseekbar.ColorSeekBar;
 
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.regex.Pattern;
 
 public class Ajoute_vihicule extends AppCompatActivity {
@@ -28,7 +35,15 @@ Spinner spinner;
 gestion_location DB;
 String Nom,Prenom,role;
     int intColot;
-    
+
+
+    private TextView mDisplayDate,dateEffete,mdateechance;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private DatePickerDialog.OnDateSetListener mDateSetListenereffete;
+    private DatePickerDialog.OnDateSetListener mDateSetListenerechance;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +101,108 @@ String Nom,Prenom,role;
         arrayList.add("Hybride");
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,arrayList);
         spinner.setAdapter(arrayAdapter);
+
+
+        /**
+         * get date circulation
+         */
+        mDisplayDate =(EditText)findViewById(R.id.vihicule_Date_Circulation);
+        mDisplayDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int Year = cal.get(Calendar.YEAR);
+                int Month = cal.get(Calendar.MONTH);
+                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialogDate = new DatePickerDialog(Ajoute_vihicule.this
+                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                ,mDateSetListener,Year, Month,Day);
+
+                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialogDate.show();
+
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month =month+1;
+               String datefin = dayOfMonth+"/"+month+"/"+year;
+                mDisplayDate.setText(datefin);
+            }
+        };
+
+
+        /**
+         * gete date effete
+         */
+
+        mdateechance =(EditText)findViewById(R.id.vihicule_Date_echeance);
+        mdateechance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int Year = cal.get(Calendar.YEAR);
+                int Month = cal.get(Calendar.MONTH);
+                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialogDate = new DatePickerDialog(Ajoute_vihicule.this
+                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                        ,mDateSetListenerechance,Year, Month,Day);
+
+                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialogDate.show();
+
+            }
+        });
+
+        mDateSetListenerechance = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month =month+1;
+                String datefin = dayOfMonth+"/"+month+"/"+year;
+                mdateechance.setText(datefin);
+            }
+        };
+
+
+        /**
+         * gete date echance
+         */
+
+        dateEffete =(EditText)findViewById(R.id.vihicule_Date_effet);
+        dateEffete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int Year = cal.get(Calendar.YEAR);
+                int Month = cal.get(Calendar.MONTH);
+                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialogDate = new DatePickerDialog(Ajoute_vihicule.this
+                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                        ,mDateSetListenereffete,Year, Month,Day);
+
+                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialogDate.show();
+
+            }
+        });
+
+        mDateSetListenereffete = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month =month+1;
+                String datefin = dayOfMonth+"/"+month+"/"+year;
+                dateEffete.setText(datefin);
+            }
+        };
+
+
+
+
     }
 
     public void Confirmer_lajoute(View view) {

@@ -2,18 +2,24 @@ package com.example.gestionlocationnew;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.Calendar;
 
 public class Ajoute_vidange extends AppCompatActivity {
     Spinner type_spinner;
@@ -23,6 +29,7 @@ public class Ajoute_vidange extends AppCompatActivity {
     EditText Date;
     CheckBox ch1,ch2,ch3;
     Bundle b;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     String Nom,Prenom,role;
     @Override
@@ -50,6 +57,42 @@ public class Ajoute_vidange extends AppCompatActivity {
         Prenom = b.getString ( "prenom" );
         role = b.getString ( "role" );
         matricule.setText(matr);
+
+
+        /**
+         * gete date effete
+         */
+
+
+        Date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int Year = cal.get(Calendar.YEAR);
+                int Month = cal.get(Calendar.MONTH);
+                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialogDate = new DatePickerDialog(Ajoute_vidange.this
+                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                        ,mDateSetListener,Year, Month,Day);
+
+                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialogDate.show();
+
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month =month+1;
+                String datefin = dayOfMonth+"/"+month+"/"+year;
+                Date.setText(datefin);
+            }
+        };
+
+
+
 
     }
 

@@ -1,6 +1,9 @@
 package com.example.gestionlocationnew;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,8 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.Calendar;
 
 
 /**
@@ -21,7 +27,8 @@ import android.widget.Toast;
 public class nouvel_reparation extends Fragment {
     EditText t1,t2,t3,t4,t5,t6;
     gestion_location dp;
-Button b1;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    Button b1;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -74,6 +81,42 @@ Button b1;
         t5 = (EditText)view.findViewById(R.id.editText26);
         t6 = (EditText)view.findViewById(R.id.editText27);
         b1 = (Button) view.findViewById(R.id.butn);
+
+
+        /**
+         * gete date reparation
+         */
+
+
+        t5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int Year = cal.get(Calendar.YEAR);
+                int Month = cal.get(Calendar.MONTH);
+                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialogDate = new DatePickerDialog(getContext()
+                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                        ,mDateSetListener,Year, Month,Day);
+
+                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialogDate.show();
+
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month =month+1;
+                String datefin = dayOfMonth+"/"+month+"/"+year;
+                t5.setText(datefin);
+            }
+        };
+
+
+
 
 
          //   = getArguments().getString("matricule");

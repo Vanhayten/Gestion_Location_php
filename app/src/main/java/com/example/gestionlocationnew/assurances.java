@@ -1,6 +1,7 @@
 package com.example.gestionlocationnew;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -32,6 +34,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class assurances extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -50,6 +53,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
 
     Dialog dialog_asurance_dialog;
 
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -357,12 +361,54 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                                 text6 = (EditText)myDyalog_ajoute_conformation.findViewById(R.id.text_montant2);
                                 text1.setText(matr.getText());
 
+
+
+                                /**
+                                 * get date circulation
+                                 */
+
+                                text2.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Calendar cal = Calendar.getInstance();
+                                        int Year = cal.get(Calendar.YEAR);
+                                        int Month = cal.get(Calendar.MONTH);
+                                        int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+                                        DatePickerDialog dialogDate = new DatePickerDialog(assurances.this
+                                                ,android.R.style.Theme_Holo_Dialog_MinWidth
+                                                ,mDateSetListener,Year, Month,Day);
+
+                                        dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                        dialogDate.show();
+
+                                    }
+                                });
+
+                                mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+                                    @Override
+                                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                        month =month+1;
+                                        String datefin = dayOfMonth+"/"+month+"/"+year;
+                                        text2.setText(datefin);
+                                    }
+                                };
+
+
+
+
+
+
+
+
                                     ArrayList<String> arrayList = new ArrayList<String>();
                                     arrayList.add("0%");
                                     arrayList.add("50%");
                                     arrayList.add("100%");
                                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(assurances.this,R.layout.support_simple_spinner_dropdown_item,arrayList);
                                     spinner.setAdapter(arrayAdapter);
+
+
                                 /**
                                  *
                                  * click button d'ajoute
