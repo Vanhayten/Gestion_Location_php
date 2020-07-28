@@ -660,9 +660,6 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 final TextView id_charge;
 
                 id_charge =(TextView)arg1.findViewById(R.id.Id_charge);
-int k=ls.getSelectedItemPosition();
-                Toast.makeText(mes_charges.this, ""+id_charge.getText().toString(), Toast.LENGTH_SHORT).show();
-
 
                     SQLiteDatabase table = db.getReadableDatabase();
                     String requet = "SELECT * FROM  Charge where Id_Charge = '"+id_charge.getText().toString()+"'";
