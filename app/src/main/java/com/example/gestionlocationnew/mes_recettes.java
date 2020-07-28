@@ -47,12 +47,10 @@ import com.google.android.material.navigation.NavigationView;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class mes_recettes extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -157,9 +155,17 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         Cursor c1 = table1.rawQuery ( requet1, null);
 
 
-        LocalDate now1 = LocalDate.now();
-        String dateYear1 = now1.format(DateTimeFormatter.ofPattern("yyyy"));
-        String dateMonth1 = now1.format(DateTimeFormatter.ofPattern("MM"));
+        //LocalDate now1 = LocalDate.now();
+       // String dateYear1 = now1.format(DateTimeFormatter.ofPattern("yyyy"));
+        //String dateMonth1 = now1.format(DateTimeFormatter.ofPattern("MM"));
+
+        Calendar datecalendar = Calendar.getInstance();
+        final int alarmYear = datecalendar.get(Calendar.YEAR);
+        int alarmMonth = datecalendar.get(Calendar.MONTH);
+        String dateYear1 =  ""+alarmYear;
+        alarmMonth++;
+        String dateMonth1 =""+alarmMonth;
+
 
 
         String dateYearcon1 =null ;
@@ -186,7 +192,10 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
             dateMonthcon1 = c1.getString(1).split("/")[1];
             dateDaycon1 = c1.getString(1).split("/")[0];
 
-            if(dateYear1.equals(dateYearcon1) && dateMonth1.equals(dateMonthcon1)){
+            int dateyy = Integer.parseInt(dateYearcon1);
+            int datemm = Integer.parseInt(dateMonthcon1);
+
+            if(dateyy == alarmYear && datemm == alarmMonth){
 
 
                 /**
@@ -277,36 +286,9 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
 
-
-
 Recherche = (EditText)findViewById(R.id.textrecherche);
 Recherche1 = (EditText)findViewById(R.id.textrecherche1);
 
-
-
-        /**
-         * btn recherche
-         */
-
-        ImageView imageView = (ImageView)findViewById(R.id.btnRecherche);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(Recherche.length() !=0 && Recherche1.length() !=0){
-
-                    try {
-                        rechercheEntreDeuxDate();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                }else {
-                    Toast.makeText(mes_recettes.this, "Veuillez remplir les dates", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
 
 
         /**
@@ -430,6 +412,8 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                 month =month+1;
                 String datefin = dayOfMonth+"/"+month+"/"+year;
                 Recherche1.setText(datefin);
+                Toast.makeText(mes_recettes.this, "Clicker sur le diagramme pour voir le resultats de recherche  ", Toast.LENGTH_LONG).show();
+
 
             }
         };
@@ -466,22 +450,28 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
         /**
          * remplire reccete
          */
+
         ls=(ListView)findViewById(R.id.listRec);
         SQLiteDatabase table = db.getReadableDatabase();
         String requet = "SELECT * FROM  Recette";
 
         Cursor c = table.rawQuery ( requet, null );
-        arrayList1 = new ArrayList<list_recette> ();
-        arrayList1.clear ();
+        arrayList1 = new ArrayList<list_recette>();
+        arrayList1.clear();
         int somme = 0;
         totale =(TextView)findViewById(R.id.ttg);
 
-        LocalDate now = LocalDate.now();
-       String dateYear = now.format(DateTimeFormatter.ofPattern("yyyy"));
-       String dateMonth = now.format(DateTimeFormatter.ofPattern("MM"));
 
 
-        DateTimeFormatter formatterY = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+       // LocalDate now = LocalDate.now();
+       //String dateYear = now.format(DateTimeFormatter.ofPattern("yyyy"));
+       //String dateMonth = now.format(DateTimeFormatter.ofPattern("MM"));
+
+        String dateYear =  ""+alarmYear;
+        String dateMonth =""+alarmMonth;
+
+
+        //DateTimeFormatter formatterY = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 
         String dateYearcon =null ;
@@ -490,10 +480,16 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
         while (c.moveToNext())
         {
 
+
+
             dateYearcon =c.getString(1).split("/")[2];
             dateMonthcon = c.getString(1).split("/")[1];
 
-            if(dateYear.equals(dateYearcon) && dateMonth.equals(dateMonthcon)){
+            int Dateyy =Integer.parseInt(dateYearcon);
+            int Datemm =Integer.parseInt(dateMonthcon);
+
+
+            if( alarmYear == Dateyy  && alarmMonth == Datemm ){
                 somme = somme+Integer.parseInt(c.getString(5));
             }
 
@@ -873,6 +869,8 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
 
 
 
+
+
         /**
          * gete date debute
          */
@@ -934,6 +932,43 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                 month =month+1;
                 String datefin = dayOfMonth+"/"+month+"/"+year;
                 text7.setText(datefin);
+
+
+                /**
+                 * get nombre jour
+                 */
+
+                Calendar cal1 = Calendar.getInstance();
+                Calendar cal2 = Calendar.getInstance();
+
+                String[] datettt = text6.getText().toString().split("/");
+                int daynb = Integer.parseInt(datettt[0]);
+                int monthnb = Integer.parseInt(datettt[1]);
+                int yearnb = Integer.parseInt(datettt[2]);
+
+                String[] datetttt = text7.getText().toString().split("/");
+                int daynb1 = Integer.parseInt(datetttt[0]);
+                int monthnb1 = Integer.parseInt(datetttt[1]);
+                int yearnb1 = Integer.parseInt(datetttt[2]);
+
+
+
+                cal1.set(yearnb, monthnb, daynb);
+                cal2.set(yearnb1, monthnb1, daynb1);
+                long milis1 = cal1.getTimeInMillis();
+                long milis2 = cal2.getTimeInMillis();
+                long diff = milis2 - milis1;
+                long days = diff / (24 * 60 * 60 * 1000);
+
+
+                text8.setText(days+"");
+
+
+
+
+
+
+
             }
         };
 
@@ -1149,10 +1184,15 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
         Cursor c1 = table1.rawQuery ( requet1, null);
 
 
-        LocalDate now1 = LocalDate.now();
-        String dateYear1 = now1.format(DateTimeFormatter.ofPattern("yyyy"));
-        String dateMonth1 = now1.format(DateTimeFormatter.ofPattern("MM"));
+        //LocalDate now1 = LocalDate.now();
+        //String dateYear1 = now1.format(DateTimeFormatter.ofPattern("yyyy"));
+        //String dateMonth1 = now1.format(DateTimeFormatter.ofPattern("MM"));
 
+        Calendar datecalendar = Calendar.getInstance();
+        final int alarmYear = datecalendar.get(Calendar.YEAR);
+        final int alarmMonth = datecalendar.get(Calendar.MONTH);
+        String dateYear1 =  ""+alarmYear;
+        String dateMonth1 =""+alarmMonth;
 
         String dateYearcon1 =null ;
         String dateMonthcon1 =null;
@@ -1297,6 +1337,12 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
 
         mChart.setData(data);
     }
+
+
+    public int daysBetween(Date d1, Date d2){
+        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+    }
+
 
 
 }

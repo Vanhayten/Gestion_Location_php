@@ -144,10 +144,18 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
 
 
-        LocalDate now1 = LocalDate.now();
-        String dateYear1 = now1.format(DateTimeFormatter.ofPattern("yyyy"));
-        String dateMonth1 = now1.format(DateTimeFormatter.ofPattern("MM"));
 
+
+        //LocalDate now1 = LocalDate.now();
+        //String dateYear1 = now1.format(DateTimeFormatter.ofPattern("yyyy"));
+        //String dateMonth1 = now1.format(DateTimeFormatter.ofPattern("MM"));
+
+        Calendar datecalendar = Calendar.getInstance();
+        final int alarmYear = datecalendar.get(Calendar.YEAR);
+        int alarmMonth = datecalendar.get(Calendar.MONTH);
+        alarmMonth++;
+        String dateYear1 =  ""+alarmYear;
+        String dateMonth1 =""+alarmMonth;
 
 
         String dateYearcon1 =null ;
@@ -175,7 +183,10 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 dateMonthcon1 = c1.getString(1).split("/")[1];
                 dateDaycon1 = c1.getString(1).split("/")[0];
 
-                if(dateYear1.equals(dateYearcon1) && dateMonth1.equals(dateMonthcon1)){
+                int dateyy =Integer.parseInt(dateYearcon1);
+                int datemm =Integer.parseInt(dateMonthcon1);
+
+                if(dateyy == alarmYear && datemm == alarmMonth){
 
                     /**
                      * test test test test test test ------------------
@@ -571,6 +582,10 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                                                         modpay=modpay+" ,virment";
                                                     }
 
+                                                    if(!espéce.isChecked() && !chéque.isChecked() && !virment.isChecked()){
+                                                        modpay ="Crèdit";
+                                                    }
+
                                                     SQLiteDatabase DB = db.getWritableDatabase();
                                                     ContentValues v = new ContentValues();
                                                     v.put("Date",datech.getText().toString());
@@ -777,6 +792,9 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 }
                 if (virment.isChecked()){
                     modpay=modpay+" ,virment";
+                }
+                if(!espéce.isChecked() && !chéque.isChecked() && !virment.isChecked()){
+                    modpay ="Crèdit";
                 }
                 boolean c = db.insert_charge(datech.getText().toString(),Integer.parseInt(montant.getText().toString()),modpay.toString(),design.getText().toString());
                 if (c){

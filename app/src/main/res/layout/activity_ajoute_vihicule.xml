@@ -19,7 +19,6 @@
         android:layout_marginRight="45dp"
         android:layout_marginTop="25dp"
         android:hint="Nom voiture"
-        android:gravity="center_horizontal"
         android:layout_centerInParent="true"
         />
 
@@ -30,8 +29,8 @@
         android:layout_marginLeft="45dp"
         android:layout_marginRight="45dp"
         android:layout_marginTop="16dp"
-        android:hint="immatriculation"
-        android:gravity="center_horizontal"
+        android:hint="immatriculation (12345-A-15)"
+
         android:layout_centerInParent="true"
         />
 
@@ -43,7 +42,6 @@
             android:layout_marginLeft="45dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="45dp"
-            android:gravity="center_horizontal"
             android:hint="date De mise en circulation"
             android:inputType="date" />
 
@@ -67,7 +65,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="40dp"
-            android:gravity="center_horizontal"
+
             android:hint="valeur d’entrée "
             android:inputType="number" />
 
@@ -79,7 +77,6 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="40dp"
-            android:gravity="center_horizontal"
             android:hint="Date Effet Assurance"
             android:inputType="date" />
 
@@ -91,7 +88,6 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="40dp"
-            android:gravity="center_horizontal"
             android:hint="Date Echeance"
             android:inputType="date" />
         <TextView

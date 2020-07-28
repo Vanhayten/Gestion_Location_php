@@ -1,18 +1,25 @@
 package com.example.gestionlocationnew;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -31,13 +38,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.divyanshu.colorseekbar.ColorSeekBar;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class vehicules extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -63,6 +74,10 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
     private DatePickerDialog.OnDateSetListener mDateSetListenerfin;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
+
+
+    CircleImageView profile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +89,12 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
         View headerView = navigationView1.getHeaderView(0);
         TextView username = headerView.findViewById(R.id.unser_name);
         TextView role1 = headerView.findViewById(R.id.role);
+        profile = (CircleImageView)headerView.findViewById(R.id.profilpic);
+
+
+
+
+
 
         Bundle b = getIntent().getExtras();
         Nom = b.getString("nom");
