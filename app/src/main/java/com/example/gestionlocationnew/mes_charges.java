@@ -54,6 +54,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+
 public class mes_charges extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
@@ -142,9 +143,11 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         Cursor c1 = table1.rawQuery ( requet1, null);
 
 
+
         LocalDate now1 = LocalDate.now();
         String dateYear1 = now1.format(DateTimeFormatter.ofPattern("yyyy"));
         String dateMonth1 = now1.format(DateTimeFormatter.ofPattern("MM"));
+
 
 
         String dateYearcon1 =null ;
@@ -266,6 +269,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                         ,android.R.style.Theme_Holo_Dialog_MinWidth
                         ,mDateSetListenerRecherche,Year, Month,Day);
 
+
                 dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialogDate.show();
 
@@ -278,6 +282,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 month =month+1;
                 String datefin = dayOfMonth+"/"+month+"/"+year;
                 Recherche.setText(datefin);
+                rechercheEntreDeuxDate();
             }
         };
 
@@ -310,6 +315,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 month =month+1;
                 String datefin = dayOfMonth+"/"+month+"/"+year;
                 Recherche1.setText(datefin);
+                rechercheEntreDeuxDate();
             }
         };
 
@@ -950,14 +956,8 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
             datasets.add(set1);
             LineData data = new LineData(datasets);
 
-
+           // mChart.refreshDrawableState();
             mChart.setData(data);
-
-
-
-
-
-
 
 
 

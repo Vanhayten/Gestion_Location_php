@@ -147,7 +147,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:textColor="@color/BlueDarck"
         android:background="@drawable/rounded_edit_text"
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:inputType="date"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="18dp"
@@ -161,13 +161,24 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:textColor="@color/BlueDarck"
         android:background="@drawable/rounded_edit_text"
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:layout_marginRight="15dp"
         android:layout_height="34dp"
         android:inputType="date"
         android:id="@+id/textrecherche1">
 
     </EditText>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_marginRight="10dp"
+        android:layout_height="34dp"
+        android:id="@+id/btnRecherche"
+        android:src="@drawable/ic_baseline_search_24"/>
+
+
+
 </LinearLayout>
 
 <RelativeLayout

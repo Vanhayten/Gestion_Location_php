@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -274,11 +275,43 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         mChart.setData(data);
 
 
-/**
- * recherche entre deux date nChqrt
- */
+
+
+
+
 Recherche = (EditText)findViewById(R.id.textrecherche);
 Recherche1 = (EditText)findViewById(R.id.textrecherche1);
+
+
+
+        /**
+         * btn recherche
+         */
+
+        ImageView imageView = (ImageView)findViewById(R.id.btnRecherche);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(Recherche.length() !=0 && Recherche1.length() !=0){
+
+                    try {
+                        rechercheEntreDeuxDate();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                }else {
+                    Toast.makeText(mes_recettes.this, "Veuillez remplir les dates", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+
+        /**
+         * recherche entre deux date nChqrt
+         */
 
         Recherche.addTextChangedListener(new TextWatcher() {
             @Override
@@ -305,12 +338,20 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
         Recherche1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                try {
+                    rechercheEntreDeuxDate();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                try {
+                    rechercheEntreDeuxDate();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -375,6 +416,8 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                         ,android.R.style.Theme_Holo_Dialog_MinWidth
                         ,mDateSetListenerrecherche2,Year, Month,Day);
 
+
+
                 dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialogDate.show();
 
@@ -387,6 +430,7 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                 month =month+1;
                 String datefin = dayOfMonth+"/"+month+"/"+year;
                 Recherche1.setText(datefin);
+
             }
         };
 
