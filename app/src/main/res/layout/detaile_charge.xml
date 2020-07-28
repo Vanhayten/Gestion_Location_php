@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16sp"
-            android:text="Montant"
+            android:text="Montant: "
             android:textColor="@color/NAVwhite"
             android:textSize="18dp"
             android:textStyle="bold" />
@@ -57,7 +57,7 @@
             android:id="@+id/text_desCharge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Desingation"
+            android:text="Desingation: "
             android:textStyle="bold"
             android:textColor="@color/NAVwhite"
             android:layout_marginTop="16sp"
