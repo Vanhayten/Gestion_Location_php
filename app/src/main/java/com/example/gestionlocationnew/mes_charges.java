@@ -171,7 +171,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
 
         if (c1.getCount() ==0) {
-            Toast.makeText(this, "table vide", Toast.LENGTH_SHORT).show();
+
         }else {
             while (c1.moveToNext())
             {
