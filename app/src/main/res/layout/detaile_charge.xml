@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="275dp"
+    android:background="@color/colorPrimaryDark"
+    android:padding="5dp"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+    <TextView
+        android:id="@+id/text_close"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textColor="@color/NAVwhite"
+        android:text="x"
+        android:textStyle="bold"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:background="@drawable/cercelbaground"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp">
+
+
+        <TextView
+            android:id="@+id/text_DateCharge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date :"
+            android:textStyle="bold"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="16sp"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:id="@+id/text_mntCharge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16sp"
+            android:text="Montant"
+            android:textColor="@color/NAVwhite"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16sp"
+            android:text="Payment: "
+            android:textColor="@color/NAVwhite"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/text_desCharge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Desingation"
+            android:textStyle="bold"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="16sp"
+            android:textSize="18dp"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

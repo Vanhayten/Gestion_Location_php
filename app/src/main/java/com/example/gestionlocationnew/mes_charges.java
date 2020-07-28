@@ -82,6 +82,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
 
     Cursor c;
+    private Dialog MyDyalog_detaille;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -643,11 +644,53 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 dyaloge_modifier_supprimer_mes_charges.show();
             }
         });
+        MyDyalog_detaille = new Dialog(this);
+        ls.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
+                MyDyalog_detaille = new Dialog(mes_charges.this);
+                MyDyalog_detaille.setContentView(R.layout.detaile_charge);
+                final TextView text1, text2, text3, text4;
+
+                text1 = (TextView)MyDyalog_detaille.findViewById(R.id.text_DateCharge);
+                text2 = (TextView)MyDyalog_detaille.findViewById(R.id.text_mntCharge);
+                text3 = (TextView)MyDyalog_detaille.findViewById(R.id.text_payment);
+                text4 = (TextView)MyDyalog_detaille.findViewById(R.id.text_desCharge);
+                final TextView id_charge;
+
+                id_charge =(TextView)arg1.findViewById(R.id.Id_charge);
+int k=ls.getSelectedItemPosition();
+                Toast.makeText(mes_charges.this, ""+id_charge.getText().toString(), Toast.LENGTH_SHORT).show();
 
 
+                    SQLiteDatabase table = db.getReadableDatabase();
+                    String requet = "SELECT * FROM  Charge where Id_Charge = '"+id_charge.getText().toString()+"'";
+
+                    Cursor c = table.rawQuery ( requet, null );
+                    while (c.moveToNext()){
+                        text1.setText(text1.getText()+" "+c.getString(1));
+                        text2.setText(text2.getText()+" "+c.getString(2));
+                        text3.setText(text3.getText()+" "+c.getString(3));
+                        text4.setText(text4.getText()+" "+c.getString(4));
+
+                    }
+                TextView close;
+                close=(TextView) MyDyalog_detaille.findViewById(R.id.text_close);
+                close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MyDyalog_detaille.dismiss();
+                    }
+                });
+                MyDyalog_detaille.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                MyDyalog_detaille.show();
 
 
+                return true;
+            }
 
+            });
 
     }
 
