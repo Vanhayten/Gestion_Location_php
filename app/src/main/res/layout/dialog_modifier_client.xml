@@ -28,13 +28,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5sp"
+                android:background="@drawable/rounded_edit_text"
                 android:enabled="false"
-                android:hint="cin"
-                android:textSize="18dp"
+                android:gravity="center"
+                android:hint="Cin"
                 android:textColor="@color/green"
                 android:textColorHint="@color/BlueDarck"
-                android:gravity="center"
-                android:background="@drawable/rounded_edit_text"/>
+                android:textSize="18dp" />
 
             <EditText
                 android:id="@+id/text_nomclient"

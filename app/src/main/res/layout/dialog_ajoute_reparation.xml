@@ -77,12 +77,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Date reparation"
+                android:background="@drawable/rounded_edit_text"
+                android:gravity="center"
+                android:hint="Date reparation (dd/mm/yyyy)"
                 android:inputType="date"
                 android:textColor="@color/NAVblack_theme100"
                 android:textColorHint="@color/BlueDarck"
-                android:gravity="center"
-                android:background="@drawable/rounded_edit_text"
                 android:textSize="18dp" />
 
             <EditText

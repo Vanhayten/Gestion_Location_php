@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5sp"
-            android:text="Marque Vehicule"
+            android:text="Marque vehicule"
             android:textColor="@color/NAVwhite"
             android:textSize="18dp"
             android:textStyle="bold" />
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16sp"
-            android:text="Date Circulation"
+            android:text="Date circulation"
             android:textColor="@color/NAVwhite"
             android:textSize="18dp"
             android:textStyle="bold" />
@@ -61,42 +61,46 @@
             android:textColor="@color/NAVwhite"
             android:textSize="18dp"
             android:textStyle="bold" />
+
         <TextView
             android:id="@+id/text_valeur_entrer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ValeurDentrée"
-            android:textStyle="bold"
-            android:textColor="@color/NAVwhite"
             android:layout_marginTop="16sp"
-            android:textSize="18dp"/>
+            android:text="Valeur d'entrée"
+            android:textColor="@color/NAVwhite"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/text_dateeffet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date_Effet_Assurance"
-            android:textStyle="bold"
-            android:textColor="@color/NAVwhite"
             android:layout_marginTop="16sp"
-            android:textSize="18dp"/>
+            android:text="Date effet assurance"
+            android:textColor="@color/NAVwhite"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/text_dateechance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date_Echeance"
-            android:textStyle="bold"
-            android:textColor="@color/NAVwhite"
             android:layout_marginTop="16sp"
-            android:textSize="18dp"/>
+            android:text="Date echeance"
+            android:textColor="@color/NAVwhite"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/text_couleur"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Couleur_Vehicule"
-            android:textStyle="bold"
-            android:textColor="@color/NAVwhite"
             android:layout_marginTop="16sp"
-            android:textSize="18dp"/>
+            android:text="Couleur vehicule"
+            android:textColor="@color/NAVwhite"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
     <LinearLayout
