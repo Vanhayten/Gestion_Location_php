@@ -23,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.divyanshu.colorseekbar.ColorSeekBar;
 
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.regex.Pattern;
@@ -267,7 +266,7 @@ String Nom,Prenom,role;
   }
 boolean k=false;
   public boolean confirmerMatricule(String mat ){
-      Pattern con=Pattern.compile("[0-9]{5}-[A-Z]{1}-[0-9]{2}");
+      Pattern con=Pattern.compile("[0-9]{5}-[A-Z]{1}-[0-9]{2}||[0-9]{1}");
       Pattern con1=Pattern.compile("[0-9]{4}-[A-Z]{1}-[0-9]{2}");
       Pattern con2=Pattern.compile("[0-9]{3}-[A-Z]{1}-[0-9]{2}");
       if(!con.matcher(mat).find() ){

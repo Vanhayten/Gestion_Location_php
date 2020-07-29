@@ -19,7 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -50,7 +49,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class mes_recettes extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -683,7 +681,14 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                     }
                 });
 
-
+                TextView close;
+                close = (TextView) MyDyalog_detaille.findViewById(R.id.text_close);
+                close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MyDyalog_detaille.dismiss();
+                    }
+                });
 
                 MyDyalog_detaille.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 MyDyalog_detaille.show();
