@@ -29,7 +29,7 @@
         android:layout_marginLeft="45dp"
         android:layout_marginRight="45dp"
         android:layout_marginTop="16dp"
-        android:hint="immatriculation (12345-A-15)"
+        android:hint="Immatriculation (12345-A-15)"
 
         android:layout_centerInParent="true"
         />
@@ -42,7 +42,7 @@
             android:layout_marginLeft="45dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="45dp"
-            android:hint="date De mise en circulation"
+            android:hint="Date de mise en circulation (dd/mm/yyyy)"
             android:inputType="date" />
 
         <Spinner
@@ -52,7 +52,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginTop="16dp"
-            android:hint="marque combustion"
+            android:hint="Marque combustion"
             android:gravity="center_horizontal"
             android:layout_centerInParent="true"
             />
@@ -66,7 +66,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginRight="40dp"
 
-            android:hint="valeur d’entrée "
+            android:hint="Valeur d’entrée "
             android:inputType="number" />
 
         <EditText
@@ -77,7 +77,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="40dp"
-            android:hint="Date Effet Assurance"
+            android:hint="Date effet assurance (dd/mm/yyyy)"
             android:inputType="date" />
 
         <EditText
@@ -88,7 +88,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="40dp"
-            android:hint="Date Echeance"
+            android:hint="Date echeance (dd/mm/yyyy)"
             android:inputType="date" />
         <TextView
             android:layout_width="wrap_content"
