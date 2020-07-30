@@ -224,6 +224,10 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
 
                         MyDyalog = new Dialog(mes_clients.this);
                         MyDyalog.setContentView(R.layout.dialog_mise_jour_client);
+
+                        MyDyalog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+
                         Button modifier, suprimer;
                         TextView text1, text_nom;
                         text1 = (TextView) MyDyalog.findViewById(R.id.text_close);

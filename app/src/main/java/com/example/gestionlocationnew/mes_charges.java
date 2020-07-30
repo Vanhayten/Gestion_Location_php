@@ -442,6 +442,9 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 final Dialog dyaloge_modifier_supprimer_mes_charges;
                 dyaloge_modifier_supprimer_mes_charges = new Dialog(mes_charges.this);
                 dyaloge_modifier_supprimer_mes_charges.setContentView(R.layout.dialoge_modifier_supprimer_mes_charge);
+
+                dyaloge_modifier_supprimer_mes_charges.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
                 Button Suprimer, Modifier;
                 Suprimer = (Button) dyaloge_modifier_supprimer_mes_charges.findViewById(R.id.btn_charge2);
                 Modifier = (Button) dyaloge_modifier_supprimer_mes_charges.findViewById(R.id.btn_charge1);
@@ -651,6 +654,9 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
                 MyDyalog_detaille = new Dialog(mes_charges.this);
                 MyDyalog_detaille.setContentView(R.layout.detaile_charge);
+
+                MyDyalog_detaille.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
                 final TextView text1, text2, text3, text4;
 
                 text1 = (TextView)MyDyalog_detaille.findViewById(R.id.text_DateCharge);

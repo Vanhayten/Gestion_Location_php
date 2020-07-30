@@ -118,6 +118,9 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 final Button sinistre,assurance;
                 TextView textClose,textnom;
                 myDyalog.setContentView(R.layout.dialog_assurance_sinistre);
+
+                myDyalog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
                 sinistre   =(Button)myDyalog.findViewById(R.id.btn_sinistres);
                 assurance  =(Button)myDyalog.findViewById(R.id.btn_assurance);
                 textClose =(TextView)myDyalog.findViewById(R.id.text_close);

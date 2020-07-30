@@ -164,6 +164,9 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                 final Dialog MyDyalog;
                 MyDyalog = new Dialog(entretiens.this);
                 MyDyalog.setContentView(R.layout.dialog_vidange_reparation_visitetechnique);
+
+                MyDyalog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
                 ImageButton img1_reparation, img2_vidange, img3_visite;
                 TextView text1, text_nom;
                 text1 = (TextView) MyDyalog.findViewById(R.id.text_close);

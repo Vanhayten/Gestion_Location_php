@@ -515,6 +515,9 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                 final Dialog MyDyalog_detaille;
                 MyDyalog_detaille = new Dialog(mes_recettes.this);
                 MyDyalog_detaille.setContentView(R.layout.dialog_detaille_recette);
+
+                MyDyalog_detaille.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
                 final TextView text1, text2, text3, text4, text5, text6,text7;
 
                 text1 = (TextView)MyDyalog_detaille.findViewById(R.id.text_idreccet);

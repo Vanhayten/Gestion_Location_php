@@ -210,6 +210,12 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 myDyalog = new Dialog(vehicules.this);
                 myDyalog.setContentView(R.layout.dialog_vihicule);
+
+               // myDyalog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+
+                myDyalog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+
                 TextView text1,text2,text3,text4,text5,text6,text7,text8,text9;
                 Button Suprimer,Modifier;
 
