@@ -545,6 +545,10 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 T.putExtras(b);
                 finish();
                 startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+
                 break;
             case R.id.assurances:
                 T = new Intent(this, assurances.class);
@@ -554,6 +558,10 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 T.putExtras(b);
                 finish();
                 startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+
                 break;
             case R.id.entretiens:
                 T = new Intent(this, entretiens.class);
@@ -563,6 +571,10 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 T.putExtras(b);
                 finish();
                 startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+
                 break;
 
             case R.id.recette:
@@ -573,6 +585,10 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 T.putExtras(b);
                 finish();
                 startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+
                 break;
             case R.id.charges:
                 T = new Intent(this, mes_charges.class);
@@ -582,6 +598,10 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 T.putExtras(b);
                 finish();
                 startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+
                 break;
             case R.id.calendrier:
                 T = new Intent(this, calendrier.class);
@@ -591,6 +611,10 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 T.putExtras(b);
                 finish();
                 startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+
                 break;
             case R.id.clients:
                 T = new Intent(this, mes_clients.class);
@@ -600,6 +624,10 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 T.putExtras(b);
                 finish();
                 startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+
                 break;
             case R.id.locations:
                 T = new Intent(this, mes_location.class);
@@ -609,6 +637,10 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 T.putExtras(b);
                 finish();
                 startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+
                 break;
 
         }

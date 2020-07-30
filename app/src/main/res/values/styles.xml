@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowAnimationStyle">
+            @style/MyCustomActivityAnimation</item>
     </style>
     <style name="SpinnerTheme" parent="android:Widget.Spinner">
         <item name="android:background">@drawable/ic_baseline_keyboard_arrow_down_24</item>
@@ -14,4 +16,21 @@
     <style name="ToolbarColoredBackArrow" parent="AppTheme">
         <item name="android:textColorSecondary">@color/NAVwhite</item>
     </style>
+
+    <style name="MyCustomActivityAnimation"
+        parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">
+            @anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">
+            @anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">
+            @anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">
+            @anim/slide_out_right</item>
+    </style>
+
+
+
 </resources>
+
+

@@ -754,6 +754,11 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+
+
                 break;
             case R.id.assurances:
                 T = new Intent(this, assurances.class);
@@ -763,6 +768,11 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+
+
                 break;
             case R.id.entretiens:
                 T = new Intent(this, entretiens.class);
@@ -772,6 +782,11 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+
+
                 break;
             case R.id.recette:
                 T = new Intent(this, mes_recettes.class);
@@ -790,6 +805,11 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+
+
                 break;
             case R.id.calendrier:
                 T = new Intent(this, calendrier.class);
@@ -799,6 +819,11 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+
+
                 break;
             case R.id.clients:
                 T = new Intent(this, mes_clients.class);
@@ -808,6 +833,11 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+
+
                 break;
             case R.id.locations:
                 T = new Intent(this, mes_location.class);
@@ -817,6 +847,11 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+
+
                 break;
 
         }

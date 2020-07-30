@@ -1,17 +1,20 @@
 package com.example.gestionlocationnew;
 
+import android.app.ActivityOptions;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
@@ -54,6 +57,7 @@ login.setOnFocusChangeListener(new View.OnFocusChangeListener() {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void connection(View view) {
 
         Cursor c = db.Get_connection();
@@ -70,7 +74,15 @@ login.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 T.putExtras(b);
                 check = true;
                 finish();
-                startActivity(T);
+
+
+
+
+                startActivity(T,
+                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+
+
+               // startActivity(T);
 
             }
         }
