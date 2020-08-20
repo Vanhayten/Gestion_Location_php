@@ -126,10 +126,21 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         XAxis.XAxisPosition position = XAxis.XAxisPosition.BOTTOM;
         xAxis.setPosition(position);
 
+        xAxis.setGranularity(1f);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setEnabled(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+       
+        //xAxis.setLabelCount(31);
+
 
 
         mChart.getDescription().setEnabled(true);
         Description description = new Description();
+
+        mChart.setPinchZoom(false);
 
 
         description.setText("Jour");
@@ -174,6 +185,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         if (c1.getCount() ==0) {
 
         }else {
+
             while (c1.moveToNext())
             {
                 date3 = null;
@@ -196,6 +208,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                     String requet2 = "select * from charge";
                     Cursor c2 = table1.rawQuery ( requet2, null);
                     test1 =0;
+
                     try {
                         date3 = sdf.parse(c1.getString(1));
                     } catch (ParseException e) {
@@ -238,6 +251,10 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
         set1.setFormSize(5.f);
 
+
+
+
+
         if (Utils.getSDKInt() >= 18) {
 //                Drawable drawable = ContextCompat.getDrawable(this, R.drawable.blue_bg);
 //                set1.setFillDrawable(drawable);
@@ -252,6 +269,10 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         ArrayList<ILineDataSet> datasets = new ArrayList<>();
         datasets.add(set1);
         LineData data = new LineData(datasets);
+
+
+
+
 
         mChart.setData(data);
 

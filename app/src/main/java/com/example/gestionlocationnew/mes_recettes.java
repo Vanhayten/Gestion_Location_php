@@ -32,6 +32,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
@@ -39,6 +40,8 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
 import com.google.android.material.navigation.NavigationView;
@@ -50,6 +53,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import static android.net.wifi.WifiConfiguration.Status.strings;
 
 public class mes_recettes extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -71,6 +76,8 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
     PageAdapter_recette listeRecet;
     TextView totale;
     EditText Recherche,Recherche1;
+
+    ArrayList<Entry> yValues =new ArrayList<>();
 
     String Idd,cin,Matr,datedb,datefn,nbjour,prix,Typ_Payment,prix_01;
 
@@ -117,6 +124,19 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         YAxis leftAxis = mChart.getAxisLeft();
         XAxis xAxis = mChart.getXAxis();
 
+        /**
+         *
+         */
+
+
+        xAxis.setGranularity(1f);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setEnabled(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+
+
 
         leftAxis.setValueFormatter(new ClaimsYAxisValueFormatter());
 
@@ -147,7 +167,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         /**
          * initialitation les donner don chart
          */
-        ArrayList<Entry> yValues =new ArrayList<>();
+
         SQLiteDatabase table1 = db.getReadableDatabase();
         String requet1 = "SELECT * FROM  Recette ORDER BY date_début ASC";
         Cursor c1 = table1.rawQuery ( requet1, null);
@@ -175,8 +195,8 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
         Integer test1 =0;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date date4;
-        Date date5;
+        Date date4  =new Date();
+        Date date5 =new Date();
 
 
         while (c1.moveToNext())
@@ -200,34 +220,41 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                  * test test test test test test ------------------
                  */
 
-                String requet2 = "SELECT * FROM  Recette";
+                String requet2 = "SELECT * FROM  Recette ORDER BY date_début ASC";
                 Cursor c2 = table1.rawQuery ( requet2, null);
                 test1 =0;
                 try {
-                    date4 = sdf.parse(c1.getString(1));
+                    date4 = new SimpleDateFormat("dd/MM/yyyy").parse(c1.getString(1));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
 
                 while (c2.moveToNext()){
+
+
+
                     try {
-                        date5 = sdf.parse(c2.getString(1));
+                        date5 = new SimpleDateFormat("dd/MM/yyyy").parse(c2.getString(1));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
 
                     if(date5.compareTo(date4) == 0){
                         test1 = test1+Integer.parseInt(c2.getString(5));
+
                     }
+
+
 
                 }
 
+
+
+
                 prixx = test1;
-
-
-
                 day = Integer.parseInt(dateDaycon1);
                 //prixx = Integer.parseInt(c1.getString(5));
+
                 yValues.add(new Entry(day,prixx));
 
 
