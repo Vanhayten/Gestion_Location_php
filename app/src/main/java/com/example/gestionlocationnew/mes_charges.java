@@ -541,10 +541,20 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                         design= (TextView) dyaloge_modifier_mes_charges.findViewById(R.id.text_design);
 
 
+                        String requuet = "select * from Charge where Id_Charge ='"+id_charge.getText().toString()+"'";
+                        Cursor c = table.rawQuery ( requuet, null );
+                        while (c.moveToNext()){
+                            datech.setText(c.getString(1));
+                            montant.setText(c.getString(2));
+                            design.setText(c.getString(4));
+                        }
+
+
 
                         /**
                          * get date modif
                          */
+
                         datech.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -571,6 +581,8 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                                 datech.setText(datefin);
                             }
                         };
+
+
 
 
 

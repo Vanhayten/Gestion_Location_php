@@ -78,6 +78,8 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
     TextView totale;
     EditText Recherche,Recherche1;
 
+    String Cintext;
+
     ArrayList<Entry> yValues =new ArrayList<>();
 
     String Idd,cin,Matr,datedb,datefn,nbjour,prix,Typ_Payment,prix_01;
@@ -1103,8 +1105,8 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
             @Override
             public void afterTextChanged(Editable s) {
                 SQLiteDatabase table = db.getReadableDatabase ();
-                String Cintext = text3.getText().toString().toUpperCase();
-                String requet = "select * from Clients where cin ='"+Cintext.toUpperCase()+"'";
+                Cintext = text3.getText().toString().toLowerCase();
+                String requet = "select * from Clients where cin ='"+Cintext+"'";
                 Cursor c = table.rawQuery ( requet, null );
 
                 if(c.moveToFirst()){
@@ -1175,7 +1177,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 boolean d = false;
                 int total = Integer.parseInt(text8.getText().toString()) * Integer.parseInt(text9.getText().toString());
                 if (c1.getCount()==0){
-                    b = db.insert_client(text1.getText().toString().toUpperCase(), text2.getText().toString().toUpperCase(), text13.getText().toString(), text3.getText().toString().toUpperCase(), text4.getText().toString(), text5.getText().toString());
+                    b = db.insert_client(text1.getText().toString(), text2.getText().toString(), text13.getText().toString(), text3.getText().toString().toLowerCase(), text4.getText().toString(), text5.getText().toString());
                     d= db.insert_Recette(s,text6.getText().toString(),text7.getText().toString(),Integer.parseInt(text8.getText().toString()),Integer.parseInt(text9.getText().toString()),total,sp.getSelectedItem().toString(),text11.getSelectedItem().toString(),text3.getText().toString());
                     if (b && d ) {
                         Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
@@ -1195,7 +1197,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                         }
                     }
                     if(!c1.getString(3).equals(text3.getText().toString())) {
-                        b = db.insert_client(text1.getText().toString(), text2.getText().toString(), text13.getText().toString(), text3.getText().toString(), text4.getText().toString(), text5.getText().toString());
+                        b = db.insert_client(text1.getText().toString(), text2.getText().toString(), text13.getText().toString(), text3.getText().toString().toLowerCase(), text4.getText().toString(), text5.getText().toString());
                         d= db.insert_Recette(s,text6.getText().toString(),text7.getText().toString(),Integer.parseInt(text8.getText().toString()),Integer.parseInt(text9.getText().toString()),total,sp.getSelectedItem().toString(),text11.getSelectedItem().toString(),text3.getText().toString());
 
                         if(b && d ){
