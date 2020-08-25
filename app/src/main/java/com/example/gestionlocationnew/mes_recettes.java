@@ -52,6 +52,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import static android.net.wifi.WifiConfiguration.Status.strings;
@@ -81,6 +82,14 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
     String Idd,cin,Matr,datedb,datefn,nbjour,prix,Typ_Payment,prix_01;
 
+
+
+
+    List<String> dateshh;
+    List<Double> allAmountsss;
+
+
+
     private DatePickerDialog.OnDateSetListener mDateSetListenerrecherche1;
     private DatePickerDialog.OnDateSetListener mDateSetListenerrecherche2;
 
@@ -100,9 +109,17 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
         db = new gestion_location(this);
 
+
         /**
          * create CHART -------------------------------------------
          */
+
+
+
+
+
+
+
 
         mChart = findViewById(R.id.Linechart);
         mChart.setDragEnabled(true);
@@ -124,9 +141,8 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         YAxis leftAxis = mChart.getAxisLeft();
         XAxis xAxis = mChart.getXAxis();
 
-        /**
-         *
-         */
+
+
 
 
         xAxis.setGranularity(1f);
@@ -138,12 +154,23 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
 
+
         leftAxis.setValueFormatter(new ClaimsYAxisValueFormatter());
 
 
 
         XAxis.XAxisPosition position = XAxis.XAxisPosition.BOTTOM;
         xAxis.setPosition(position);
+
+
+
+
+        /**
+         *   //testtt
+         */
+        //  xAxis.setValueFormatter(new ClaimsXAxisValueFormatter());
+        //  xAxis.setValueFormatter(new ClaimsXAxisValueFormatter(dates));
+        //  leftAxis.setValueFormatter(new ClaimsYAxisValueFormatter());
 
 
 
@@ -174,7 +201,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
         //LocalDate now1 = LocalDate.now();
-       // String dateYear1 = now1.format(DateTimeFormatter.ofPattern("yyyy"));
+        // String dateYear1 = now1.format(DateTimeFormatter.ofPattern("yyyy"));
         //String dateMonth1 = now1.format(DateTimeFormatter.ofPattern("MM"));
 
         Calendar datecalendar = Calendar.getInstance();
@@ -190,13 +217,23 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         String dateMonthcon1 =null;
         String dateDaycon1 =null;
         int day =0;
-        int prixx = 0;
+        double prixx = 0;
 
 
         Integer test1 =0;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date date4  =new Date();
         Date date5 =new Date();
+
+
+
+        if(c1.getCount() != 0){
+            dateshh =new ArrayList<>();
+            allAmountsss =new ArrayList<>();
+        }
+
+
+
 
 
         while (c1.moveToNext())
@@ -255,7 +292,29 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 day = Integer.parseInt(dateDaycon1);
                 //prixx = Integer.parseInt(c1.getString(5));
 
-                yValues.add(new Entry(day,prixx));
+
+                //yValues.add(new Entry(day,prixx));
+
+                boolean repitition = false;
+
+                for (int i=0 ;i <dateshh.size();i++){
+
+                    if(dateshh.get(i).equals(c1.getString(1)) ){
+                    repitition =true;
+                    }
+
+                }
+
+                if(repitition == false){
+
+                    if(c1.getCount() != 0){
+                        dateshh.add(c1.getString(1));
+
+                        allAmountsss.add(prixx);
+                    }
+
+                }
+
 
 
             }
@@ -263,56 +322,22 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         }
 
 
-
-
-
-
-
-        LineDataSet set1 = new LineDataSet(yValues,"Prix par jour");
-        set1.setColor(getResources().getColor(R.color.green));
-        set1.setCircleColor(getResources().getColor(R.color.green));
-        set1.setLineWidth(2f);//line size
-        set1.setCircleRadius(5f);
-        set1.setDrawCircleHole(true);
-        set1.setValueTextSize(10f);
-        set1.setDrawFilled(true);
-        set1.setFormLineWidth(5f);
-        set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
-        set1.setFormSize(5.f);
-
-        if (Utils.getSDKInt() >= 18) {
-//                Drawable drawable = ContextCompat.getDrawable(this, R.drawable.blue_bg);
-//                set1.setFillDrawable(drawable);
-            set1.setFillColor(Color.WHITE);
-
-        } else {
-            set1.setFillColor(Color.WHITE);
+        if(dateshh != null && allAmountsss != null){
+            renderData(dateshh, allAmountsss);
         }
-        set1.setDrawValues(true);
-/*
-        set1.setFillAlpha(110);
-        set1.setColor(Color.GREEN);
-        set1.setLineWidth(2f);
-        set1.setValueTextSize(8f);
-        set1.setValueTextColor(Color.GRAY);
-
- */
-
-        ArrayList<ILineDataSet> datasets = new ArrayList<>();
-        datasets.add(set1);
-        LineData data = new LineData(datasets);
 
 
 
 
 
-        mChart.setData(data);
 
 
 
 
-Recherche = (EditText)findViewById(R.id.textrecherche);
-Recherche1 = (EditText)findViewById(R.id.textrecherche1);
+
+
+        Recherche = (EditText)findViewById(R.id.textrecherche);
+        Recherche1 = (EditText)findViewById(R.id.textrecherche1);
 
 
 
@@ -345,6 +370,10 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
         Recherche1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+
+
                 try {
                     rechercheEntreDeuxDate();
                 } catch (ParseException e) {
@@ -354,6 +383,12 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+                dateshh.clear();
+                allAmountsss.clear();
+
+
                 try {
                     rechercheEntreDeuxDate();
                 } catch (ParseException e) {
@@ -363,6 +398,11 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
 
             @Override
             public void afterTextChanged(Editable s) {
+
+                dateshh.clear();
+                allAmountsss.clear();
+
+
                 try {
                     rechercheEntreDeuxDate();
                 } catch (ParseException e) {
@@ -422,7 +462,6 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                 DatePickerDialog dialogDate = new DatePickerDialog(mes_recettes.this
                         ,android.R.style.Theme_Holo_Dialog_MinWidth
                         ,mDateSetListenerrecherche2,Year, Month,Day);
-
 
 
                 dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -488,9 +527,9 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
 
 
 
-       // LocalDate now = LocalDate.now();
-       //String dateYear = now.format(DateTimeFormatter.ofPattern("yyyy"));
-       //String dateMonth = now.format(DateTimeFormatter.ofPattern("MM"));
+        // LocalDate now = LocalDate.now();
+        //String dateYear = now.format(DateTimeFormatter.ofPattern("yyyy"));
+        //String dateMonth = now.format(DateTimeFormatter.ofPattern("MM"));
 
         String dateYear =  ""+alarmYear;
         String dateMonth =""+alarmMonth;
@@ -606,13 +645,13 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                         text6 = (EditText)MyDyalog_modifier.findViewById(R.id.text_nbbjour);
                         text7 = (EditText)MyDyalog_modifier.findViewById(R.id.text_prixtt);
 
-                            text1.setText(Idd);
-                            text2.setText(cin);
-                            text3.setText(Matr);
-                            text4.setText(datedb);
-                            text5.setText(datefn);
-                            text6.setText(nbjour);
-                            text7.setText(prix);
+                        text1.setText(Idd);
+                        text2.setText(cin);
+                        text3.setText(Matr);
+                        text4.setText(datedb);
+                        text5.setText(datefn);
+                        text6.setText(nbjour);
+                        text7.setText(prix);
 
 
                         /**
@@ -744,7 +783,7 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                 ArrayList<list_recette> arrayList2;
                 SQLiteDatabase table = db.getReadableDatabase ();
 
-               String requet = "SELECT * FROM  Recette where Id_Recette ='"+t1.getText()+"'";
+                String requet = "SELECT * FROM  Recette where Id_Recette ='"+t1.getText()+"'";
                 Cursor c = table.rawQuery ( requet, null );
                 if(c.getCount()>=1){
                     ls.clearChoices();
@@ -899,7 +938,7 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
         Spinner sp ;
 
 
-      sp= (Spinner) MyDyalog_ajou.findViewById(R.id.text_typeP);
+        sp= (Spinner) MyDyalog_ajou.findViewById(R.id.text_typeP);
         ArrayList<String> arr  = new ArrayList<String>();
         arr.add("Chéque");
         arr.add("Virement");
@@ -917,10 +956,10 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
 
         text11 = (Spinner) MyDyalog_ajou.findViewById(R.id.text_matric);
         ArrayList<String> arrayListMatricule  = new ArrayList<String>();
-            arrayListMatricule = filter_vehicule();
+        arrayListMatricule = filter_vehicule();
 
-            ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,arrayListMatricule);
-            text11.setAdapter(arrayAdapter1);
+        ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,arrayListMatricule);
+        text11.setAdapter(arrayAdapter1);
 
 
 
@@ -1146,18 +1185,18 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                 if(c1.moveToFirst()) {
 
                     if(c1.getString(3).equals(text3.getText().toString())) {
-                          d= db.insert_Recette(s,text6.getText().toString(),text7.getText().toString(),Integer.parseInt(text8.getText().toString()),Integer.parseInt(text9.getText().toString()),total,sp.getSelectedItem().toString(),text11.getSelectedItem().toString(),text3.getText().toString());
+                        d= db.insert_Recette(s,text6.getText().toString(),text7.getText().toString(),Integer.parseInt(text8.getText().toString()),Integer.parseInt(text9.getText().toString()),total,sp.getSelectedItem().toString(),text11.getSelectedItem().toString(),text3.getText().toString());
 
 
                         if (d) {
                             Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
                         }else{
-                           Toast.makeText(mes_recettes.this, "l'enregistrement ne pas effecuter", Toast.LENGTH_SHORT).show();
-                       }
+                            Toast.makeText(mes_recettes.this, "l'enregistrement ne pas effecuter", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     if(!c1.getString(3).equals(text3.getText().toString())) {
-                   b = db.insert_client(text1.getText().toString(), text2.getText().toString(), text13.getText().toString(), text3.getText().toString(), text4.getText().toString(), text5.getText().toString());
-                   d= db.insert_Recette(s,text6.getText().toString(),text7.getText().toString(),Integer.parseInt(text8.getText().toString()),Integer.parseInt(text9.getText().toString()),total,sp.getSelectedItem().toString(),text11.getSelectedItem().toString(),text3.getText().toString());
+                        b = db.insert_client(text1.getText().toString(), text2.getText().toString(), text13.getText().toString(), text3.getText().toString(), text4.getText().toString(), text5.getText().toString());
+                        d= db.insert_Recette(s,text6.getText().toString(),text7.getText().toString(),Integer.parseInt(text8.getText().toString()),Integer.parseInt(text9.getText().toString()),total,sp.getSelectedItem().toString(),text11.getSelectedItem().toString(),text3.getText().toString());
 
                         if(b && d ){
                             Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
@@ -1202,7 +1241,7 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
         Date datenow = null;
         Date datereccete = null;
         try {
-             datenow = df.parse(formattedDate);
+            datenow = df.parse(formattedDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -1242,6 +1281,7 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void rechercheEntreDeuxDate() throws ParseException {
 
+
         ArrayList<list_recette> arrayList2;
         arrayList2 = new ArrayList<list_recette> ();
 
@@ -1268,7 +1308,7 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
         String dateMonthcon1 =null;
         String dateDaycon1 =null;
         int day =0;
-        int prixx = 0;
+        double prixx = 0;
 
         // yValues.add(new Entry(0,0));
 
@@ -1289,6 +1329,7 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
         Integer test1 =0;
         Date date4;
         Date date5;
+
 
 
         while (c1.moveToNext())
@@ -1342,7 +1383,17 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
                 day = Integer.parseInt(dateDaycon1);
                 //prixx = Integer.parseInt(c1.getString(5));
                 //Toast.makeText(this, ""+day+" "+prixx, Toast.LENGTH_SHORT).show();
-                yValues.add(new Entry(day,prixx));
+             //   yValues.add(new Entry(day,prixx));
+
+                if(c1.getCount() !=0){
+
+                    dateshh.add(c1.getString(1));
+
+                    allAmountsss.add(prixx);
+
+                }
+
+
 
 
                 i++;
@@ -1353,6 +1404,13 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
             }
 
         }
+
+
+        if(dateshh != null && allAmountsss != null) {
+            renderData(dateshh, allAmountsss);
+        }
+
+
 
 
         PageAdapter_recette   adapter_vihucle1 = new PageAdapter_recette ( this, arrayList2 );
@@ -1367,45 +1425,6 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
 
 
 
-
-
-
-        LineDataSet set1 = new LineDataSet(yValues,"Prix par jour");
-        set1.setColor(getResources().getColor(R.color.green));
-        set1.setCircleColor(getResources().getColor(R.color.green));
-        set1.setLineWidth(2f);//line size
-        set1.setCircleRadius(5f);
-        set1.setDrawCircleHole(true);
-        set1.setValueTextSize(10f);
-        set1.setDrawFilled(true);
-        set1.setFormLineWidth(5f);
-        set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
-        set1.setFormSize(5.f);
-
-        if (Utils.getSDKInt() >= 18) {
-//                Drawable drawable = ContextCompat.getDrawable(this, R.drawable.blue_bg);
-//                set1.setFillDrawable(drawable);
-            set1.setFillColor(Color.WHITE);
-
-        } else {
-            set1.setFillColor(Color.WHITE);
-        }
-        set1.setDrawValues(true);
-/*
-        set1.setFillAlpha(110);
-        set1.setColor(Color.GREEN);
-        set1.setLineWidth(2f);
-        set1.setValueTextSize(8f);
-        set1.setValueTextColor(Color.GRAY);
-
- */
-
-        ArrayList<ILineDataSet> datasets = new ArrayList<>();
-        datasets.add(set1);
-        LineData data = new LineData(datasets);
-
-
-        mChart.setData(data);
     }
 
 
@@ -1414,5 +1433,133 @@ Recherche1 = (EditText)findViewById(R.id.textrecherche1);
     }
 
 
+    public void renderData(List<String> dates, List<Double> allAmounts) {
+
+        final ArrayList<String> xAxisLabel = new ArrayList<>();
+        xAxisLabel.add("1");
+        xAxisLabel.add("7");
+        xAxisLabel.add("14");
+        xAxisLabel.add("21");
+        xAxisLabel.add("28");
+        xAxisLabel.add("30");
+
+        XAxis xAxis = mChart.getXAxis();
+        XAxis.XAxisPosition position = XAxis.XAxisPosition.BOTTOM;
+        xAxis.setPosition(position);
+        xAxis.enableGridDashedLine(2f, 7f, 0f);
+        xAxis.setAxisMaximum(5f);
+        xAxis.setAxisMinimum(0f);
+        xAxis.setLabelCount(6, true);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setGranularity(7f);
+        xAxis.setLabelRotationAngle(315f);
+
+        xAxis.setValueFormatter(new ClaimsXAxisValueFormatter(dates));
+
+        xAxis.setCenterAxisLabels(true);
+
+
+        xAxis.setDrawLimitLinesBehindData(true);
+
+
+
+
+        LimitLine ll2 = new LimitLine(35f, "");
+        ll2.setLineWidth(4f);
+        ll2.enableDashedLine(10f, 10f, 0f);
+        ll2.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+        ll2.setTextSize(10f);
+        ll2.setLineColor(Color.parseColor("#FFFFFF"));
+
+
+
+        YAxis leftAxis = mChart.getAxisLeft();
+
+
+
+        leftAxis.enableGridDashedLine(10f, 10f, 0f);
+        leftAxis.setDrawZeroLine(false);
+        leftAxis.setDrawLimitLinesBehindData(false);
+        //XAxis xAxis = mBarChart.getXAxis();
+        leftAxis.setValueFormatter(new ClaimsYAxisValueFormatter());
+
+        mChart.getDescription().setEnabled(true);
+        Description description = new Description();
+        // description.setText(UISetters.getFullMonthName());//commented for weekly reporting
+        description.setText("Week");
+        description.setTextSize(15f);
+        mChart.getDescription().setPosition(0f, 0f);
+        mChart.setDescription(description);
+        mChart.getAxisRight().setEnabled(false);
+
+        //setData()-- allAmounts is data to display;
+        setDataForWeeksWise(allAmounts);
+
+    }
+
+    private void setDataForWeeksWise(List<Double> amounts) {
+
+        ArrayList<Entry> values = new ArrayList<>();
+
+            int x=0;
+            for(int i=0; i< amounts.size(); i++){
+                x=i+1;
+                values.add(new Entry(x, amounts.get(i).floatValue()));
+            }
+
+
+
+
+
+
+
+        //values.add(new Entry(1, amounts.get(0).floatValue()));
+        //values.add(new Entry(2, amounts.get(1).floatValue()));
+        //values.add(new Entry(3, amounts.get(2).floatValue()));
+        //values.add(new Entry(4, amounts.get(3).floatValue()));
+
+
+        LineDataSet set1;
+        if (mChart.getData() != null &&
+                mChart.getData().getDataSetCount() > 0) {
+            set1 = (LineDataSet) mChart.getData().getDataSetByIndex(0);
+            set1.setValues(values);
+            mChart.getData().notifyDataChanged();
+            mChart.notifyDataSetChanged();
+        } else {
+            set1 = new LineDataSet(values, "Total volume");
+            set1.setDrawCircles(true);
+            set1.enableDashedLine(10f, 0f, 0f);
+            set1.enableDashedHighlightLine(10f, 0f, 0f);
+            set1.setColor(getResources().getColor(R.color.green));
+            set1.setCircleColor(getResources().getColor(R.color.green));
+            set1.setLineWidth(2f);//line size
+            set1.setCircleRadius(5f);
+            set1.setDrawCircleHole(true);
+            set1.setValueTextSize(10f);
+            set1.setDrawFilled(true);
+            set1.setFormLineWidth(5f);
+            set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
+            set1.setFormSize(5.f);
+
+            if (Utils.getSDKInt() >= 18) {
+//                Drawable drawable = ContextCompat.getDrawable(this, R.drawable.blue_bg);
+//                set1.setFillDrawable(drawable);
+                set1.setFillColor(Color.WHITE);
+
+            } else {
+                set1.setFillColor(Color.WHITE);
+            }
+            set1.setDrawValues(true);
+            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+            dataSets.add(set1);
+            LineData data = new LineData(dataSets);
+
+            mChart.setData(data);
+        }
+    }
+
+
 
 }
+

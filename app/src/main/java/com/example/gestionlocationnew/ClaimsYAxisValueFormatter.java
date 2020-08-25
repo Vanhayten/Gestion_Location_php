@@ -8,5 +8,6 @@ public class ClaimsYAxisValueFormatter extends ValueFormatter {
     @Override
     public String getAxisLabel(float value, AxisBase axis) {
         return String.format("%d",(int)value)+ " DH";
+        //return value + " DH";
     }
 }

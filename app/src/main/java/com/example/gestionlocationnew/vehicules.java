@@ -128,8 +128,8 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
          * On first use
          */
 
-        Animation  fromnav = AnimationUtils.loadAnimation(this,R.anim.fromnav);
-        navigationView.setAnimation(fromnav);
+        //Animation  fromnav = AnimationUtils.loadAnimation(this,R.anim.fromnav);
+      //  navigationView.setAnimation(fromnav);
 
 
 
