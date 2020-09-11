@@ -51,6 +51,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -144,9 +145,6 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         XAxis xAxis = mChart.getXAxis();
 
 
-
-
-
         xAxis.setGranularity(1f);
         xAxis.setCenterAxisLabels(true);
         xAxis.setEnabled(true);
@@ -170,10 +168,6 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         /**
          *   //testtt
          */
-        //  xAxis.setValueFormatter(new ClaimsXAxisValueFormatter());
-        //  xAxis.setValueFormatter(new ClaimsXAxisValueFormatter(dates));
-        //  leftAxis.setValueFormatter(new ClaimsYAxisValueFormatter());
-
 
 
         mChart.getDescription().setEnabled(true);
@@ -283,8 +277,6 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
                     }
 
-
-
                 }
 
 
@@ -330,14 +322,6 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
 
-
-
-
-
-
-
-
-
         Recherche = (EditText)findViewById(R.id.textrecherche);
         Recherche1 = (EditText)findViewById(R.id.textrecherche1);
 
@@ -376,11 +360,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
 
-                try {
-                    rechercheEntreDeuxDate();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+
             }
 
             @Override
@@ -564,6 +544,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
             arrayList1.add (list);
         }
 
+        Collections.reverse(arrayList1);
         listeRecet = new PageAdapter_recette ( this, arrayList1 );
         ls.setAdapter(listeRecet);
 
@@ -795,6 +776,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                         list_recette list = new list_recette (Integer.parseInt(c.getString(5)),c.getString(0));
                         arrayList2.add ( list );
                     }
+                    Collections.reverse(arrayList2);
                     PageAdapter_recette adapter_recette = new PageAdapter_recette (mes_recettes.this,arrayList2);
                     ls.setAdapter ( adapter_recette );
                 }else{
@@ -1288,7 +1270,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         arrayList2 = new ArrayList<list_recette> ();
 
 
-        ArrayList<Entry> yValues =new ArrayList<>();
+
         SQLiteDatabase table1 = db.getReadableDatabase();
         String requet1 = "SELECT * FROM  Recette ORDER BY date_début ASC";
 
@@ -1296,9 +1278,6 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         Cursor c1 = table1.rawQuery ( requet1, null);
 
 
-        //LocalDate now1 = LocalDate.now();
-        //String dateYear1 = now1.format(DateTimeFormatter.ofPattern("yyyy"));
-        //String dateMonth1 = now1.format(DateTimeFormatter.ofPattern("MM"));
 
         Calendar datecalendar = Calendar.getInstance();
         final int alarmYear = datecalendar.get(Calendar.YEAR);
@@ -1343,10 +1322,9 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
             date3 = sdf.parse(c1.getString(1));
 
-            dateYearcon1 =c1.getString(1).split("/")[2];
-            dateMonthcon1 = c1.getString(1).split("/")[1];
-
-            dateDaycon1 = c1.getString(1).split("/")[0];
+            dateYearcon1 = c1.getString(1).split("/")[2];
+            dateMonthcon1= c1.getString(1).split("/")[1];
+            dateDaycon1  = c1.getString(1).split("/")[0];
 
             if(date3.after(date)  &&  date3.before(date1)){
 
@@ -1378,20 +1356,29 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
                 prixx = test1;
 
-
-
-
-
                 day = Integer.parseInt(dateDaycon1);
                 //prixx = Integer.parseInt(c1.getString(5));
                 //Toast.makeText(this, ""+day+" "+prixx, Toast.LENGTH_SHORT).show();
              //   yValues.add(new Entry(day,prixx));
 
-                if(c1.getCount() !=0){
 
-                    dateshh.add(c1.getString(1));
+                boolean repitition = false;
 
-                    allAmountsss.add(prixx);
+                for (int ii=0 ;ii <dateshh.size();ii++){
+
+                    if(dateshh.get(ii).equals(c1.getString(1)) ){
+                        repitition =true;
+                    }
+
+                }
+
+                if(repitition == false){
+
+                    if(c1.getCount() != 0){
+                        dateshh.add(c1.getString(1));
+
+                        allAmountsss.add(prixx);
+                    }
 
                 }
 
@@ -1414,7 +1401,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
 
-
+        Collections.reverse(arrayList2);
         PageAdapter_recette   adapter_vihucle1 = new PageAdapter_recette ( this, arrayList2 );
 
 
@@ -1508,11 +1495,6 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 x=i+1;
                 values.add(new Entry(x, amounts.get(i).floatValue()));
             }
-
-
-
-
-
 
 
         //values.add(new Entry(1, amounts.get(0).floatValue()));

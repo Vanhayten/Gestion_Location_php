@@ -413,6 +413,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                          *
                          * button Ajoute vidange
                          */
+
                         final Button Ajoute_vidange;
                         Ajoute_vidange = (Button) dyalog_vidange.findViewById(R.id.btn_Ajouter1);
                         Ajoute_vidange.setOnClickListener(new View.OnClickListener() {
@@ -817,7 +818,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
     }
 
 
-    private void SaveEvent(String event,String time,String date, String month,String year){
+     private void SaveEvent(String event,String time,String date, String month,String year){
 
         dbOpenHelper = new DBOpenHelper(this);
         SQLiteDatabase database = dbOpenHelper.getWritableDatabase();

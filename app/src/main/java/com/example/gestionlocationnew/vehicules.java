@@ -177,8 +177,10 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
         //-------------------------
 
                     SQLiteDatabase table = db.getReadableDatabase ();
+
                    String requet = "select * from véhicules ";
                     c1 = table.rawQuery ( requet, null );
+                      /*
                    if(c1.getCount()==0){
                         finish();
                        Intent i=new Intent(this,Ajoute_vihicule.class);
@@ -189,6 +191,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                         i.putExtras(b1);
                        startActivity(i);
                    }
+                   */
                     arrayList = new ArrayList<list_vihcule> ();
                     arrayList.clear ();
 

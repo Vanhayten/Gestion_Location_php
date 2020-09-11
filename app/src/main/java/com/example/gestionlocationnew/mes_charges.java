@@ -52,21 +52,23 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 
 public class mes_charges extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    String Nom,Prenom,role;
+    String Nom, Prenom, role;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     gestion_location db;
-    TextView   datech, montant,design;
-    CheckBox espéce,chéque,virment;
-    String modpay="";
+    TextView datech, montant, design;
+    CheckBox espéce, chéque, virment;
+    String modpay = "";
     Page_Adapter_charge listrep;
     ListView ls;
     Page_Adapter_charge adapter_vihucle;
@@ -80,6 +82,8 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
     private DatePickerDialog.OnDateSetListener DateSetListenerche;
     private DatePickerDialog.OnDateSetListener DateSetListenerche1;
 
+    List<String> dateshh;
+    List<Double> allAmountsss;
 
     Cursor c;
     private Dialog MyDyalog_detaille;
@@ -98,12 +102,12 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
          */
 
 
-                mChart = findViewById(R.id.Linecharcherge);
+        mChart = findViewById(R.id.Linecharcherge);
         mChart.setDragEnabled(true);
         mChart.setScaleEnabled(true);
 
 
-        LimitLine ll1 = new LimitLine(30f,"Title");
+        LimitLine ll1 = new LimitLine(30f, "Title");
         ll1.setLineColor(getResources().getColor(R.color.NAVblack_theme75));
         ll1.setLineWidth(4f);
         ll1.enableDashedLine(10f, 10f, 0f);
@@ -119,43 +123,38 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         XAxis xAxis = mChart.getXAxis();
 
 
-        leftAxis.setValueFormatter(new ClaimsYAxisValueFormatter());
-
-
-
-        XAxis.XAxisPosition position = XAxis.XAxisPosition.BOTTOM;
-        xAxis.setPosition(position);
-
         xAxis.setGranularity(1f);
         xAxis.setCenterAxisLabels(true);
         xAxis.setEnabled(true);
         xAxis.setDrawGridLines(false);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
-       
-        //xAxis.setLabelCount(31);
 
+        leftAxis.setValueFormatter(new ClaimsYAxisValueFormatter());
+
+
+        XAxis.XAxisPosition position = XAxis.XAxisPosition.BOTTOM;
+        xAxis.setPosition(position);
+
+
+        //xAxis.setLabelCount(31);
 
 
         mChart.getDescription().setEnabled(true);
         Description description = new Description();
-
-        mChart.setPinchZoom(false);
-
-
+        // description.setText(UISetters.getFullMonthName());//commented for weekly reporting
         description.setText("Jour");
         description.setTextSize(15f);
         mChart.getDescription().setPosition(0f, 0f);
         mChart.setDescription(description);
         mChart.getAxisRight().setEnabled(false);
 
-        ArrayList<Entry> yValues =new ArrayList<>();
+
+
         String requet1 = "select * from charge ORDER BY Date ASC";
-        SQLiteDatabase table1 = db.getReadableDatabase ();
-        Cursor c1 = table1.rawQuery ( requet1, null);
-
-
-
+        SQLiteDatabase table1 = db.getReadableDatabase();
+        Cursor c1 = table1.rawQuery(requet1, null);
+        //////////////////
 
 
         //LocalDate now1 = LocalDate.now();
@@ -166,48 +165,50 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         final int alarmYear = datecalendar.get(Calendar.YEAR);
         int alarmMonth = datecalendar.get(Calendar.MONTH);
         alarmMonth++;
-        String dateYear1 =  ""+alarmYear;
-        String dateMonth1 =""+alarmMonth;
+        String dateYear1 = "" + alarmYear;
+        String dateMonth1 = "" + alarmMonth;
 
 
-        String dateYearcon1 =null ;
-        String dateMonthcon1 =null;
-        String dateDaycon1 =null;
-        int day =0;
-        int prixx = 0;
+        String dateYearcon1 = null;
+        String dateMonthcon1 = null;
+        String dateDaycon1 = null;
+        int day = 0;
+        double prixx = 0;
 
-        Integer test1 =0;
+        Integer test1 = 0;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date date3;
-        Date date4;
+        Date date3=new Date();
+        Date date4=new Date();
 
 
-        if (c1.getCount() ==0) {
+        if (c1.getCount() == 0) {
 
-        }else {
 
-            while (c1.moveToNext())
-            {
+        } else {
+            dateshh = new ArrayList<>();
+            allAmountsss = new ArrayList<>();
+
+            while (c1.moveToNext()) {
                 date3 = null;
                 date4 = null;
-                prixx=0;
+                prixx = 0;
 
-                dateYearcon1 =c1.getString(1).split("/")[2];
+                dateYearcon1 = c1.getString(1).split("/")[2];
                 dateMonthcon1 = c1.getString(1).split("/")[1];
                 dateDaycon1 = c1.getString(1).split("/")[0];
 
-                int dateyy =Integer.parseInt(dateYearcon1);
-                int datemm =Integer.parseInt(dateMonthcon1);
+                int dateyy = Integer.parseInt(dateYearcon1);
+                int datemm = Integer.parseInt(dateMonthcon1);
 
-                if(dateyy == alarmYear && datemm == alarmMonth){
+                if (dateyy == alarmYear && datemm == alarmMonth) {
 
                     /**
                      * test test test test test test ------------------
                      */
 
-                    String requet2 = "select * from charge";
-                    Cursor c2 = table1.rawQuery ( requet2, null);
-                    test1 =0;
+                    String requet2 = "select * from charge ORDER BY Date ASC";
+                    Cursor c2 = table1.rawQuery(requet2, null);
+                    test1 = 0;
 
                     try {
                         date3 = sdf.parse(c1.getString(1));
@@ -215,76 +216,59 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                         e.printStackTrace();
                     }
 
-                    while (c2.moveToNext()){
+                    while (c2.moveToNext()) {
                         try {
                             date4 = sdf.parse(c2.getString(1));
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
 
-                        if(date3.compareTo(date4) == 0){
-                            test1 = test1+Integer.parseInt(c2.getString(2));
+                        if (date3.compareTo(date4) == 0) {
+                            test1 = test1 + Integer.parseInt(c2.getString(2));
                         }
 
                     }
+
 
                     prixx = test1;
 
                     day = Integer.parseInt(dateDaycon1);
                     //prixx = Integer.parseInt(c1.getString(2));
-                    yValues.add(new Entry(day,prixx));
+                    // yValues.add(new Entry(day,prixx));
+                    boolean repitition = false;
+
+                    for (int i = 0; i < dateshh.size(); i++) {
+
+                        if (dateshh.get(i).equals(c1.getString(1))) {
+                            repitition = true;
+                        }
+
+                    }
+
+                    if (repitition == false) {
+
+                        if (c1.getCount() != 0) {
+                            dateshh.add(c1.getString(1));
+
+                            allAmountsss.add(prixx);
+                        }
+
+                    }
                 }
 
             }
+            if (dateshh != null && allAmountsss != null) {
+                renderData(dateshh, allAmountsss);
+            }
         }
-
-
-        LineDataSet set1 = new LineDataSet(yValues,"Prix par jour");
-        set1.setColor(getResources().getColor(R.color.Red));
-        set1.setCircleColor(getResources().getColor(R.color.RedDark));
-        set1.setLineWidth(2f);//line size
-        set1.setCircleRadius(5f);
-        set1.setDrawCircleHole(true);
-        set1.setValueTextSize(10f);
-        set1.setDrawFilled(true);
-        set1.setFormLineWidth(5f);
-        set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
-        set1.setFormSize(5.f);
-
-
-
-
-
-        if (Utils.getSDKInt() >= 18) {
-//                Drawable drawable = ContextCompat.getDrawable(this, R.drawable.blue_bg);
-//                set1.setFillDrawable(drawable);
-            set1.setFillColor(Color.WHITE);
-
-        } else {
-            set1.setFillColor(Color.WHITE);
-        }
-        set1.setDrawValues(true);
-
-
-        ArrayList<ILineDataSet> datasets = new ArrayList<>();
-        datasets.add(set1);
-        LineData data = new LineData(datasets);
-
-
-
-
-
-        mChart.setData(data);
-
-
 
 
         /**
          * create CHART -------------------------------------------     end
          */
 
-        Recherche =(EditText)findViewById(R.id.chercherCharge);
-        Recherche1 =(EditText)findViewById(R.id.chercherCharge1);
+        Recherche = (EditText) findViewById(R.id.chercherCharge);
+        Recherche1 = (EditText) findViewById(R.id.chercherCharge1);
 
 
         /**
@@ -299,8 +283,8 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 int Day = cal.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog dialogDate = new DatePickerDialog(mes_charges.this
-                        ,android.R.style.Theme_Holo_Dialog_MinWidth
-                        ,mDateSetListenerRecherche,Year, Month,Day);
+                        , android.R.style.Theme_Holo_Dialog_MinWidth
+                        , mDateSetListenerRecherche, Year, Month, Day);
 
 
                 dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -312,13 +296,11 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         mDateSetListenerRecherche = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month =month+1;
-                String datefin = dayOfMonth+"/"+month+"/"+year;
+                month = month + 1;
+                String datefin = dayOfMonth + "/" + month + "/" + year;
                 Recherche.setText(datefin);
-                rechercheEntreDeuxDate();
             }
         };
-
 
 
         /**
@@ -333,8 +315,8 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 int Day = cal.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog dialogDate = new DatePickerDialog(mes_charges.this
-                        ,android.R.style.Theme_Holo_Dialog_MinWidth
-                        ,mDateSetListenerRecherche1,Year, Month,Day);
+                        , android.R.style.Theme_Holo_Dialog_MinWidth
+                        , mDateSetListenerRecherche1, Year, Month, Day);
 
                 dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialogDate.show();
@@ -345,20 +327,12 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         mDateSetListenerRecherche1 = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month =month+1;
-                String datefin = dayOfMonth+"/"+month+"/"+year;
+                month = month + 1;
+                String datefin = dayOfMonth + "/" + month + "/" + year;
                 Recherche1.setText(datefin);
-                rechercheEntreDeuxDate();
+                Toast.makeText(mes_charges.this, "Clicker sur le diagramme pour voir le resultats de recherche  ", Toast.LENGTH_LONG).show();
             }
         };
-
-
-
-
-
-
-
-
 
 
         drawerLayout = findViewById(R.id.drawer);
@@ -368,52 +342,50 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawerOpen,R.string.drawerClose);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawerOpen, R.string.drawerClose);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         //-------------------------
 
 
-        NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);
+        NavigationView navigationView1 = (NavigationView) findViewById(R.id.navigationView);
         View headerView = navigationView1.getHeaderView(0);
         TextView username = headerView.findViewById(R.id.unser_name);
         TextView role1 = headerView.findViewById(R.id.role);
 
         Bundle b = getIntent().getExtras();
         Nom = b.getString("nom");
-        Prenom =  b.getString("prenom");
-        role = ""+b.getString("role");
-        username.setText(Nom+" "+Prenom);
+        Prenom = b.getString("prenom");
+        role = "" + b.getString("role");
+        username.setText(Nom + " " + Prenom);
         role1.setText(role);
-
-
-
 
 
         /**
          *remplissage liste des charges
          */
 
-        ls = (ListView)findViewById(R.id.listcharges);
+        ls = (ListView) findViewById(R.id.listcharges);
         ArrayList<list_charge> arrayList1;
-        SQLiteDatabase table = db.getReadableDatabase ();
-        arrayList1= new ArrayList<list_charge> ();
+        SQLiteDatabase table = db.getReadableDatabase();
+        arrayList1 = new ArrayList<list_charge>();
         String requet = "select * from Charge";
-        c = table.rawQuery ( requet, null );
+        c = table.rawQuery(requet, null);
         arrayList1.clear();
-        if(c.getCount()>=1){
+        if (c.getCount() >= 1) {
             ls.clearChoices();
 
-            while (c.moveToNext ())
-            {
-                list_charge list = new list_charge (c.getString(0),c.getString(4),c.getString(2),c.getString(3),c.getString(1));
-                arrayList1.add ( list );
+            while (c.moveToNext()) {
+                list_charge list = new list_charge(c.getString(0), c.getString(4), c.getString(2), c.getString(3), c.getString(1));
+                arrayList1.add(list);
             }
-             adapter_vihucle = new Page_Adapter_charge (mes_charges.this,arrayList1);
-            ls.setAdapter ( adapter_vihucle );
-        }else{
-            ls.setAdapter (listrep);
+            Collections.reverse(arrayList1);
+            adapter_vihucle = new Page_Adapter_charge(mes_charges.this, arrayList1);
+            ls.setAdapter(adapter_vihucle);
+        } else {
+
+            ls.setAdapter(listrep);
         }
 
 /**
@@ -428,32 +400,49 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                rechercheEntreDeuxDate();
+
 
             }
         });
 
         Recherche1.addTextChangedListener(new TextWatcher() {
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-    }
+            }
 
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+                dateshh.clear();
+                allAmountsss.clear();
 
-    }
+                try {
+                    rechercheEntreDeuxDate();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
-    @Override
-    public void afterTextChanged(Editable s) {
-        rechercheEntreDeuxDate();
+            }
 
-    }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                dateshh.clear();
+                allAmountsss.clear();
+
+                try {
+                    rechercheEntreDeuxDate();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+            }
         });
 
         //modifer supprimer charge
@@ -471,7 +460,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 Modifier = (Button) dyaloge_modifier_supprimer_mes_charges.findViewById(R.id.btn_charge1);
                 final TextView id_charge;
 
-                id_charge =(TextView)view.findViewById(R.id.Id_charge);
+                id_charge = (TextView) view.findViewById(R.id.Id_charge);
                 /**
                  * button Suprimer
                  */
@@ -492,12 +481,12 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
                                         try {
                                             SQLiteDatabase DB = db.getWritableDatabase();
-                                             DB.delete("Charge","Id_Charge=?",new String[]{id_charge.getText().toString()});
+                                            DB.delete("Charge", "Id_Charge=?", new String[]{id_charge.getText().toString()});
                                             Toast.makeText(mes_charges.this, "Supprision Réussi", Toast.LENGTH_SHORT).show();
                                             finish();
                                             startActivity(getIntent());
 
-                                        }catch (Exception Ex){
+                                        } catch (Exception Ex) {
                                             Toast.makeText(mes_charges.this, "Supprision n'est pas Effectué", Toast.LENGTH_SHORT).show();
                                         }
 
@@ -533,22 +522,21 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                         dyaloge_modifier_mes_charges = new Dialog(mes_charges.this);
                         dyaloge_modifier_mes_charges.setContentView(R.layout.dialoge_ajoute_mes_charges);
                         Button confirm_modifier;
-                        datech= (TextView)dyaloge_modifier_mes_charges.findViewById(R.id.text_datecha);
-                        montant= (TextView)dyaloge_modifier_mes_charges.findViewById(R.id.text_Montant);
-                        espéce= (CheckBox) dyaloge_modifier_mes_charges.findViewById(R.id.mode_espéce);
-                        chéque= (CheckBox) dyaloge_modifier_mes_charges.findViewById(R.id.mode_chèque);
-                        virment= (CheckBox) dyaloge_modifier_mes_charges.findViewById(R.id.mode_virement);
-                        design= (TextView) dyaloge_modifier_mes_charges.findViewById(R.id.text_design);
+                        datech = (TextView) dyaloge_modifier_mes_charges.findViewById(R.id.text_datecha);
+                        montant = (TextView) dyaloge_modifier_mes_charges.findViewById(R.id.text_Montant);
+                        espéce = (CheckBox) dyaloge_modifier_mes_charges.findViewById(R.id.mode_espéce);
+                        chéque = (CheckBox) dyaloge_modifier_mes_charges.findViewById(R.id.mode_chèque);
+                        virment = (CheckBox) dyaloge_modifier_mes_charges.findViewById(R.id.mode_virement);
+                        design = (TextView) dyaloge_modifier_mes_charges.findViewById(R.id.text_design);
 
 
-                        String requuet = "select * from Charge where Id_Charge ='"+id_charge.getText().toString()+"'";
-                        Cursor c = table.rawQuery ( requuet, null );
-                        while (c.moveToNext()){
+                        String requuet = "select * from Charge where Id_Charge ='" + id_charge.getText().toString() + "'";
+                        Cursor c = table.rawQuery(requuet, null);
+                        while (c.moveToNext()) {
                             datech.setText(c.getString(1));
                             montant.setText(c.getString(2));
                             design.setText(c.getString(4));
                         }
-
 
 
                         /**
@@ -564,8 +552,8 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                                 int Day = cal.get(Calendar.DAY_OF_MONTH);
 
                                 DatePickerDialog dialogDate = new DatePickerDialog(mes_charges.this
-                                        ,android.R.style.Theme_Holo_Dialog_MinWidth
-                                        ,DateSetListenerche,Year, Month,Day);
+                                        , android.R.style.Theme_Holo_Dialog_MinWidth
+                                        , DateSetListenerche, Year, Month, Day);
 
                                 dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                                 dialogDate.show();
@@ -576,18 +564,14 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                         DateSetListenerche = new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                month =month+1;
-                                String datefin = dayOfMonth+"/"+month+"/"+year;
+                                month = month + 1;
+                                String datefin = dayOfMonth + "/" + month + "/" + year;
                                 datech.setText(datefin);
                             }
                         };
 
 
-
-
-
-
-                        confirm_modifier =(Button)dyaloge_modifier_mes_charges.findViewById(R.id.btn_confirmer);
+                        confirm_modifier = (Button) dyaloge_modifier_mes_charges.findViewById(R.id.btn_confirmer);
                         confirm_modifier.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -608,35 +592,35 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                                                  * confirmer
                                                  */
                                                 try {
-                                                    modpay="";
-                                                    if (espéce.isChecked()){
-                                                        modpay="espéce";
+                                                    modpay = "";
+                                                    if (espéce.isChecked()) {
+                                                        modpay = "espéce";
                                                     }
-                                                    if (chéque.isChecked()){
-                                                        modpay=modpay+" ,chéque";
+                                                    if (chéque.isChecked()) {
+                                                        modpay = modpay + " ,chéque";
                                                     }
-                                                    if (virment.isChecked()){
-                                                        modpay=modpay+" ,virment";
+                                                    if (virment.isChecked()) {
+                                                        modpay = modpay + " ,virment";
                                                     }
 
-                                                    if(!espéce.isChecked() && !chéque.isChecked() && !virment.isChecked()){
-                                                        modpay ="Crèdit";
+                                                    if (!espéce.isChecked() && !chéque.isChecked() && !virment.isChecked()) {
+                                                        modpay = "Crèdit";
                                                     }
 
                                                     SQLiteDatabase DB = db.getWritableDatabase();
                                                     ContentValues v = new ContentValues();
-                                                    v.put("Date",datech.getText().toString());
-                                                    v.put("Montant",Integer.parseInt(montant.getText().toString()));
-                                                    v.put("Payment",modpay);
-                                                    v.put("designation",design.getText().toString());
+                                                    v.put("Date", datech.getText().toString());
+                                                    v.put("Montant", Integer.parseInt(montant.getText().toString()));
+                                                    v.put("Payment", modpay);
+                                                    v.put("designation", design.getText().toString());
 
-                                                    DB.update("Charge",v,"Id_Charge=?",new String[]{id_charge.getText().toString()});
+                                                    DB.update("Charge", v, "Id_Charge=?", new String[]{id_charge.getText().toString()});
 
                                                     Toast.makeText(mes_charges.this, "Modification Réussi", Toast.LENGTH_SHORT).show();
                                                     finish();
                                                     startActivity(getIntent());
 
-                                                }catch (Exception Ex){
+                                                } catch (Exception Ex) {
                                                     Toast.makeText(mes_charges.this, "Modifiction n'est pas Effectué", Toast.LENGTH_SHORT).show();
                                                 }
 
@@ -657,8 +641,6 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                             }
 
                         });
-
-
 
 
                         dyaloge_modifier_mes_charges.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -692,27 +674,27 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
                 final TextView text1, text2, text3, text4;
 
-                text1 = (TextView)MyDyalog_detaille.findViewById(R.id.text_DateCharge);
-                text2 = (TextView)MyDyalog_detaille.findViewById(R.id.text_mntCharge);
-                text3 = (TextView)MyDyalog_detaille.findViewById(R.id.text_payment);
-                text4 = (TextView)MyDyalog_detaille.findViewById(R.id.text_desCharge);
+                text1 = (TextView) MyDyalog_detaille.findViewById(R.id.text_DateCharge);
+                text2 = (TextView) MyDyalog_detaille.findViewById(R.id.text_mntCharge);
+                text3 = (TextView) MyDyalog_detaille.findViewById(R.id.text_payment);
+                text4 = (TextView) MyDyalog_detaille.findViewById(R.id.text_desCharge);
                 final TextView id_charge;
 
-                id_charge =(TextView)arg1.findViewById(R.id.Id_charge);
+                id_charge = (TextView) arg1.findViewById(R.id.Id_charge);
 
-                    SQLiteDatabase table = db.getReadableDatabase();
-                    String requet = "SELECT * FROM  Charge where Id_Charge = '"+id_charge.getText().toString()+"'";
+                SQLiteDatabase table = db.getReadableDatabase();
+                String requet = "SELECT * FROM  Charge where Id_Charge = '" + id_charge.getText().toString() + "'";
 
-                    Cursor c = table.rawQuery ( requet, null );
-                    while (c.moveToNext()){
-                        text1.setText(text1.getText()+" "+c.getString(1));
-                        text2.setText(text2.getText()+" "+c.getString(2));
-                        text3.setText(text3.getText()+" "+c.getString(3));
-                        text4.setText(text4.getText()+" "+c.getString(4));
+                Cursor c = table.rawQuery(requet, null);
+                while (c.moveToNext()) {
+                    text1.setText(text1.getText() + " " + c.getString(1));
+                    text2.setText(text2.getText() + " " + c.getString(2));
+                    text3.setText(text3.getText() + " " + c.getString(3));
+                    text4.setText(text4.getText() + " " + c.getString(4));
 
-                    }
+                }
                 TextView close;
-                close=(TextView) MyDyalog_detaille.findViewById(R.id.text_close);
+                close = (TextView) MyDyalog_detaille.findViewById(R.id.text_close);
                 close.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -726,7 +708,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 return true;
             }
 
-            });
+        });
 
     }
 
@@ -734,12 +716,12 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         Intent T;
         Bundle b = new Bundle();
-        switch (menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
             case R.id.vihicule:
                 T = new Intent(this, vehicules.class);
-                b.putString("nom",Nom);
-                b.putString("prenom",Prenom);
-                b.putString("role",role);
+                b.putString("nom", Nom);
+                b.putString("prenom", Prenom);
+                b.putString("role", role);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -751,9 +733,9 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 break;
             case R.id.assurances:
                 T = new Intent(this, assurances.class);
-                b.putString("nom",Nom);
-                b.putString("prenom",Prenom);
-                b.putString("role",role);
+                b.putString("nom", Nom);
+                b.putString("prenom", Prenom);
+                b.putString("role", role);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -765,9 +747,9 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 break;
             case R.id.entretiens:
                 T = new Intent(this, entretiens.class);
-                b.putString("nom",Nom);
-                b.putString("prenom",Prenom);
-                b.putString("role",role);
+                b.putString("nom", Nom);
+                b.putString("prenom", Prenom);
+                b.putString("role", role);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -779,9 +761,9 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 break;
             case R.id.recette:
                 T = new Intent(this, mes_recettes.class);
-                b.putString("nom",Nom);
-                b.putString("prenom",Prenom);
-                b.putString("role",role);
+                b.putString("nom", Nom);
+                b.putString("prenom", Prenom);
+                b.putString("role", role);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -790,13 +772,12 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                         R.anim.slide_in_left);
 
 
-
                 break;
             case R.id.charges:
                 T = new Intent(this, mes_charges.class);
-                b.putString("nom",Nom);
-                b.putString("prenom",Prenom);
-                b.putString("role",role);
+                b.putString("nom", Nom);
+                b.putString("prenom", Prenom);
+                b.putString("role", role);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -808,9 +789,9 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 break;
             case R.id.calendrier:
                 T = new Intent(this, calendrier.class);
-                b.putString("nom",Nom);
-                b.putString("prenom",Prenom);
-                b.putString("role",role);
+                b.putString("nom", Nom);
+                b.putString("prenom", Prenom);
+                b.putString("role", role);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -822,9 +803,9 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 break;
             case R.id.clients:
                 T = new Intent(this, mes_clients.class);
-                b.putString("nom",Nom);
-                b.putString("prenom",Prenom);
-                b.putString("role",role);
+                b.putString("nom", Nom);
+                b.putString("prenom", Prenom);
+                b.putString("role", role);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -836,9 +817,9 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 break;
             case R.id.locations:
                 T = new Intent(this, mes_location.class);
-                b.putString("nom",Nom);
-                b.putString("prenom",Prenom);
-                b.putString("role",role);
+                b.putString("nom", Nom);
+                b.putString("prenom", Prenom);
+                b.putString("role", role);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -858,12 +839,12 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         dyalog_mes_charges = new Dialog(this);
         dyalog_mes_charges.setContentView(R.layout.dialoge_ajoute_mes_charges);
 
-        datech= (TextView)dyalog_mes_charges.findViewById(R.id.text_datecha);
-        montant= (TextView)dyalog_mes_charges.findViewById(R.id.text_Montant);
-        espéce= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_espéce);
-        chéque= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_chèque);
-       virment= (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_virement);
-        design= (TextView) dyalog_mes_charges.findViewById(R.id.text_design);
+        datech = (TextView) dyalog_mes_charges.findViewById(R.id.text_datecha);
+        montant = (TextView) dyalog_mes_charges.findViewById(R.id.text_Montant);
+        espéce = (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_espéce);
+        chéque = (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_chèque);
+        virment = (CheckBox) dyalog_mes_charges.findViewById(R.id.mode_virement);
+        design = (TextView) dyalog_mes_charges.findViewById(R.id.text_design);
 
 
         /**
@@ -878,8 +859,8 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 int Day = cal.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog dialogDate = new DatePickerDialog(mes_charges.this
-                        ,android.R.style.Theme_Holo_Dialog_MinWidth
-                        ,DateSetListenerche1,Year, Month,Day);
+                        , android.R.style.Theme_Holo_Dialog_MinWidth
+                        , DateSetListenerche1, Year, Month, Day);
 
                 dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialogDate.show();
@@ -890,45 +871,43 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         DateSetListenerche1 = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month =month+1;
-                String datefin = dayOfMonth+"/"+month+"/"+year;
+                month = month + 1;
+                String datefin = dayOfMonth + "/" + month + "/" + year;
                 datech.setText(datefin);
             }
         };
 
 
-
-
         Button confirmer;
-        confirmer = (Button)dyalog_mes_charges.findViewById(R.id.btn_confirmer);
+        confirmer = (Button) dyalog_mes_charges.findViewById(R.id.btn_confirmer);
         confirmer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (espéce.isChecked()){
-                    modpay="espéce";
+                if (espéce.isChecked()) {
+                    modpay = "espéce";
                 }
-                if (chéque.isChecked()){
-                    modpay=modpay+" ,chéque";
+                if (chéque.isChecked()) {
+                    modpay = modpay + " ,chéque";
                 }
-                if (virment.isChecked()){
-                    modpay=modpay+" ,virment";
+                if (virment.isChecked()) {
+                    modpay = modpay + " ,virment";
                 }
-                if(!espéce.isChecked() && !chéque.isChecked() && !virment.isChecked()){
-                    modpay ="Crèdit";
+                if (!espéce.isChecked() && !chéque.isChecked() && !virment.isChecked()) {
+                    modpay = "Crèdit";
                 }
-                boolean c = db.insert_charge(datech.getText().toString(),Integer.parseInt(montant.getText().toString()),modpay.toString(),design.getText().toString());
-                if (c){
-                    Toast.makeText(mes_charges.this,"l'ajoute Reussi",Toast.LENGTH_LONG).show();
+                boolean c = db.insert_charge(datech.getText().toString(), Integer.parseInt(montant.getText().toString()), modpay.toString(), design.getText().toString());
+                if (c) {
+                    Toast.makeText(mes_charges.this, "l'ajoute Reussi", Toast.LENGTH_LONG).show();
                     finish();
                     startActivity(getIntent());
-                } else{
-                    Toast.makeText(mes_charges.this,"Erreur d'ajoute",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(mes_charges.this, "Erreur d'ajoute", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
 
-            dyalog_mes_charges.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dyalog_mes_charges.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dyalog_mes_charges.show();
 
 
@@ -937,15 +916,12 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
     public void recherche(View view) {
 
-        LinearLayout propLayout = (LinearLayout)findViewById(R.id.layout_recherche);
-        Button btnrecherche =(Button)findViewById(R.id.visiblecharche);
+        LinearLayout propLayout = (LinearLayout) findViewById(R.id.layout_recherche);
+        Button btnrecherche = (Button) findViewById(R.id.visiblecharche);
         btnrecherche.setVisibility(View.INVISIBLE);
-        if (propLayout.getVisibility() == View.VISIBLE)
-        {
+        if (propLayout.getVisibility() == View.VISIBLE) {
             propLayout.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
+        } else {
             propLayout.setVisibility(View.VISIBLE);
         }
 
@@ -953,34 +929,34 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void rechercheEntreDeuxDate(){
-
-        ArrayList<Entry> yValues =new ArrayList<>();
+    public void rechercheEntreDeuxDate() throws ParseException {
 
 
         ArrayList<list_charge> arrayList2;
-        SQLiteDatabase table = db.getReadableDatabase();
-        String requet = "select * from Charge  ORDER BY Date ASC";
+        arrayList2 = new ArrayList<list_charge>();
 
-        try {
+        SQLiteDatabase table = db.getReadableDatabase();
+        String requet = "SELECT * FROM Charge  ORDER BY Date ASC";
 
 
             Cursor c = table.rawQuery(requet, null);
 
-            LocalDate now1 = LocalDate.now();
-            String dateYear1 = now1.format(DateTimeFormatter.ofPattern("yyyy"));
-            String dateMonth1 = now1.format(DateTimeFormatter.ofPattern("MM"));
+
+            Calendar datecalendar = Calendar.getInstance();
+            final int alarmYear = datecalendar.get(Calendar.YEAR);
+            final int alarmMonth = datecalendar.get(Calendar.MONTH);
+            String dateYear1 =""+alarmYear;
+            String dateMonth1 =""+alarmMonth;
 
 
-            String dateYearcon1 =null ;
-            String dateMonthcon1 =null;
-            String dateDaycon1 =null;
-            int day =0;
-            int prixx = 0;
+            String dateYearcon1 = null;
+            String dateMonthcon1 = null;
+            String dateDaycon1 = null;
+            int day = 0;
+            double prixx = 0;
 
 
 
-            arrayList2 = new ArrayList<list_charge>();
 
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -997,7 +973,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
             Date date3;
             int i = 0;
 
-            Integer test1 =0;
+            Integer test1 = 0;
 
             Date date5;
             Date date4;
@@ -1007,37 +983,40 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 date3 = null;
                 date5 = null;
                 date4 = null;
-                prixx=0;
+                prixx = 0;
 
                 date3 = sdf.parse(c.getString(1));
+
                 //Toast.makeText(this, ""+date3, Toast.LENGTH_SHORT).show();
-                dateDaycon1 = c.getString(1).split("/")[0];
+                dateYearcon1 = c.getString(1).split("/")[2];
+                dateMonthcon1= c.getString(1).split("/")[1];
+                dateDaycon1  = c.getString(1).split("/")[0];
 
 
-                if (date3.after(date)  &&  date3.before(date1)) {
+                if (date3.after(date) && date3.before(date1)) {
 
                     /**
                      * test test test test test test ------------------
                      */
 
                     String requet2 = "select * from charge";
-                    Cursor c2 = table.rawQuery ( requet2, null);
-                    test1 =0;
+                    Cursor c2 = table.rawQuery(requet2, null);
+                    test1 = 0;
                     try {
                         date4 = sdf.parse(c.getString(1));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
 
-                    while (c2.moveToNext()){
+                    while (c2.moveToNext()) {
                         try {
                             date5 = sdf.parse(c2.getString(1));
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
 
-                        if(date5.compareTo(date4) == 0){
-                            test1 = test1+Integer.parseInt(c2.getString(2));
+                        if (date5.compareTo(date4) == 0) {
+                            test1 = test1 + Integer.parseInt(c2.getString(2));
                         }
 
                     }
@@ -1047,17 +1026,43 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                     day = Integer.parseInt(dateDaycon1);
                     //prixx = Integer.parseInt(c.getString(2));
                     //Toast.makeText(this, ""+day+" "+prixx, Toast.LENGTH_SHORT).show();
-                    yValues.add(new Entry(day,prixx));
+                    // yValues.add(new Entry(day, prixx));
+
+                    boolean repitition = false;
+
+                    for (int ii=0 ;ii <dateshh.size();ii++){
+
+                        if(dateshh.get(ii).equals(c.getString(1)) ){
+                            repitition =true;
+                        }
+
+                    }
+
+                    if(repitition == false){
+
+                        if(c.getCount() != 0){
+                            dateshh.add(c.getString(1));
+
+                            allAmountsss.add(prixx);
+                        }
+
+                    }
+
 
 
                     i++;
-                    list_charge list = new list_charge (c.getString(0),c.getString(4),c.getString(2),c.getString(3),c.getString(1));
-                    arrayList2.add ( list );
+                    list_charge list = new list_charge(c.getString(0), c.getString(4), c.getString(2), c.getString(3), c.getString(1));
+                    arrayList2.add(list);
                     // Log.i("TAG", "message "+c.getString(0)+"  "+c.getString(4)+"  "+c.getString(2)+"  "+c.getString(3)+"  "+c.getString(1));
                 }
 
             }
 
+            if(dateshh != null && allAmountsss != null) {
+                renderData(dateshh, allAmountsss);
+            }
+
+            Collections.reverse(arrayList2);
             Page_Adapter_charge adapter_vihucle1 = new Page_Adapter_charge(mes_charges.this, arrayList2);
 
             if (i > 0) {
@@ -1068,7 +1073,103 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
             }
 
 
-            LineDataSet set1 = new LineDataSet(yValues,"Prix par jour");
+
+    }
+
+    public int daysBetween(Date d1, Date d2) {
+        return (int) ((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+    }
+
+    public void renderData(List<String> dates, List<Double> allAmounts) {
+
+        final ArrayList<String> xAxisLabel = new ArrayList<>();
+        xAxisLabel.add("1");
+        xAxisLabel.add("7");
+        xAxisLabel.add("14");
+        xAxisLabel.add("21");
+        xAxisLabel.add("28");
+        xAxisLabel.add("30");
+
+        XAxis xAxis = mChart.getXAxis();
+        XAxis.XAxisPosition position = XAxis.XAxisPosition.BOTTOM;
+        xAxis.setPosition(position);
+        xAxis.enableGridDashedLine(2f, 7f, 0f);
+        xAxis.setAxisMaximum(5f);
+        xAxis.setAxisMinimum(0f);
+        xAxis.setLabelCount(6, true);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setGranularity(7f);
+        xAxis.setLabelRotationAngle(315f);
+
+        xAxis.setValueFormatter(new ClaimsXAxisValueFormatter(dates));
+
+        xAxis.setCenterAxisLabels(true);
+
+
+        xAxis.setDrawLimitLinesBehindData(true);
+
+
+        LimitLine ll2 = new LimitLine(35f, "");
+        ll2.setLineWidth(4f);
+        ll2.enableDashedLine(10f, 10f, 0f);
+        ll2.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+        ll2.setTextSize(10f);
+        ll2.setLineColor(Color.parseColor("#FFFFFF"));
+
+
+        YAxis leftAxis = mChart.getAxisLeft();
+
+
+        leftAxis.enableGridDashedLine(10f, 10f, 0f);
+        leftAxis.setDrawZeroLine(false);
+        leftAxis.setDrawLimitLinesBehindData(false);
+        //XAxis xAxis = mBarChart.getXAxis();
+        leftAxis.setValueFormatter(new ClaimsYAxisValueFormatter());
+
+        mChart.getDescription().setEnabled(true);
+        Description description = new Description();
+        // description.setText(UISetters.getFullMonthName());
+        // commented for weekly reporting
+        description.setText("Week");
+        description.setTextSize(15f);
+        mChart.getDescription().setPosition(0f, 0f);
+        mChart.setDescription(description);
+        mChart.getAxisRight().setEnabled(false);
+
+        //setData()-- allAmounts is data to display;
+        setDataForWeeksWise(allAmounts);
+
+    }
+
+    private void setDataForWeeksWise(List<Double> amounts) {
+
+        ArrayList<Entry> values = new ArrayList<>();
+
+        int x=0;
+        for(int i=0; i< amounts.size(); i++){
+            x=i+1;
+            values.add(new Entry(x, amounts.get(i).floatValue()));
+        }
+
+
+        //values.add(new Entry(1, amounts.get(0).floatValue()));
+        //values.add(new Entry(2, amounts.get(1).floatValue()));
+        //values.add(new Entry(3, amounts.get(2).floatValue()));
+        //values.add(new Entry(4, amounts.get(3).floatValue()));
+
+
+        LineDataSet set1;
+        if (mChart.getData() != null &&
+                mChart.getData().getDataSetCount() > 0) {
+            set1 = (LineDataSet) mChart.getData().getDataSetByIndex(0);
+            set1.setValues(values);
+            mChart.getData().notifyDataChanged();
+            mChart.notifyDataSetChanged();
+        } else {
+            set1 = new LineDataSet(values, "Total volume");
+            set1.setDrawCircles(true);
+            set1.enableDashedLine(10f, 0f, 0f);
+            set1.enableDashedHighlightLine(10f, 0f, 0f);
             set1.setColor(getResources().getColor(R.color.green));
             set1.setCircleColor(getResources().getColor(R.color.green));
             set1.setLineWidth(2f);//line size
@@ -1081,27 +1182,20 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
             set1.setFormSize(5.f);
 
             if (Utils.getSDKInt() >= 18) {
-
+//                Drawable drawable = ContextCompat.getDrawable(this, R.drawable.blue_bg);
+//                set1.setFillDrawable(drawable);
                 set1.setFillColor(Color.WHITE);
 
             } else {
                 set1.setFillColor(Color.WHITE);
             }
             set1.setDrawValues(true);
+            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+            dataSets.add(set1);
+            LineData data = new LineData(dataSets);
 
-
-            ArrayList<ILineDataSet> datasets = new ArrayList<>();
-            datasets.add(set1);
-            LineData data = new LineData(datasets);
-
-           // mChart.refreshDrawableState();
             mChart.setData(data);
-
-
-
-        } catch (Exception Ex) {
-
         }
-
     }
+
 }

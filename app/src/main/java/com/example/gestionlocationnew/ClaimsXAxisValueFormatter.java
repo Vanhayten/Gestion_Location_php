@@ -58,7 +58,7 @@ Depends on the position number on the X axis, we need to display the label, Here
 
     public static long getDateInMilliSeconds(String givenDateString, String format) {
         String DATE_TIME_FORMAT = format;
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.FRENCH);
         long timeInMilliseconds = 1;
         try {
             Date mDate = sdf.parse(givenDateString);

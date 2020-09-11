@@ -154,9 +154,18 @@ public class ajouter_assurance extends AppCompatActivity {
                  * ajouter assurance event on calendar
                  */
                 try {
-                    addEventsassurance(t3.getText().toString(),t1.getText().toString());
-                }catch (Exception EX){
+                    Calendar c1 = Calendar.getInstance();
 
+                    SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+
+                    String formattedDate = df.format(c1.getTime());
+
+                    addEventsassurance(t3.getText().toString(),t1.getText().toString(),formattedDate);
+
+
+
+                }catch (Exception EX){
+                    Toast.makeText(this, ""+EX.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 Intent T;
                 Bundle b= new Bundle();
@@ -174,7 +183,7 @@ public class ajouter_assurance extends AppCompatActivity {
 
     }
 
-    public  void addEventsassurance(String sdate,String discription){
+    public  void addEventsassurance(String sdate,String discription,String formattedDate){
 
         String string = sdate;
         //t3.getText().toString();
@@ -206,9 +215,13 @@ public class ajouter_assurance extends AppCompatActivity {
         Calendar c = Calendar.getInstance();
 
         SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
-        String formattedDate = df.format(c.getTime());
+
+        String formattedDate1 = df.format(c.getTime());
+
         SaveEvent(Events,formattedDate,DateF,monthString,part3);
         SetUpCalendar();
+
+
 
         alarmHour = c.get(Calendar.HOUR_OF_DAY);
         alarmMinuit = c.get(Calendar.MINUTE);
