@@ -53,6 +53,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center">
                 <EditText
+                    android:id="@+id/chercherMatr"
                     android:layout_width="300dp"
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
@@ -60,11 +61,10 @@
                     android:textAlignment="center"
                     android:textColor="@color/BlueDarck"
                     android:textColorHint="@color/BlueDarck"
-                    android:id="@+id/chercherMatr"
                     android:background="@drawable/rounded_edit_text"
                     android:layout_marginBottom="16dp"
                     >
-                    <requestFocus />
+
                 </EditText>
                 </LinearLayout>
 

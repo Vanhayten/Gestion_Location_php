@@ -192,6 +192,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                        startActivity(i);
                    }
                    */
+
                     arrayList = new ArrayList<list_vihcule> ();
                     arrayList.clear ();
 

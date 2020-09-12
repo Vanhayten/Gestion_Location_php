@@ -36,12 +36,20 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingLeft="20.7dp">
+<ImageView
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:layout_marginTop="20dp"
+   android:layout_gravity="center"
+    android:layout_marginRight="20dp"
+    android:src="@drawable/gestloca">
 
+</ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="57.7dp"
+                    android:layout_marginTop="37.7dp"
                     android:text="s'identifier"
                     android:textColor="#030303"
                     android:textSize="31.3sp" />
@@ -49,7 +57,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="35dp"
+                    android:layout_marginTop="25dp"
                     android:text="Nom d'utilisateur"
                     android:textColor="#c2c2c2"
                     android:textSize="13.3sp" />
@@ -76,7 +84,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30.3dp"
+                    android:layout_marginTop="20.3dp"
                     android:text="Mot de passe"
                     android:textColor="#c2c2c2"
                     android:textSize="13.3sp" />
