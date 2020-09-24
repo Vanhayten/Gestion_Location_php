@@ -50,6 +50,8 @@ Depends on the position number on the X axis, we need to display the label, Here
             position = 2;
         } else if (value > 4 && value <= 5) {
             position = 3;
+        }else if (value > 5 && value <= 6) {
+            position = 4;
         }
         if (position < datesList.size())
             return sdf.format(new Date((getDateInMilliSeconds(datesList.get(position), "dd/MM/yyyy"))));

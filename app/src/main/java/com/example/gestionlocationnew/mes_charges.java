@@ -928,15 +928,23 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
     }
 
+    /**
+     *
+     * recherche entre deux date
+     * @throws ParseException
+     */
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void rechercheEntreDeuxDate() throws ParseException {
+
+        mChart.notifyDataSetChanged();
 
 
         ArrayList<list_charge> arrayList2;
         arrayList2 = new ArrayList<list_charge>();
 
         SQLiteDatabase table = db.getReadableDatabase();
-        String requet = "SELECT * FROM Charge  ORDER BY Date ASC";
+        String requet = "SELECT * FROM Charge ORDER BY date(Date) DESC";
 
 
             Cursor c = table.rawQuery(requet, null);
@@ -999,7 +1007,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                      * test test test test test test ------------------
                      */
 
-                    String requet2 = "select * from charge";
+                    String requet2 = "select * from Charge ORDER BY date(Date) DESC";
                     Cursor c2 = table.rawQuery(requet2, null);
                     test1 = 0;
                     try {
@@ -1061,6 +1069,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
             if(dateshh != null && allAmountsss != null) {
                 renderData(dateshh, allAmountsss);
             }
+
 
             Collections.reverse(arrayList2);
             Page_Adapter_charge adapter_vihucle1 = new Page_Adapter_charge(mes_charges.this, arrayList2);
