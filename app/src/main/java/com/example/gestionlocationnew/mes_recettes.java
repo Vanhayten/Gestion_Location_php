@@ -7,16 +7,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -38,7 +35,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
@@ -46,8 +42,6 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
 import com.google.android.material.navigation.NavigationView;
@@ -62,8 +56,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import static android.net.wifi.WifiConfiguration.Status.strings;
 
 public class mes_recettes extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -1307,8 +1299,38 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 startActivity(getIntent());
 
             }
-        });
 
+        });
+    //en click feedback
+        LinearLayout l=(LinearLayout) MyDyalog_ajou.findViewById(R.id.feedbackLayout);
+        l.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dilogfeed;
+                dilogfeed = new Dialog(mes_recettes.this);
+                dilogfeed.setContentView(R.layout.dialog_fedeback);
+ListView ls1=(ListView)dilogfeed.findViewById(R.id.listefed) ;
+
+                SQLiteDatabase table = db.getReadableDatabase ();
+
+                String requet = "select * from feedback where cin ='"+Cintext+"'";
+                Cursor c1 = table.rawQuery ( requet, null );
+             ArrayList arrayList3 = new ArrayList<liste_feedback>();
+                arrayList3.clear();
+              while (c1.moveToNext()){
+                  liste_feedback list = new liste_feedback (Float.parseFloat(c1.getString(2)),c1.getString(4),c1.getString(3));
+                  arrayList3.add (list);
+              }
+                pageAdapeter_feedback pg;
+
+                pg = new pageAdapeter_feedback ( mes_recettes.this, arrayList3 );
+                ls1.setAdapter(pg);
+
+
+                dilogfeed.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dilogfeed.show();
+            }
+        });
 
 
         MyDyalog_ajou.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
