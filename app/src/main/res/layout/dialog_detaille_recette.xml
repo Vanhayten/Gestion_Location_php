@@ -117,4 +117,77 @@
     </LinearLayout>
 
 
+    <!--android:visibility="gone"-->
+
+    <LinearLayout
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Evoluez ce client"
+            android:textColor="@color/NAVwhite_theme10"
+            android:layout_gravity="center" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_marginTop="9dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:progressTint="#FFCC01"
+            android:progressBackgroundTint="@color/NAVgray_theme50" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/descLayout"
+        android:visibility="gone">
+        <EditText
+            android:layout_gravity="center"
+            android:layout_width="250dp"
+            android:layout_height="75dp"
+            android:hint="description"
+            android:textColorHint="@color/NAVgray_theme50"
+            android:gravity="center"
+            android:textColor="@color/NAVwhite.1"
+            android:background="@drawable/edittextbackground"
+            android:id="@+id/descript">
+
+        </EditText>
+        <Button
+            android:id="@+id/ratingBTN"
+            android:layout_gravity="center"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="confirm">
+
+        </Button>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/downLayout">
+        <ImageView
+            android:id="@+id/downImage"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+
+    </LinearLayout>
+
+
+
+
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 
 public class gestion_location extends SQLiteOpenHelper {
@@ -122,6 +123,13 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_idRecette = "id_Recette";
     private static final String Col_matricule  = "Matricule";
 
+    //declaration table Vehucile_chosi
+    private static final String Table13 = "feedback";
+    private static final String Col_id_feedback  = "id";
+    private static final String Col_cin_Client  = "cin";
+    private static final String Col_vote  = "vote";
+    private static final String Col_desc_client = "descr";
+    private static final String Col_date  = "date";
 
 
     public gestion_location(Context context) {
@@ -143,6 +151,7 @@ public class gestion_location extends SQLiteOpenHelper {
         String table10 = "Create table "+Table10+" ("+Col_imatriculation_vidange+" text , "+Col_date_vidange+" date , "+Col_kilomaitrage+" integer , "+Col_filtre+" TEXT , "+Col_type_vidage+" Integer)";
         String table11 = "Create table "+Table11+" ("+Col_imatriculation_visite+" text , "+Col_date_visite+" date , "+Col_date_prch_visite+" date)";
         String table12 = "Create table "+Table12+" ("+Col_id+" Integer PRIMARY KEY AUTOINCREMENT , "+Col_idRecette+" Text , "+Col_cin1+" Text, "+Col_matricule+" Text)";
+        String table13 = "Create table "+Table13+" ("+Col_id_feedback+" Integer PRIMARY KEY AUTOINCREMENT , "+Col_cin_Client+" Text , "+Col_vote+" Float ,"+Col_desc_client+" Text, "+Col_date+" date)";
 
 
 
@@ -158,6 +167,7 @@ public class gestion_location extends SQLiteOpenHelper {
         db.execSQL(table10);
         db.execSQL(table11);
         db.execSQL(table12);
+        db.execSQL(table13);
     }
 
     @Override
@@ -174,6 +184,7 @@ public class gestion_location extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+Table10);
         db.execSQL("DROP TABLE IF EXISTS "+Table11);
         db.execSQL("DROP TABLE IF EXISTS "+Table12);
+        db.execSQL("DROP TABLE IF EXISTS "+Table13);
         onCreate(db);
     }
     public boolean insert_emp(String Login ,String Pass,String nom,String prenom,String role){
@@ -324,7 +335,6 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
         tab_ch.put(Col_prixTotal_location,pt);
         tab_ch.put(Col_Type,typ);
         tab_ch.put(Col_matr,ma);
-
         tab_ch.put(Col_CinCl,ci);
 
         long result = db.insert(Table4,null,tab_ch);
@@ -473,6 +483,26 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
         tab_ch1.put(Col_date_reparation,Da);
         tab_ch1.put(Col_montant_reparation,Mont);
         long result = db.insert(Table7,null,tab_ch1);
+        if(result == -1){
+            res=false;
+        }
+        else{
+            res=true;
+        }
+        return res;
+    }
+
+
+    public boolean insert_feedback(String cin ,Float vote,String desc,String date){
+        boolean res=false;
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues tab_ch = new ContentValues();
+        tab_ch.put(Col_cin_Client,cin);
+        tab_ch.put(Col_vote,vote);
+        tab_ch.put(Col_desc_client,desc);
+        tab_ch.put(Col_date,date);
+
+        long result = db.insert(Table13,null,tab_ch);
         if(result == -1){
             res=false;
         }

@@ -701,6 +701,14 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                         MyDyalog_detaille.dismiss();
                     }
                 });
+
+
+
+
+
+
+
+
                 MyDyalog_detaille.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 MyDyalog_detaille.show();
 

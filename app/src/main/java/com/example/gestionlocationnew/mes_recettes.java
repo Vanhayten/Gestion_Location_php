@@ -7,19 +7,25 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +53,7 @@ import com.github.mikephil.charting.utils.Utils;
 import com.google.android.material.navigation.NavigationView;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -86,6 +93,8 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
     String Idd,cin,Matr,datedb,datefn,nbjour,prix,Typ_Payment,prix_01;
 
 
+    Float NbRate;
+
 
 
     List<String> dateshh;
@@ -116,11 +125,6 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         /**
          * create CHART -------------------------------------------
          */
-
-
-
-
-
 
 
 
@@ -742,6 +746,98 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                     }
                 });
 
+
+
+                /**
+                 * Code Of Rate Client ¤ ¤ ¤ ¤ ¤
+                 */
+
+
+
+
+
+                LinearLayout DownLayout = (LinearLayout)MyDyalog_detaille.findViewById(R.id.downLayout);
+
+                DownLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        LinearLayout contentLayout = (LinearLayout)MyDyalog_detaille.findViewById(R.id.contentLayout);
+                        contentLayout.setVisibility(View.VISIBLE);
+
+                        /**
+                         * return value of Rating
+                         */
+
+
+                        RatingBar rateBAre = (RatingBar)MyDyalog_detaille.findViewById(R.id.ratingBar);
+                        rateBAre.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+
+                            @Override
+                            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                                NbRate = rateBAre.getRating();
+
+
+
+
+                                LinearLayout descLayout = (LinearLayout)MyDyalog_detaille.findViewById(R.id.descLayout);
+                                descLayout.setVisibility(view.VISIBLE);
+
+                                LinearLayout downLayout = (LinearLayout)MyDyalog_detaille.findViewById(R.id.downLayout);
+                                downLayout.setVisibility(view.INVISIBLE);
+
+
+                                ImageView upImage = (ImageView)MyDyalog_detaille.findViewById(R.id.downImage);
+                                upImage.setImageResource(0);
+
+                                Button ratingBTN = MyDyalog_detaille.findViewById(R.id.ratingBTN);
+                                ratingBTN.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        EditText descript = (EditText)MyDyalog_detaille.findViewById(R.id.descript);
+
+                                        /**
+                                         * Save Rate of Client in database
+                                         */
+                                        Calendar datecalendar = Calendar.getInstance();
+                                        final int alarmYear = datecalendar.get(Calendar.YEAR);
+                                        final int alarmMonth = datecalendar.get(Calendar.MONTH);
+                                        final int alarmday = datecalendar.get(Calendar.DAY_OF_MONTH);
+                                        String Dateformat =alarmday+"/"+alarmMonth+"/"+alarmYear;
+
+
+
+                                        boolean c = db.insert_feedback(cin,NbRate,descript.getText().toString(),Dateformat);
+                                        if (c) {
+                                            Toast.makeText(mes_recettes.this, "L'évaluation a réussi", Toast.LENGTH_LONG).show();
+                                            finish();
+                                            startActivity(getIntent());
+                                        } else {
+                                            Toast.makeText(mes_recettes.this, "Erreur", Toast.LENGTH_LONG).show();
+                                        }
+
+                                    }
+                                });
+
+                            }
+                        });
+
+
+
+
+
+
+
+
+
+                    }
+                });
+
+
+
+
+
                 MyDyalog_detaille.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 MyDyalog_detaille.show();
 
@@ -910,8 +1006,20 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         }
         return false;
     }
+
+    /**
+     * Ajouter nouveaux Recettes
+     * @param view
+     */
+
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void ajouter(View view) {
+
+
+
+
+
         final Dialog MyDyalog_ajou;
         MyDyalog_ajou = new Dialog(mes_recettes.this);
         MyDyalog_ajou.setContentView(R.layout.dialog_ajouter_client);
@@ -961,6 +1069,13 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         text9 = (EditText) MyDyalog_ajou.findViewById(R.id.text_Prix);
 
 
+/*
+        RatingBar ratingBar = (RatingBar) MyDyalog_ajou.findViewById(R.id.ratingBar);
+        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+        stars.getDrawable(0).setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        stars.getDrawable(1).setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+*/
 
 
 
@@ -1100,6 +1215,18 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                         text13.setText(c.getString(2));
                     }
                 }
+
+
+
+                /**
+                 * return feedback
+                 */
+
+                GetFeesBAck(Cintext,MyDyalog_ajou);
+
+
+
+
             }
         });
 
@@ -1109,6 +1236,24 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onClick(View v) {
+
+
+
+                String nom = text1.getText().toString();
+                String prenom = text2.getText().toString();
+                String adr = text13.getText().toString();
+                String cin = text3.getText().toString();
+                String tele = text4.getText().toString();
+                String activ = text5.getText().toString();
+                String ddate_debut = text6.getText().toString();
+                String ddate_fin = text7.getText().toString();
+                int NB_jour = Integer.parseInt(text8.getText().toString());
+                int prix = Integer.parseInt(text9.getText().toString());
+                int prix_total = Integer.parseInt(text8.getText().toString()) * Integer.parseInt(text9.getText().toString());
+                String type = sp.getSelectedItem().toString();
+                String matricule = text11.getSelectedItem().toString();
+                String CinCl = text3.getText().toString();
+
 
 
                 int count = 0;
@@ -1152,56 +1297,35 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
                 Toast.makeText(mes_recettes.this, ""+s, Toast.LENGTH_SHORT).show();
 
-                SQLiteDatabase table1 = db.getReadableDatabase ();
-                String requet1 = "select * from Clients where cin ='"+text3.getText()+"'";
-                Cursor c1 = table1.rawQuery ( requet1, null );
-                boolean b = false;
-                boolean d = false;
-                int total = Integer.parseInt(text8.getText().toString()) * Integer.parseInt(text9.getText().toString());
-                if (c1.getCount()==0){
-                    b = db.insert_client(text1.getText().toString(), text2.getText().toString(), text13.getText().toString(), text3.getText().toString().toLowerCase(), text4.getText().toString(), text5.getText().toString());
-                    d= db.insert_Recette(s,text6.getText().toString(),text7.getText().toString(),Integer.parseInt(text8.getText().toString()),Integer.parseInt(text9.getText().toString()),total,sp.getSelectedItem().toString(),text11.getSelectedItem().toString(),text3.getText().toString());
-                    if (b && d ) {
-                        Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                // tester if lclient existe        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                if(c1.moveToFirst()) {
-
-                    if(c1.getString(3).equals(text3.getText().toString())) {
-                        d= db.insert_Recette(s,text6.getText().toString(),text7.getText().toString(),Integer.parseInt(text8.getText().toString()),Integer.parseInt(text9.getText().toString()),total,sp.getSelectedItem().toString(),text11.getSelectedItem().toString(),text3.getText().toString());
-
-
-                        if (d) {
-                            Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(mes_recettes.this, "l'enregistrement ne pas effecuter", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    if(!c1.getString(3).equals(text3.getText().toString())) {
-                        b = db.insert_client(text1.getText().toString(), text2.getText().toString(), text13.getText().toString(), text3.getText().toString().toLowerCase(), text4.getText().toString(), text5.getText().toString());
-                        d= db.insert_Recette(s,text6.getText().toString(),text7.getText().toString(),Integer.parseInt(text8.getText().toString()),Integer.parseInt(text9.getText().toString()),total,sp.getSelectedItem().toString(),text11.getSelectedItem().toString(),text3.getText().toString());
-
-                        if(b && d ){
-                            Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(mes_recettes.this, "l'enregistrement ne pas effecuter", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                }
-
+                /**
+                 * function pour ajouter nouveaux recettes
+                 */
+                 Ajouter_recettes(nom,prenom,adr,cin,tele,activ,s,ddate_debut,ddate_fin,NB_jour,prix,prix_total,type,matricule,CinCl);
 
                 MyDyalog_ajou.dismiss();
-
                 finish();
                 startActivity(getIntent());
 
             }
         });
+
+
+
         MyDyalog_ajou.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         MyDyalog_ajou.show();
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -1541,6 +1665,104 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
             mChart.setData(data);
         }
+    }
+
+    public void Ajouter_recettes(String nom , String prenom, String adr, String cin, String tel, String activi ,String IDrecette , String d1, String d2, int nb, int prix,int pt,String typ,String ma,String ci){
+
+
+
+        SQLiteDatabase table1 = db.getReadableDatabase ();
+        String requet1 = "select * from Clients where cin ='"+ci+"'";
+        Cursor c1 = table1.rawQuery ( requet1, null );
+        boolean b = false;
+        boolean d = false;
+
+        if (c1.getCount()==0){
+            b = db.insert_client(nom,prenom,adr,cin, tel,activi);
+            d= db.insert_Recette(IDrecette,d1,d2,nb,prix,pt,typ,ma,ci);
+            if (b && d ) {
+                Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+            }
+        }
+        // tester if lclient existe        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        if(c1.moveToFirst()) {
+
+            if(c1.getString(3).equals(ci)) {
+                d= db.insert_Recette(IDrecette,d1,d2,nb,prix,pt,typ,ma,ci);
+
+                if (d) {
+                    Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(mes_recettes.this, "l'enregistrement ne pas effecuter", Toast.LENGTH_SHORT).show();
+                }
+            }
+            if(!c1.getString(3).equals(ci)) {
+                b = db.insert_client(nom,prenom,adr,cin, tel,activi);
+                d= db.insert_Recette(IDrecette,d1,d2,nb,prix,pt,typ,ma,ci);
+
+                if(b && d ){
+                    Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(mes_recettes.this, "l'enregistrement ne pas effecuter", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        }
+
+    }
+
+
+    public void GetFeesBAck(String GetFeesBAck ,Dialog MyDyalog_ajou){
+
+        LinearLayout feedbackLayout = (LinearLayout)MyDyalog_ajou.findViewById(R.id.feedbackLayout);
+        float feeds = 0,TotalFeeds =0;
+        int counter = 0,nbdesc = 0;
+
+        String test ="";
+
+
+        SQLiteDatabase table1 = db.getReadableDatabase ();
+        String requet1 = "select * from feedback where cin ='"+Cintext+"'";
+        Cursor c1 = table1.rawQuery ( requet1, null );
+
+        if(c1.getCount() !=0) {
+
+            feedbackLayout.setVisibility(View.VISIBLE);
+
+            while (c1.moveToNext()) {
+                if (!c1.getString(3).equals("")) {
+                    nbdesc++;
+                }
+                counter++;
+                test ="";
+                    test = c1.getString(2).toString();
+
+                    try {
+                        feeds =feeds+Float.valueOf(test.trim()).floatValue();
+                    }
+                    catch (NumberFormatException e) {
+                        Toast.makeText(mes_recettes.this, "NumberFormatException: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+            }
+
+
+
+            TotalFeeds = feeds /counter;
+
+            TextView rateText = (TextView)MyDyalog_ajou.findViewById(R.id.rateText);
+            rateText.setText(TotalFeeds+"");
+
+            TextView NBText = (TextView)MyDyalog_ajou.findViewById(R.id.feedText);
+
+            DecimalFormat df = new DecimalFormat("#.##");
+            String formatted = df.format(nbdesc);
+
+
+            String feedback =  formatted+" feedback  ";
+            NBText.setText(feedback);
+        }
+
     }
 
 

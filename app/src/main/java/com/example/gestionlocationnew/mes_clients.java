@@ -15,7 +15,9 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +39,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class mes_clients extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -51,6 +55,9 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
     TextView Cin;
     EditText t1;
     String cinlist;
+    Float NbRate;
+
+
 
     /**
      * list choix vehicule
@@ -220,6 +227,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                          * suprimer ----------
                          */
 
+
                         final Dialog MyDyalog;
 
                         MyDyalog = new Dialog(mes_clients.this);
@@ -368,6 +376,96 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                             }
                         });
 
+
+                        /**
+                         * Code Of Rate Client ¤ ¤ ¤ ¤ ¤
+                         */
+
+                    LinearLayout DownLayout = (LinearLayout)MyDyalog.findViewById(R.id.downLayout);
+
+                DownLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        // Gets linearlayout
+                        LinearLayout globalLayout = (LinearLayout)MyDyalog.findViewById(R.id.globalLayout);
+                        // Gets the layout params that will allow you to resize the layout
+                        ViewGroup.LayoutParams params = globalLayout.getLayoutParams();
+                        // Changes the height and width to the specified *pixels*
+                        params.height = 550;
+                        globalLayout.setLayoutParams(params);
+
+
+                        LinearLayout contentLayout = (LinearLayout)MyDyalog.findViewById(R.id.contentLayout);
+                        contentLayout.setVisibility(View.VISIBLE);
+
+                        /**
+                         * return value of Rating
+                         */
+
+
+                        RatingBar rateBAre = (RatingBar)MyDyalog.findViewById(R.id.ratingBar);
+                        rateBAre.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+
+                            @Override
+                            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                                NbRate = rateBAre.getRating();
+
+
+                                params.height = 965;
+                                globalLayout.setLayoutParams(params);
+
+                                LinearLayout descLayout = (LinearLayout)MyDyalog.findViewById(R.id.descLayout);
+                                descLayout.setVisibility(view.VISIBLE);
+
+                                LinearLayout downLayout = (LinearLayout)MyDyalog.findViewById(R.id.downLayout);
+                                downLayout.setVisibility(view.INVISIBLE);
+
+
+                                ImageView upImage = (ImageView)MyDyalog.findViewById(R.id.downImage);
+                                upImage.setImageResource(0);
+
+                            Button ratingBTN = MyDyalog.findViewById(R.id.ratingBTN);
+                            ratingBTN.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    EditText descript = (EditText)MyDyalog.findViewById(R.id.descript);
+
+                                    /**
+                                     * Save Rate of Client in database
+                                     */
+                                    Calendar datecalendar = Calendar.getInstance();
+                                    final int alarmYear = datecalendar.get(Calendar.YEAR);
+                                    final int alarmMonth = datecalendar.get(Calendar.MONTH);
+                                    final int alarmday = datecalendar.get(Calendar.DAY_OF_MONTH);
+                                    String Dateformat =alarmday+"/"+alarmMonth+"/"+alarmYear;
+
+
+                                    boolean c = db.insert_feedback(text_nom.getText().toString(),NbRate,descript.getText().toString(),Dateformat);
+                                    if (c) {
+                                        Toast.makeText(mes_clients.this, "L'évaluation a réussi", Toast.LENGTH_LONG).show();
+                                        finish();
+                                        startActivity(getIntent());
+                                    } else {
+                                        Toast.makeText(mes_clients.this, "Erreur", Toast.LENGTH_LONG).show();
+                                    }
+
+                                }
+                            });
+
+                            }
+                        });
+
+
+
+
+
+
+
+
+
+                    }
+                });
 
 
 
