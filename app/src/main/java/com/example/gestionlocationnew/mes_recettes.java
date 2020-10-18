@@ -1,15 +1,21 @@
 package com.example.gestionlocationnew;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.pdf.PdfDocument;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
@@ -32,6 +38,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -46,6 +53,9 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -1788,6 +1798,35 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
     }
 
 
+    public void generete_pdf(View view) {
+        ActivityCompat.requestPermissions(this,new String[]{
+                Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                PackageManager.PERMISSION_GRANTED);
 
+        Createpdf();
+    }
+
+    private void Createpdf() {
+        PdfDocument MyPdfDocument = new PdfDocument();
+        Paint myPaint = new Paint();
+
+        PdfDocument.PageInfo MyPageInfo1 = new PdfDocument.PageInfo.Builder(250,400,1).create();
+        PdfDocument.Page myPage1 = MyPdfDocument.startPage(MyPageInfo1);
+
+        Canvas canvas = myPage1.getCanvas();
+        canvas.drawText("welcome to gesloc",40,50,myPaint);
+        MyPdfDocument.finishPage(myPage1);
+
+        File file = new File(Environment.getExternalStorageDirectory(),"/firstpdf.pdf");
+
+        try {
+            MyPdfDocument.writeTo(new FileOutputStream(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        MyPdfDocument.close();
+
+    }
 }
 
