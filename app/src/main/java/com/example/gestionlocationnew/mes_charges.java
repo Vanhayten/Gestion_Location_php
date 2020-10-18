@@ -1,9 +1,11 @@
 package com.example.gestionlocationnew;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,10 +13,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,6 +38,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -46,10 +53,13 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -95,6 +105,45 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mes_charge);
         db = new gestion_location(this);
+
+        /**
+         * pdf
+         *
+         *
+         */
+        try{
+            Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+            m.invoke(null);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+
+        /* clic sur le bouton */
+        findViewById(R.id.button_pdf).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context c = getApplicationContext();
+                try {
+                    File fileInDataDir = copyFileFromAssetsToDownloads(c, "", "file.pdf");
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(Uri.fromFile(fileInDataDir), "application/pdf");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    startActivity(intent);
+                } catch(Exception e) {
+                    Log.e(getClass().getSimpleName(), "Exception: " + e.getMessage(), e);
+                }
+            }
+        });
+
+        /* Permissions Nougat et +*/
+        ActivityCompat.requestPermissions(this, new String[] {
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+        }, 1);
+
+
+
 
 
         /**
@@ -1214,5 +1263,37 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
             mChart.setData(data);
         }
     }
+    //
+    //
+    //contuner pdf
+
+    private static File copyFileFromAssetsToDownloads(final Context context, final String assetFolder, final String fileName)
+            throws IOException {
+        /* utilisation du répertoire download pour pour que l'application externe puisse lire le fichier sinon ça semble coincer. */
+        File f = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName);
+        if (f.exists())
+            //noinspection ResultOfMethodCallIgnored
+            f.delete();
+        InputStream in = null;
+        FileOutputStream out = null;
+        try {
+            in = context.getAssets().open(assetFolder + fileName);
+            out = new FileOutputStream(f);
+            int read;
+            final byte[] buffer = new byte[4096];
+            while ((read = in.read(buffer)) > 0)
+                out.write(buffer, 0, read);
+        } catch (IOException ioe) {
+            throw new IOException(ioe);
+        } finally {
+            if (out != null)
+                out.close();
+            if (in != null)
+                in.close();
+        }
+        return f;
+    }
+    
+
 
 }

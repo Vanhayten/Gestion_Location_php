@@ -134,6 +134,28 @@
 
                     android:textColor="@color/NAVwhite_theme50" />
             </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/button_pdf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/corner_pdf"
+                    android:drawableStart="@drawable/pdf"
+                    android:drawableLeft="@drawable/pdf"
+                    android:text="TELECHARGEMENT"
+                    android:textColor="@color/NAVwhite"
+                    android:layout_marginLeft="130dp"
+                    android:drawablePadding="4dp"
+
+
+                    />
+
+            </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
