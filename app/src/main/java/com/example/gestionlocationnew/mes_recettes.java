@@ -1309,7 +1309,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 final Dialog dilogfeed;
                 dilogfeed = new Dialog(mes_recettes.this);
                 dilogfeed.setContentView(R.layout.dialog_fedeback);
-ListView ls1=(ListView)dilogfeed.findViewById(R.id.listefed) ;
+                ListView ls1=(ListView)dilogfeed.findViewById(R.id.listefed) ;
 
                 SQLiteDatabase table = db.getReadableDatabase ();
 
