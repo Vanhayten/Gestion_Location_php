@@ -15,4 +15,13 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="pizza_menu">
+        <item>select</item>
+        <item>margarite</item>
+        <item>Double chause margarite</item>
+        <item>happy paner</item>
+        <item>mexicane green waver</item>
+        <item>veg extravangaza</item>
+    </string-array>
 </resources>

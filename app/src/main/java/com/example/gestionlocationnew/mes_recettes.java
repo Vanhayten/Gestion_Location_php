@@ -1,23 +1,33 @@
 package com.example.gestionlocationnew;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.pdf.PdfDocument;
+import android.icu.util.LocaleData;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,6 +43,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -40,6 +51,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -51,11 +63,31 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
+import com.google.android.material.dialog.MaterialDialogs;
 import com.google.android.material.navigation.NavigationView;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseField;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.lang.reflect.Type;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -64,6 +96,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -71,6 +104,34 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
     private static final String TAG = "mes_recettes";
+    private static final int STORAGE_CODE = 1000;
+
+
+
+
+
+    /**
+     *
+     * declaratoin pdf test
+     */
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 111;
+    private File pdfFile;
+    Button button_pdf;
+    Bitmap bmp,scaledbmp;
+    int pageWith = 1200;
+
+
+    /**
+     * feedback
+     */
+    list_feedback list_feedback;
+    ArrayList<list_feedback> arrayListFeedback;
+
+
+
+
+
+
 
     private LineChart mChart;
 
@@ -103,6 +164,9 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
     List<Double> allAmountsss;
 
 
+    SQLiteDatabase table1;
+
+
 
     private DatePickerDialog.OnDateSetListener mDateSetListenerrecherche1;
     private DatePickerDialog.OnDateSetListener mDateSetListenerrecherche2;
@@ -125,11 +189,30 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
         /**
-         * create CHART -------------------------------------------
+         * feedback
+         */
+        arrayListFeedback = new ArrayList<list_feedback>();
+
+        /**
+         * code of pdf
          */
 
+        bmp = BitmapFactory.decodeResource(getResources(),R.drawable.gestloca);
+        scaledbmp = Bitmap.createScaledBitmap(bmp,192,222,false);
+
+        button_pdf = (Button)findViewById(R.id.button_pdf);
+        button_pdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TestPdf();
+            }
+        });
 
 
+
+        /**
+         * create CHART -------------------------------------------
+         */
         mChart = findViewById(R.id.Linechart);
         mChart.setDragEnabled(true);
         mChart.setScaleEnabled(true);
@@ -197,7 +280,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
          * initialitation les donner don chart
          */
 
-        SQLiteDatabase table1 = db.getReadableDatabase();
+        table1 = db.getReadableDatabase();
         String requet1 = "SELECT * FROM  Recette ORDER BY date_début ASC";
         Cursor c1 = table1.rawQuery ( requet1, null);
 
@@ -554,8 +637,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         listeRecet = new PageAdapter_recette ( this, arrayList1 );
         ls.setAdapter(listeRecet);
 
-        totale.setText("Total generale par mois: "+somme+" DH");
-
+       // totale.setText("Total generale par mois: "+somme+" DH");
 
 
 
@@ -781,8 +863,6 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                                 NbRate = rateBAre.getRating();
 
 
-
-
                                 LinearLayout descLayout = (LinearLayout)MyDyalog_detaille.findViewById(R.id.descLayout);
                                 descLayout.setVisibility(view.VISIBLE);
 
@@ -826,17 +906,8 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                         });
 
 
-
-
-
-
-
-
-
                     }
                 });
-
-
 
 
 
@@ -1423,7 +1494,10 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
         ArrayList<list_recette> arrayList2;
-        arrayList2 = new ArrayList<list_recette> ();
+        arrayList2 = new ArrayList<list_recette>();
+
+
+        arrayListFeedback.clear();
 
 
 
@@ -1546,9 +1620,16 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 arrayList2.add (list);
 
 
+                /**
+                 * insert list of feedback
+                 */
+                list_feedback = new list_feedback(c1.getString(7),c1.getString(1),c1.getString(2),c1.getString(5));
+                arrayListFeedback.add(list_feedback);
+
             }
 
         }
+
 
 
         if(dateshh != null && allAmountsss != null) {
@@ -1798,35 +1879,179 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
     }
 
 
-    public void generete_pdf(View view) {
-        ActivityCompat.requestPermissions(this,new String[]{
-                Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                PackageManager.PERMISSION_GRANTED);
 
-        Createpdf();
-    }
 
-    private void Createpdf() {
-        PdfDocument MyPdfDocument = new PdfDocument();
+        public void TestPdf(){
+
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                            PackageManager.PERMISSION_DENIED) {
+
+                        String[] permissions ={Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                        requestPermissions(permissions, STORAGE_CODE);
+
+                    } else {
+                        savePdf();
+                    }
+                }else {
+                    savePdf();
+
+                }
+
+
+
+
+
+        }
+
+    private void savePdf() {
+
+
+        PdfDocument myPdfDocument = new PdfDocument();
         Paint myPaint = new Paint();
+        Paint titlePaint = new Paint();
 
-        PdfDocument.PageInfo MyPageInfo1 = new PdfDocument.PageInfo.Builder(250,400,1).create();
-        PdfDocument.Page myPage1 = MyPdfDocument.startPage(MyPageInfo1);
-
+        PdfDocument.PageInfo myPageInfo1 = new PdfDocument.PageInfo.Builder(1200,2010,1).create();
+        PdfDocument.Page myPage1 = myPdfDocument.startPage(myPageInfo1);
         Canvas canvas = myPage1.getCanvas();
-        canvas.drawText("welcome to gesloc",40,50,myPaint);
-        MyPdfDocument.finishPage(myPage1);
 
-        File file = new File(Environment.getExternalStorageDirectory(),"/firstpdf.pdf");
 
+        canvas.drawBitmap(scaledbmp,(pageWith-221)/2,10,myPaint);
+
+        titlePaint.setTextAlign(Paint.Align.CENTER);
+        titlePaint.setTypeface(Typeface.create(Typeface.DEFAULT,Typeface.BOLD));
+        titlePaint.setTextSize(70);
+        //canvas.drawText("Recette",pageWith/2,290,titlePaint);
+
+        myPaint.setColor(Color.rgb(0,113,188));
+        myPaint.setTextSize(30f);
+        myPaint.setTextAlign(Paint.Align.RIGHT);
+        canvas.drawText("Call : 06-84 07 84 07",1160,40,myPaint);
+        canvas.drawText("05-35 09 87 21",1160,80,myPaint);
+
+
+        titlePaint.setTextAlign(Paint.Align.CENTER);
+        titlePaint.setTypeface(Typeface.create(Typeface.DEFAULT,Typeface.ITALIC));
+        titlePaint.setTextSize(70);
+        canvas.drawText("Recette",pageWith/2,500,titlePaint);
+
+        myPaint.setTextAlign(Paint.Align.LEFT);
+        myPaint.setTextSize(35f);
+        myPaint.setColor(Color.BLACK);
+
+
+
+
+
+
+        canvas.drawText("Nom: "+Nom+" "+Prenom+"",20,590,myPaint);
+
+
+        canvas.drawText("Date Debut: "+Recherche.getText(),20,650,myPaint);
+        canvas.drawText("Date Fin: "+Recherche1.getText(),20,700,myPaint);
+
+        myPaint.setTextAlign(Paint.Align.RIGHT);
+
+        Date datePdf ;
+        DateFormat dateFormatPdf;
+        datePdf = new Date();
+        dateFormatPdf = new SimpleDateFormat("dd/MM/yy");
+        canvas.drawText("Date : "+dateFormatPdf.format(datePdf),pageWith-20,640,myPaint);
+
+        dateFormatPdf = new SimpleDateFormat("HH:mm:ss");
+        canvas.drawText("temps: "+dateFormatPdf.format(datePdf),pageWith-20,690,myPaint);
+
+
+        myPaint.setStyle(Paint.Style.STROKE);
+        myPaint.setStrokeWidth(2);
+        canvas.drawRect(20,780,pageWith-20,860,myPaint);
+
+
+        myPaint.setTextAlign(Paint.Align.LEFT);
+        myPaint.setStyle(Paint.Style.FILL);
+        canvas.drawText("Immatriculation",40,830,myPaint);
+        canvas.drawText("date début",400,830,myPaint);
+        canvas.drawText("date fin",700,830,myPaint);
+        canvas.drawText("montant",1000,830,myPaint);
+
+
+        canvas.drawLine(370,790,370,840,myPaint);
+        canvas.drawLine(650,790,650,840,myPaint);
+        canvas.drawLine(930,790,930,840,myPaint);
+
+        /**
+         * content
+         */
+
+        int y=950;
+        int prixTotal =0;
+
+        for (list_feedback feedback : arrayListFeedback) {
+
+            canvas.drawText(feedback.getMatricul(),40,y,myPaint);
+            canvas.drawText(feedback.getDate_db(),400,y,myPaint);
+            canvas.drawText(feedback.getDate_fin(),700,y,myPaint);
+            canvas.drawText(feedback.getMontant()+" DH",1000,y,myPaint);
+            y=y+50;
+
+            prixTotal = prixTotal +Integer.parseInt(feedback.getMontant());
+        }
+
+
+        /**
+         * total
+         */
+
+        int startY = y+100; //1200
+        canvas.drawLine(680,startY,pageWith-20,startY,myPaint);
+        myPaint.setColor(Color.rgb(247,147,30));
+
+            int top = y+150;//1250
+            int bottom = y+250;//1350
+        canvas.drawRect(680,top,pageWith-20,bottom,myPaint);
+
+        myPaint.setColor(Color.BLACK);
+        myPaint.setTextSize(50f);
+        myPaint.setTextAlign(Paint.Align.LEFT);
+        int textY = y+215;
+        canvas.drawText("Total",700,textY,myPaint);
+        myPaint.setTextAlign(Paint.Align.RIGHT);
+        canvas.drawText(prixTotal+" DH",pageWith-40,textY,myPaint);
+
+
+
+        myPdfDocument.finishPage(myPage1);
+        File file = new File(Environment.getExternalStorageDirectory(),"/Gesloc.pdf");
         try {
-            MyPdfDocument.writeTo(new FileOutputStream(file));
-        } catch (IOException e) {
+            myPdfDocument.writeTo(new FileOutputStream(file));
+        }catch (Exception e){
             e.printStackTrace();
         }
 
-        MyPdfDocument.close();
+        myPdfDocument.close();
+
 
     }
+
+    //handel permition
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case STORAGE_CODE:{
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+                    // permision was granted from popup , call save pdf method
+                    savePdf();
+                }else{
+                    //
+                    Toast.makeText(mes_recettes.this, "permission denied ...!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
 }
 

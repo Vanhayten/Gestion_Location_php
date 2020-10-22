@@ -101,14 +101,15 @@ xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_gravity="center"
                     android:id="@+id/ajouterClient"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:background="@drawable/rounded_buttom"
                     android:drawableStart="@drawable/ic_add_black_24dp"
                     android:drawableLeft="@drawable/ic_add_black_24dp"
                     android:onClick="ajouter"
                     android:text="Ajouter"
                     android:textColor="@color/NAVwhite_theme50"
-                    android:layout_marginRight="25dp">
+                    android:layout_marginRight="25dp"
+                    android:paddingRight="12dp">
                 </Button>
                 <TextView
                     android:id="@+id/ttg"
@@ -148,8 +149,10 @@ xmlns:android="http://schemas.android.com/apk/res/android"
                     android:drawableLeft="@drawable/pdf"
                     android:text="TELECHARGEMENT"
                     android:textColor="@color/NAVwhite"
-                    android:onClick="generete_pdf"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
                     />
+
                </LinearLayout>
 
 

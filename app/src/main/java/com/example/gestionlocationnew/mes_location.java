@@ -167,7 +167,7 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
 
 
                 SQLiteDatabase table1 = db.getReadableDatabase();
-                String requetclient = "select * from Clients where cin = '"+c.getString(8).toUpperCase()+"'";
+                String requetclient = "select * from Clients where cin = '"+c.getString(8)+"'";
                 Cursor cclint = table1.rawQuery(requetclient, null);
 
                 String requetvehicule = "select * from véhicules where immatriculation = '"+c.getString(7)+"'";

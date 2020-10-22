@@ -167,6 +167,7 @@ public class ajouter_assurance extends AppCompatActivity {
                 }catch (Exception EX){
                     Toast.makeText(this, ""+EX.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+
                 Intent T;
                 Bundle b= new Bundle();
                 T = new Intent(this, assurances.class);
@@ -219,6 +220,7 @@ public class ajouter_assurance extends AppCompatActivity {
         String formattedDate1 = df.format(c.getTime());
 
         SaveEvent(Events,formattedDate,DateF,monthString,part3);
+
         SetUpCalendar();
 
 
@@ -289,7 +291,6 @@ public class ajouter_assurance extends AppCompatActivity {
         dbOpenHelper.SaveEvent(event,time,date,month,year,"on",database);
         dbOpenHelper.close();
         Toast.makeText(this, "Event Saved", Toast.LENGTH_SHORT).show();
-
     }
 
 

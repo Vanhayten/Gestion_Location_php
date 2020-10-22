@@ -127,13 +127,6 @@
         android:orientation="vertical"
         android:visibility="gone"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Evoluez ce client"
-            android:textColor="@color/NAVwhite_theme10"
-            android:layout_gravity="center" />
-
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_marginTop="9dp"
@@ -167,7 +160,7 @@
             android:id="@+id/ratingBTN"
             android:layout_gravity="center"
             android:layout_width="120dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             style="@style/Widget.AppCompat.Button.Colored"
             android:text="confirm">
 
@@ -177,8 +170,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/downLayout">
+        android:layout_height="wrap_content"
+        android:id="@+id/downLayout"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="-12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Evoluez ce client"
+            android:textColor="@color/NAVwhite.1"
+            android:layout_gravity="center" />
+
         <ImageView
             android:id="@+id/downImage"
             android:layout_width="match_parent"

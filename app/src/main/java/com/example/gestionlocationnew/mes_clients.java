@@ -381,23 +381,19 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                          * Code Of Rate Client ¤ ¤ ¤ ¤ ¤
                          */
 
-                    LinearLayout DownLayout = (LinearLayout)MyDyalog.findViewById(R.id.downLayout);
 
-                DownLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
 
                         // Gets linearlayout
                         LinearLayout globalLayout = (LinearLayout)MyDyalog.findViewById(R.id.globalLayout);
                         // Gets the layout params that will allow you to resize the layout
                         ViewGroup.LayoutParams params = globalLayout.getLayoutParams();
                         // Changes the height and width to the specified *pixels*
-                        params.height = 550;
-                        globalLayout.setLayoutParams(params);
+                        //params.height = 550;
+                        //globalLayout.setLayoutParams(params);
 
 
-                        LinearLayout contentLayout = (LinearLayout)MyDyalog.findViewById(R.id.contentLayout);
-                        contentLayout.setVisibility(View.VISIBLE);
+                        //LinearLayout contentLayout = (LinearLayout)MyDyalog.findViewById(R.id.contentLayout);
+                        //contentLayout.setVisibility(View.VISIBLE);
 
                         /**
                          * return value of Rating
@@ -412,18 +408,11 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                                 NbRate = rateBAre.getRating();
 
 
-                                params.height = 965;
-                                globalLayout.setLayoutParams(params);
+                                //  params.height = 965;
+                                //  globalLayout.setLayoutParams(params);
 
                                 LinearLayout descLayout = (LinearLayout)MyDyalog.findViewById(R.id.descLayout);
                                 descLayout.setVisibility(view.VISIBLE);
-
-                                LinearLayout downLayout = (LinearLayout)MyDyalog.findViewById(R.id.downLayout);
-                                downLayout.setVisibility(view.INVISIBLE);
-
-
-                                ImageView upImage = (ImageView)MyDyalog.findViewById(R.id.downImage);
-                                upImage.setImageResource(0);
 
                             Button ratingBTN = MyDyalog.findViewById(R.id.ratingBTN);
                             ratingBTN.setOnClickListener(new View.OnClickListener() {
@@ -458,14 +447,6 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
 
 
 
-
-
-
-
-
-
-                    }
-                });
 
 
 

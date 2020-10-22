@@ -187,6 +187,8 @@ public class gestion_location extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+Table13);
         onCreate(db);
     }
+
+
     public boolean insert_emp(String Login ,String Pass,String nom,String prenom,String role){
         boolean res=false;
         SQLiteDatabase db = this.getWritableDatabase();
