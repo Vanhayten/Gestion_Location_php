@@ -138,7 +138,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
         });
         SQLiteDatabase table = db.getReadableDatabase();
         ArrayList<list_vihcule> arrayList;
-        String requet = "select * from véhicules and login ='"+login+"'";
+        String requet = "select * from véhicules where login ='"+login+"'";
         Cursor c = table.rawQuery(requet, null);
         arrayList = new ArrayList<list_vihcule>();
         arrayList.clear();
