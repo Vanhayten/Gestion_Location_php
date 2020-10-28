@@ -38,7 +38,7 @@ import java.util.Calendar;
 
 public class assurances extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    String Nom,Prenom,role;
+    String Nom,Prenom,role,login;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     NavigationView navigationView;
@@ -62,6 +62,26 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
 
         db= new gestion_location(this);
 
+
+        /**
+         * Menu
+         */
+
+        NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);
+        View headerView = navigationView1.getHeaderView(0);
+        TextView username = headerView.findViewById(R.id.unser_name);
+        TextView role1 = headerView.findViewById(R.id.role);
+
+        Bundle b = getIntent().getExtras();
+        Nom = b.getString("nom");
+        Prenom =  b.getString("prenom");
+        role = ""+b.getString("role");
+        login = ""+b.getString("login");
+        username.setText(Nom+" "+Prenom);
+        role1.setText(role);
+
+
+
         drawerLayout = findViewById(R.id.drawer);
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.navigationView);
@@ -84,7 +104,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 ArrayList<list_vihcule> arrayList1;
                 SQLiteDatabase table = db.getReadableDatabase ();
-                String requet = "select * from véhicules where immatriculation ='"+t1.getText()+"'";
+                String requet = "select * from véhicules where immatriculation ='"+t1.getText()+"' and login ='"+login+"'";
                 Cursor c = table.rawQuery ( requet, null );
                 if(c.getCount()>=1){
                     ls.clearChoices();
@@ -174,7 +194,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                         Button proch_assurance;
                         proch_assurance =(Button) dialog.findViewById(R.id.ajouter_assurance);
                         SQLiteDatabase table = db.getReadableDatabase ();
-                        String requet = "select date_fin from assurance where imatriculation_asurance ='"+matr.getText().toString()+"'";
+                        String requet = "select date_fin from assurance where imatriculation_asurance ='"+matr.getText().toString()+"' and login ='"+login+"'";
                         Cursor c = table.rawQuery ( requet, null );
                         while (c.moveToNext()){
                             proch_assurance.setText("Prochaine Assurance : "+c.getString(0));
@@ -208,7 +228,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                                         matr1.setText("Matricule : "+matr.getText().toString());
 
                                 SQLiteDatabase table = db.getReadableDatabase ();
-                                String requet = "select * from assurance where imatriculation_asurance ='"+matr.getText().toString()+"'";
+                                String requet = "select * from assurance where imatriculation_asurance ='"+matr.getText().toString()+"' and login ='"+login+"'";
                                 Cursor c = table.rawQuery ( requet, null );
                                 if (c.moveToLast()){
                                     date1.setText("Date debut :"+c.getString(1).toString());
@@ -255,6 +275,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                                 B.putString("nom",Nom);
                                 B.putString("prenom",Prenom);
                                 B.putString("role",role);
+                                B.putString("login",login);
                                 I.putExtras(B);
                                 startActivity(I);
                                 finish();
@@ -318,7 +339,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                             public void onClick(View v) {
 
                                 SQLiteDatabase table = db.getReadableDatabase ();
-                                String requet = "select count(*) from sinistre where imatriculation_sinistre ='"+matr.getText().toString()+"'";
+                                String requet = "select count(*) from sinistre where imatriculation_sinistre ='"+matr.getText().toString()+"' and login ='"+login+"'";
                                 Cursor c = table.rawQuery ( requet, null );
                                 if(c.moveToNext()) {
                                     if (Integer.parseInt(c.getString(0)) == 0) {
@@ -329,6 +350,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                                         Intent I = new Intent(assurances.this, historique_sinistre.class);
                                         Bundle B = new Bundle();
                                         B.putString("matricule", matr.getText().toString());
+                                        B.putString("login", login);
                                         I.putExtras(B);
                                         startActivity(I);
                                     }
@@ -369,7 +391,6 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                                 /**
                                  * get date circulation
                                  */
-
                                 text2.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -442,7 +463,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                                                             }else if(!CH1.isChecked() && CH2.isChecked()){
                                                                 ch11 ="Material";
                                                                 }
-                                                        boolean confirm = db.insert_sinistre(text1.getText().toString(),text2.getText().toString(),ch11,Integer.parseInt(text4.getText().toString()),spinner.getSelectedItem().toString(),Integer.parseInt(text6.getText().toString()));
+                                                        boolean confirm = db.insert_sinistre(text1.getText().toString(),text2.getText().toString(),ch11,Integer.parseInt(text4.getText().toString()),spinner.getSelectedItem().toString(),Integer.parseInt(text6.getText().toString()),login);
                                                         if(confirm){
                                                             Toast.makeText(assurances.this, "Bien ajoute", Toast.LENGTH_SHORT).show();
                                                             myDyalog_ajoute_conformation.dismiss();
@@ -501,10 +522,15 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
 
 
         SQLiteDatabase table = db.getReadableDatabase ();
-        String requet = "select * from véhicules ";
+        String requet = "select * from véhicules where login ='"+login+"'";
         Cursor c = table.rawQuery ( requet, null );
         if(c.getCount()==0){
             Intent i=new Intent(this,Ajoute_vihicule.class);
+            b.putString("nom",Nom);
+            b.putString("prenom",Prenom);
+            b.putString("role",role);
+            b.putString("login",login);
+            i.putExtras(b);
             startActivity(i);
         }
         arrayList = new ArrayList<list_vihcule> ();
@@ -516,21 +542,6 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
         }
        listrep = new PageAdapter_vihucle ( this, arrayList);
         ls.setAdapter ( listrep );
-
-
-
-        NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);
-        View headerView = navigationView1.getHeaderView(0);
-        TextView username = headerView.findViewById(R.id.unser_name);
-        TextView role1 = headerView.findViewById(R.id.role);
-
-        Bundle b = getIntent().getExtras();
-        Nom = b.getString("nom");
-        Prenom =  b.getString("prenom");
-        role = ""+b.getString("role");
-        username.setText(Nom+" "+Prenom);
-        role1.setText(role);
-
 
 
     }
@@ -545,6 +556,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -558,6 +570,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -571,6 +584,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -585,6 +599,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -598,6 +613,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -611,6 +627,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -624,6 +641,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -637,6 +655,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);

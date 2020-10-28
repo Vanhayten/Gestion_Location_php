@@ -49,7 +49,7 @@ import java.util.Locale;
 
 public class mes_location extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    String Nom,Prenom,role;
+    String Nom,Prenom,role,login;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     NavigationView navigationView;
@@ -82,6 +82,7 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
         Nom = b.getString("nom");
         Prenom =  b.getString("prenom");
         role = ""+b.getString("role");
+        login = ""+b.getString("login");
         username.setText(Nom+" "+Prenom);
         role1.setText(role);
 
@@ -142,7 +143,7 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
 
 
         SQLiteDatabase table = db.getReadableDatabase();
-        String requet = "select * from Recette";
+        String requet = "select * from Recette where login='"+login+"'";
         Cursor c = table.rawQuery(requet, null);
 
         Date dateNow=null;
@@ -167,10 +168,10 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
 
 
                 SQLiteDatabase table1 = db.getReadableDatabase();
-                String requetclient = "select * from Clients where cin = '"+c.getString(8)+"'";
+                String requetclient = "select * from Clients where cin = '"+c.getString(8)+"' and login='"+login+"'";
                 Cursor cclint = table1.rawQuery(requetclient, null);
 
-                String requetvehicule = "select * from véhicules where immatriculation = '"+c.getString(7)+"'";
+                String requetvehicule = "select * from véhicules where immatriculation = '"+c.getString(7)+"' and login ='"+login+"'";
                 Cursor cvhcl = table1.rawQuery(requetvehicule, null);
 
 
@@ -205,7 +206,7 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
                         String[] fullname = cin.getText().toString().split(" ");
 
                         SQLiteDatabase table = db.getReadableDatabase();
-                        String requet = "select tel from Clients where nom ='" +fullname[0]+ "' and prenom ='"+fullname[1]+"'";
+                        String requet = "select tel from Clients where nom ='" +fullname[0]+ "' and prenom ='"+fullname[1]+"' and login ='"+login+"'";
                         Cursor c = table.rawQuery(requet, null);
                         String teephone = null;
                         if(c.moveToNext()){
@@ -247,6 +248,7 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -262,6 +264,7 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -277,6 +280,7 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -292,6 +296,7 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -306,6 +311,7 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -320,6 +326,7 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -329,6 +336,7 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -343,6 +351,7 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);

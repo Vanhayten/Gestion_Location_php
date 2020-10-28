@@ -41,7 +41,7 @@ import java.util.Locale;
 
 public class entretiens extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    String Nom, Prenom, role;
+    String Nom, Prenom, role,login;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     NavigationView navigationView;
@@ -79,6 +79,18 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entretiens);
 
+
+        /**
+         * get Intent values
+         */
+        Bundle b = getIntent().getExtras();
+        Nom = b.getString("nom");
+        Prenom = b.getString("prenom");
+        role = "" + b.getString("role");
+        login = "" + b.getString("login");
+
+
+
         drawerLayout = findViewById(R.id.drawer);
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.navigationView);
@@ -103,7 +115,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 ArrayList<list_vihcule> arrayList1;
                 SQLiteDatabase table = db.getReadableDatabase();
-                String requet = "select * from véhicules where immatriculation ='" + t1.getText() + "'";
+                String requet = "select * from véhicules where immatriculation ='" + t1.getText() + "' and login ='"+login+"'";
                 Cursor c = table.rawQuery(requet, null);
                 if (c.getCount() >= 1) {
                     ls.clearChoices();
@@ -126,7 +138,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
         });
         SQLiteDatabase table = db.getReadableDatabase();
         ArrayList<list_vihcule> arrayList;
-        String requet = "select * from véhicules ";
+        String requet = "select * from véhicules and login ='"+login+"'";
         Cursor c = table.rawQuery(requet, null);
         arrayList = new ArrayList<list_vihcule>();
         arrayList.clear();
@@ -146,10 +158,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
         TextView username = headerView.findViewById(R.id.unser_name);
         TextView role1 = headerView.findViewById(R.id.role);
 
-        Bundle b = getIntent().getExtras();
-        Nom = b.getString("nom");
-        Prenom = b.getString("prenom");
-        role = "" + b.getString("role");
+
         username.setText(Nom + " " + Prenom);
         role1.setText(role);
 
@@ -188,7 +197,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                     public void onClick(View v) {
                       Cursor c;
                         SQLiteDatabase table = db.getReadableDatabase();
-                        String requet = "select count(*) from reparation where imatriculation ='" + Matricule.getText().toString() + "' ";
+                        String requet = "select count(*) from reparation where imatriculation ='" + Matricule.getText().toString() + "' and login ='"+login+"'";
                       c = table.rawQuery(requet, null);
 
 
@@ -217,8 +226,6 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                            /**
                             * gete date reparation
                             */
-
-
                            text5.setOnClickListener(new View.OnClickListener() {
                                @Override
                                public void onClick(View v) {
@@ -257,7 +264,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                                 public void onClick(View v) {
                                     boolean b = false;
                                         try {
-                                            b = db.insert_reparation(Matricule.getText().toString(), text2.getText().toString(), text3.getText().toString(), text4.getText().toString(), text5.getText().toString(), Integer.parseInt(text6.getText().toString()));
+                                            b = db.insert_reparation(Matricule.getText().toString(), text2.getText().toString(), text3.getText().toString(), text4.getText().toString(), text5.getText().toString(), Integer.parseInt(text6.getText().toString()),login);
                                         }catch (Exception E){
 
                                         }
@@ -281,6 +288,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                             Bundle B = new Bundle();
 
                             B.putString("matricule", Matricule.getText().toString());
+                            B.putString("login", login);
                            nouvel_reparation fragobj = new nouvel_reparation();
                             fragobj.setArguments(B);
 
@@ -347,7 +355,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
 
 
                             btn_atende = (Button) dyalog_vidange.findViewById(R.id.btn_atende);
-                            String requet = "select kilomaitrage,type_vidage from vidange where imatriculation_vidange ='" + Matricule.getText() + "'";
+                            String requet = "select kilomaitrage,type_vidage from vidange where imatriculation_vidange ='" + Matricule.getText() + "' and login ='"+login+"'";
                             SQLiteDatabase table = db.getReadableDatabase();
                             Cursor c = table.rawQuery(requet, null);
                             Integer kilom = 0;
@@ -379,7 +387,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                                 text4 = (TextView) dyalog_detaille_vidange.findViewById(R.id.text_filtre);
                                 text5 = (TextView) dyalog_detaille_vidange.findViewById(R.id.texttype_vidange);
                                 try {
-                                    String requet = "select * from vidange where imatriculation_vidange ='" + Matricule.getText() + "'";
+                                    String requet = "select * from vidange where imatriculation_vidange ='" + Matricule.getText() + "' and login ='"+login+"'";
                                     SQLiteDatabase table = db.getReadableDatabase();
                                     Cursor c = table.rawQuery(requet, null);
                                     while (c.moveToNext()) {
@@ -427,6 +435,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                                 B.putString("nom", Nom);
                                 B.putString("prenom", Prenom);
                                 B.putString("role", role);
+                                B.putString("login", login);
                                 I.putExtras(B);
                                 startActivity(I);
                                 finish();
@@ -472,7 +481,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                         try {
 
                             SQLiteDatabase table = db.getReadableDatabase();
-                            String requet = "select * from visite_technique where imatriculation_visite = '" + Matricule.getText() + "'";
+                            String requet = "select * from visite_technique where imatriculation_visite = '" + Matricule.getText() + "' and login ='"+login+"'";
                             Cursor c = table.rawQuery(requet, null);
                             while (c.moveToNext()) {
                                 date_visite.setText("prochaine visite technique : " + c.getString(2));
@@ -597,10 +606,6 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
 
 
 
-
-
-
-
                         /**
                          * confirmation dajoute
                          */
@@ -614,6 +619,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                                 tab_ch1.put("imatriculation_visite", Matricule.getText().toString());
                                 tab_ch1.put("date_visite", date1.getText().toString());
                                 tab_ch1.put("prch_visite", Date2.getText().toString());
+                                tab_ch1.put("login", login);
                                 long result = DB.insert("visite_technique", null, tab_ch1);
                                 if (result == -1) {
                                     res = false;
@@ -630,7 +636,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
 
                                     String Event = "Prochaine visite de la vihicule "+Matricule.getText().toString();
                                     try {
-                                        addEventsassurance(Date2.getText().toString(),Event);
+                                        addEventsassurance(Date2.getText().toString(),Event,login);
                                     }catch (Exception EX){
 
                                     }
@@ -669,6 +675,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom", Nom);
                 b.putString("prenom", Prenom);
                 b.putString("role", role);
+                b.putString("login", login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -682,6 +689,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom", Nom);
                 b.putString("prenom", Prenom);
                 b.putString("role", role);
+                b.putString("login", login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -695,6 +703,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom", Nom);
                 b.putString("prenom", Prenom);
                 b.putString("role", role);
+                b.putString("login", login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -709,6 +718,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom", Nom);
                 b.putString("prenom", Prenom);
                 b.putString("role", role);
+                b.putString("login", login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -722,6 +732,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom", Nom);
                 b.putString("prenom", Prenom);
                 b.putString("role", role);
+                b.putString("login", login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -735,6 +746,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom", Nom);
                 b.putString("prenom", Prenom);
                 b.putString("role", role);
+                b.putString("login", login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -748,6 +760,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom", Nom);
                 b.putString("prenom", Prenom);
                 b.putString("role", role);
+                b.putString("login", login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -761,6 +774,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login", login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -777,7 +791,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
 
 
 
-    public  void addEventsassurance(String sdate,String discription){
+    public  void addEventsassurance(String sdate,String discription ,String login){
 
         String string = sdate;
         //t3.getText().toString();
@@ -812,24 +826,24 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
         SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
         String formattedDate = df.format(c.getTime());
 
-        SaveEvent(Events,formattedDate,DateF,monthString,part3);
-        SetUpCalendar();
+        SaveEvent(Events,formattedDate,DateF,monthString,part3,login);
+        SetUpCalendar(login);
 
     }
 
 
-     private void SaveEvent(String event,String time,String date, String month,String year){
+     private void SaveEvent(String event,String time,String date, String month,String year,String login){
 
         dbOpenHelper = new DBOpenHelper(this);
         SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
-        dbOpenHelper.SaveEvent(event,time,date,month,year,"on",database);
+        dbOpenHelper.SaveEvent(event,time,date,month,year,"on",login,database);
         dbOpenHelper.close();
         Toast.makeText(this, "Event Saved", Toast.LENGTH_SHORT).show();
 
     }
 
 
-    private void SetUpCalendar(){
+    private void SetUpCalendar(String login){
         String currwntDate = dateFormat.format(calendar.getTime());
         CurrentDate.setText(currwntDate);
         dates.clear();
@@ -837,7 +851,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
         monthCalendar.set(Calendar.DAY_OF_MONTH,1);
         int FirstDayofMonth = monthCalendar.get(Calendar.DAY_OF_WEEK)-1;
         monthCalendar.add(Calendar.DAY_OF_MONTH, -FirstDayofMonth);
-        CollectEventsPerMonth(monthFormat.format(calendar.getTime()),yearFormate.format(calendar.getTime()));
+        CollectEventsPerMonth(monthFormat.format(calendar.getTime()),yearFormate.format(calendar.getTime()),login);
 
         while (dates.size() < MAX_CALENDAR_DAYS){
             dates.add(monthCalendar.getTime());
@@ -851,11 +865,11 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
     }
 
 
-    private void CollectEventsPerMonth(String Month,String year){
+    private void CollectEventsPerMonth(String Month,String year,String login){
         eventsList.clear();
         dbOpenHelper= new DBOpenHelper(this);
         SQLiteDatabase database = dbOpenHelper.getReadableDatabase();
-        Cursor cursor = dbOpenHelper.ReadEventsperMonth(Month,year,database);
+        Cursor cursor = dbOpenHelper.ReadEventsperMonth(Month,year,login,database);
         while (cursor.moveToNext()){
             String event = cursor.getString(cursor.getColumnIndex(DBStructure.EVENT));
             String time = cursor.getString(cursor.getColumnIndex(DBStructure.TIME));

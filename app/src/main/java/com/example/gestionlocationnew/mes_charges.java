@@ -70,7 +70,7 @@ import java.util.List;
 public class mes_charges extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    String Nom, Prenom, role;
+    String Nom, Prenom, role,login;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     NavigationView navigationView;
@@ -104,6 +104,15 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mes_charge);
+
+
+        Bundle b = getIntent().getExtras();
+        Nom = b.getString("nom");
+        Prenom = b.getString("prenom");
+        role = "" + b.getString("role");
+        login = "" + b.getString("login");
+
+
         db = new gestion_location(this);
 
         /**
@@ -200,7 +209,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
 
 
-        String requet1 = "select * from charge ORDER BY Date ASC";
+        String requet1 = "select * from charge where login ='"+login+"' ORDER BY Date ASC";
         SQLiteDatabase table1 = db.getReadableDatabase();
         Cursor c1 = table1.rawQuery(requet1, null);
         //////////////////
@@ -255,7 +264,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                      * test test test test test test ------------------
                      */
 
-                    String requet2 = "select * from charge ORDER BY Date ASC";
+                    String requet2 = "select * from charge where login ='"+login+"' ORDER BY Date ASC";
                     Cursor c2 = table1.rawQuery(requet2, null);
                     test1 = 0;
 
@@ -403,10 +412,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         TextView username = headerView.findViewById(R.id.unser_name);
         TextView role1 = headerView.findViewById(R.id.role);
 
-        Bundle b = getIntent().getExtras();
-        Nom = b.getString("nom");
-        Prenom = b.getString("prenom");
-        role = "" + b.getString("role");
+
         username.setText(Nom + " " + Prenom);
         role1.setText(role);
 
@@ -419,7 +425,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         ArrayList<list_charge> arrayList1;
         SQLiteDatabase table = db.getReadableDatabase();
         arrayList1 = new ArrayList<list_charge>();
-        String requet = "select * from Charge";
+        String requet = "select * from Charge where login ='"+login+"'";
         c = table.rawQuery(requet, null);
         arrayList1.clear();
         if (c.getCount() >= 1) {
@@ -472,7 +478,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 allAmountsss.clear();
 
                 try {
-                    rechercheEntreDeuxDate();
+                    rechercheEntreDeuxDate(login);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -486,7 +492,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 allAmountsss.clear();
 
                 try {
-                    rechercheEntreDeuxDate();
+                    rechercheEntreDeuxDate(login);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -530,13 +536,13 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
 
                                         try {
                                             SQLiteDatabase DB = db.getWritableDatabase();
-                                            DB.delete("Charge", "Id_Charge=?", new String[]{id_charge.getText().toString()});
+                                            DB.delete("Charge", "Id_Charge=? and login=?", new String[]{id_charge.getText().toString(),login});
                                             Toast.makeText(mes_charges.this, "Supprision Réussi", Toast.LENGTH_SHORT).show();
                                             finish();
                                             startActivity(getIntent());
 
                                         } catch (Exception Ex) {
-                                            Toast.makeText(mes_charges.this, "Supprision n'est pas Effectué", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(mes_charges.this, "Suppression n'est pas Effectué", Toast.LENGTH_SHORT).show();
                                         }
 
                                     }
@@ -579,7 +585,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                         design = (TextView) dyaloge_modifier_mes_charges.findViewById(R.id.text_design);
 
 
-                        String requuet = "select * from Charge where Id_Charge ='" + id_charge.getText().toString() + "'";
+                        String requuet = "select * from Charge where Id_Charge ='" + id_charge.getText().toString() + "' and login ='"+login+"'";
                         Cursor c = table.rawQuery(requuet, null);
                         while (c.moveToNext()) {
                             datech.setText(c.getString(1));
@@ -663,14 +669,14 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                                                     v.put("Payment", modpay);
                                                     v.put("designation", design.getText().toString());
 
-                                                    DB.update("Charge", v, "Id_Charge=?", new String[]{id_charge.getText().toString()});
+                                                    DB.update("Charge", v, "Id_Charge=? and login =?", new String[]{id_charge.getText().toString(),login});
 
                                                     Toast.makeText(mes_charges.this, "Modification Réussi", Toast.LENGTH_SHORT).show();
                                                     finish();
                                                     startActivity(getIntent());
 
                                                 } catch (Exception Ex) {
-                                                    Toast.makeText(mes_charges.this, "Modifiction n'est pas Effectué", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(mes_charges.this, "Modification n'est pas Effectué", Toast.LENGTH_SHORT).show();
                                                 }
 
 
@@ -732,7 +738,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 id_charge = (TextView) arg1.findViewById(R.id.Id_charge);
 
                 SQLiteDatabase table = db.getReadableDatabase();
-                String requet = "SELECT * FROM  Charge where Id_Charge = '" + id_charge.getText().toString() + "'";
+                String requet = "SELECT * FROM  Charge where Id_Charge = '" + id_charge.getText().toString() + "' and login ='"+login+"'";
 
                 Cursor c = table.rawQuery(requet, null);
                 while (c.moveToNext()) {
@@ -779,6 +785,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 b.putString("nom", Nom);
                 b.putString("prenom", Prenom);
                 b.putString("role", role);
+                b.putString("login", login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -793,6 +800,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 b.putString("nom", Nom);
                 b.putString("prenom", Prenom);
                 b.putString("role", role);
+                b.putString("login", login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -807,6 +815,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 b.putString("nom", Nom);
                 b.putString("prenom", Prenom);
                 b.putString("role", role);
+                b.putString("login", login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -821,6 +830,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 b.putString("nom", Nom);
                 b.putString("prenom", Prenom);
                 b.putString("role", role);
+                b.putString("login", login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -835,6 +845,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 b.putString("nom", Nom);
                 b.putString("prenom", Prenom);
                 b.putString("role", role);
+                b.putString("login", login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -849,6 +860,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 b.putString("nom", Nom);
                 b.putString("prenom", Prenom);
                 b.putString("role", role);
+                b.putString("login", login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -863,6 +875,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 b.putString("nom", Nom);
                 b.putString("prenom", Prenom);
                 b.putString("role", role);
+                b.putString("login", login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -877,6 +890,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 b.putString("nom", Nom);
                 b.putString("prenom", Prenom);
                 b.putString("role", role);
+                b.putString("login", login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -952,7 +966,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 if (!espéce.isChecked() && !chéque.isChecked() && !virment.isChecked()) {
                     modpay = "Crèdit";
                 }
-                boolean c = db.insert_charge(datech.getText().toString(), Integer.parseInt(montant.getText().toString()), modpay.toString(), design.getText().toString());
+                boolean c = db.insert_charge(datech.getText().toString(), Integer.parseInt(montant.getText().toString()), modpay.toString(), design.getText().toString(),login);
                 if (c) {
                     Toast.makeText(mes_charges.this, "l'ajoute Reussi", Toast.LENGTH_LONG).show();
                     finish();
@@ -992,7 +1006,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
      */
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void rechercheEntreDeuxDate() throws ParseException {
+    public void rechercheEntreDeuxDate(String login) throws ParseException {
 
         mChart.notifyDataSetChanged();
 
@@ -1001,7 +1015,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
         arrayList2 = new ArrayList<list_charge>();
 
         SQLiteDatabase table = db.getReadableDatabase();
-        String requet = "SELECT * FROM Charge ORDER BY date(Date) DESC";
+        String requet = "SELECT * FROM Charge where login ='"+login+"' ORDER BY date(Date) DESC";
 
 
             Cursor c = table.rawQuery(requet, null);
@@ -1064,7 +1078,7 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                      * test test test test test test ------------------
                      */
 
-                    String requet2 = "select * from Charge ORDER BY date(Date) DESC";
+                    String requet2 = "select * from Charge where login ='"+login+"' ORDER BY date(Date) DESC";
                     Cursor c2 = table.rawQuery(requet2, null);
                     test1 = 0;
                     try {

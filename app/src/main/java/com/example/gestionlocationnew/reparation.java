@@ -20,6 +20,7 @@ public class reparation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reparation);
+
         tablayout =(TabLayout)findViewById(R.id.tablayout2);
         tabItem = (TabItem)findViewById(R.id.ajouter_reparation);
         tabItem1 = (TabItem)findViewById(R.id.affiche_reparation);

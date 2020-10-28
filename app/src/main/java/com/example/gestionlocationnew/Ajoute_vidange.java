@@ -25,7 +25,7 @@ public class Ajoute_vidange extends AppCompatActivity {
     Spinner type_spinner;
     gestion_location db;
     EditText kilomaitrage,matricule;
-    String matr;
+    String matr,login;
     EditText Date;
     CheckBox ch1,ch2,ch3;
     Bundle b;
@@ -56,14 +56,13 @@ public class Ajoute_vidange extends AppCompatActivity {
         Nom = b.getString ( "nom" );
         Prenom = b.getString ( "prenom" );
         role = b.getString ( "role" );
+        login = b.getString ( "login" );
         matricule.setText(matr);
 
 
         /**
          * gete date effete
          */
-
-
         Date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +107,7 @@ public class Ajoute_vidange extends AppCompatActivity {
             choix=choix+" ,  carburant";
         }
 
-        boolean res = db.insert_vidange(matr , Date.getText().toString() , Integer.parseInt(kilomaitrage.getText().toString()) , choix , Integer.parseInt(type_spinner.getSelectedItem().toString()));
+        boolean res = db.insert_vidange(matr , Date.getText().toString() , Integer.parseInt(kilomaitrage.getText().toString()) , choix , Integer.parseInt(type_spinner.getSelectedItem().toString()),login);
         if(res){
             Toast.makeText(this,"Bien Ajoute",Toast.LENGTH_LONG).show();
 
@@ -117,12 +116,13 @@ public class Ajoute_vidange extends AppCompatActivity {
             B.putString("nom", Nom);
             B.putString("prenom", Prenom);
             B.putString("role", role);
+            B.putString("login", login);
             I.putExtras(B);
             startActivity(I);
             finish();
 
         }else{
-            Toast.makeText(this,"erreur d'ajoute",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Erreur d'ajoute",Toast.LENGTH_LONG).show();
         }
 
 

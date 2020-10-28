@@ -52,9 +52,10 @@ String id_sinistre;
 
         b = getIntent().getExtras();
         String matr =b.getString ( "matricule" );
+        String login =b.getString ( "login" );
         textView.setText ("la liste des sinistres de matricule : "+b.getString ( "matricule" ) );
         SQLiteDatabase table = db.getReadableDatabase ();
-        String requet = "select * from sinistre where imatriculation_sinistre ='"+matr+"'";
+        String requet = "select * from sinistre where imatriculation_sinistre ='"+matr+"' and login ="+login+"";
         Cursor c = table.rawQuery ( requet, null );
         while (c.moveToNext ()){
             liste_sinistre listeS= new liste_sinistre();
@@ -105,7 +106,7 @@ String id_sinistre;
                    public void onClick(View v) {
                        try {
                        SQLiteDatabase DB = db.getWritableDatabase();
-                       DB.execSQL("DELETE FROM sinistre WHERE imatriculation_sinistre ='"+b.getString ( "matricule" )+"' and date_sinistre = '"+date.getText().toString()+"' and ganre_daccident='"+genre.getText().toString()+"' and montant_reparation='"+montant.getText().toString()+"' and responsabilite ='"+resp.getText().toString()+"' and MONTANT_PRIS_EN_CHARGE ='"+montant1.getText().toString()+"'");
+                       DB.execSQL("DELETE FROM sinistre WHERE imatriculation_sinistre ='"+b.getString ( "matricule" )+"' and date_sinistre = '"+date.getText().toString()+"' and ganre_daccident='"+genre.getText().toString()+"' and montant_reparation='"+montant.getText().toString()+"' and responsabilite ='"+resp.getText().toString()+"' and MONTANT_PRIS_EN_CHARGE ='"+montant1.getText().toString()+"' and login ="+login+"");
                            myDyalog_ajoute.dismiss();
                            Toast.makeText(historique_sinistre.this, "Bien Suprimer", Toast.LENGTH_SHORT).show();
                            finish();
@@ -175,7 +176,7 @@ String id_sinistre;
                                id_sinistre ="";
                                SQLiteDatabase table = db.getReadableDatabase();
                                String matr = b.getString ( "matricule" );
-                               String requet = "select * from sinistre WHERE imatriculation_sinistre = '"+matr+"' and date_sinistre = '"+date.getText().toString()+"' and ganre_daccident ='"+genre.getText().toString()+"' and montant_reparation ='"+montant.getText().toString()+"' and responsabilite ='"+resp.getText().toString()+"' and MONTANT_PRIS_EN_CHARGE ='"+montant1.getText().toString()+"'";
+                               String requet = "select * from sinistre WHERE imatriculation_sinistre = '"+matr+"' and date_sinistre = '"+date.getText().toString()+"' and ganre_daccident ='"+genre.getText().toString()+"' and montant_reparation ='"+montant.getText().toString()+"' and responsabilite ='"+resp.getText().toString()+"' and MONTANT_PRIS_EN_CHARGE ='"+montant1.getText().toString()+"' and login ="+login+"";
                                Cursor c1 = table.rawQuery ( requet, null );
                                while(c1.moveToNext()){
                                    id_sinistre = c1.getString(0);
@@ -204,11 +205,11 @@ String id_sinistre;
                                    v1.put("responsabilite", spinner.getSelectedItem().toString());
                                    v1.put("MONTANT_PRIS_EN_CHARGE", text6.getText().toString());
                                    String id = "id_sinistre";
-                                   DB.update("sinistre", v1, "" + id + "=?", new String[]{id_sinistre});
+                                   DB.update("sinistre", v1, "" + id + "=? and login =?", new String[]{id_sinistre,login});
                                    finish();
                                    startActivity(getIntent());
                                }catch (Exception Ex){
-                                   Toast.makeText(historique_sinistre.this, "erreur de modification", Toast.LENGTH_SHORT).show();
+                                   Toast.makeText(historique_sinistre.this, "Erreur de modification", Toast.LENGTH_SHORT).show();
                                }
 
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,7 +28,7 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
 
 
 
-    String Nom,Prenom,role;
+    String Nom,Prenom,role,login;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     NavigationView navigationView;
@@ -41,14 +42,25 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
 
     CustomCalendarView customCalendarView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendrier);
 
 
+
+        Bundle b = getIntent().getExtras();
+        Nom = b.getString("nom");
+        Prenom =  b.getString("prenom");
+        role = ""+b.getString("role");
+        login = ""+b.getString("login");
+
+
+
         customCalendarView = findViewById(R.id.custom_calendar_view);
 
+        customCalendarView =new CustomCalendarView(this,null,login);
 
         /**
          * calander
@@ -74,10 +86,7 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
         TextView username = headerView.findViewById(R.id.unser_name);
         TextView role1 = headerView.findViewById(R.id.role);
 
-        Bundle b = getIntent().getExtras();
-        Nom = b.getString("nom");
-        Prenom =  b.getString("prenom");
-        role = ""+b.getString("role");
+
         username.setText(Nom+" "+Prenom);
         role1.setText(role);
 
@@ -102,6 +111,7 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -116,6 +126,7 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -130,6 +141,7 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -144,6 +156,7 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -158,6 +171,7 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -172,6 +186,7 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -186,6 +201,7 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -199,6 +215,7 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);

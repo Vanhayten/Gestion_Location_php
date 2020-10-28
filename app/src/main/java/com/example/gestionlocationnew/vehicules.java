@@ -52,7 +52,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class vehicules extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    String Nom,Prenom,role;
+    String Nom,Prenom,role,login;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     NavigationView navigationView;
@@ -100,6 +100,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
         Nom = b.getString("nom");
         Prenom =  b.getString("prenom");
         role = ""+b.getString("role");
+        login = ""+b.getString("login");
         username.setText(Nom+" "+Prenom);
         role1.setText(role);
 
@@ -150,7 +151,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 ArrayList<list_vihcule> arrayList1;
                 SQLiteDatabase table = db.getReadableDatabase ();
-                String requet = "select * from véhicules where immatriculation ='"+t1.getText()+"'";
+                String requet = "select * from véhicules where immatriculation ='"+t1.getText()+"' and login ='"+login+"'";
                c = table.rawQuery ( requet, null );
                 if(c.getCount()>=1){
                     ls.clearChoices();
@@ -178,7 +179,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
 
                     SQLiteDatabase table = db.getReadableDatabase ();
 
-                   String requet = "select * from véhicules ";
+                   String requet = "select * from véhicules where login ='"+login+"'";
                     c1 = table.rawQuery ( requet, null );
                       /*
                    if(c1.getCount()==0){
@@ -388,7 +389,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                         text44.setAdapter(arraspinner);
 
                         SQLiteDatabase table = db.getReadableDatabase ();
-                        String requet = "select * from véhicules where immatriculation ='"+matr.getText()+"'";
+                        String requet = "select * from véhicules where immatriculation ='"+matr.getText()+"' and login ='"+login+"'";
                         Cursor c = table.rawQuery ( requet, null );
 
                         while (c.moveToNext()){
@@ -431,13 +432,13 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                                                  */
 
                                                 try {
-                                                        db.modifier_vihucle(text11.getText().toString(),text33.getText().toString(),text22.getText().toString(),text44.getSelectedItem().toString(),Integer.parseInt(text55.getText().toString()),text66.getText().toString(),text77.getText().toString(),intColot);
+                                                        db.modifier_vihucle(text11.getText().toString(),text33.getText().toString(),text22.getText().toString(),text44.getSelectedItem().toString(),Integer.parseInt(text55.getText().toString()),text66.getText().toString(),text77.getText().toString(),intColot,login);
                                                     Toast.makeText(vehicules.this, "Modification Réussi", Toast.LENGTH_SHORT).show();
                                                     finish();
                                                     startActivity(getIntent());
 
                                                 }catch (Exception Ex){
-                                                    Toast.makeText(vehicules.this, "Modifiction n'est pas Effectué", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(vehicules.this, "Modification n'est pas Effectué", Toast.LENGTH_SHORT).show();
                                                 }
 
 
@@ -476,7 +477,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        db.suprimer_vihucle(matr.getText().toString());
+                                        db.suprimer_vihucle(matr.getText().toString(),login);
                                         finish();
                                         startActivity(getIntent());
                                         myDyalog.dismiss();
@@ -497,7 +498,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
 
                 //inisialise les donner from bas donner
                 SQLiteDatabase table = db.getReadableDatabase ();
-                String requet = "select * from véhicules where immatriculation ='"+matr.getText()+"'";
+                String requet = "select * from véhicules where immatriculation ='"+matr.getText()+"' and login = '"+login+"'";
                 Cursor c = table.rawQuery ( requet, null );
 
                 while (c.moveToNext()){
@@ -531,6 +532,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -545,6 +547,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -558,6 +561,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -572,6 +576,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -585,6 +590,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -598,6 +604,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -611,6 +618,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -624,6 +632,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -643,6 +652,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
         b.putString("nom",Nom);
         b.putString("prenom",Prenom);
         b.putString("role",role);
+        b.putString("login",login);
         Ajouter.putExtras(b);
         startActivity(Ajouter);
     }

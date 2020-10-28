@@ -41,6 +41,8 @@ import static android.content.ContentValues.TAG;
 public class CustomCalendarView extends LinearLayout {
     ImageButton NextButton,PreviousButton;
     TextView CurrentDate;
+
+    String Login;
     GridView gridView;
     private static final int MAX_CALENDAR_DAYS = 42;
     Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
@@ -57,6 +59,8 @@ public class CustomCalendarView extends LinearLayout {
     int alarmYear,alarmMonth,alarmDay,alarmHour,alarmMinuit;
     DBOpenHelper dbOpenHelper;
 
+
+
     public CustomCalendarView(Context context) {
         super(context);
     }
@@ -67,17 +71,20 @@ public class CustomCalendarView extends LinearLayout {
     }
 
 
-    public CustomCalendarView(final Context context, @Nullable AttributeSet attrs) {
+    public CustomCalendarView(final Context context, @Nullable AttributeSet attrs,String login ) {
         super(context, attrs);
         this.context = context;
+
+        Login =login;
         IntializeLayout();
-        SetUpCalendar();
+        SetUpCalendar(Login);
+
 
         PreviousButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 calendar.add(Calendar.MONTH,-1);
-                SetUpCalendar();
+                SetUpCalendar(Login);
             }
         });
 
@@ -85,10 +92,9 @@ public class CustomCalendarView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 calendar.add(Calendar.MONTH,1);
-                SetUpCalendar();
+                SetUpCalendar(Login);
             }
         });
-
 
 
 
@@ -148,8 +154,8 @@ public class CustomCalendarView extends LinearLayout {
                     public void onClick(View v) {
 
                         if (alarmMe.isChecked()){
-                            SaveEvent(EventName.getText().toString(),EventTime.getText().toString(),date,month,year,"on");
-                            SetUpCalendar();
+                            SaveEvent(EventName.getText().toString(),EventTime.getText().toString(),date,month,year,"on",Login);
+                            SetUpCalendar(Login);
                             Calendar calendar = Calendar.getInstance();
 
                             calendar.set(alarmYear,alarmMonth,alarmDay,alarmHour,alarmMinuit);
@@ -161,14 +167,14 @@ public class CustomCalendarView extends LinearLayout {
 
 
                             setAlarm(calendar,EventName.getText().toString(),EventTime.getText().toString(),getRequestCode(date
-                                    ,EventName.getText().toString(),EventTime.getText().toString()));
+                                    ,EventName.getText().toString(),EventTime.getText().toString(),Login));
 
                             alertDialog.dismiss();
 
                         }else{
 
-                            SaveEvent(EventName.getText().toString(),EventTime.getText().toString(),date,month,year,"off");
-                            SetUpCalendar();
+                            SaveEvent(EventName.getText().toString(),EventTime.getText().toString(),date,month,year,"off",login);
+                            SetUpCalendar(Login);
                             alertDialog.dismiss();
 
                         }
@@ -203,7 +209,7 @@ public class CustomCalendarView extends LinearLayout {
                 recyclerView .setLayoutManager(layoutManager);
                 recyclerView.setHasFixedSize(true);
                 EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext()
-                        ,CollectEventByDate(date));
+                        ,CollectEventByDate(date,Login),login);
                 recyclerView.setAdapter(eventRecyclerAdapter);
                 eventRecyclerAdapter.notifyDataSetChanged();
                 builder.setView(showView);
@@ -212,7 +218,7 @@ public class CustomCalendarView extends LinearLayout {
                 alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
-                        SetUpCalendar();
+                        SetUpCalendar(Login);
                     }
                 });
 
@@ -233,11 +239,11 @@ public class CustomCalendarView extends LinearLayout {
 
     }
 
-    private int getRequestCode(String date,String event,String time){
+    private int getRequestCode(String date,String event,String time,String login){
         int code = 0;
         dbOpenHelper = new DBOpenHelper(context);
         SQLiteDatabase database = dbOpenHelper.getReadableDatabase();
-        Cursor cursor = dbOpenHelper.ReadIDEvents(date,event,time,database);
+        Cursor cursor = dbOpenHelper.ReadIDEvents(date,event,time,login,database);
         while (cursor.moveToNext()){
             code = cursor.getInt(cursor.getColumnIndex(DBStructure.ID));
         }
@@ -263,11 +269,11 @@ public class CustomCalendarView extends LinearLayout {
     }
 
 
-    private ArrayList<Events> CollectEventByDate(String date){
+    private ArrayList<Events> CollectEventByDate(String date,String login){
         ArrayList<Events> arrayList = new ArrayList<>();
         dbOpenHelper = new DBOpenHelper(context);
         SQLiteDatabase database = dbOpenHelper.getReadableDatabase();
-        Cursor cursor = dbOpenHelper.ReadEvents(date,database);
+        Cursor cursor = dbOpenHelper.ReadEvents(date,login,database);
         while (cursor.moveToNext()){
             String event = cursor.getString(cursor.getColumnIndex(DBStructure.EVENT));
             String time = cursor.getString(cursor.getColumnIndex(DBStructure.TIME));
@@ -287,11 +293,11 @@ public class CustomCalendarView extends LinearLayout {
 
 
 
-    private void SaveEvent(String event,String time,String date, String month,String year,String notify){
+    private void SaveEvent(String event,String time,String date, String month,String year,String notify,String login){
 
         dbOpenHelper = new DBOpenHelper(context);
         SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
-        dbOpenHelper.SaveEvent(event,time,date,month,year,notify,database);
+        dbOpenHelper.SaveEvent(event,time,date,month,year,notify,login,database);
         dbOpenHelper.close();
         Toast.makeText(context, "Event Saved", Toast.LENGTH_SHORT).show();
 
@@ -308,7 +314,7 @@ public class CustomCalendarView extends LinearLayout {
         gridView = view.findViewById(R.id.gridview);
     }
 
-    private void SetUpCalendar(){
+    private void SetUpCalendar(String login){
         String currwntDate = dateFormat.format(calendar.getTime());
        CurrentDate.setText(currwntDate);
         dates.clear();
@@ -316,7 +322,7 @@ public class CustomCalendarView extends LinearLayout {
         monthCalendar.set(Calendar.DAY_OF_MONTH,1);
         int FirstDayofMonth = monthCalendar.get(Calendar.DAY_OF_WEEK)-1;
         monthCalendar.add(Calendar.DAY_OF_MONTH, -FirstDayofMonth);
-        CollectEventsPerMonth(monthFormat.format(calendar.getTime()),yearFormate.format(calendar.getTime()));
+        CollectEventsPerMonth(monthFormat.format(calendar.getTime()),yearFormate.format(calendar.getTime()),login);
 
         while (dates.size() < MAX_CALENDAR_DAYS){
             dates.add(monthCalendar.getTime());
@@ -330,11 +336,11 @@ public class CustomCalendarView extends LinearLayout {
     }
 
 
-    private void CollectEventsPerMonth(String Month,String year){
+    private void CollectEventsPerMonth(String Month,String year,String login){
         eventsList.clear();
         dbOpenHelper= new DBOpenHelper(context);
         SQLiteDatabase database = dbOpenHelper.getReadableDatabase();
-        Cursor cursor = dbOpenHelper.ReadEventsperMonth(Month,year,database);
+        Cursor cursor = dbOpenHelper.ReadEventsperMonth(Month,year,login,database);
         while (cursor.moveToNext()){
             String event = cursor.getString(cursor.getColumnIndex(DBStructure.EVENT));
             String time = cursor.getString(cursor.getColumnIndex(DBStructure.TIME));

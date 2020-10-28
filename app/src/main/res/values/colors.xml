@@ -19,4 +19,9 @@
     <color name="green1.1">#e0dcdc</color>
     <color name="RedDark">#8B0000</color>
     <color name="Red">#FF0000</color>
+    <color name="colorPrimaryText">#000000</color>
+    <color name="colorOpacityText">#80000000</color>
+    <color name="colorDivide">#EBEBEB</color>
+    <color name="colorError">#FF0000</color>
+    <color name="colorSecondaryText">#FFFFFF</color>
 </resources>

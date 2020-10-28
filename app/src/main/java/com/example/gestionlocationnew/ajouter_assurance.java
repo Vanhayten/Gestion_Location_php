@@ -34,7 +34,7 @@ import static android.content.ContentValues.TAG;
 public class ajouter_assurance extends AppCompatActivity {
     EditText t1,t2,t3,t4,t5;
     gestion_location db;
-    String Nom,Prenom,role;
+    String Nom,Prenom,role,login;
     DBOpenHelper dbOpenHelper;
 
     TextView CurrentDate;
@@ -71,6 +71,7 @@ public class ajouter_assurance extends AppCompatActivity {
         Nom = b.getString("nom");
         Prenom = b.getString("prenom");
         role = b.getString("role");
+        login = b.getString("login");
 
 
         /**
@@ -145,7 +146,7 @@ public class ajouter_assurance extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void ajouterAssurance(View view) {
 
-            boolean c=db.insert_assurance(t1.getText().toString(),t2.getText().toString(),t3.getText().toString(),t4.getText().toString(),Integer.parseInt(t5.getText().toString()));
+            boolean c=db.insert_assurance(t1.getText().toString(),t2.getText().toString(),t3.getText().toString(),t4.getText().toString(),Integer.parseInt(t5.getText().toString()),login);
 
 
             if(c){
@@ -153,6 +154,7 @@ public class ajouter_assurance extends AppCompatActivity {
                 /**
                  * ajouter assurance event on calendar
                  */
+
                 try {
                     Calendar c1 = Calendar.getInstance();
 
@@ -160,7 +162,7 @@ public class ajouter_assurance extends AppCompatActivity {
 
                     String formattedDate = df.format(c1.getTime());
 
-                    addEventsassurance(t3.getText().toString(),t1.getText().toString(),formattedDate);
+                    addEventsassurance(t3.getText().toString(),t1.getText().toString(),formattedDate,login);
 
 
 
@@ -174,6 +176,7 @@ public class ajouter_assurance extends AppCompatActivity {
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -184,7 +187,7 @@ public class ajouter_assurance extends AppCompatActivity {
 
     }
 
-    public  void addEventsassurance(String sdate,String discription,String formattedDate){
+    public  void addEventsassurance(String sdate,String discription,String formattedDate,String login){
 
         String string = sdate;
         //t3.getText().toString();
@@ -219,7 +222,7 @@ public class ajouter_assurance extends AppCompatActivity {
 
         String formattedDate1 = df.format(c.getTime());
 
-        SaveEvent(Events,formattedDate,DateF,monthString,part3);
+        SaveEvent(Events,formattedDate,DateF,monthString,part3,login);
 
         SetUpCalendar();
 
@@ -241,7 +244,7 @@ public class ajouter_assurance extends AppCompatActivity {
         //calendar.add(Calendar.DAY_OF_MONTH, -2); //add 15 jour
 
         setAlarm(calendar,Events,formattedDate,getRequestCode(DateF
-                ,Events,formattedDate));
+                ,Events,formattedDate,login));
 
 
 
@@ -249,11 +252,11 @@ public class ajouter_assurance extends AppCompatActivity {
 
     }
 
-    private int getRequestCode(String date,String event,String time){
+    private int getRequestCode(String date,String event,String time,String login){
         int code = 0;
         dbOpenHelper = new DBOpenHelper(this);
         SQLiteDatabase database = dbOpenHelper.getReadableDatabase();
-        Cursor cursor = dbOpenHelper.ReadIDEvents(date,event,time,database);
+        Cursor cursor = dbOpenHelper.ReadIDEvents(date,event,time,login,database);
         while (cursor.moveToNext()){
             code = cursor.getInt(cursor.getColumnIndex(DBStructure.ID));
         }
@@ -284,11 +287,11 @@ public class ajouter_assurance extends AppCompatActivity {
 
 
 
-    private void SaveEvent(String event,String time,String date, String month,String year){
+    private void SaveEvent(String event,String time,String date, String month,String year,String login){
 
         dbOpenHelper = new DBOpenHelper(this);
         SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
-        dbOpenHelper.SaveEvent(event,time,date,month,year,"on",database);
+        dbOpenHelper.SaveEvent(event,time,date,month,year,"on",login,database);
         dbOpenHelper.close();
         Toast.makeText(this, "Event Saved", Toast.LENGTH_SHORT).show();
     }
@@ -302,7 +305,7 @@ public class ajouter_assurance extends AppCompatActivity {
         monthCalendar.set(Calendar.DAY_OF_MONTH,1);
         int FirstDayofMonth = monthCalendar.get(Calendar.DAY_OF_WEEK)-1;
         monthCalendar.add(Calendar.DAY_OF_MONTH, -FirstDayofMonth);
-        CollectEventsPerMonth(monthFormat.format(calendar.getTime()),yearFormate.format(calendar.getTime()));
+        CollectEventsPerMonth(monthFormat.format(calendar.getTime()),yearFormate.format(calendar.getTime()),login);
 
         while (dates.size() < MAX_CALENDAR_DAYS){
             dates.add(monthCalendar.getTime());
@@ -316,11 +319,11 @@ public class ajouter_assurance extends AppCompatActivity {
     }
 
 
-    private void CollectEventsPerMonth(String Month,String year){
+    private void CollectEventsPerMonth(String Month,String year,String login){
         eventsList.clear();
         dbOpenHelper= new DBOpenHelper(this);
         SQLiteDatabase database = dbOpenHelper.getReadableDatabase();
-        Cursor cursor = dbOpenHelper.ReadEventsperMonth(Month,year,database);
+        Cursor cursor = dbOpenHelper.ReadEventsperMonth(Month,year,login,database);
         while (cursor.moveToNext()){
             String event = cursor.getString(cursor.getColumnIndex(DBStructure.EVENT));
             String time = cursor.getString(cursor.getColumnIndex(DBStructure.TIME));
@@ -337,10 +340,10 @@ public class ajouter_assurance extends AppCompatActivity {
     }
 
 
-    private void updateEvent(String date,String event,String time,String notify ){
+    private void updateEvent(String date,String event,String time,String notify,String login ){
         dbOpenHelper = new DBOpenHelper(this);
         SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
-        dbOpenHelper.updateEvent(date,event,time,notify,database);
+        dbOpenHelper.updateEvent(date,event,time,notify,login,database);
         dbOpenHelper.close();
     }
 

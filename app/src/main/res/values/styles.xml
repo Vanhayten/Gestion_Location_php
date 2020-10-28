@@ -28,6 +28,32 @@
     </style>
 
 
+    <style name="TextSecondaryHeadingStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/source_sans_pro_regular</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:textSize">@dimen/text_secondary_heading</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextPrimaryBodyStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/open_sans_regular</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:textSize">@dimen/text_primary_body</item>
+    </style>
+
+    <style name="TextPrimaryCaptionStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/open_sans_regular</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:textSize">@dimen/text_primary_caption</item>
+    </style>
+
+    <style name="TextPrimaryButtonStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/source_sans_pro_regular</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:textSize">@dimen/text_primary_button</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
 </resources>
 

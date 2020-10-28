@@ -43,7 +43,7 @@ import java.util.Calendar;
 
 public class mes_clients extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    String Nom, Prenom, role;
+    String Nom, Prenom, role,login;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     NavigationView navigationView;
@@ -98,6 +98,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         Nom = b.getString("nom");
         Prenom = b.getString("prenom");
         role = "" + b.getString("role");
+        login = "" + b.getString("login");
         username.setText(Nom + " " + Prenom);
         role1.setText(role);
         //charge liste view par les clients
@@ -119,7 +120,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 ArrayList<list_client> arrayList1;
                 SQLiteDatabase table = db.getReadableDatabase();
-                String requet = "select * from Clients where nom ='" + t1.getText().toString().toUpperCase() + "' or prenom ='" + t1.getText().toString().toUpperCase() + "'";
+                String requet = "select * from Clients where login ='"+login+"' and ( nom ='" + t1.getText().toString().toUpperCase() + "' or prenom ='" + t1.getText().toString().toUpperCase() + "' )";
                 Cursor c = table.rawQuery(requet, null);
                 if (c.getCount() >= 1) {
                     ls.clearChoices();
@@ -144,7 +145,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
 
 
         SQLiteDatabase table = db.getReadableDatabase();
-        String requet = "select * from Clients ";
+        String requet = "select * from Clients where login ='"+login+"'";
         Cursor c = table.rawQuery(requet, null);
         if (c.getCount() == 0) {
             /*
@@ -185,7 +186,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
 
                         TextView cin = (TextView)view.findViewById(R.id.marqueV);
                         SQLiteDatabase table = db.getReadableDatabase();
-                        String requet = "select tel from Clients where cin ='" + cin.getText() + "'";
+                        String requet = "select tel from Clients where cin ='" + cin.getText() + "' and login ='"+login+"'";
                         Cursor c = table.rawQuery(requet, null);
                         String teephone = null;
                         if(c.moveToNext()){
@@ -268,7 +269,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                                             public void onClick(DialogInterface dialog, int which) {
 
 
-                                                int i = db.suprimer_client(text_nom.getText().toString());
+                                                int i = db.suprimer_client(text_nom.getText().toString(),login);
                                                 finish();
                                                 startActivity(getIntent());
                                                 MyDyalog.dismiss();
@@ -307,7 +308,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
 
 
                                SQLiteDatabase table = db.getReadableDatabase();
-                               String requette = "select * from Clients where cin ='"+cinlist+"'";
+                               String requette = "select * from Clients where cin ='"+cinlist+"' and login ='"+login+"'";
                                Cursor c = table.rawQuery(requette,null);
 
                                while (c.moveToNext()){
@@ -341,7 +342,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                                                          */
 
                                                         try {
-                                                            db.modifier_clients(cinndialog.getText().toString(),nomdialog.getText().toString(),prenomdialog.getText().toString(),nemerodialog.getText().toString(),adressdialog.getText().toString(),activiterdialog.getText().toString());
+                                                            db.modifier_clients(cinndialog.getText().toString(),nomdialog.getText().toString(),prenomdialog.getText().toString(),nemerodialog.getText().toString(),adressdialog.getText().toString(),activiterdialog.getText().toString(),login);
                                                             Toast.makeText(mes_clients.this, "Modification Réussi", Toast.LENGTH_SHORT).show();
                                                             finish();
                                                             startActivity(getIntent());
@@ -430,7 +431,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                                     String Dateformat =alarmday+"/"+alarmMonth+"/"+alarmYear;
 
 
-                                    boolean c = db.insert_feedback(text_nom.getText().toString(),NbRate,descript.getText().toString(),Dateformat);
+                                    boolean c = db.insert_feedback(text_nom.getText().toString(),NbRate,descript.getText().toString(),Dateformat,login);
                                     if (c) {
                                         Toast.makeText(mes_clients.this, "L'évaluation a réussi", Toast.LENGTH_LONG).show();
                                         finish();
@@ -475,6 +476,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -489,6 +491,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -502,6 +505,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -516,6 +520,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -530,6 +535,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -544,6 +550,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -558,6 +565,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -572,6 +580,7 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);

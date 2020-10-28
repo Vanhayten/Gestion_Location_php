@@ -83,6 +83,12 @@ public class nouvel_reparation extends Fragment {
         b1 = (Button) view.findViewById(R.id.butn);
 
 
+
+        //   = getArguments().getString("matricule");
+
+        String strtext = getActivity().getIntent().getExtras().getString("matricule");
+        String login = getActivity().getIntent().getExtras().getString("login");
+
         /**
          * gete date reparation
          */
@@ -119,9 +125,7 @@ public class nouvel_reparation extends Fragment {
 
 
 
-         //   = getArguments().getString("matricule");
 
-        String strtext = getActivity().getIntent().getExtras().getString("matricule");
 
 
         t1.setText(strtext);
@@ -130,7 +134,7 @@ public class nouvel_reparation extends Fragment {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean b = dp.insert_reparation(t1.getText().toString(), t2.getText().toString(), t3.getText().toString(), t4.getText().toString(), t5.getText().toString(), Integer.parseInt(t6.getText().toString()));
+                boolean b = dp.insert_reparation(t1.getText().toString(), t2.getText().toString(), t3.getText().toString(), t4.getText().toString(), t5.getText().toString(), Integer.parseInt(t6.getText().toString()),login);
                  if(b) {
                      Toast.makeText(getActivity(), "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
 

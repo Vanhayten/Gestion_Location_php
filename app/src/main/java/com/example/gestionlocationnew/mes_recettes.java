@@ -135,7 +135,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
     private LineChart mChart;
 
-    String Nom,Prenom,role;
+    String Nom,Prenom,role,login;
 
     DrawerLayout drawerLayout;
     Toolbar toolbar;
@@ -184,6 +184,14 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mes_recettes);
+
+
+        Bundle b = getIntent().getExtras();
+        Nom = b.getString("nom");
+        Prenom =  b.getString("prenom");
+        role = b.getString("role");
+        login = b.getString("login");
+
 
         db = new gestion_location(this);
 
@@ -281,7 +289,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
          */
 
         table1 = db.getReadableDatabase();
-        String requet1 = "SELECT * FROM  Recette ORDER BY date_début ASC";
+        String requet1 = "SELECT * FROM  Recette where login ='"+login+"' ORDER BY date_début ASC";
         Cursor c1 = table1.rawQuery ( requet1, null);
 
 
@@ -342,7 +350,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                  * test test test test test test ------------------
                  */
 
-                String requet2 = "SELECT * FROM  Recette ORDER BY date_début ASC";
+                String requet2 = "SELECT * FROM  Recette where login ='"+login+"' ORDER BY date_début ASC";
                 Cursor c2 = table1.rawQuery ( requet2, null);
                 test1 =0;
                 try {
@@ -461,7 +469,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
                 try {
-                    rechercheEntreDeuxDate();
+                    rechercheEntreDeuxDate(login);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -475,7 +483,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
                 try {
-                    rechercheEntreDeuxDate();
+                    rechercheEntreDeuxDate(login);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -548,8 +556,6 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 String datefin = dayOfMonth+"/"+month+"/"+year;
                 Recherche1.setText(datefin);
                 Toast.makeText(mes_recettes.this, "Clicker sur le diagramme pour voir le resultats de recherche  ", Toast.LENGTH_LONG).show();
-
-
             }
         };
 
@@ -574,10 +580,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         TextView username = headerView.findViewById(R.id.unser_name);
         TextView role1 = headerView.findViewById(R.id.role);
 
-        Bundle b = getIntent().getExtras();
-        Nom = b.getString("nom");
-        Prenom =  b.getString("prenom");
-        role = b.getString("role");
+
         username.setText(Nom+" "+Prenom);
         role1.setText(role);
 
@@ -588,7 +591,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
         ls=(ListView)findViewById(R.id.listRec);
         SQLiteDatabase table = db.getReadableDatabase();
-        String requet = "SELECT * FROM  Recette";
+        String requet = "SELECT * FROM  Recette where login ='"+login+"'";
 
         Cursor c = table.rawQuery ( requet, null );
         arrayList1 = new ArrayList<list_recette>();
@@ -603,7 +606,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         //String dateMonth = now.format(DateTimeFormatter.ofPattern("MM"));
 
         String dateYear =  ""+alarmYear;
-        String dateMonth =""+alarmMonth;
+        String dateMonth = ""+alarmMonth;
 
 
         //DateTimeFormatter formatterY = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -671,7 +674,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 try {
 
                     SQLiteDatabase table = db.getReadableDatabase();
-                    String requet = "SELECT * FROM  Recette where Id_Recette = '"+idreccet[2]+"'";
+                    String requet = "SELECT * FROM  Recette where Id_Recette = '"+idreccet[2]+"' and login ='"+login+"'";
 
                     Cursor c = table.rawQuery ( requet, null );
                     while (c.moveToNext()){
@@ -692,6 +695,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                         prix = c.getString(4);
                         Typ_Payment = c.getString(6);
                         prix_01 = c.getString(5);
+
                     }
 
                 }catch (Exception ex){
@@ -806,7 +810,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                             public void onClick(View v) {
                                 Integer prix_TT = Integer.parseInt(text7.getText().toString())*Integer.parseInt(text6.getText().toString());
 
-                                db.modifier_reccete(text1.getText().toString(),text4.getText().toString(),text5.getText().toString(),text6.getText().toString(),text7.getText().toString(),prix_TT.toString(),Typ_Payment,text3.getText().toString(),text2.getText().toString());
+                                db.modifier_reccete(text1.getText().toString(),text4.getText().toString(),text5.getText().toString(),text6.getText().toString(),text7.getText().toString(),prix_TT.toString(),Typ_Payment,text3.getText().toString(),text2.getText().toString(),login);
                                 Toast.makeText(mes_recettes.this, "Modification Réussi", Toast.LENGTH_SHORT).show();
                                 finish();
                                 startActivity(getIntent());
@@ -835,11 +839,6 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 /**
                  * Code Of Rate Client ¤ ¤ ¤ ¤ ¤
                  */
-
-
-
-
-
                 LinearLayout DownLayout = (LinearLayout)MyDyalog_detaille.findViewById(R.id.downLayout);
 
                 DownLayout.setOnClickListener(new View.OnClickListener() {
@@ -890,7 +889,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
 
-                                        boolean c = db.insert_feedback(cin,NbRate,descript.getText().toString(),Dateformat);
+                                        boolean c = db.insert_feedback(cin,NbRate,descript.getText().toString(),Dateformat,login);
                                         if (c) {
                                             Toast.makeText(mes_recettes.this, "L'évaluation a réussi", Toast.LENGTH_LONG).show();
                                             finish();
@@ -908,7 +907,6 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
                     }
                 });
-
 
 
                 MyDyalog_detaille.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -935,7 +933,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 ArrayList<list_recette> arrayList2;
                 SQLiteDatabase table = db.getReadableDatabase ();
 
-                String requet = "SELECT * FROM  Recette where Id_Recette ='"+t1.getText()+"'";
+                String requet = "SELECT * FROM  Recette where Id_Recette ='"+t1.getText()+"' and login ='"+login+"'";
                 Cursor c = table.rawQuery ( requet, null );
                 if(c.getCount()>=1){
                     ls.clearChoices();
@@ -973,6 +971,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -987,6 +986,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -1001,6 +1001,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -1015,6 +1016,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -1024,6 +1026,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -1038,6 +1041,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -1052,6 +1056,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -1066,6 +1071,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 b.putString("nom",Nom);
                 b.putString("prenom",Prenom);
                 b.putString("role",role);
+                b.putString("login",login);
                 T.putExtras(b);
                 finish();
                 startActivity(T);
@@ -1245,17 +1251,8 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 text8.setText(days+"");
 
 
-
-
-
-
-
             }
         };
-
-
-
-
 
 
 
@@ -1276,7 +1273,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
             public void afterTextChanged(Editable s) {
                 SQLiteDatabase table = db.getReadableDatabase ();
                 Cintext = text3.getText().toString().toLowerCase();
-                String requet = "select * from Clients where cin ='"+Cintext+"'";
+                String requet = "select * from Clients where cin ='"+Cintext+"' and login ='"+login+"'";
                 Cursor c = table.rawQuery ( requet, null );
 
                 if(c.moveToFirst()){
@@ -1339,7 +1336,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 String part3day = parts[2];
 
                 SQLiteDatabase table = db.getReadableDatabase();
-                String requet = "SELECT Id_Recette FROM  Recette";
+                String requet = "SELECT Id_Recette FROM  Recette where login ='"+login+"'";
                 Cursor c = table.rawQuery ( requet, null );
 
 
@@ -1373,7 +1370,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 /**
                  * function pour ajouter nouveaux recettes
                  */
-                 Ajouter_recettes(nom,prenom,adr,cin,tele,activ,s,ddate_debut,ddate_fin,NB_jour,prix,prix_total,type,matricule,CinCl);
+                 Ajouter_recettes(nom,prenom,adr,cin,tele,activ,s,ddate_debut,ddate_fin,NB_jour,prix,prix_total,type,matricule,CinCl,login);
 
                 MyDyalog_ajou.dismiss();
                 finish();
@@ -1442,8 +1439,8 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String formattedDate = df.format(c);
 
-        String requet_reccete ="SELECT Matricule_choisi,date_fin FROM Recette";
-        String requet_vehicule ="SELECT immatriculation FROM véhicules";
+        String requet_reccete ="SELECT Matricule_choisi,date_fin FROM Recette where login ='"+login+"'";
+        String requet_vehicule ="SELECT immatriculation FROM véhicules where login ='"+login+"'";
 
         SQLiteDatabase table = db.getReadableDatabase ();
         Cursor vehicule = table.rawQuery ( requet_vehicule, null );
@@ -1490,7 +1487,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void rechercheEntreDeuxDate() throws ParseException {
+    public void rechercheEntreDeuxDate(String login) throws ParseException {
 
 
         ArrayList<list_recette> arrayList2;
@@ -1502,7 +1499,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
         SQLiteDatabase table1 = db.getReadableDatabase();
-        String requet1 = "SELECT * FROM  Recette ORDER BY date_début ASC";
+        String requet1 = "SELECT * FROM  Recette where login ='"+login+"'  ORDER BY date_début ASC";
 
 
         Cursor c1 = table1.rawQuery ( requet1, null);
@@ -1562,7 +1559,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                  * test test test test test test ------------------
                  */
 
-                String requet2 = "SELECT * FROM  Recette";
+                String requet2 = "SELECT * FROM  Recette where login='"+login+"'";
                 Cursor c2 = table1.rawQuery ( requet2, null);
                 test1 =0;
                 try {
@@ -1780,19 +1777,19 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void Ajouter_recettes(String nom , String prenom, String adr, String cin, String tel, String activi ,String IDrecette , String d1, String d2, int nb, int prix,int pt,String typ,String ma,String ci){
+    public void Ajouter_recettes(String nom , String prenom, String adr, String cin, String tel, String activi ,String IDrecette , String d1, String d2, int nb, int prix,int pt,String typ,String ma,String ci,String login){
 
 
 
         SQLiteDatabase table1 = db.getReadableDatabase ();
-        String requet1 = "select * from Clients where cin ='"+ci+"'";
+        String requet1 = "select * from Clients where cin ='"+ci+"' and login ='"+login+"'";
         Cursor c1 = table1.rawQuery ( requet1, null );
         boolean b = false;
         boolean d = false;
 
         if (c1.getCount()==0){
-            b = db.insert_client(nom,prenom,adr,cin, tel,activi);
-            d= db.insert_Recette(IDrecette,d1,d2,nb,prix,pt,typ,ma,ci);
+            b = db.insert_client(nom,prenom,adr,cin, tel,activi,login);
+            d= db.insert_Recette(IDrecette,d1,d2,nb,prix,pt,typ,ma,ci,login);
             if (b && d ) {
                 Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
             }
@@ -1801,7 +1798,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         if(c1.moveToFirst()) {
 
             if(c1.getString(3).equals(ci)) {
-                d= db.insert_Recette(IDrecette,d1,d2,nb,prix,pt,typ,ma,ci);
+                d= db.insert_Recette(IDrecette,d1,d2,nb,prix,pt,typ,ma,ci,login);
 
                 if (d) {
                     Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
@@ -1810,8 +1807,8 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 }
             }
             if(!c1.getString(3).equals(ci)) {
-                b = db.insert_client(nom,prenom,adr,cin, tel,activi);
-                d= db.insert_Recette(IDrecette,d1,d2,nb,prix,pt,typ,ma,ci);
+                b = db.insert_client(nom,prenom,adr,cin, tel,activi,login);
+                d= db.insert_Recette(IDrecette,d1,d2,nb,prix,pt,typ,ma,ci,login);
 
                 if(b && d ){
                     Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
@@ -1898,10 +1895,6 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                     savePdf();
 
                 }
-
-
-
-
 
         }
 

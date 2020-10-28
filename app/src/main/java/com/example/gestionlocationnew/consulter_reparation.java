@@ -92,10 +92,11 @@ public class consulter_reparation extends Fragment {
         ls = (ListView) view.findViewById ( R.id.liste_reparation );
         //
         String strtext = getActivity().getIntent().getExtras().getString("matricule");
+        String login = getActivity().getIntent().getExtras().getString("login");
 
 
         SQLiteDatabase table = db.getReadableDatabase ();
-        String requet = "select * from reparation where imatriculation ='" +strtext+ "'";
+        String requet = "select * from reparation where imatriculation ='" +strtext+ "' and login ='"+login+"'";
       c= table.rawQuery ( requet, null );
         ArrayList<class_reparation> arrayList = new ArrayList<> ();
         arrayList.clear ();
@@ -128,7 +129,7 @@ public class consulter_reparation extends Fragment {
                     SQLiteDatabase table = db.getReadableDatabase ();
 
 
-                    String requet = "select * from reparation where imatriculation ='" +strtext+ "'";
+                    String requet = "select * from reparation where imatriculation ='" +strtext+ "' and login ='"+login+"'";
                     //and  date_reparation  between '" + d1 + "' and '" + d2 + "'
                     Cursor c = table.rawQuery ( requet, null );
                     ArrayList<class_reparation> arrayList1 = new ArrayList<> ();

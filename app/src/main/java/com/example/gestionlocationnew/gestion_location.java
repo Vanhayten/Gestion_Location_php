@@ -20,6 +20,8 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_Nom = "Nom";
     private static final String Col_Prenom = "Prenom";
     private static final String Col_Role = "Role";
+    private static final String Cole_dateID = "DateIdentifie";
+    private static final String Cole_Email = "Email";
 
     //declaration table Client
     private static final String Table2 = "Clients";
@@ -29,6 +31,7 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_cin = "cin";
     private static final String Col_tel = "tel";
     private static final String Col_activité = "activité";
+    //private static final String Col_login = "Login";
 
   //  private static final String Col_Type_Payement = "Type_Payement";
 
@@ -44,6 +47,7 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_Date_Effet_Assurance = "Date_Effet_Assurance";
     private static final String Col_Date_Echeance = "Date_Echeance";
     private static final String Col_Couleur_Vehicule = "Couleur_Vehicule";
+    //private static final String Col_login = "Login";
 
     //declarationtable recette
     private static final String Table4 = "Recette";
@@ -56,6 +60,7 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_Type = "Type_Payment";
     private static final String Col_matr = "Matricule_choisi";
     private static final String Col_CinCl = "Cin";
+    //private static final String Col_login = "Login";
 
 
     //declaration table charge
@@ -65,6 +70,7 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_Montant= "Montant";
     private static final String Col_Payment= "Payment";
     private static final String Col_designation= "designation";
+    //private static final String Col_login = "Login";
 
     //declaration table Evenment
     private static final String Table6 = "Evenement";
@@ -74,6 +80,7 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_Rappel= "Rappel";
     private static final String Col_Nature= "Nature";
     private static final String Col_Responsable= "Responsable";
+    //private static final String Col_login = "Login";
 
     //declaration table reparation
     private static final String Table7 = "reparation";
@@ -83,6 +90,7 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_ref_facture = "ref_facture";
     private static final String Col_date_reparation= "date_reparation";
     private static final String Col_montant_reparation = "montant_reparation";
+    //private static final String Col_login = "Login";
 
     //declaration table assurance
     private static final String Table8 = "assurance";
@@ -91,6 +99,7 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_date_fin_assurance  = "date_fin";
     private static final String Col_compagnie_assurance = "compagnie_assurance";
     private static final String Col_prime_assurance = "prime_assurance";
+    //private static final String Col_login = "Login";
 
     //declaration table sinistre
     private static final String Table9 = "sinistre";
@@ -101,6 +110,7 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_montant_reparation_sinistre = "montant_reparation";
     private static final String Col_responsabilite = "responsabilite";
     private static final String Col_MONTANT_PRIS_EN_CHARGE = "MONTANT_PRIS_EN_CHARGE";
+    //private static final String Col_login = "Login";
 
     //declaration table vidange
     private static final String Table10 = "vidange";
@@ -109,12 +119,14 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_kilomaitrage  = "kilomaitrage";
     private static final String Col_filtre = "filtre";
     private static final String Col_type_vidage = "type_vidage";
+    //private static final String Col_login = "Login";
 
     //declaration table visite_technique
     private static final String Table11 = "visite_technique";
     private static final String Col_imatriculation_visite  = "imatriculation_visite";
     private static final String Col_date_visite = "date_visite";
     private static final String Col_date_prch_visite  = "prch_visite";
+    //private static final String Col_login = "Login";
 
     //declaration table Vehucile_chosi
     private static final String Table12 = "vehicule_choisi";
@@ -122,6 +134,7 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_cin1  = "cin";
     private static final String Col_idRecette = "id_Recette";
     private static final String Col_matricule  = "Matricule";
+    //private static final String Col_login = "Login";
 
     //declaration table Vehucile_chosi
     private static final String Table13 = "feedback";
@@ -130,29 +143,29 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_vote  = "vote";
     private static final String Col_desc_client = "descr";
     private static final String Col_date  = "date";
+    //private static final String Col_login = "Login";
 
 
     public gestion_location(Context context) {
-        super(context, DATABASE_NAME, null, 2);
+        super(context, DATABASE_NAME, null, 3);
             db = this.getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String table1 = "Create table "+Table1+" ("+Col_login+" text primary key ,"+Col_Mdp+" text,"+Col_Nom+" text,"+Col_Prenom+" text,"+Col_Role+" text)";
-        String table2 = "Create table "+Table2+" ("+Col_nom+" text  ,"+Col_prenom+" text,"+Col_adresse+" text,"+Col_cin+" text primary key,"+Col_tel+" text,"+Col_activité+" text)";
-        String table3 = "Create table "+Table3+" ("+Col_Marque_Vihicule+" text ,"+Col_DateCirculation+" date ,"+Col_immatriculation+" text primary key,"+Col_MarqueCombustion+" text,"+Col_ValeurDentrée+" Integer,"+Col_Date_Effet_Assurance+" date,"+Col_Date_Echeance+" date,"+Col_Couleur_Vehicule+" Integer)";
-        String table4 = "Create table "+Table4+" ("+Col_IdRecette+" text primary key ,"+Col_date_début+" Date,"+Col_date_fin+" Date,"+Col_nbJour+" Integer,"+Col_prix_location+" Integer,"+Col_prixTotal_location+" Integer,"+Col_Type+" Text,"+Col_matr+" Text,"+Col_CinCl+" text)";
-        String table5 = "Create table "+Table5+" ("+Col_IdCharge+" Integer PRIMARY KEY AUTOINCREMENT,"+Col_Date+" date,"+Col_Montant+" integer,"+Col_Payment+" text,"+Col_designation+" text)";
-        String table6 = "Create table "+Table6+" ("+Col_IdEvenement+" text primary key,"+Col_DateDebut+" date ,"+Col_DateFin+" date,"+Col_Rappel+" text,"+Col_Nature+" text,"+Col_Responsable+" text)";
-        String table7 = "Create table "+Table7+" ("+Col_imatriculation_reparation+" text,"+Col_pieces_changes+" text,"+Col_main_douvre+" TEXT,"+Col_ref_facture+" TEXT,"+Col_date_reparation+"  DATE,"+Col_montant_reparation+" integer)";
-        String table8 = "Create table "+Table8+" ("+Col_imatriculation_asurance+" text,"+Col_date_debut_assurance+" date,"+Col_date_fin_assurance+" TEXT,"+Col_compagnie_assurance+" text,"+Col_prime_assurance+" integer)";
-        String table9 = "Create table "+Table9+" ("+Col_id_sinistre+" Integer PRIMARY KEY AUTOINCREMENT , "+Col_imatriculation_sinistre+" text,"+Col_date_sinistre+" date,"+Col_ganre_daccident+" TEXT,"+Col_montant_reparation_sinistre+" Integer,"+Col_responsabilite+" Text,"+Col_MONTANT_PRIS_EN_CHARGE+" Integer)";
-        String table10 = "Create table "+Table10+" ("+Col_imatriculation_vidange+" text , "+Col_date_vidange+" date , "+Col_kilomaitrage+" integer , "+Col_filtre+" TEXT , "+Col_type_vidage+" Integer)";
-        String table11 = "Create table "+Table11+" ("+Col_imatriculation_visite+" text , "+Col_date_visite+" date , "+Col_date_prch_visite+" date)";
-        String table12 = "Create table "+Table12+" ("+Col_id+" Integer PRIMARY KEY AUTOINCREMENT , "+Col_idRecette+" Text , "+Col_cin1+" Text, "+Col_matricule+" Text)";
-        String table13 = "Create table "+Table13+" ("+Col_id_feedback+" Integer PRIMARY KEY AUTOINCREMENT , "+Col_cin_Client+" Text , "+Col_vote+" Float ,"+Col_desc_client+" Text, "+Col_date+" date)";
-
+        String table1 = "Create table "+Table1+" ("+Col_login+" text primary key ,"+Col_Mdp+" text,"+Col_Nom+" text,"+Col_Prenom+" text,"+Col_Role+" text,"+Cole_dateID+" date , "+Cole_Email+" text)";
+        String table2 = "Create table "+Table2+" ("+Col_nom+" text  ,"+Col_prenom+" text,"+Col_adresse+" text,"+Col_cin+" text primary key,"+Col_tel+" text,"+Col_activité+" text , "+Col_login+" text)";
+        String table3 = "Create table "+Table3+" ("+Col_Marque_Vihicule+" text ,"+Col_DateCirculation+" date ,"+Col_immatriculation+" text primary key,"+Col_MarqueCombustion+" text , "+Col_ValeurDentrée+" Integer,"+Col_Date_Effet_Assurance+" date,"+Col_Date_Echeance+" date,"+Col_Couleur_Vehicule+" Integer,"+Col_login+" text)";
+        String table4 = "Create table "+Table4+" ("+Col_IdRecette+" text primary key ,"+Col_date_début+" Date,"+Col_date_fin+" Date,"+Col_nbJour+" Integer,"+Col_prix_location+" Integer , "+Col_prixTotal_location+" Integer , "+Col_Type+" Text,"+Col_matr+" Text,"+Col_CinCl+" text ,"+Col_login+" text)";
+        String table5 = "Create table "+Table5+" ("+Col_IdCharge+" Integer PRIMARY KEY AUTOINCREMENT,"+Col_Date+" date,"+Col_Montant+" integer,"+Col_Payment+" text,"+Col_designation+" text ,"+Col_login+" text)";
+        String table6 = "Create table "+Table6+" ("+Col_IdEvenement+" text primary key,"+Col_DateDebut+" date ,"+Col_DateFin+" date,"+Col_Rappel+" text,"+Col_Nature+" text,"+Col_Responsable+" text ,"+Col_login+" text)";
+        String table7 = "Create table "+Table7+" ("+Col_imatriculation_reparation+" text,"+Col_pieces_changes+" text,"+Col_main_douvre+" TEXT,"+Col_ref_facture+" TEXT,"+Col_date_reparation+"  DATE,"+Col_montant_reparation+" integer,"+Col_login+" text)";
+        String table8 = "Create table "+Table8+" ("+Col_imatriculation_asurance+" text,"+Col_date_debut_assurance+" date,"+Col_date_fin_assurance+" TEXT,"+Col_compagnie_assurance+" text,"+Col_prime_assurance+" integer ,"+Col_login+" text)";
+        String table9 = "Create table "+Table9+" ("+Col_id_sinistre+" Integer PRIMARY KEY AUTOINCREMENT , "+Col_imatriculation_sinistre+" text,"+Col_date_sinistre+" date,"+Col_ganre_daccident+" TEXT,"+Col_montant_reparation_sinistre+" Integer,"+Col_responsabilite+" Text,"+Col_MONTANT_PRIS_EN_CHARGE+" Integer,"+Col_login+" text)";
+        String table10 = "Create table "+Table10+" ("+Col_imatriculation_vidange+" text , "+Col_date_vidange+" date , "+Col_kilomaitrage+" integer , "+Col_filtre+" TEXT , "+Col_type_vidage+" Integer,"+Col_login+" text)";
+        String table11 = "Create table "+Table11+" ("+Col_imatriculation_visite+" text , "+Col_date_visite+" date , "+Col_date_prch_visite+" date , "+Col_login+" text)";
+        String table12 = "Create table "+Table12+" ("+Col_id+" Integer PRIMARY KEY AUTOINCREMENT , "+Col_idRecette+" Text , "+Col_cin1+" Text, "+Col_matricule+" Text,"+Col_login+" text)";
+        String table13 = "Create table "+Table13+" ("+Col_id_feedback+" Integer PRIMARY KEY AUTOINCREMENT , "+Col_cin_Client+" Text , "+Col_vote+" Float ,"+Col_desc_client+" Text, "+Col_date+" date,"+Col_login+" text)";
 
 
         db.execSQL(table1);
@@ -189,7 +202,8 @@ public class gestion_location extends SQLiteOpenHelper {
     }
 
 
-    public boolean insert_emp(String Login ,String Pass,String nom,String prenom,String role){
+
+    public boolean insert_emp(String Login ,String Pass,String nom,String prenom,String role,String date,String email){
         boolean res=false;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues tab_ch = new ContentValues();
@@ -198,6 +212,8 @@ public class gestion_location extends SQLiteOpenHelper {
         tab_ch.put(Col_Nom,nom);
         tab_ch.put(Col_Prenom,prenom);
         tab_ch.put(Col_Role,role);
+        tab_ch.put(Cole_dateID,date);
+        tab_ch.put(Cole_Email,email);
         long result = db.insert(Table1,null,tab_ch);
         if(result == -1){
             res=false;
@@ -225,7 +241,7 @@ public class gestion_location extends SQLiteOpenHelper {
         return res;
     }
 //insert client
-public boolean insert_client(String nom , String prenom, String adr, String cin, String tel, String activi){
+public boolean insert_client(String nom , String prenom, String adr, String cin, String tel, String activi,String login){
     boolean res=false;
     SQLiteDatabase db = this.getWritableDatabase();
     ContentValues tab_ch = new ContentValues();
@@ -235,6 +251,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
     tab_ch.put(Col_cin,cin);
     tab_ch.put(Col_tel,tel);
     tab_ch.put(Col_activité,activi);
+    tab_ch.put(Col_login,login);
 
   //  tab_ch.put(Col_Type_Payement,type);
     long result = db.insert(Table2,null,tab_ch);
@@ -251,14 +268,14 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
     /**
      * detete clients
      */
-    public Integer suprimer_client(String lb){
+    public Integer suprimer_client(String lb,String login){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(Table2,""+Col_cin+"=?",new String[]{lb});
+        return db.delete(Table2,""+Col_cin+"=? and login=?",new String[]{lb,login});
     }
 
 
     //insert vidange
-    public boolean insert_vidange(String matricule ,String Date,Integer km,String filter,Integer type){
+    public boolean insert_vidange(String matricule ,String Date,Integer km,String filter,Integer type,String login){
         boolean res=false;
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues tab_ch = new ContentValues();
@@ -267,6 +284,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
         tab_ch.put(Col_kilomaitrage,km);
         tab_ch.put(Col_filtre,filter);
         tab_ch.put(Col_type_vidage,type);
+        tab_ch.put(Col_login,login);
         long result = db.insert(Table10,null,tab_ch);
         if(result == -1){
             res=false;
@@ -279,7 +297,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
 
 
     //methode ajouter vehucle
-        public boolean insert_vehiucle(String Nom,String date , String imatricul, String marque, Integer valeur, String Date_Effet, String Date_echance, Integer couleur){
+        public boolean insert_vehiucle(String Nom,String date , String imatricul, String marque, Integer valeur, String Date_Effet, String Date_echance, Integer couleur,String login){
         boolean res=false;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues tab_ch1 = new ContentValues();
@@ -291,6 +309,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
         tab_ch1.put(Col_Date_Effet_Assurance,Date_Effet);
         tab_ch1.put(Col_Date_Echeance,Date_echance);
         tab_ch1.put(Col_Couleur_Vehicule,couleur);
+        tab_ch1.put(Col_login,login);
         long result = db.insert(Table3,null,tab_ch1);
         if(result == -1){
             res=false;
@@ -302,7 +321,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
     }
 //insert charge
 
-    public boolean insert_charge(String date ,Integer montant,String paym,String designation){
+    public boolean insert_charge(String date ,Integer montant,String paym,String designation,String login){
         boolean res=false;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues tab_ch = new ContentValues();
@@ -310,6 +329,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
         tab_ch.put(Col_Montant,montant);
         tab_ch.put(Col_Payment,paym);
         tab_ch.put(Col_designation,designation);
+        tab_ch.put(Col_login,login);
 
         long result = db.insert(Table5,null,tab_ch);
         if(result == -1){
@@ -325,7 +345,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
      *insert reccet
      */
 
-    public boolean insert_Recette(String IDrecette , String d1, String d2, int nb, int prix,int pt,String typ,String ma,String ci){
+    public boolean insert_Recette(String IDrecette , String d1, String d2, int nb, int prix,int pt,String typ,String ma,String ci,String login){
         boolean res=false;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues tab_ch = new ContentValues();
@@ -338,6 +358,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
         tab_ch.put(Col_Type,typ);
         tab_ch.put(Col_matr,ma);
         tab_ch.put(Col_CinCl,ci);
+        tab_ch.put(Col_login,login);
 
         long result = db.insert(Table4,null,tab_ch);
         if(result == -1){
@@ -356,7 +377,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
 
     //remlisage de sinistre
 
-    public boolean insert_sinistre(String matr , String date, String ganre, Integer montant, String respo,Integer montant1){
+    public boolean insert_sinistre(String matr , String date, String ganre, Integer montant, String respo,Integer montant1 ,String login){
         boolean res=false;
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues tab_ch = new ContentValues();
@@ -366,6 +387,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
         tab_ch.put(Col_montant_reparation_sinistre,montant);
         tab_ch.put(Col_responsabilite,respo);
         tab_ch.put(Col_MONTANT_PRIS_EN_CHARGE,montant1);
+        tab_ch.put(Col_login,login);
         long result = db.insert(Table9,null,tab_ch);
         if(result == -1){
             res=false;
@@ -383,16 +405,16 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
     }
 
 
-    public Cursor Get_connection(){
+    public Cursor Get_connection(String user ,String password){
         SQLiteDatabase db=this.getWritableDatabase();
-        Cursor c = db.rawQuery("select * from "+Table1,null);
+        Cursor c = db.rawQuery("select * from "+Table1+" where ("+Cole_Email+" ='"+user+"' or "+Col_login+" ='"+user+"') and "+Col_Mdp+" ='"+password+"'",null);
         return c;
     }
 
 //methode modifier vihicule
 
 
-    public void modifier_vihucle(String Nom,String date , String imatricul, String marque, Integer valeur, String Date_Effet, String Date_echance, Integer couleur){
+    public void modifier_vihucle(String Nom,String date , String imatricul, String marque, Integer valeur, String Date_Effet, String Date_echance, Integer couleur,String login){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues v = new ContentValues();
         v.put(Col_Marque_Vihicule,Nom);
@@ -402,7 +424,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
         v.put(Col_Date_Effet_Assurance,Date_Effet);
         v.put(Col_Date_Echeance,Date_echance);
         v.put(Col_Couleur_Vehicule,couleur);
-        db.update(Table3,v,""+Col_immatriculation+"=?",new String[]{imatricul});
+        db.update(Table3,v,""+Col_immatriculation+"=? AND " + Col_login + " =?",new String[]{imatricul,login});
     }
 
 
@@ -410,7 +432,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
      * modifier reccete
      * @return
      */
-    public void modifier_reccete(String id_reccete, String datedb, String datefn, String nbjr, String prix01, String prixtt,String typp,String matrr,String cinn){
+    public void modifier_reccete(String id_reccete, String datedb, String datefn, String nbjr, String prix01, String prixtt,String typp,String matrr,String cinn,String login){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues v = new ContentValues();
         v.put(Col_date_début,datedb);
@@ -421,13 +443,14 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
         v.put(Col_Type,typp);
         v.put(Col_matr,matrr);
         v.put(Col_CinCl,cinn);
+        v.put(Col_login,login);
         db.update(Table4,v,""+Col_IdRecette+"=?",new String[]{id_reccete});
     }
 
 
 
 
-    public void modifier_clients(String cin, String nom, String prenom, String tele, String adress, String activity){
+    public void modifier_clients(String cin, String nom, String prenom, String tele, String adress, String activity,String login){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues v = new ContentValues();
         v.put(Col_nom,nom);
@@ -435,7 +458,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
         v.put(Col_adresse,adress);
         v.put(Col_tel,tele);
         v.put(Col_activité,activity);
-        db.update(Table2,v,""+Col_cin+"=?",new String[]{cin});
+        db.update(Table2,v,""+Col_cin+"=? and login =?",new String[]{cin,login});
     }
 
 
@@ -448,12 +471,12 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
         return c;
     }
 
-    public Integer suprimer_vihucle(String lb){
+    public Integer suprimer_vihucle(String lb,String login){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(Table3,""+Col_immatriculation+"=?",new String[]{lb});
+        return db.delete(Table3,""+Col_immatriculation+"=? AND "+Col_login+"=?",new String[]{lb,login});
     }
     // insert assurance
-    public boolean insert_assurance( String mat, String dat1, String dat2, String comp, Integer prime){
+    public boolean insert_assurance( String mat, String dat1, String dat2, String comp, Integer prime,String login){
         boolean res=false;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues tab_ch1 = new ContentValues();
@@ -462,6 +485,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
         tab_ch1.put(Col_date_fin_assurance,dat2);
         tab_ch1.put(Col_compagnie_assurance,comp);
         tab_ch1.put(Col_prime_assurance,prime);
+        tab_ch1.put(Col_login,login);
         long result = db.insert(Table8,null,tab_ch1);
         if(result == -1){
             res=false;
@@ -474,7 +498,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
 
 
     // insert reparation
-    public boolean insert_reparation( String imma, String Pc , String Md, String rf,String Da, Integer Mont){
+    public boolean insert_reparation( String imma, String Pc , String Md, String rf,String Da, Integer Mont,String login){
         boolean res=false;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues tab_ch1 = new ContentValues();
@@ -484,6 +508,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
         tab_ch1.put(Col_ref_facture,rf);
         tab_ch1.put(Col_date_reparation,Da);
         tab_ch1.put(Col_montant_reparation,Mont);
+        tab_ch1.put(Col_login,login);
         long result = db.insert(Table7,null,tab_ch1);
         if(result == -1){
             res=false;
@@ -495,7 +520,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
     }
 
 
-    public boolean insert_feedback(String cin ,Float vote,String desc,String date){
+    public boolean insert_feedback(String cin ,Float vote,String desc,String date,String login){
         boolean res=false;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues tab_ch = new ContentValues();
@@ -503,6 +528,7 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
         tab_ch.put(Col_vote,vote);
         tab_ch.put(Col_desc_client,desc);
         tab_ch.put(Col_date,date);
+        tab_ch.put(Col_login,login);
 
         long result = db.insert(Table13,null,tab_ch);
         if(result == -1){

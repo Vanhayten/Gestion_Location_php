@@ -32,7 +32,7 @@ EditText text1,text2,text3,text4,text5,text6,text;
     ColorSeekBar Colorseek;
 Spinner spinner;
 gestion_location DB;
-String Nom,Prenom,role;
+String Nom,Prenom,role,login;
     int intColot;
 
 
@@ -87,6 +87,7 @@ String Nom,Prenom,role;
         Nom = b.getString("nom");
         Prenom =  b.getString("prenom");
         role = ""+b.getString("role");
+        login = ""+b.getString("login");
 
 
         DB = new gestion_location(this);
@@ -220,7 +221,7 @@ String Nom,Prenom,role;
 
                 Boolean result = null;
                 try {
-                    result = DB.insert_vehiucle(text1.getText().toString(), text2.getText().toString(), text3.getText().toString(), spinner.getSelectedItem().toString(), Integer.parseInt(text4.getText().toString()), text5.getText().toString(), text6.getText().toString(), intColot);
+                    result = DB.insert_vehiucle(text1.getText().toString(), text2.getText().toString(), text3.getText().toString(), spinner.getSelectedItem().toString(), Integer.parseInt(text4.getText().toString()), text5.getText().toString(), text6.getText().toString(), intColot,login);
 
                 }catch (Exception E){
                    
@@ -232,6 +233,7 @@ String Nom,Prenom,role;
                     b1.putString("nom", Nom);
                     b1.putString("prenom", Prenom);
                     b1.putString("role", role);
+                    b1.putString("login", login);
                     I.putExtras(b1);
                     startActivity(I);
                 } else {

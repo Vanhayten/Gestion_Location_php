@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -35,9 +36,7 @@ public class Login extends AppCompatActivity {
         login =(EditText)findViewById(R.id.editText6);
         Pass =(EditText)findViewById(R.id.editText7);
 
-        boolean result = db.insert_emp("1111","1111","Chaib","ayoub","Admin");
-        login.setText("1111");
-        Pass.setText("1111");
+
 
 login.setOnFocusChangeListener(new View.OnFocusChangeListener() {
     @Override
@@ -54,37 +53,42 @@ login.setOnFocusChangeListener(new View.OnFocusChangeListener() {
         });
 
 
+        LinearLayout sinscrireLayout = (LinearLayout)findViewById(R.id.sinscrire);
+        sinscrireLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent register=new Intent(Login.this,register.class);
+                startActivity(register);
+            }
+        });
+
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void connection(View view) {
 
-        Cursor c = db.Get_connection();
+        Cursor c = db.Get_connection(login.getText().toString(),Pass.getText().toString());
         String str1,str2;
         Boolean check = false;
         while (c.moveToNext()) {
 
-            if (c.getString(0).equals(login.getText().toString()) && c.getString(1).equals(Pass.getText().toString())) {
+
                 Intent T = new Intent(this, vehicules.class);
                 Bundle b = new Bundle();
                 b.putString("nom",c.getString(2).toString());
                 b.putString("prenom",c.getString(3).toString());
                 b.putString("role",c.getString(4).toString());
+                b.putString("login",c.getString(0).toString());
                 T.putExtras(b);
                 check = true;
                 finish();
 
 
 
-
-                startActivity(T,
-                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-
-
+                startActivity(T, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                // startActivity(T);
 
-            }
         }
         if(check == false){
             Toast.makeText(this, "nom d'utilisateur ou mot de passe incorrect", Toast.LENGTH_SHORT).show();
@@ -93,10 +97,6 @@ login.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
     }
 
-    public void creer(View view) {
-        Intent in=new Intent(this,creer_compte.class);
-        startActivity(in);
-    }
 
 
 

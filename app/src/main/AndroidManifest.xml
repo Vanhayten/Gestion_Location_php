@@ -2,22 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.gestionlocationnew">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
-
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/gestloca"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:requestLegacyExternalStorage="true">
+        android:theme="@style/AppTheme">
+        <activity android:name=".register"></activity>
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,11 +32,10 @@
         <activity android:name=".entretiens" />
         <activity android:name=".assurances" />
         <activity android:name=".calendrier" />
-        <activity android:name=".creer_compte" />
-        <activity android:name=".Login">
-        </activity>
+        <activity android:name=".Login"></activity>
         <activity android:name=".mes_clients" />
-        <activity android:name=".mes_recettes"
+        <activity
+            android:name=".mes_recettes"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".mes_charges" />
         <activity android:name=".vehicules" />

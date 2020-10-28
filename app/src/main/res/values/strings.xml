@@ -12,6 +12,21 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="user">"nom Prenom"</string>
+    <string name="register">S\'inscrire</string>
+    <string name="register_msg">Bonjour, rejoignez-nous</string>
+    <string name="first_name">Prénom</string>
+    <string name="use_Name">Nom d\'utilisateur</string>
+    <string name="error_name">Min 4 caractères!</string>
+    <string name="userName">Deja existe</string>
+    <string name="last_name">Nom </string>
+    <string name="numTele">Numero de telephone</string>
+    <string name="email">Email</string>
+    <string name="error_email">Invalid email!</string>
+    <string name="error_tele">Invalid phone!</string>
+    <string name="password">Mot de passe</string>
+    <string name="error_password">Min 8 character!</string>
+    <string name="register_have_account_msg">Vous avez déjà un compte?</string>
+    <string name="login">S\'identifier</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
