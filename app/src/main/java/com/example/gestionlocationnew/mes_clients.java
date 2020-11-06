@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -36,12 +37,21 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class mes_clients extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    GoogleSignInClient mGoogleSignInClient;
 
     String Nom, Prenom, role,login;
     DrawerLayout drawerLayout;
@@ -74,6 +84,19 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mes_clients);
 
+
+
+        /**
+         * google
+         */
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+
         drawerLayout = findViewById(R.id.drawer);
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.navigationView);
@@ -93,6 +116,19 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
         View headerView = navigationView1.getHeaderView(0);
         TextView username = headerView.findViewById(R.id.unser_name);
         TextView role1 = headerView.findViewById(R.id.role);
+
+        CircleImageView profile = (CircleImageView)headerView.findViewById(R.id.profilpic);
+
+
+        /**
+         * get image from google and gut its in profile
+         */
+        SharedPreferences sp = getSharedPreferences("login",MODE_PRIVATE);
+        String urlsImage = sp.getString("URLImage","");
+        if(!urlsImage.equals("")){
+            ImageLoadTask imageLoadTask = (ImageLoadTask) new ImageLoadTask(urlsImage, profile).execute();
+        }
+
 
         Bundle b = getIntent().getExtras();
         Nom = b.getString("nom");
@@ -587,8 +623,32 @@ public class mes_clients extends AppCompatActivity implements NavigationView.OnN
 
                 this.overridePendingTransition(R.anim.slide_in_right,
                         R.anim.slide_in_left);
+                break;
 
 
+            case R.id.logout:
+
+                /**
+                 * Sing out from google
+                 */
+                mGoogleSignInClient.signOut()
+                        .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(mes_clients.this, " déconnecté avec succès", Toast.LENGTH_SHORT).show();
+                                // ...
+                            }
+                        });
+
+
+                T = new Intent(this, Login.class);
+                SharedPreferences sp;
+                sp = getSharedPreferences("login",MODE_PRIVATE);
+                sp.edit().putBoolean("logged",false).apply();
+                startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
                 break;
 
         }

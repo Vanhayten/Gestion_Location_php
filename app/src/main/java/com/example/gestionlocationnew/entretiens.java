@@ -1,10 +1,14 @@
 
 package com.example.gestionlocationnew;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -12,6 +16,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,6 +35,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 import java.text.SimpleDateFormat;
@@ -39,7 +49,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.content.ContentValues.TAG;
+
 public class entretiens extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    GoogleSignInClient mGoogleSignInClient;
 
     String Nom, Prenom, role,login;
     DrawerLayout drawerLayout;
@@ -63,6 +79,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
     MyGridAdapter myGridAdapter;
     GridView gridView;
     Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
+    int alarmYear,alarmMonth,alarmDay,alarmHour,alarmMinuit;
     SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
     SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM",Locale.ENGLISH);
     SimpleDateFormat yearFormate = new SimpleDateFormat("yyyy",Locale.ENGLISH);
@@ -78,6 +95,17 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entretiens);
+
+
+        /**
+         * google
+         */
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
 
         /**
@@ -101,6 +129,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
         //-------------------------
         db = new gestion_location(this);
         t1 = (EditText) findViewById(R.id.recherche);
@@ -157,6 +186,18 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
         View headerView = navigationView1.getHeaderView(0);
         TextView username = headerView.findViewById(R.id.unser_name);
         TextView role1 = headerView.findViewById(R.id.role);
+
+        CircleImageView profile = (CircleImageView)headerView.findViewById(R.id.profilpic);
+
+
+        /**
+         * get image from google and gut its in profile
+         */
+        SharedPreferences sp = getSharedPreferences("login",MODE_PRIVATE);
+        String urlsImage = sp.getString("URLImage","");
+        if(!urlsImage.equals("")){
+            ImageLoadTask imageLoadTask = (ImageLoadTask) new ImageLoadTask(urlsImage, profile).execute();
+        }
 
 
         username.setText(Nom + " " + Prenom);
@@ -784,6 +825,31 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
 
                 break;
 
+            case R.id.logout:
+
+                /**
+                 * Sing out from google
+                 */
+                mGoogleSignInClient.signOut()
+                        .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(entretiens.this, " déconnecté avec succès", Toast.LENGTH_SHORT).show();
+                                // ...
+                            }
+                        });
+
+
+                T = new Intent(this, Login.class);
+                SharedPreferences sp;
+                sp = getSharedPreferences("login",MODE_PRIVATE);
+                sp.edit().putBoolean("logged",false).apply();
+                startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+                break;
+
         }
         return false;
     }
@@ -829,7 +895,63 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
         SaveEvent(Events,formattedDate,DateF,monthString,part3,login);
         SetUpCalendar(login);
 
+
+
+        alarmHour = c.get(Calendar.HOUR_OF_DAY);
+        alarmMinuit = c.get(Calendar.MINUTE);
+
+        String[] dateslp = sdate.split("/");
+
+        alarmYear = Integer.parseInt(dateslp[2]);
+        alarmMonth = Integer.parseInt(dateslp[1]);
+        alarmDay = Integer.parseInt(dateslp[0]);
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(alarmYear,alarmMonth,alarmDay,alarmHour,alarmMinuit);
+
+        //calendar.add(Calendar.DAY_OF_MONTH, -2); //add 15 jour
+
+        setAlarm(calendar,Events,formattedDate,getRequestCode(DateF
+                ,Events,formattedDate,login));
+
+
+
     }
+
+
+    private int getRequestCode(String date,String event,String time,String login){
+        int code = 0;
+        dbOpenHelper = new DBOpenHelper(this);
+        SQLiteDatabase database = dbOpenHelper.getReadableDatabase();
+        Cursor cursor = dbOpenHelper.ReadIDEvents(date,event,time,login,database);
+        while (cursor.moveToNext()){
+            code = cursor.getInt(cursor.getColumnIndex(DBStructure.ID));
+        }
+        cursor.close();
+        dbOpenHelper.close();
+        Log.d(TAG, "getRequestCode: "+code);
+
+        return code;
+    }
+
+
+
+    private void setAlarm(Calendar calendar,String event,String time,int RequestCOde){
+
+        calendar.add(Calendar.DAY_OF_MONTH, -15); //add 15 jour
+        //calendar.add(Calendar.MINUTE, +3); //add 15 jour
+
+        Intent intent = new Intent(this,AlarmReceiver.class);
+        intent.putExtra("event",event);
+        intent.putExtra("time",time);
+        intent.putExtra("id",RequestCOde);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,RequestCOde,intent,PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager alarmManager = (AlarmManager)this.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
+    }
+
 
 
      private void SaveEvent(String event,String time,String date, String month,String year,String login){

@@ -1,12 +1,16 @@
 package com.example.gestionlocationnew;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -16,6 +20,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -23,9 +32,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class calendrier extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-
+    GoogleSignInClient mGoogleSignInClient;
 
 
     String Nom,Prenom,role,login;
@@ -34,12 +45,11 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
 
+
+
     /**
      * calandar
      */
-
-
-
     CustomCalendarView customCalendarView;
 
 
@@ -47,6 +57,18 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendrier);
+
+
+
+        /**
+         * google
+         */
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
 
 
@@ -58,14 +80,16 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
 
 
 
+
         customCalendarView = findViewById(R.id.custom_calendar_view);
 
-        customCalendarView =new CustomCalendarView(this,null,login);
+
+
 
         /**
          * calander
          */
-        //calendarView = (CalendarView)findViewById(R.id.calendarView);
+
 
 
         drawerLayout = findViewById(R.id.drawer);
@@ -87,8 +111,21 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
         TextView role1 = headerView.findViewById(R.id.role);
 
 
+        CircleImageView profile = (CircleImageView)headerView.findViewById(R.id.profilpic);
+
+
+        /**
+         * get image from google and gut its in profile
+         */
+        SharedPreferences sp = getSharedPreferences("login",MODE_PRIVATE);
+        String urlsImage = sp.getString("URLImage","");
+        if(!urlsImage.equals("")){
+            ImageLoadTask imageLoadTask = (ImageLoadTask) new ImageLoadTask(urlsImage, profile).execute();
+        }
+
         username.setText(Nom+" "+Prenom);
-        role1.setText(role);
+        //role1.setText(role);
+        role1.setText(login);
 
 
 
@@ -223,9 +260,31 @@ public class calendrier extends AppCompatActivity implements NavigationView.OnNa
                 this.overridePendingTransition(R.anim.slide_in_right,
                         R.anim.slide_in_left);
 
-
                 break;
 
+            case R.id.logout:
+
+                /**
+                 * Sing out from google
+                 */
+                mGoogleSignInClient.signOut()
+                        .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(calendrier.this, " déconnecté avec succès", Toast.LENGTH_SHORT).show();
+                                // ...
+                            }
+                        });
+
+                T = new Intent(this, Login.class);
+                SharedPreferences sp;
+                sp = getSharedPreferences("login",MODE_PRIVATE);
+                sp.edit().putBoolean("logged",false).apply();
+                startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+                break;
         }
         return false;
     }

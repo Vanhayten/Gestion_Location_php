@@ -1,5 +1,6 @@
 package com.example.gestionlocationnew;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -7,8 +8,11 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +32,8 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.navigation.NavigationView;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,9 +47,18 @@ import static android.content.ContentValues.TAG;
 public class CustomCalendarView extends LinearLayout {
     ImageButton NextButton,PreviousButton;
     TextView CurrentDate;
+    TextView loginid;
+
+
+    SharedPreferences log;
+
 
     String Login;
+    String Login1;
     GridView gridView;
+
+    calendrier Calendrier;
+
     private static final int MAX_CALENDAR_DAYS = 42;
     Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
     Context context;
@@ -63,21 +78,37 @@ public class CustomCalendarView extends LinearLayout {
 
     public CustomCalendarView(Context context) {
         super(context);
+
+
+
     }
 
     public CustomCalendarView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+
     }
 
 
-    public CustomCalendarView(final Context context, @Nullable AttributeSet attrs,String login ) {
+    public CustomCalendarView(final Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
 
-        Login =login;
+
+
+        log = context.getSharedPreferences("login",0);
+
+
+
         IntializeLayout();
+
+
+        Login = log.getString("login","");
+
+
         SetUpCalendar(Login);
+
+
 
 
         PreviousButton.setOnClickListener(new OnClickListener() {
@@ -173,7 +204,7 @@ public class CustomCalendarView extends LinearLayout {
 
                         }else{
 
-                            SaveEvent(EventName.getText().toString(),EventTime.getText().toString(),date,month,year,"off",login);
+                            SaveEvent(EventName.getText().toString(),EventTime.getText().toString(),date,month,year,"off",Login);
                             SetUpCalendar(Login);
                             alertDialog.dismiss();
 
@@ -209,7 +240,7 @@ public class CustomCalendarView extends LinearLayout {
                 recyclerView .setLayoutManager(layoutManager);
                 recyclerView.setHasFixedSize(true);
                 EventRecyclerAdapter eventRecyclerAdapter = new EventRecyclerAdapter(showView.getContext()
-                        ,CollectEventByDate(date,Login),login);
+                        ,CollectEventByDate(date,Login),Login);
                 recyclerView.setAdapter(eventRecyclerAdapter);
                 eventRecyclerAdapter.notifyDataSetChanged();
                 builder.setView(showView);
@@ -226,7 +257,6 @@ public class CustomCalendarView extends LinearLayout {
                 return true;
             }
         });
-
 
 
 
@@ -315,6 +345,9 @@ public class CustomCalendarView extends LinearLayout {
     }
 
     private void SetUpCalendar(String login){
+
+
+
         String currwntDate = dateFormat.format(calendar.getTime());
        CurrentDate.setText(currwntDate);
         dates.clear();

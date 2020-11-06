@@ -167,7 +167,7 @@ public class ajouter_assurance extends AppCompatActivity {
 
 
                 }catch (Exception EX){
-                    Toast.makeText(this, ""+EX.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, ""+EX.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
                 Intent T;
@@ -222,9 +222,11 @@ public class ajouter_assurance extends AppCompatActivity {
 
         String formattedDate1 = df.format(c.getTime());
 
+
+
         SaveEvent(Events,formattedDate,DateF,monthString,part3,login);
 
-        SetUpCalendar();
+        SetUpCalendar(login);
 
 
 
@@ -294,12 +296,13 @@ public class ajouter_assurance extends AppCompatActivity {
         dbOpenHelper.SaveEvent(event,time,date,month,year,"on",login,database);
         dbOpenHelper.close();
         Toast.makeText(this, "Event Saved", Toast.LENGTH_SHORT).show();
+
     }
 
 
-    private void SetUpCalendar(){
+    private void SetUpCalendar(String login){
         String currwntDate = dateFormat.format(calendar.getTime());
-        CurrentDate.setText(currwntDate);
+        //CurrentDate.setText(currwntDate);
         dates.clear();
         Calendar monthCalendar= (Calendar) calendar.clone();
         monthCalendar.set(Calendar.DAY_OF_MONTH,1);

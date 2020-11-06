@@ -5,12 +5,14 @@ android {
     buildToolsVersion "29.0.3"
 
 
+
     defaultConfig {
         applicationId "com.example.gestionlocationnew"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+       
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -58,6 +60,9 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha03'
     implementation 'com.itextpdf:itextg:5.5.10'
+    implementation 'com.google.android.gms:play-services-auth:18.1.0'
+
+
 
 
 

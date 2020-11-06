@@ -42,6 +42,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.divyanshu.colorseekbar.ColorSeekBar;
+import com.google.android.gms.auth.api.identity.SignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.ByteArrayOutputStream;
@@ -51,6 +58,10 @@ import java.util.Calendar;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class vehicules extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    GoogleSignInClient mGoogleSignInClient;
+
 
     String Nom,Prenom,role,login;
     DrawerLayout drawerLayout;
@@ -67,6 +78,8 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
     EditText t1;
     Cursor c,c1;
 
+
+
     int intColot = 0;
 
 
@@ -76,12 +89,38 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
 
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+
+    }
+
     CircleImageView profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        /**
+         * google
+         */
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+
+
+
+
+
+
 
 
 
@@ -91,6 +130,17 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
         TextView role1 = headerView.findViewById(R.id.role);
         profile = (CircleImageView)headerView.findViewById(R.id.profilpic);
 
+
+
+
+        /**
+         * get image from google and gut its in profile
+         */
+        SharedPreferences sp = getSharedPreferences("login",MODE_PRIVATE);
+        String urlsImage = sp.getString("URLImage","");
+        if(!urlsImage.equals("")){
+            ImageLoadTask imageLoadTask = (ImageLoadTask) new ImageLoadTask(urlsImage, profile).execute();
+        }
 
 
 
@@ -642,6 +692,29 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
 
                 break;
 
+            case R.id.logout:
+
+                /**
+                 * Sing out from google
+                 */
+                mGoogleSignInClient.signOut()
+                        .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(vehicules.this, " déconnecté avec succès", Toast.LENGTH_SHORT).show();
+                                // ...
+                            }
+                        });
+
+
+                T = new Intent(this, Login.class);
+                SharedPreferences sp;
+                sp = getSharedPreferences("login",MODE_PRIVATE);
+                sp.edit().putBoolean("logged",false).apply();
+                startActivity(T);
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
+                break;
         }
         return false;
     }

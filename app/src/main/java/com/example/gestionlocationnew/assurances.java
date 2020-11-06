@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -31,12 +32,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class assurances extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    GoogleSignInClient mGoogleSignInClient;
 
     String Nom,Prenom,role,login;
     DrawerLayout drawerLayout;
@@ -55,12 +65,27 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assurances);
 
-        db= new gestion_location(this);
+
+
+        /**
+         * google
+         */
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+
+
+        db = new gestion_location(this);
 
 
         /**
@@ -71,6 +96,18 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
         View headerView = navigationView1.getHeaderView(0);
         TextView username = headerView.findViewById(R.id.unser_name);
         TextView role1 = headerView.findViewById(R.id.role);
+        CircleImageView profile = (CircleImageView)headerView.findViewById(R.id.profilpic);
+
+
+        /**
+         * get image from google and gut its in profile
+         */
+        SharedPreferences sp = getSharedPreferences("login",MODE_PRIVATE);
+        String urlsImage = sp.getString("URLImage","");
+        if(!urlsImage.equals("")){
+            ImageLoadTask imageLoadTask = (ImageLoadTask) new ImageLoadTask(urlsImage, profile).execute();
+        }
+
 
         Bundle b = getIntent().getExtras();
         Nom = b.getString("nom");
@@ -189,7 +226,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
 
 
                         /**
-                         * recupiration last asuranse
+                         * recupiration last asurance
                          */
                         Button proch_assurance;
                         proch_assurance =(Button) dialog.findViewById(R.id.ajouter_assurance);
@@ -662,7 +699,31 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
 
                 this.overridePendingTransition(R.anim.slide_in_right,
                         R.anim.slide_in_left);
+                break;
 
+            case R.id.logout:
+
+                /**
+                 * Sing out from google
+                 */
+                mGoogleSignInClient.signOut()
+                        .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(assurances.this, " déconnecté avec succès", Toast.LENGTH_SHORT).show();
+                                // ...
+                            }
+                        });
+
+
+                T = new Intent(this, Login.class);
+                SharedPreferences sp;
+                sp = getSharedPreferences("login",MODE_PRIVATE);
+                sp.edit().putBoolean("logged",false).apply();
+                startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
                 break;
 
         }

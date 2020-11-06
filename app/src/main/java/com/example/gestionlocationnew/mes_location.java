@@ -38,6 +38,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 import java.text.ParseException;
@@ -47,7 +52,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class mes_location extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    GoogleSignInClient mGoogleSignInClient;
 
     String Nom,Prenom,role,login;
     DrawerLayout drawerLayout;
@@ -72,11 +82,35 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_mes_location);
 
 
+        /**
+         * google
+         */
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+
 
         NavigationView navigationView1 = (NavigationView)findViewById(R.id.navigationView);
         View headerView = navigationView1.getHeaderView(0);
         TextView username = headerView.findViewById(R.id.unser_name);
         TextView role1 = headerView.findViewById(R.id.role);
+
+        CircleImageView profile = (CircleImageView)headerView.findViewById(R.id.profilpic);
+
+
+        /**
+         * get image from google and gut its in profile
+         */
+        SharedPreferences sp = getSharedPreferences("login",MODE_PRIVATE);
+        String urlsImage = sp.getString("URLImage","");
+        if(!urlsImage.equals("")){
+            ImageLoadTask imageLoadTask = (ImageLoadTask) new ImageLoadTask(urlsImage, profile).execute();
+        }
+
 
         Bundle b = getIntent().getExtras();
         Nom = b.getString("nom");
@@ -358,8 +392,31 @@ public class mes_location extends AppCompatActivity implements NavigationView.On
 
                 this.overridePendingTransition(R.anim.slide_in_right,
                         R.anim.slide_in_left);
+                break;
 
 
+            case R.id.logout:
+
+                /**
+                 * Sing out from google
+                 */
+                mGoogleSignInClient.signOut()
+                        .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(mes_location.this, " déconnecté avec succès", Toast.LENGTH_SHORT).show();
+                                // ...
+                            }
+                        });
+
+                T = new Intent(this, Login.class);
+                SharedPreferences sp;
+                sp = getSharedPreferences("login",MODE_PRIVATE);
+                sp.edit().putBoolean("logged",false).apply();
+                startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
                 break;
 
         }

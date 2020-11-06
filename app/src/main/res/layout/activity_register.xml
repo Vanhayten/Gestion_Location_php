@@ -80,7 +80,7 @@
             android:layout_marginEnd="@dimen/margin_secondary"
             android:background="@drawable/bg_field"
             android:hint="@string/use_Name"
-            android:inputType="textPersonName"
+            android:inputType="text"
             android:padding="@dimen/padding_secondary"
             android:paddingTop="@dimen/padding_primary"
             android:paddingBottom="@dimen/padding_primary"

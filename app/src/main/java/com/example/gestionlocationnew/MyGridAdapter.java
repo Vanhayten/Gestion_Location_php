@@ -19,7 +19,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class MyGridAdapter extends ArrayAdapter {
+public class
+MyGridAdapter extends ArrayAdapter {
     List<Date> dates;
     Calendar currentDate;
     List<Events> events;

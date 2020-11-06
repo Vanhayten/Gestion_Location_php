@@ -15,6 +15,7 @@ public class gestion_location extends SQLiteOpenHelper {
 
     //declaration table Identifie
     private static final String Table1 = "Identifie";
+    private static final String Col_Idreccete = "ID";
     private static final String Col_login = "Login";
     private static final String Col_Mdp = "Mdp";
     private static final String Col_Nom = "Nom";
@@ -147,13 +148,15 @@ public class gestion_location extends SQLiteOpenHelper {
 
 
     public gestion_location(Context context) {
-        super(context, DATABASE_NAME, null, 3);
+        super(context, DATABASE_NAME, null, 5);
             db = this.getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String table1 = "Create table "+Table1+" ("+Col_login+" text primary key ,"+Col_Mdp+" text,"+Col_Nom+" text,"+Col_Prenom+" text,"+Col_Role+" text,"+Cole_dateID+" date , "+Cole_Email+" text)";
+
+        //, PRIMARY KEY("+Col_login+","+Cole_Email+")
+        String table1 = "Create table "+Table1+" ("+Col_Idreccete+" Integer PRIMARY KEY AUTOINCREMENT ,"+Col_login+" text ,"+Col_Mdp+" text,"+Col_Nom+" text,"+Col_Prenom+" text,"+Col_Role+" text,"+Cole_dateID+" date , "+Cole_Email+" text )";
         String table2 = "Create table "+Table2+" ("+Col_nom+" text  ,"+Col_prenom+" text,"+Col_adresse+" text,"+Col_cin+" text primary key,"+Col_tel+" text,"+Col_activité+" text , "+Col_login+" text)";
         String table3 = "Create table "+Table3+" ("+Col_Marque_Vihicule+" text ,"+Col_DateCirculation+" date ,"+Col_immatriculation+" text primary key,"+Col_MarqueCombustion+" text , "+Col_ValeurDentrée+" Integer,"+Col_Date_Effet_Assurance+" date,"+Col_Date_Echeance+" date,"+Col_Couleur_Vehicule+" Integer,"+Col_login+" text)";
         String table4 = "Create table "+Table4+" ("+Col_IdRecette+" text primary key ,"+Col_date_début+" Date,"+Col_date_fin+" Date,"+Col_nbJour+" Integer,"+Col_prix_location+" Integer , "+Col_prixTotal_location+" Integer , "+Col_Type+" Text,"+Col_matr+" Text,"+Col_CinCl+" text ,"+Col_login+" text)";
@@ -408,6 +411,12 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
     public Cursor Get_connection(String user ,String password){
         SQLiteDatabase db=this.getWritableDatabase();
         Cursor c = db.rawQuery("select * from "+Table1+" where ("+Cole_Email+" ='"+user+"' or "+Col_login+" ='"+user+"') and "+Col_Mdp+" ='"+password+"'",null);
+        return c;
+    }
+
+    public Cursor Get_connectionGGL(String EMAIL){
+        SQLiteDatabase db=this.getWritableDatabase();
+        Cursor c = db.rawQuery("select * from "+Table1+" where "+Cole_Email+" ='"+EMAIL+"'",null);
         return c;
     }
 

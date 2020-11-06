@@ -1,12 +1,18 @@
 package com.example.gestionlocationnew;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -25,11 +31,13 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -50,7 +58,12 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.ShareCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -63,6 +76,11 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialDialogs;
 import com.google.android.material.navigation.NavigationView;
 import com.itextpdf.text.BaseColor;
@@ -85,6 +103,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Type;
+import java.net.URLConnection;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -100,11 +119,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.provider.CalendarContract.CalendarCache.URI;
+
 public class mes_recettes extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    GoogleSignInClient mGoogleSignInClient;
 
     private static final String TAG = "mes_recettes";
     private static final int STORAGE_CODE = 1000;
+
+    private static final String MESSAGE_RFC822 = "application/pdf";
 
 
 
@@ -184,6 +210,17 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mes_recettes);
+
+        /**
+         * google
+         */
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
 
 
         Bundle b = getIntent().getExtras();
@@ -579,6 +616,20 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         View headerView = navigationView1.getHeaderView(0);
         TextView username = headerView.findViewById(R.id.unser_name);
         TextView role1 = headerView.findViewById(R.id.role);
+
+
+
+        CircleImageView profile = (CircleImageView)headerView.findViewById(R.id.profilpic);
+
+
+        /**
+         * get image from google and gut its in profile
+         */
+        SharedPreferences sp = getSharedPreferences("login",MODE_PRIVATE);
+        String urlsImage = sp.getString("URLImage","");
+        if(!urlsImage.equals("")){
+            ImageLoadTask imageLoadTask = (ImageLoadTask) new ImageLoadTask(urlsImage, profile).execute();
+        }
 
 
         username.setText(Nom+" "+Prenom);
@@ -1078,8 +1129,29 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
                 this.overridePendingTransition(R.anim.slide_in_right,
                         R.anim.slide_in_left);
+                break;
 
+            case R.id.logout:
+                /**
+                 * Sing out from google
+                 */
+                mGoogleSignInClient.signOut()
+                        .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(mes_recettes.this, " déconnecté avec succès", Toast.LENGTH_SHORT).show();
+                                // ...
+                            }
+                        });
 
+                T = new Intent(this, Login.class);
+                SharedPreferences sp;
+                sp = getSharedPreferences("login",MODE_PRIVATE);
+                sp.edit().putBoolean("logged",false).apply();
+                startActivity(T);
+
+                this.overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_in_left);
                 break;
 
         }
@@ -1347,12 +1419,13 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
                     input = null;
                     input = c.getString(0);
-                    firstFourChars = input.substring(0, 2);
-
+                    firstFourChars =null;
+                    firstFourChars = input.split("-")[1].substring(0,2 );
+                    Toast.makeText(mes_recettes.this, firstFourChars, Toast.LENGTH_SHORT).show();
 
 
                     String[] parts1 = c.getString(0).split("-");
-                    String part22 = parts1[1];
+                    String part22 = parts1[2];
 
                     if( Integer.parseInt(firstFourChars) == Integer.parseInt(part3day) ){
                         count = Integer.parseInt(part22);
@@ -1363,7 +1436,15 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 }
                 count++;
 
-                String s =part3day+""+part2month+""+part1year+"-"+count;
+
+                String requetuser = "SELECT ID FROM  Identifie where login ='"+login+"'";
+                Cursor cur = table.rawQuery ( requetuser, null );
+                String pre_2 = null;
+                if(cur.moveToNext()){
+                    pre_2 = cur.getString(0);
+                }
+              
+                String s =pre_2+"-"+part3day+""+part2month+""+part1year+"-"+count;
 
                 Toast.makeText(mes_recettes.this, ""+s, Toast.LENGTH_SHORT).show();
 
@@ -2015,15 +2096,35 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
 
 
         myPdfDocument.finishPage(myPage1);
-        File file = new File(Environment.getExternalStorageDirectory(),"/Gesloc.pdf");
-        try {
-            myPdfDocument.writeTo(new FileOutputStream(file));
-        }catch (Exception e){
-            e.printStackTrace();
+
+        // write the document content
+        String directory_path = Environment.getExternalStorageDirectory().getPath() + "/geslocPDF/";
+        File file = new File(directory_path);
+        if (!file.exists()) {
+            file.mkdirs();
         }
 
+        SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy");
+        Date date = new Date();
+        String Datef = formatter.format(date);
+        String file_name =Datef+"_recettes.pdf";
+        String targetPdf = directory_path+file_name;
+        File filePath = new File(targetPdf);
+        try {
+            myPdfDocument.writeTo(new FileOutputStream(filePath));
+            Toast.makeText(this, "Done", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            Log.e("main", "error "+e.toString());
+            Toast.makeText(this, "Something wrong: " + e.toString(),  Toast.LENGTH_LONG).show();
+        }
+        // close the document
         myPdfDocument.close();
 
+
+        /**
+         * send pdf
+         */
+        sendEmail(file_name);
 
     }
 
@@ -2045,6 +2146,32 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
             }
         }
     }
+
+
+    public void sendEmail(String file_name)
+    {
+        try {
+            File root= Environment.getExternalStorageDirectory();
+            String filelocation= root.getAbsolutePath() + "/geslocPDF" + "/" + file_name;
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
+            intent.setType("application/pdf");
+            String message="Fichier à partager " + file_name + "., vous le trouverez dans "+root.getAbsolutePath() + "/geslocPDF/...";
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+            intent.putExtra(Intent.EXTRA_STREAM, Uri.parse( "file://"+filelocation));
+            intent.putExtra(Intent.EXTRA_TEXT, message);
+            intent.setData(Uri.parse("mailto:"));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            startActivity(intent);
+        } catch(Exception e)  {
+            System.out.println("is exception raises during sending mail"+e);
+        }
+    }
+
+
+
+
+
 
 }
 
