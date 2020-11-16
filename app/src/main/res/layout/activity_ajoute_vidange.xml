@@ -26,7 +26,7 @@
                 android:layout_marginRight="45dp"
                 android:enabled="false"
                 android:gravity="center"
-                android:hint="Matricule" />
+                android:hint="@string/Matricule" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -44,7 +44,7 @@
                 android:layout_marginLeft="45dp"
                 android:layout_marginRight="45dp"
                 android:gravity="center"
-                android:hint="Date vidange"
+                android:hint="@string/Date_vidange"
                 android:inputType="date" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,7 +62,7 @@
                 android:layout_marginLeft="45dp"
                 android:layout_marginRight="45dp"
                 android:gravity="center"
-                android:hint="Kilomètrage"
+                android:hint="@string/Kilomètrage"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
         <LinearLayout
@@ -74,27 +74,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
-                android:text="les Filter : "/>
+                android:text="@string/Filter"/>
 
         </LinearLayout>
         <CheckBox
             android:id="@+id/filter1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Filtre à air"
+            android:text="@string/Filtre_à_air"
             android:layout_marginLeft="120dp"/>
         <CheckBox
             android:id="@+id/filter2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Filtre à huile"
+            android:text="@string/Filtre_à_huile"
             android:layout_marginLeft="120dp"
             android:layout_marginTop="8dp"/>
         <CheckBox
             android:id="@+id/filter3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Filtre à carburant"
+            android:text="@string/Filtre_à_carburant"
             android:layout_marginLeft="120dp"
             android:layout_marginTop="8dp"/>
 
@@ -108,7 +108,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="kilométrage d'huile : "/>
+                android:text="@string/kilométrage"/>
 
             <Spinner
                 android:id="@+id/spinner_type"
@@ -118,7 +118,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="KM"/>
+                android:text="@string/KM"/>
 
         </LinearLayout>
 
@@ -126,7 +126,7 @@
     android:onClick="Ajoute"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Ajoute"
+    android:text="@string/Ajoute"
     android:layout_gravity="center"
     android:layout_marginTop="30dp">
 

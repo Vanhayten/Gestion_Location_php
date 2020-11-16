@@ -9,6 +9,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,8 +21,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.divyanshu.colorseekbar.ColorSeekBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -215,37 +218,61 @@ String Nom,Prenom,role,login;
         text6 = (EditText)findViewById(R.id.vihicule_Date_echeance);
 
 
+          if(!TextUtils.isEmpty(text1.getText().toString()) && !TextUtils.isEmpty(text2.getText().toString()) && !TextUtils.isEmpty(text3.getText().toString()) && !TextUtils.isEmpty(text4.getText().toString()) ){
+
 
         if(intColot != 0){
             if(confirmerMatricule(text3.getText().toString())==false) {
 
                 Boolean result = null;
                 try {
-                    result = DB.insert_vehiucle(text1.getText().toString(), text2.getText().toString(), text3.getText().toString(), spinner.getSelectedItem().toString(), Integer.parseInt(text4.getText().toString()), text5.getText().toString(), text6.getText().toString(), intColot,login);
+                        result = DB.insert_vehiucle(text1.getText().toString(), text2.getText().toString(), text3.getText().toString(), spinner.getSelectedItem().toString(), Integer.parseInt(text4.getText().toString()), text5.getText().toString(), text6.getText().toString(), intColot,login);
+
 
                 }catch (Exception E){
                    
                 }
                 if (result) {
-                    Toast.makeText(Ajoute_vihicule.this, "L'ajoute Effectué", Toast.LENGTH_SHORT).show();
-                    Intent I = new Intent(Ajoute_vihicule.this, vehicules.class);
-                    Bundle b1 = new Bundle();
-                    b1.putString("nom", Nom);
-                    b1.putString("prenom", Prenom);
-                    b1.putString("role", role);
-                    b1.putString("login", login);
-                    I.putExtras(b1);
-                    startActivity(I);
+                    //Toast.makeText(Ajoute_vihicule.this, "L'ajoute Effectué", Toast.LENGTH_SHORT).show();
+
+                    //Snackbar.make(view, "L'ajoute Effectué", Snackbar.LENGTH_SHORT).show();
+
+                    Snackbar snack = Snackbar.make(view,"L'ajoute Effectué",Snackbar.LENGTH_INDEFINITE);
+                    View sbView = snack.getView();
+                    sbView.setBackgroundColor(getResources().getColor(R.color.green));
+                    snack.setAction("Close", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            snack.dismiss();
+                            Intent I = new Intent(Ajoute_vihicule.this, vehicules.class);
+                            Bundle b1 = new Bundle();
+                            b1.putString("nom", Nom);
+                            b1.putString("prenom", Prenom);
+                            b1.putString("role", role);
+                            b1.putString("login", login);
+                            I.putExtras(b1);
+                            startActivity(I);
+                        }
+                    }).setActionTextColor(getResources().getColor(R.color.NAVwhite1)).show();
+
                 } else {
-                    Toast.makeText(Ajoute_vihicule.this, "L'ajoute n'est pas Effectué", Toast.LENGTH_SHORT).show();
+
+                    Snackbar.make(view, "L'ajoute n'est pas Effectué", Snackbar.LENGTH_SHORT).show();
+                    //Toast.makeText(Ajoute_vihicule.this, "L'ajoute n'est pas Effectué", Toast.LENGTH_SHORT).show();
                 }
             }else{
-                Toast.makeText(Ajoute_vihicule.this, "Respecte la forme de la matricule", Toast.LENGTH_SHORT).show();
+                Snackbar.make(view, "Respecte la forme de la matricule", Snackbar.LENGTH_SHORT).show();
+                //Toast.makeText(Ajoute_vihicule.this, "Respecte la forme de la matricule", Toast.LENGTH_SHORT).show();
 
             }
         }else{
-            Toast.makeText(this, "Merci de choisire la couleur de la vihicule", Toast.LENGTH_SHORT).show();
+            Snackbar.make(view, "Merci de choisire la couleur de la vihicule", Snackbar.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Merci de choisire la couleur de la vihicule", Toast.LENGTH_SHORT).show();
         }
+
+         }else{
+                        Snackbar.make(view, "les champs obligatoire", Snackbar.LENGTH_SHORT).show();
+                    }
 
 
     }

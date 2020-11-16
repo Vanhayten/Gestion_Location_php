@@ -38,6 +38,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -381,7 +382,11 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                                 if(c.moveToNext()) {
                                     if (Integer.parseInt(c.getString(0)) == 0) {
 
-                                        Toast.makeText(assurances.this, "sinistre vide", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(assurances.this, "sinistre vide", Toast.LENGTH_SHORT).show();
+                                        Snackbar snack = Snackbar.make(view,"sinistre vide",Snackbar.LENGTH_SHORT);
+                                        View sbView = snack.getView();
+                                        sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_light_red));
+                                        snack.show();
                                     } else {
 
                                         Intent I = new Intent(assurances.this, historique_sinistre.class);
@@ -486,7 +491,7 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
 
                                         AlertDialog.Builder builder = new AlertDialog.Builder(assurances.this);
                                         builder.setCancelable(true);
-                                        builder.setTitle("Neveaux sinistre");
+                                        builder.setTitle("Nouveaux sinistre");
                                         builder.setMessage("vous vouller ajouter");
                                         builder.setPositiveButton("Confirm",
                                                 new DialogInterface.OnClickListener() {
@@ -502,16 +507,31 @@ public class assurances extends AppCompatActivity implements NavigationView.OnNa
                                                                 }
                                                         boolean confirm = db.insert_sinistre(text1.getText().toString(),text2.getText().toString(),ch11,Integer.parseInt(text4.getText().toString()),spinner.getSelectedItem().toString(),Integer.parseInt(text6.getText().toString()),login);
                                                         if(confirm){
-                                                            Toast.makeText(assurances.this, "Bien ajoute", Toast.LENGTH_SHORT).show();
+
+                                                            //Toast.makeText(assurances.this, "Bien ajoute", Toast.LENGTH_SHORT).show();
+                                                            Snackbar snack = Snackbar.make(view,"Bien ajoute",Snackbar.LENGTH_SHORT);
+                                                            View sbView = snack.getView();
+                                                            sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_green));
+                                                            snack.show();
+
                                                             myDyalog_ajoute_conformation.dismiss();
                                                         }else{
-                                                            Toast.makeText(assurances.this, "Erreur d'ajoute", Toast.LENGTH_SHORT).show();
+                                                            Snackbar snack = Snackbar.make(view,"Erreur d'ajoute",Snackbar.LENGTH_SHORT);
+                                                            View sbView = snack.getView();
+                                                            sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_red));
+                                                            snack.show();
+                                                           // Toast.makeText(assurances.this, "Erreur d'ajoute", Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
                                                 });
                                         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
+
+                                                Snackbar snack = Snackbar.make(view,"l'ajout a été annulée",Snackbar.LENGTH_SHORT);
+                                                View sbView = snack.getView();
+                                                sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_yellow));
+                                                snack.show();
                                             }
                                         });
                                         AlertDialog dialog = builder.create();

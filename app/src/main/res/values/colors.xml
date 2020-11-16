@@ -6,7 +6,7 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="BlueDarck">#2f333f</color>
     <color name="BlueLight">#49acd5</color>
-    <color name="Green">#45bc62</color>
+    <color name="Green">#00AA00</color>
     <color name="Orange">#eaad43</color>
     <color name="NAVblack_theme100">#000000</color>
     <color name="NAVblack_theme75">#64638b</color>
@@ -15,7 +15,8 @@
     <color name="NAVwhite_theme10">#E4E7E8</color>
     <color name="NAVwhite">#fff</color>
     <color name="NAVwhite.1">#CDC9C9</color>
-    <color name="green">#45bc62</color>
+    <color name="NAVwhite1">#CDC9C9</color>
+    <color name="green">#339900</color>
     <color name="green1.1">#e0dcdc</color>
     <color name="RedDark">#8B0000</color>
     <color name="Red">#FF0000</color>
@@ -24,4 +25,9 @@
     <color name="colorDivide">#EBEBEB</color>
     <color name="colorError">#FF0000</color>
     <color name="colorSecondaryText">#FFFFFF</color>
+    <color name="color_warning_yellow">#ffcc00</color>
+    <color name="color_warning_red">#cc3300</color>
+    <color name="color_warning_green">#339900</color>
+    <color name="color_warning_light_green">#99cc33</color>
+    <color name="color_warning_light_red">#ff9966</color>
 </resources>

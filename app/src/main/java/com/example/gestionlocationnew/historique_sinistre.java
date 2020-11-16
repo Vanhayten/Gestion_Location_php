@@ -23,6 +23,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -39,7 +41,9 @@ String id_sinistre;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historique_sinistre);
 
-        Toast.makeText(this, "appuyez et maintenez pour modification ou suppression", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "appuyez et maintenez pour modification ou suppression", Toast.LENGTH_LONG).show();
+        View parentLayout = findViewById(android.R.id.content);
+        Snackbar.make(parentLayout, "appuyez et maintenez pour modification ou suppression", Snackbar.LENGTH_LONG).show();
         
         db = new gestion_location(this);
         ls=(ListView)findViewById(R.id.list2);

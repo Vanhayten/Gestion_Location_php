@@ -58,6 +58,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -409,7 +410,12 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 month = month + 1;
                 String datefin = dayOfMonth + "/" + month + "/" + year;
                 Recherche1.setText(datefin);
-                Toast.makeText(mes_charges.this, "Clicker sur le diagramme pour voir le resultats de recherche  ", Toast.LENGTH_LONG).show();
+              //  Toast.makeText(mes_charges.this, "Clicker sur le diagramme pour voir le resultats de recherche  ", Toast.LENGTH_LONG).show();
+                View parentLayout = findViewById(android.R.id.content);
+                Snackbar snack = Snackbar.make(parentLayout,"Clicker sur le diagramme pour voir le resultats de recherche",Snackbar.LENGTH_INDEFINITE).setDuration(5000);
+                View sbView = snack.getView();
+                sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_light_green));
+                snack.show();
             }
         };
 
@@ -1023,13 +1029,42 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 if (!espéce.isChecked() && !chéque.isChecked() && !virment.isChecked()) {
                     modpay = "Crèdit";
                 }
-                boolean c = db.insert_charge(datech.getText().toString(), Integer.parseInt(montant.getText().toString()), modpay.toString(), design.getText().toString(),login);
+                boolean c = false;
+                try {
+                    c = db.insert_charge(datech.getText().toString(), Integer.parseInt(montant.getText().toString()), modpay.toString(), design.getText().toString(),login);
+
+                }catch (Exception es){
+                    View parentLayout = findViewById(android.R.id.content);
+                    Snackbar snack = Snackbar.make(parentLayout,"veuillez remplir tous les champs obligatoires",Snackbar.LENGTH_LONG);
+                    View sbView = snack.getView();
+                    sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_yellow));
+                    snack.show();
+                }
                 if (c) {
-                    Toast.makeText(mes_charges.this, "l'ajoute Reussi", Toast.LENGTH_LONG).show();
-                    finish();
-                    startActivity(getIntent());
+                    dyalog_mes_charges.dismiss();
+                    Snackbar snack = Snackbar.make(view,"l'ajoute Reussi",Snackbar.LENGTH_INDEFINITE);
+                    View sbView = snack.getView();
+                    sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_green));
+                    snack.setAction("rafraîchir", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            snack.dismiss();
+                            finish();
+                            startActivity(getIntent());
+                        }
+                    }).setActionTextColor(getResources().getColor(R.color.NAVwhite1)).show();
+
+                    //Toast.makeText(mes_charges.this, "l'ajoute Reussi", Toast.LENGTH_LONG).show();
+
+                    
                 } else {
-                    Toast.makeText(mes_charges.this, "Erreur d'ajoute", Toast.LENGTH_LONG).show();
+                    
+                    //Toast.makeText(mes_charges.this, "Erreur d'ajoute", Toast.LENGTH_LONG).show();
+                    View parentLayout = findViewById(android.R.id.content);
+                    Snackbar snack = Snackbar.make(parentLayout,"Erreur d'ajoute",Snackbar.LENGTH_LONG);
+                    View sbView = snack.getView();
+                    sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_yellow));
+                    snack.show();
                 }
             }
         });
@@ -1334,7 +1369,6 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
             mChart.setData(data);
         }
     }
-    //
     //
     //contuner pdf
 

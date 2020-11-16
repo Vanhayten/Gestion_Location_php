@@ -1,7 +1,10 @@
 package com.example.gestionlocationnew;
 
+import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,14 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
@@ -29,6 +36,9 @@ import java.util.Date;
  */
 public class consulter_reparation extends Fragment {
     gestion_location db;
+
+    DatePickerDialog.OnDateSetListener mDateSetListenerechance;
+    DatePickerDialog.OnDateSetListener DateSetListenerechance;
 
     EditText t1, t2;
     ListView ls;
@@ -83,6 +93,8 @@ public class consulter_reparation extends Fragment {
         // Inflate the layout for this fragment
 
          View view=inflater.inflate(R.layout.fragment_consulter_reparation, container, false);
+
+
         db = new gestion_location ( getActivity () );
 
 
@@ -90,6 +102,72 @@ public class consulter_reparation extends Fragment {
         t1 = (EditText) view.findViewById ( R.id.date1 );
         t2 = (EditText) view.findViewById ( R.id.date2 );
         ls = (ListView) view.findViewById ( R.id.liste_reparation );
+
+        /**
+         * gete date effete
+         */
+        t1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int Year = cal.get(Calendar.YEAR);
+                int Month = cal.get(Calendar.MONTH);
+                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+
+                DatePickerDialog dialogDate = new DatePickerDialog(view.getContext()
+                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                        ,mDateSetListenerechance,Year, Month,Day);
+
+                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialogDate.show();
+
+            }
+        });
+
+         mDateSetListenerechance = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month = month + 1;
+                String datefin = dayOfMonth + "/" + month + "/" + year;
+                t1.setText(datefin);
+            }
+        };
+
+
+
+        t2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int Year = cal.get(Calendar.YEAR);
+                int Month = cal.get(Calendar.MONTH);
+                int Day = cal.get(Calendar.DAY_OF_MONTH);
+
+
+                DatePickerDialog dialogDate = new DatePickerDialog(view.getContext()
+                        ,android.R.style.Theme_Holo_Dialog_MinWidth
+                        ,DateSetListenerechance,Year, Month,Day);
+
+                dialogDate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialogDate.show();
+
+            }
+        });
+
+        DateSetListenerechance = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month = month + 1;
+                String datefin = dayOfMonth + "/" + month + "/" + year;
+                t2.setText(datefin);
+            }
+        };
+
+
+
+
+
         //
         String strtext = getActivity().getIntent().getExtras().getString("matricule");
         String login = getActivity().getIntent().getExtras().getString("login");
@@ -138,8 +216,10 @@ public class consulter_reparation extends Fragment {
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                     Date date1 = sdf.parse(d1);
                     Date date2 = sdf.parse(d2);
-                    Toast.makeText(getActivity(), date1+""+date2, Toast.LENGTH_SHORT).show();
 
+
+                    //Toast.makeText(getActivity(), sdf.parse(d1)+""+date2, Toast.LENGTH_SHORT).show();
+                    Snackbar.make(view, "recherche entre : "+sdf.format(date1)+"  et  "+sdf.format(date2), Snackbar.LENGTH_LONG).show();
 
                     Date date3;
 

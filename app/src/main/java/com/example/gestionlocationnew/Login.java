@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.NotificationCompat;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -59,6 +60,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+       // AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -280,7 +282,7 @@ login.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 T.putExtras(b);
                 check = true;
                 finish();
-                startActivity(T, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                startActivity(T);
             }
 
             if(check == false){

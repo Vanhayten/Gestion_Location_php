@@ -33,6 +33,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
@@ -83,6 +84,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialDialogs;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -592,7 +594,12 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 month =month+1;
                 String datefin = dayOfMonth+"/"+month+"/"+year;
                 Recherche1.setText(datefin);
-                Toast.makeText(mes_recettes.this, "Clicker sur le diagramme pour voir le resultats de recherche  ", Toast.LENGTH_LONG).show();
+                //Toast.makeText(mes_recettes.this, "Clicker sur le diagramme pour voir le resultats de recherche  ", Toast.LENGTH_LONG).show();
+                View parentLayout = findViewById(android.R.id.content);
+                Snackbar snack = Snackbar.make(parentLayout,"Clicker sur le diagramme pour voir le resultats de recherche",Snackbar.LENGTH_INDEFINITE).setDuration(5000);
+                View sbView = snack.getView();
+                sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_light_green));
+                snack.show();
             }
         };
 
@@ -691,7 +698,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
         listeRecet = new PageAdapter_recette ( this, arrayList1 );
         ls.setAdapter(listeRecet);
 
-       // totale.setText("Total generale par mois: "+somme+" DH");
+        totale.setText("Total generale par mois: "+somme+" DH");
 
 
 
@@ -1389,11 +1396,36 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                 String activ = text5.getText().toString();
                 String ddate_debut = text6.getText().toString();
                 String ddate_fin = text7.getText().toString();
-                int NB_jour = Integer.parseInt(text8.getText().toString());
-                int prix = Integer.parseInt(text9.getText().toString());
-                int prix_total = Integer.parseInt(text8.getText().toString()) * Integer.parseInt(text9.getText().toString());
+                String nbrout="";
+                nbrout  =text8.getText().toString();
+                int NB_jour=0;
+                if(!TextUtils.isEmpty(nbrout)){
+                    NB_jour = Integer.parseInt(nbrout);
+                }
+
+                String prixrout="";
+                int prix = 0;
+                prixrout=text9.getText().toString();
+                if(!TextUtils.isEmpty(prixrout)){
+                    prix = Integer.parseInt(prixrout);
+                }
+
+                String prixTTrout1="";
+                String prixTTrout2="";
+                int prix_total = 0;
+                prixTTrout1=text8.getText().toString();
+                prixTTrout2=text9.getText().toString();
+                if(!TextUtils.isEmpty(prixTTrout1) && !TextUtils.isEmpty(prixTTrout2) ){
+                    prix_total = Integer.parseInt(prixTTrout1) * Integer.parseInt(prixTTrout2);
+                }
                 String type = sp.getSelectedItem().toString();
-                String matricule = text11.getSelectedItem().toString();
+                String matricule = null;
+                try {
+                     matricule = text11.getSelectedItem().toString();
+                }catch (Exception e){
+                    //Toast.makeText(mes_recettes.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
                 String CinCl = text3.getText().toString();
 
 
@@ -1446,16 +1478,23 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
               
                 String s =pre_2+"-"+part3day+""+part2month+""+part1year+"-"+count;
 
-                Toast.makeText(mes_recettes.this, ""+s, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mes_recettes.this, ""+s, Toast.LENGTH_SHORT).show();
 
                 /**
                  * function pour ajouter nouveaux recettes
                  */
-                 Ajouter_recettes(nom,prenom,adr,cin,tele,activ,s,ddate_debut,ddate_fin,NB_jour,prix,prix_total,type,matricule,CinCl,login);
+                if(!TextUtils.isEmpty(matricule) && !TextUtils.isEmpty(cin) && !TextUtils.isEmpty(nom) && !TextUtils.isEmpty(prenom) && !TextUtils.isEmpty(adr) && !TextUtils.isEmpty(tele) && !TextUtils.isEmpty(activ) && !TextUtils.isEmpty(ddate_debut) && !TextUtils.isEmpty(ddate_fin) && !TextUtils.isEmpty(text8.getText().toString()) && !TextUtils.isEmpty(prix+"") && !TextUtils.isEmpty(prix_total+"")){
+                        Ajouter_recettes(nom,prenom,adr,cin,tele,activ,s,ddate_debut,ddate_fin,NB_jour,prix,prix_total,type,matricule,CinCl,login);
+                    MyDyalog_ajou.dismiss();
+                }else {
+                   // Toast.makeText(mes_recettes.this, "veuillez remplir tous les champs obligatoires", Toast.LENGTH_SHORT).show();
+                    View parentLayout = findViewById(android.R.id.content);
+                    Snackbar snack = Snackbar.make(parentLayout,"veuillez remplir tous les champs obligatoires",Snackbar.LENGTH_LONG);
+                    View sbView = snack.getView();
+                    sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_yellow));
+                    snack.show();
+                }
 
-                MyDyalog_ajou.dismiss();
-                finish();
-                startActivity(getIntent());
 
             }
 
@@ -1861,7 +1900,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
     public void Ajouter_recettes(String nom , String prenom, String adr, String cin, String tel, String activi ,String IDrecette , String d1, String d2, int nb, int prix,int pt,String typ,String ma,String ci,String login){
 
 
-
+            
         SQLiteDatabase table1 = db.getReadableDatabase ();
         String requet1 = "select * from Clients where cin ='"+ci+"' and login ='"+login+"'";
         Cursor c1 = table1.rawQuery ( requet1, null );
@@ -1872,35 +1911,92 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
             b = db.insert_client(nom,prenom,adr,cin, tel,activi,login);
             d= db.insert_Recette(IDrecette,d1,d2,nb,prix,pt,typ,ma,ci,login);
             if (b && d ) {
-                Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+
+                View parentLayout = findViewById(android.R.id.content);
+                Snackbar snack = Snackbar.make(parentLayout,"l'enregistrement effecuter",Snackbar.LENGTH_INDEFINITE);
+                View sbView = snack.getView();
+                sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_green));
+                snack.setAction("rafraîchir", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        snack.dismiss();
+                        finish();
+                        startActivity(getIntent());
+                    }
+                }).setActionTextColor(getResources().getColor(R.color.NAVwhite1)).show();
+
             }
         }
-        // tester if lclient existe        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        // tester if lclient existe      >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         if(c1.moveToFirst()) {
 
             if(c1.getString(3).equals(ci)) {
-                d= db.insert_Recette(IDrecette,d1,d2,nb,prix,pt,typ,ma,ci,login);
+
+                    d= db.insert_Recette(IDrecette,d1,d2,nb,prix,pt,typ,ma,ci,login);
+
+
 
                 if (d) {
-                    Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+                    View parentLayout = findViewById(android.R.id.content);
+                    Snackbar snack = Snackbar.make(parentLayout,"l'enregistrement effecuter",Snackbar.LENGTH_INDEFINITE);
+                    View sbView = snack.getView();
+                    sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_green));
+                    snack.setAction("rafraîchir", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            snack.dismiss();
+                            finish();
+                            startActivity(getIntent());
+                        }
+                    }).setActionTextColor(getResources().getColor(R.color.NAVwhite1)).show();
+
                 }else{
-                    Toast.makeText(mes_recettes.this, "l'enregistrement ne pas effecuter", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mes_recettes.this, "l'enregistrement ne pas effecuter", Toast.LENGTH_SHORT).show();
+                    View parentLayout = findViewById(android.R.id.content);
+                    Snackbar snack = Snackbar.make(parentLayout,"l'enregistrement ne pas effecuter",Snackbar.LENGTH_LONG);
+                    View sbView = snack.getView();
+                    sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_red));
+                    snack.show();
                 }
             }
             if(!c1.getString(3).equals(ci)) {
-                b = db.insert_client(nom,prenom,adr,cin, tel,activi,login);
-                d= db.insert_Recette(IDrecette,d1,d2,nb,prix,pt,typ,ma,ci,login);
+
+                    b = db.insert_client(nom,prenom,adr,cin, tel,activi,login);
+                    d= db.insert_Recette(IDrecette,d1,d2,nb,prix,pt,typ,ma,ci,login);
+
+
 
                 if(b && d ){
-                    Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(mes_recettes.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+                    View parentLayout = findViewById(android.R.id.content);
+                    Snackbar snack = Snackbar.make(parentLayout,"l'enregistrement effecuter",Snackbar.LENGTH_INDEFINITE);
+                    View sbView = snack.getView();
+                    sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_green));
+                    snack.setAction("rafraîchir", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            snack.dismiss();
+                            finish();
+                            startActivity(getIntent());
+                        }
+                    }).setActionTextColor(getResources().getColor(R.color.NAVwhite1)).show();
+
                 }else{
-                    Toast.makeText(mes_recettes.this, "l'enregistrement ne pas effecuter", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(mes_recettes.this, "l'enregistrement ne pas effecuter", Toast.LENGTH_SHORT).show();
+                    View parentLayout = findViewById(android.R.id.content);
+                    Snackbar snack = Snackbar.make(parentLayout,"l'enregistrement ne pas effecuter",Snackbar.LENGTH_LONG);
+                    View sbView = snack.getView();
+                    sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_red));
+                    snack.show();
                 }
             }
 
         }
-
     }
+          
+
+
 
 
     public void GetFeesBAck(String GetFeesBAck ,Dialog MyDyalog_ajou){
@@ -2115,7 +2211,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
             Toast.makeText(this, "Done", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Log.e("main", "error "+e.toString());
-            Toast.makeText(this, "Something wrong: " + e.toString(),  Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Quelque chose ne va pas : " + e.toString(),  Toast.LENGTH_LONG).show();
         }
         // close the document
         myPdfDocument.close();
@@ -2141,7 +2237,7 @@ public class mes_recettes extends AppCompatActivity implements NavigationView.On
                     savePdf();
                 }else{
                     //
-                    Toast.makeText(mes_recettes.this, "permission denied ...!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mes_recettes.this, "permission refusée ...!", Toast.LENGTH_SHORT).show();
                 }
             }
         }

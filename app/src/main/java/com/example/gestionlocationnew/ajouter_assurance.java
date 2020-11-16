@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
@@ -21,6 +22,8 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -146,11 +149,14 @@ public class ajouter_assurance extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void ajouterAssurance(View view) {
 
+
+        if(!TextUtils.isEmpty(t1.getText().toString()) && !TextUtils.isEmpty(t2.getText().toString()) && !TextUtils.isEmpty(t3.getText().toString()) && !TextUtils.isEmpty(t4.getText().toString()) && !TextUtils.isEmpty(t5.getText().toString())){
+
             boolean c=db.insert_assurance(t1.getText().toString(),t2.getText().toString(),t3.getText().toString(),t4.getText().toString(),Integer.parseInt(t5.getText().toString()),login);
 
 
             if(c){
-                Toast.makeText(this,"l'ajoute Reussi",Toast.LENGTH_LONG).show();
+
                 /**
                  * ajouter assurance event on calendar
                  */
@@ -170,20 +176,45 @@ public class ajouter_assurance extends AppCompatActivity {
                     Toast.makeText(this, ""+EX.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
-                Intent T;
-                Bundle b= new Bundle();
-                T = new Intent(this, assurances.class);
-                b.putString("nom",Nom);
-                b.putString("prenom",Prenom);
-                b.putString("role",role);
-                b.putString("login",login);
-                T.putExtras(b);
-                finish();
-                startActivity(T);
-            }else {
-                Toast.makeText(this,"Erreur d'ajoute",Toast.LENGTH_LONG).show();
-            }
+                Snackbar snack = Snackbar.make(view,"l'ajoute Reussi",Snackbar.LENGTH_INDEFINITE);
+                View sbView = snack.getView();
+                sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_green));
+                snack.setAction("Close", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        snack.dismiss();
+                        Intent T;
+                        Bundle b= new Bundle();
+                        T = new Intent(ajouter_assurance.this, assurances.class);
+                        b.putString("nom",Nom);
+                        b.putString("prenom",Prenom);
+                        b.putString("role",role);
+                        b.putString("login",login);
+                        T.putExtras(b);
+                        finish();
+                        startActivity(T);
+                    }
+                }).setActionTextColor(getResources().getColor(R.color.NAVwhite1)).show();
 
+
+
+            }else {
+                //Toast.makeText(this,"Erreur d'ajoute",Toast.LENGTH_LONG).show();
+                Snackbar snack = Snackbar.make(view,"Erreur d'ajoute",Snackbar.LENGTH_SHORT);
+                View sbView = snack.getView();
+                sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_red));
+                snack.show();
+
+            }
+        }else{
+            Snackbar snack = Snackbar.make(view,"les champs obligatoire",Snackbar.LENGTH_SHORT);
+            View sbView = snack.getView();
+            sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_yellow));
+            snack.show();
+
+            //Snackbar.make(view, "les champs obligatoire", Snackbar.LENGTH_SHORT).show();
+
+        }
 
     }
 

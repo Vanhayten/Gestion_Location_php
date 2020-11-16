@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
 
@@ -84,6 +87,9 @@ public class nouvel_reparation extends Fragment {
 
 
 
+
+
+
         //   = getArguments().getString("matricule");
 
         String strtext = getActivity().getIntent().getExtras().getString("matricule");
@@ -134,9 +140,15 @@ public class nouvel_reparation extends Fragment {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(!TextUtils.isEmpty(t1.getText()) && !TextUtils.isEmpty(t2.getText()) && !TextUtils.isEmpty(t3.getText()) && !TextUtils.isEmpty(t4.getText()) && !TextUtils.isEmpty(t5.getText())  && !TextUtils.isEmpty(t6.getText())){
                 boolean b = dp.insert_reparation(t1.getText().toString(), t2.getText().toString(), t3.getText().toString(), t4.getText().toString(), t5.getText().toString(), Integer.parseInt(t6.getText().toString()),login);
                  if(b) {
-                     Toast.makeText(getActivity(), "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+                     Snackbar snack = Snackbar.make(view,"l'enregistrement effecuter",Snackbar.LENGTH_LONG);
+                     View sbView = snack.getView();
+                     sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_green));
+                     snack.show();
+                     //Toast.makeText(getActivity(), "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
 
                      //t1.setText("");
                      t2.setText("");
@@ -146,9 +158,20 @@ public class nouvel_reparation extends Fragment {
                      t6.setText("");
 
                  }else{
-                    Toast.makeText(getActivity(),"l'enregistrement ne pas effectuer",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(),"l'enregistrement ne pas effectuer",Toast.LENGTH_SHORT).show();
+                     Snackbar snack = Snackbar.make(view,"l'enregistrement ne pas effectuer",Snackbar.LENGTH_LONG);
+                     View sbView = snack.getView();
+                     sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_red));
+                     snack.show();
+
                 }
 
+            }else{
+                    Snackbar snack = Snackbar.make(view,"les champs obligatoire",Snackbar.LENGTH_SHORT);
+                    View sbView = snack.getView();
+                    sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_yellow));
+                    snack.show();
+                }
             }
         });
         return view ;

@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -18,6 +19,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
 
@@ -106,25 +109,43 @@ public class Ajoute_vidange extends AppCompatActivity {
         if(ch3.isChecked()){
             choix=choix+" ,  carburant";
         }
-
+        if(!TextUtils.isEmpty(matr) && !TextUtils.isEmpty(Date.getText().toString()) && !TextUtils.isEmpty(kilomaitrage.getText().toString())){
         boolean res = db.insert_vidange(matr , Date.getText().toString() , Integer.parseInt(kilomaitrage.getText().toString()) , choix , Integer.parseInt(type_spinner.getSelectedItem().toString()),login);
         if(res){
-            Toast.makeText(this,"Bien Ajoute",Toast.LENGTH_LONG).show();
+            //Toast.makeText(this,"Bien Ajoute",Toast.LENGTH_LONG).show();
+            Snackbar snack = Snackbar.make(view,"Bien Ajoute",Snackbar.LENGTH_INDEFINITE);
+            View sbView = snack.getView();
+            sbView.setBackgroundColor(getResources().getColor(R.color.green));
+            snack.setAction("Close", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    snack.dismiss();
+                    Intent I = new Intent(Ajoute_vidange.this, entretiens.class);
+                    Bundle B = new Bundle();
+                    B.putString("nom", Nom);
+                    B.putString("prenom", Prenom);
+                    B.putString("role", role);
+                    B.putString("login", login);
+                    I.putExtras(B);
+                    startActivity(I);
+                    finish();
+                }
+            }).setActionTextColor(getResources().getColor(R.color.NAVwhite1)).show();
 
-            Intent I = new Intent(Ajoute_vidange.this, entretiens.class);
-            Bundle B = new Bundle();
-            B.putString("nom", Nom);
-            B.putString("prenom", Prenom);
-            B.putString("role", role);
-            B.putString("login", login);
-            I.putExtras(B);
-            startActivity(I);
-            finish();
 
         }else{
-            Toast.makeText(this,"Erreur d'ajoute",Toast.LENGTH_LONG).show();
+            //Toast.makeText(this,"Erreur d'ajoute",Toast.LENGTH_LONG).show();
+            Snackbar snack = Snackbar.make(view,"Erreur d'ajoute",Snackbar.LENGTH_SHORT);
+            View sbView = snack.getView();
+            sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_red));
+            snack.show();
         }
-
+        }else{
+            Snackbar snack = Snackbar.make(view,"les champs obligatoire",Snackbar.LENGTH_SHORT);
+            View sbView = snack.getView();
+            sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_yellow));
+            snack.show();
+        }
 
 
     }

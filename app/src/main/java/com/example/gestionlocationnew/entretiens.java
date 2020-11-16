@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
@@ -41,6 +42,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -310,18 +312,31 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
 
                                         }
                                     if (b) {
-                                        Toast.makeText(entretiens.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+
+                                        //Toast.makeText(entretiens.this, "l'enregistrement effecuter", Toast.LENGTH_SHORT).show();
+                                        Snackbar snack = Snackbar.make(view,"l'enregistrement effecuter",Snackbar.LENGTH_LONG);
+                                        View sbView = snack.getView();
+                                        sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_green));
+                                        snack.show();
+
                                         MyDyalog_ajou.dismiss();
                                     } else {
-                                        Toast.makeText(entretiens.this, "l'enregistrement ne pas effectuer", Toast.LENGTH_SHORT).show();
+                                        Snackbar snack = Snackbar.make(view,"l'enregistrement ne pas effectuer",Snackbar.LENGTH_LONG);
+                                        View sbView = snack.getView();
+                                        sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_red));
+                                        snack.show();
+                                        //Toast.makeText(entretiens.this, "l'enregistrement ne pas effectuer", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
 
                             MyDyalog_ajou.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                             MyDyalog_ajou.show();
-                           Toast.makeText(entretiens.this, "Pour accéder à cette page, vous devez au moins remplir 1 réparation", Toast.LENGTH_LONG).show();
-
+                           //Toast.makeText(entretiens.this, "Pour accéder à cette page, vous devez au moins remplir 1 réparation", Toast.LENGTH_LONG).show();
+                           Snackbar snack = Snackbar.make(view,"Pour accéder à cette page, vous devez au moins remplir 1 réparation",Snackbar.LENGTH_INDEFINITE).setDuration(5000);
+                           View sbView = snack.getView();
+                           sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_yellow));
+                           snack.show();
 
                         } else {
 
@@ -655,6 +670,9 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                             @Override
                             public void onClick(View v) {
                                 boolean res = false;
+                                if(!TextUtils.isEmpty(date1.getText()) && !TextUtils.isEmpty(Date2.getText()) ){
+
+
                                 SQLiteDatabase DB = db.getWritableDatabase();
                                 ContentValues tab_ch1 = new ContentValues();
                                 tab_ch1.put("imatriculation_visite", Matricule.getText().toString());
@@ -662,6 +680,7 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                                 tab_ch1.put("prch_visite", Date2.getText().toString());
                                 tab_ch1.put("login", login);
                                 long result = DB.insert("visite_technique", null, tab_ch1);
+
                                 if (result == -1) {
                                     res = false;
                                 } else {
@@ -669,7 +688,12 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                                 }
                                 if (res) {
                                     dialog_ajoute_visite.dismiss();
-                                    Toast.makeText(entretiens.this, "Bien Ajouter", Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(entretiens.this, "Bien Ajouter", Toast.LENGTH_SHORT).show();
+                                    Snackbar snack = Snackbar.make(view,"Bien Ajouter",Snackbar.LENGTH_SHORT);
+                                    View sbView = snack.getView();
+                                    sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_green));
+                                    snack.show();
+
 
                                     /**
                                      * AJOUTE SUR CELENDAR
@@ -683,7 +707,17 @@ public class entretiens extends AppCompatActivity implements NavigationView.OnNa
                                     }
 
                                 } else {
-                                    Toast.makeText(entretiens.this, "erreur d'joute", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(entretiens.this, "erreur d'joute", Toast.LENGTH_SHORT).show();
+                                    Snackbar snack = Snackbar.make(view,"erreur d'joute",Snackbar.LENGTH_SHORT);
+                                    View sbView = snack.getView();
+                                    sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_red));
+                                    snack.show();
+                                }
+                                }else{
+                                    Snackbar snack = Snackbar.make(view,"les champs obligatoire",Snackbar.LENGTH_SHORT);
+                                    View sbView = snack.getView();
+                                    sbView.setBackgroundColor(getResources().getColor(R.color.color_warning_yellow));
+                                    snack.show();
                                 }
                             }
                         });
