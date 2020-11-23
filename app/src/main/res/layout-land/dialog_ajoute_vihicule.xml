@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark"
+    android:padding="5dp"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+
+
+<LinearLayout
+    android:layout_width="650dp"
+    android:layout_height="575dp"
+    android:background="@color/colorPrimaryDark"
+    android:padding="5dp"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="60dp"
+        android:layout_marginLeft="60dp">
+
+        <EditText
+            android:id="@+id/text_nom1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:hint="@string/Nom_voiture"
+            android:textSize="18dp"
+            android:textColor="@color/NAVblack_theme100"
+            android:textColorHint="@color/BlueDarck"
+            android:gravity="center"
+            android:background="@drawable/rounded_edit_text"/>
+
+        <EditText
+            android:id="@+id/text_prenom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:enabled="false"
+            android:hint="@string/Matricule"
+            android:textSize="18dp"
+            android:textColor="@color/green"
+            android:textColorHint="@color/BlueDarck"
+            android:gravity="center"
+            android:background="@drawable/rounded_edit_text" />
+        <EditText
+            android:id="@+id/text_cin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date Circulation"
+            android:layout_marginTop="16dp"
+            android:inputType="date"
+            android:textColor="@color/NAVblack_theme100"
+            android:textColorHint="@color/BlueDarck"
+            android:gravity="center"
+            android:background="@drawable/rounded_edit_text"
+            android:textSize="18dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/NAVwhite"
+            android:layout_marginTop="16dp">
+            <Spinner
+                android:id="@+id/text_marqueCombision1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/marque_com"
+                android:textColor="@color/NAVwhite"
+                android:textSize="24dp" />
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/text_tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/Valeur_entrée"
+            android:textSize="18dp"
+            android:textColor="@color/NAVblack_theme100"
+            android:textColorHint="@color/BlueDarck"
+            android:gravity="center"
+            android:background="@drawable/rounded_edit_text"/>
+
+        <EditText
+            android:id="@+id/text_activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/Date_effet"
+            android:textColor="@color/NAVblack_theme100"
+            android:textColorHint="@color/BlueDarck"
+            android:gravity="center"
+            android:inputType="date"
+            android:background="@drawable/rounded_edit_text"
+            android:layout_marginTop="16dp"
+            android:textSize="18dp" />
+        <EditText
+            android:id="@+id/text_dateDebut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/Date_echeance"
+            android:textColor="@color/NAVblack_theme100"
+            android:textColorHint="@color/BlueDarck"
+            android:gravity="center"
+            android:background="@drawable/rounded_edit_text"
+            android:layout_marginTop="16dp"
+            android:inputType="date"
+            android:textSize="18dp"
+            />
+        <com.divyanshu.colorseekbar.ColorSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:background="@android:color/white"
+            android:id="@+id/vihicule_Couleur">
+
+        </com.divyanshu.colorseekbar.ColorSeekBar>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        >
+        <Button
+            android:id="@+id/btn_modifier1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/confirmer"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/button_style"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginRight="18dp"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>
+</ScrollView>

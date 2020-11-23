@@ -1,16 +1,8 @@
 package com.example.gestionlocationnew;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -25,20 +17,16 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.pdf.PdfDocument;
-import android.icu.util.LocaleData;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -52,17 +40,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.ShareCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 
@@ -82,33 +64,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.dialog.MaterialDialogs;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.BaseField;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.lang.reflect.Type;
-import java.net.URLConnection;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -117,13 +78,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static android.provider.CalendarContract.CalendarCache.URI;
 
 public class mes_recettes extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 

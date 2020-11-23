@@ -46,7 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="Mes charges"
+                    android:text="@string/charge"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textSize="28dp"></TextView>
@@ -54,7 +54,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="recherche entre deux date"
+                    android:text="@string/deux_date"
                     android:layout_gravity="center"
                     android:id="@+id/visiblecharche"
                     android:onClick="recherche"
@@ -72,7 +72,7 @@
                     android:id="@+id/chercherCharge"
                     android:layout_width="300dp"
                     android:layout_height="40dp"
-                    android:hint="Date de début"
+                    android:hint="@string/date_debut"
                     android:textAlignment="center"
                     android:inputType="date"
                     android:textColor="@color/BlueDarck"
@@ -85,7 +85,7 @@
                         android:layout_width="300dp"
                         android:layout_height="40dp"
                         android:layout_marginTop="8dp"
-                        android:hint="Date de fin"
+                        android:hint="@string/date_fin"
                         android:inputType="date"
                         android:textAlignment="center"
                         android:textColor="@color/BlueDarck"
@@ -129,7 +129,7 @@
                     android:drawableStart="@drawable/ic_add_black_24dp"
                     android:drawableLeft="@drawable/ic_add_black_24dp"
                     android:drawablePadding="4dp"
-                    android:text="Ajouter"
+                    android:text="@string/Ajoute"
                     android:onClick="confirmer"
 
                     android:textColor="@color/NAVwhite_theme50" />
@@ -140,17 +140,18 @@
 
                 <Button
                     android:id="@+id/button_pdf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="250dp"
+                    android:layout_height="45dp"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="230dp"
                     android:layout_marginRight="25dp"
                     android:background="@drawable/corner_pdf"
                     android:drawableStart="@drawable/pdf"
                     android:drawableLeft="@drawable/pdf"
-                    android:text="TELECHARGEMENT"
-                    android:textColor="@color/NAVwhite"
-                    android:layout_marginLeft="130dp"
                     android:drawablePadding="4dp"
+                    android:text="@string/TELECHARGEMENT"
+                    android:textColor="@color/NAVwhite"
+                    android:layout_centerHorizontal="true"
 
 
                     />
@@ -170,14 +171,14 @@
                 android:layout_marginTop="12dp">
 
                 <com.github.mikephil.charting.charts.LineChart
-                    android:layout_width="match_parent"
+                    android:id="@+id/Linecharcherge"
+                    android:layout_width="200dp"
                     android:layout_height="230dp"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
                     android:background="@color/NAVwhite"
-                    android:elevation="10dp"
-                    android:id="@+id/Linecharcherge">
+                    android:elevation="10dp">
 
                 </com.github.mikephil.charting.charts.LineChart>
 

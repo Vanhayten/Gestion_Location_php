@@ -48,7 +48,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:gravity="center_horizontal"
-                    android:text="Mes Recettes"
+                    android:text="@string/recette"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textSize="28dp"></TextView>
@@ -63,7 +63,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="300dp"
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
-                    android:hint="Recherche"
+                    android:hint="@string/Rechercher"
                     android:textAlignment="center"
                     android:textColor="@color/BlueDarck"
                     android:textColorHint="@color/BlueDarck"
@@ -106,7 +106,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
                     android:drawableStart="@drawable/ic_add_black_24dp"
                     android:drawableLeft="@drawable/ic_add_black_24dp"
                     android:onClick="ajouter"
-                    android:text="Ajouter"
+                    android:text="@string/Ajoute"
                     android:textColor="@color/NAVwhite_theme50"
                     android:layout_marginRight="25dp"
                     android:paddingRight="12dp">
@@ -147,7 +147,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
                     android:background="@drawable/corner_pdf"
                     android:drawableStart="@drawable/pdf"
                     android:drawableLeft="@drawable/pdf"
-                    android:text="TELECHARGEMENT"
+                    android:text="@string/TELECHARGEMENT"
                     android:textColor="@color/NAVwhite"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
@@ -178,7 +178,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:orientation="horizontal">
     <EditText
-        android:hint="date1"
+        android:hint="@string/date_debut"
         android:textAlignment="center"
         android:textColor="@color/BlueDarck"
         android:background="@drawable/rounded_edit_text"
@@ -192,7 +192,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 
     </EditText>
     <EditText
-        android:hint="date 2"
+        android:hint="@string/date_fin"
         android:textAlignment="center"
         android:textColor="@color/BlueDarck"
         android:background="@drawable/rounded_edit_text"
@@ -239,6 +239,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         //comment
 
     </RelativeLayout>
+
 
 
 

@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
                 android:enabled="false"
-                android:hint="Matricule"
+                android:hint="@string/Matricule"
                 android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
                 android:textSize="18dp" />
@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Date sinistre"
+                android:hint="@string/d_sin"
                 android:inputType="date"
                 android:textSize="18dp"
                 android:textColor="@color/NAVblack_theme100"
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Genr :"
+                android:text="@string/genre"
                 android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
                 android:textSize="18dp" />
@@ -65,21 +65,21 @@
                     android:id="@+id/text_ganredaccident2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Corporele"
+                    android:hint="@string/corps"
                     android:textColorHint="@color/NAVwhite"
                     android:textColor="@color/NAVwhite"
                     android:layout_marginTop="5sp"
-                    android:textSize="18dp" />
+                    android:textSize="16dp" />
                 <CheckBox
                     android:id="@+id/text_ganredaccident3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Material"
+                    android:hint="@string/Material"
                     android:layout_marginLeft="8dp"
                     android:textColorHint="@color/NAVwhite"
                     android:textColor="@color/NAVwhite"
                     android:layout_marginTop="5sp"
-                    android:textSize="18dp" />
+                    android:textSize="16dp" />
             </LinearLayout>
 
 
@@ -88,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Montant reparation"
+                android:hint="@string/mont_rep"
                 android:inputType="number"
                 android:textColor="@color/NAVblack_theme100"
                 android:textColorHint="@color/BlueDarck"
@@ -104,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5sp"
-                    android:text="Responsabiliter :"
+                    android:text="@string/respo"
                     android:textColor="@color/NAVwhite"
                     android:textColorHint="@color/NAVwhite"
                     android:textSize="18dp" />
@@ -117,7 +117,7 @@
                     android:id="@+id/text_responsabilite2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Responsabilite"
+                    android:hint="@string/respo"
                     android:textSize="6dp" />
                 </LinearLayout>
             </LinearLayout>
@@ -128,13 +128,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Montant pris en charge"
+                android:hint="@string/Mont_pris"
                 android:inputType="number"
                 android:textColor="@color/NAVblack_theme100"
                 android:textColorHint="@color/BlueDarck"
                 android:gravity="center"
                 android:background="@drawable/rounded_edit_text"
-                android:textSize="18dp"
+                android:textSize="17dp"
                 />
 
         </LinearLayout>
@@ -150,7 +150,7 @@
                 android:id="@+id/btn_modifier1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Confirmer"
+                android:text="@string/confirmer"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:background="@drawable/button_style"

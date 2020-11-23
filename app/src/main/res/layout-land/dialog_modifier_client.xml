@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark"
+    android:padding="5dp"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="550dp"
+        android:layout_height="505dp"
+        android:background="@color/colorPrimaryDark"
+        android:padding="5dp"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="60dp"
+            android:layout_marginLeft="60dp">
+
+            <EditText
+                android:id="@+id/text_Cinnn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp"
+                android:background="@drawable/rounded_edit_text"
+                android:enabled="false"
+                android:gravity="center"
+                android:hint="@string/cin"
+                android:textColor="@color/green"
+                android:textColorHint="@color/BlueDarck"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/text_nomclient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/Nom_client"
+                android:textSize="18dp"
+                android:textColor="@color/NAVblack_theme100"
+                android:textColorHint="@color/BlueDarck"
+                android:gravity="center"
+                android:background="@drawable/rounded_edit_text"/>
+            <EditText
+                android:id="@+id/text_prenomclient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/Prenom"
+                android:textColor="@color/NAVblack_theme100"
+                android:textColorHint="@color/BlueDarck"
+                android:gravity="center"
+                android:background="@drawable/rounded_edit_text"
+                android:textSize="18dp" />
+
+
+            <EditText
+                android:id="@+id/text_Adress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/adr"
+                android:textColor="@color/NAVblack_theme100"
+                android:textColorHint="@color/BlueDarck"
+                android:gravity="center"
+                android:background="@drawable/rounded_edit_text"
+                android:layout_marginTop="16dp"
+                android:textSize="18dp"
+                />
+            <EditText
+                android:id="@+id/text_num_tele"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/numTele"
+                android:textColor="@color/NAVblack_theme100"
+                android:textColorHint="@color/BlueDarck"
+                android:gravity="center"
+                android:background="@drawable/rounded_edit_text"
+                android:layout_marginTop="16dp"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/text_activ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/act"
+                android:textColor="@color/NAVblack_theme100"
+                android:textColorHint="@color/BlueDarck"
+                android:gravity="center"
+                android:background="@drawable/rounded_edit_text"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            >
+            <Button
+                android:id="@+id/btn_modifier1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/confirmer"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/button_style"
+                android:textColor="@color/NAVwhite"
+                android:layout_marginRight="18dp"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

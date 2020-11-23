@@ -34,7 +34,7 @@
             android:layout_marginRight="18dp"
             android:background="@drawable/button_style"
             android:gravity="center"
-            android:text="Modifier"
+            android:text="@string/Modifier"
             android:textColor="@color/NAVwhite" />
 
         <Button
@@ -44,7 +44,7 @@
             android:layout_gravity="center"
             android:background="@drawable/button_style"
             android:gravity="center"
-            android:text="Supprimer"
+            android:text="@string/Supprimer"
             android:textColor="@color/NAVwhite" />
 
     </LinearLayout>

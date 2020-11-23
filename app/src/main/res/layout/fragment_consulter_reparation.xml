@@ -13,7 +13,7 @@
             android:id="@+id/title1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="l'historique des reparations"
+            android:text="@string/his"
             android:textAllCaps="true"
             android:textSize="24sp"
             android:layout_marginTop="16dp"
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
                 android:layout_weight="1"
-                android:hint="1er date"
+                android:hint="@string/date_debut"
                 android:inputType="date|none"></EditText>
 
             <EditText
@@ -49,7 +49,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="2eme date"
+                android:hint="@string/date_fin"
                 android:inputType="date">
 
             </EditText>
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/aficher_reparat"
             android:layout_below="@id/linner1"
-            android:text="afficher"
+            android:text="@string/afficher"
             android:layout_marginLeft="140dp">
 
         </Button>

@@ -29,7 +29,7 @@
             android:id="@+id/text_nom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cin"
+            android:text="cin"
             android:layout_marginBottom="4dp"
             android:textStyle="bold"
             android:textColor="@color/NAVwhite"
@@ -52,7 +52,7 @@
             android:layout_marginRight="18dp"
             android:background="@drawable/button_style"
             android:gravity="center"
-            android:text="Nodifier"
+            android:text="@string/Modifier"
             android:textColor="@color/NAVwhite" />
 
         <Button
@@ -62,7 +62,7 @@
             android:layout_gravity="center"
             android:background="@drawable/button_style"
             android:gravity="center"
-            android:text="Supprimer"
+            android:text="@string/Supprimer"
             android:textColor="@color/NAVwhite" />
 
     </LinearLayout>
@@ -79,7 +79,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Evoluez ce client"
+                android:text="@string/Evoluez"
                 android:textColor="@color/NAVwhite_theme10"
                 android:layout_gravity="center" />
 

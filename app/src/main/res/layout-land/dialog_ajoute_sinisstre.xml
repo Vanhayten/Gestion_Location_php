@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark"
+    android:padding="5dp"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="650dp"
+        android:layout_height="575dp"
+        android:background="@color/colorPrimaryDark"
+        android:padding="5dp"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="60dp"
+            android:layout_marginLeft="60dp">
+
+
+            <EditText
+                android:id="@+id/text_matricule2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:enabled="false"
+                android:hint="@string/Matricule"
+                android:textColor="@color/NAVwhite"
+                android:textColorHint="@color/NAVwhite"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/text_datesinistre2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/d_sin"
+                android:inputType="date"
+                android:textSize="18dp"
+                android:textColor="@color/NAVblack_theme100"
+                android:textColorHint="@color/BlueDarck"
+                android:gravity="center"
+                android:background="@drawable/rounded_edit_text"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/genre"
+                android:textColor="@color/NAVwhite"
+                android:textColorHint="@color/NAVwhite"
+                android:textSize="18dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/text_ganredaccident2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/corps"
+                    android:textColorHint="@color/NAVwhite"
+                    android:textColor="@color/NAVwhite"
+                    android:layout_marginTop="5sp"
+                    android:textSize="18dp" />
+                <CheckBox
+                    android:id="@+id/text_ganredaccident3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/Material"
+                    android:layout_marginLeft="8dp"
+                    android:textColorHint="@color/NAVwhite"
+                    android:textColor="@color/NAVwhite"
+                    android:layout_marginTop="5sp"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/text_vmontant2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Montant reparation"
+                android:inputType="number"
+                android:textColor="@color/NAVblack_theme100"
+                android:textColorHint="@color/BlueDarck"
+                android:gravity="center"
+                android:background="@drawable/rounded_edit_text"
+                android:textSize="18dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5sp"
+                    android:text="@string/respo"
+                    android:textColor="@color/NAVwhite"
+                    android:textColorHint="@color/NAVwhite"
+                    android:textSize="18dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/NAVwhite">
+                <Spinner
+                    android:id="@+id/text_responsabilite2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/respo"
+                    android:textSize="6dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/text_montant2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/Mont_pris"
+                android:inputType="number"
+                android:textColor="@color/NAVblack_theme100"
+                android:textColorHint="@color/BlueDarck"
+                android:gravity="center"
+                android:background="@drawable/rounded_edit_text"
+                android:textSize="18dp"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            >
+            <Button
+                android:id="@+id/btn_modifier1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/confirmer"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/button_style"
+                android:textColor="@color/NAVwhite"
+                android:layout_marginRight="18dp"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
-                android:hint="Designation"
+                android:hint="@string/dis"
                 android:inputType="none"
                 android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
-                android:hint="Montant"
+                android:hint="@string/mont"
                 android:inputType="number"
                 android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
                 android:clickable="true"
-                android:hint="Date"
+                android:hint="@string/date"
                 android:inputType="date"
                 android:textColor="@color/NAVwhite"
                 android:textColorHint="@color/NAVwhite"
@@ -60,7 +60,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mode Payment : "
+                android:text="@string/mod"
                 android:textColor="@color/NAVwhite"
                 android:layout_marginTop="5sp"
                 android:textSize="18dp"
@@ -70,7 +70,7 @@
              android:id="@+id/mode_espéce"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             android:text="espéce"
+             android:text="@string/esp"
              android:textColor="@color/NAVwhite"
              android:layout_marginLeft="80dp"
 
@@ -79,7 +79,7 @@
                 android:id="@+id/mode_chèque"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="chèque"
+                android:text="@string/chek"
                 android:textColor="@color/NAVwhite"
                 android:layout_marginLeft="80dp"
 
@@ -88,7 +88,7 @@
                 android:id="@+id/mode_virement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="virement"
+                android:text="@string/virm"
                 android:textColor="@color/NAVwhite"
                 android:layout_marginLeft="80dp"
 
@@ -115,7 +115,7 @@
                 android:background="@drawable/button_style"
                 android:gravity="center"
                 android:onClick="Confirmer"
-                android:text="Confirmer"
+                android:text="@string/confirmer"
 
 
                 android:textColor="@color/NAVwhite" />

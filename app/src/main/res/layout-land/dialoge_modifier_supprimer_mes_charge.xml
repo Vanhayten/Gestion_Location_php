@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="340dp"
+    android:layout_height="150dp"
+    android:background="@color/colorPrimaryDark"
+    android:padding="5dp"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+    <TextView
+        android:id="@+id/text_close"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textColor="@color/NAVwhite"
+        android:text="x"
+        android:textStyle="bold"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:background="@drawable/cercelbaground"/>
+
+
+    <LinearLayout
+        android:layout_width="333dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_charge1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="18dp"
+            android:background="@drawable/button_style"
+            android:gravity="center"
+            android:text="@string/Modifier"
+            android:textColor="@color/NAVwhite" />
+
+        <Button
+            android:id="@+id/btn_charge2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/button_style"
+            android:gravity="center"
+            android:text="@string/Supprimer"
+            android:textColor="@color/NAVwhite" />
+
+    </LinearLayout>
+
+</LinearLayout>

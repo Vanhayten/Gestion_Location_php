@@ -1,30 +1,20 @@
 package com.example.gestionlocationnew;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -39,21 +29,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.divyanshu.colorseekbar.ColorSeekBar;
-import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 

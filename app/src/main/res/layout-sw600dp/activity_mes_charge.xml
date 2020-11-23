@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    tools:openDrawer="end"
+    android:background="@color/NAVwhite_theme50"
+    android:id="@+id/drawer"
+    android:layout_height="match_parent"
+    tools:context=".mes_charges">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:theme="@style/ToolbarColoredBackArrow"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="45dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="672dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:background="@color/NAVwhite_theme50"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical"
+                android:layout_marginBottom="26dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/charge"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="28dp"></TextView>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/deux_date"
+                    android:layout_gravity="center"
+                    android:id="@+id/visiblecharche"
+                    android:onClick="recherche"
+                    >
+
+                </Button>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:id="@+id/layout_recherche">
+                <EditText
+                    android:id="@+id/chercherCharge"
+                    android:layout_width="300dp"
+                    android:layout_height="40dp"
+                    android:hint="@string/date_debut"
+                    android:textAlignment="center"
+                    android:inputType="date"
+                    android:textColor="@color/BlueDarck"
+                    android:textColorHint="@color/BlueDarck"
+                    android:background="@drawable/rounded_edit_text"
+                    android:layout_marginBottom="16dp"
+                    />
+                    <EditText
+                        android:id="@+id/chercherCharge1"
+                        android:layout_width="300dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:hint="@string/date_fin"
+                        android:inputType="date"
+                        android:textAlignment="center"
+                        android:textColor="@color/BlueDarck"
+                        android:textColorHint="@color/BlueDarck"
+                        android:background="@drawable/rounded_edit_text"
+                        android:layout_marginBottom="16dp"
+                        />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/idcolor"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"></TextView>
+
+            </LinearLayout>
+
+            <ListView
+                android:nestedScrollingEnabled="true"
+                android:id="@+id/listcharges"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="-25dp"
+                android:layout_marginRight="30dp"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="10.0sp">
+
+            </ListView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_width="102dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/rounded_buttom"
+                    android:drawableStart="@drawable/ic_add_black_24dp"
+                    android:drawableLeft="@drawable/ic_add_black_24dp"
+                    android:drawablePadding="4dp"
+                    android:text="@string/Ajoute"
+                    android:onClick="confirmer"
+
+                    android:textColor="@color/NAVwhite_theme50" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/button_pdf"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="420dp"
+                    android:layout_marginRight="35dp"
+                    android:background="@drawable/corner_pdf"
+                    android:drawableStart="@drawable/pdf"
+                    android:drawableLeft="@drawable/pdf"
+                    android:drawablePadding="4dp"
+                    android:text="@string/TELECHARGEMENT"
+                    android:textColor="@color/NAVwhite"
+                    android:layout_centerHorizontal="true"
+
+
+                    />
+
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:background="@android:color/darker_gray"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="12dp">
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/Linecharcherge"
+                    android:layout_width="200dp"
+                    android:layout_height="230dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@color/NAVwhite"
+                    android:elevation="10dp">
+
+                </com.github.mikephil.charting.charts.LineChart>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+        //comment
+    </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:id="@+id/navigationView"
+        app:menu="@menu/menu_item"
+        app:headerLayout="@layout/header"
+        android:layout_gravity="start"
+        android:background="@color/NAVwhite_theme10"
+        />
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

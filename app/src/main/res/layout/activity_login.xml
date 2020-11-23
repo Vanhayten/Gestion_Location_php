@@ -6,9 +6,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:background="@color/NAVblack_theme75"
     android:orientation="vertical"
-    tools:context=".Login">
+    tools:context=".Login"
+    android:gravity="center">
 
 
     <LinearLayout
@@ -54,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="37.7dp"
-                    android:text="s'identifier"
+                    android:text="@string/Identification"
                     android:textColor="#030303"
                     android:textSize="31.3sp" />
 
@@ -62,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
-                    android:text="Nom d'utilisateur ou Email"
+                    android:text="@string/Nom_utilisateur_ou_Email"
                     android:textColor="#c2c2c2"
                     android:textSize="13.3sp" />
 
@@ -89,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20.3dp"
-                    android:text="Mot de passe"
+                    android:text="@string/prompt_password"
                     android:textColor="#c2c2c2"
                     android:textSize="13.3sp" />
 
@@ -125,7 +127,7 @@
                     android:layout_gravity="right"
                     android:layout_marginTop="17.3dp"
                     android:layout_marginRight="44.3dp"
-                    android:text="Mot de passe oublié?"
+                    android:text="@string/oublier"
                     android:textColor="#d5d5d5"
                     android:textSize="12.3sp" />
 
@@ -208,7 +210,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginTop="@dimen/margin_secondary"
-                android:text="  S'inscrire"
+                android:text="@string/register"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

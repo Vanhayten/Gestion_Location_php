@@ -13,7 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="70dp"
-        android:text="Matricule" />
+        android:text="@string/Matricule" />
 
     <EditText
         android:id="@+id/editText19"
@@ -25,15 +25,15 @@
         android:enabled="false"
         android:inputType="textPersonName" />
 
+
     <TextView
         android:id="@+id/textView16"
         android:layout_width="165dp"
         android:layout_height="25dp"
         android:layout_below="@id/textView22"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="30dp"
-        android:text="Date début assurance" />
-
+        android:layout_marginTop="35dp"
+        android:text="@string/Date_début_assurance" />
 
     <EditText
         android:id="@+id/editText9"
@@ -51,7 +51,7 @@
         android:layout_below="@id/editText9"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="30dp"
-        android:text="Date fin assurance" />
+        android:text="@string/Date_fin_assurance" />
 
     <EditText
         android:id="@+id/editText16"
@@ -69,7 +69,7 @@
         android:layout_below="@id/textView18"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="30dp"
-        android:text="Compagine d'assurance" />
+        android:text="@string/Compagine" />
 
     <EditText
         android:id="@+id/editText17"
@@ -87,7 +87,7 @@
         android:layout_below="@id/textView19"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="30dp"
-        android:text="Prime d'assurance" />
+        android:text="@string/prime" />
 
     <EditText
         android:id="@+id/editText18"
@@ -107,6 +107,6 @@
         android:layout_marginLeft="140dp"
         android:layout_marginTop="40dp"
         android:onClick="ajouterAssurance"
-        android:text="Confirmation" />
+        android:text="@string/confirmer" />
 
 </RelativeLayout>

@@ -3,37 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/flotte"
-        android:title="Ma Flotte">
+        android:title="@string/Flotte">
         <menu>
             <item
                 android:id="@+id/vihicule"
-                android:title="   Mes véhicules"></item>
+                android:title="@string/véhicules"></item>
             <item
                 android:id="@+id/assurances"
-                android:title="   Mes assurances"></item>
+                android:title="@string/assurances"></item>
             <item
                 android:id="@+id/entretiens"
-                android:title="   Mes entretiens"></item>
+                android:title="@string/mes_entretiens"></item>
         </menu>
     </item>
     <item
         android:id="@+id/recette"
-        android:title="Ma Recette"/>
+        android:title="@string/Ma_Recette"/>
     <item
         android:id="@+id/charges"
-        android:title="Mes Charges"/>
+        android:title="@string/Mes_Charges"/>
     <item
         android:id="@+id/calendrier"
-        android:title="Calendrier"/>
+        android:title="@string/Calendrier"/>
     <item
         android:id="@+id/clients"
-        android:title="Mes Clients"/>
+        android:title="@string/Mes_Clients"/>
     <item
         android:id="@+id/locations"
-        android:title="Mes Locations"/>
+        android:title="@string/Mes_Locations"/>
     <item
         android:id="@+id/logout"
-        android:title="Se déconnecter"
+        android:title="@string/Se_déconnecter"
         android:icon="@drawable/ic_baseline_login_24"
         app:showAsAction="always">
     </item>

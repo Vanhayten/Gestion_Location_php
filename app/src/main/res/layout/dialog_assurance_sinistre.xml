@@ -50,7 +50,7 @@
             android:layout_marginRight="18dp"
             android:background="@drawable/button_style"
             android:gravity="center"
-            android:text="ASSURANCE AUTO"
+            android:text="@string/ass_aut"
             android:textColor="@color/NAVwhite" />
 
         <Button
@@ -60,7 +60,7 @@
             android:layout_gravity="center"
             android:background="@drawable/button_style"
             android:gravity="center"
-            android:text="SINISTRES AUTO"
+            android:text="@string/sin_aut"
             android:textColor="@color/NAVwhite" />
 
     </LinearLayout>

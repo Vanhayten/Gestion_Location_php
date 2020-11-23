@@ -2,31 +2,29 @@
     <string name="app_name">Gestloc</string>
     <string name="drawerOpen">drawerOpen</string>
     <string name="drawerClose">drawerClose</string>
-    <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="user">"nom Prenom"</string>
+    <string name="prompt_password">Mot de passe </string>
+    <string name="action_sign_in">Connectez-vous ou inscrivez-vous</string>
+    <string name="action_sign_in_short">Se connecter</string>
+    <string name="welcome">"Bienvenue"</string>
+    <string name="invalid_username">Nom utilisateur incorrect</string>
+    <string name="invalid_password">Mot de passe doit etre supérieur à 5 caractères</string>
+    <string name="login_failed">"Nom utilisateur incorrect"</string>
+    <string name="user">"Nom Prenom"</string>
     <string name="register">S\'inscrire</string>
     <string name="register_msg">Bonjour, rejoignez-nous</string>
-    <string name="first_name">Prénom</string>
     <string name="use_Name">Nom d\'utilisateur</string>
     <string name="error_name">Min 4 caractères!</string>
-    <string name="userName">Deja existe</string>
+    <string name="userName">Déja existe</string>
     <string name="last_name">Nom </string>
-    <string name="numTele">Numero de telephone</string>
+    <string name="numTele">Numéro de télephone</string>
     <string name="email">Email</string>
-    <string name="error_email">Invalid email!</string>
-    <string name="error_tele">Invalid phone!</string>
+    <string name="error_email">Email incorrect!</string>
+    <string name="error_tele">Numéro de télephone incorrecte!</string>
     <string name="password">Mot de passe</string>
-    <string name="error_password">Min 8 character!</string>
+    <string name="error_password">le mots de passe doit contient minimum 8 caractère!</string>
     <string name="register_have_account_msg">Vous avez déjà un compte?</string>
-    <string name="login">S\'identifier</string>
+    <string name="login">Identification</string>
     <string name="Matricule">Matricule</string>
     <string name="Date_vidange">Date vidange</string>
     <string name="Kilomètrage">Kilomètrage</string>
@@ -36,8 +34,136 @@
     <string name="Filtre_à_carburant">Filtre à carburant </string>
     <string name="kilométrage">kilométrage d\'huile : </string>
     <string name="KM">KM</string>
-    <string name="Ajoute">Ajoute</string>
+    <string name="Ajoute">Ajouter</string>
+    <string name="Nom_voiture">Nom_voiture</string>
+    <string name="Immatriculation">Immatriculation_(12345-A-15)</string>
+    <string name="Date_de_mise">Date de mise en circulation (dd/mm/yyyy)</string>
+    <string name="Valeur_entrée">Valeur d’entrée</string>
+    <string name="Date_effet">Date effet assurance (dd/mm/yyyy)</string>
+    <string name="d_effet">Date effet assurance</string>
+    <string name="Date_echeance">Date echeance (dd/mm/yyyy)</string>
+    <string name="d_echeance">Date echeance</string>
+    <string name="couleur">Couleur de véhicule</string>
+    <string name="choix">Choisir la couleur</string>
+    <string name="confirmer">confirmer</string>
+    <string name="Date_début_assurance">Date début assurance</string>
+    <string name="Date_fin_assurance">Date fin assurance</string>
+    <string name="Compagine">Compagine assurance</string>
+    <string name="prime">Prime assurance</string>
+    <string name="assurance">Assurance</string>
+    <string name="Rechercher">Rechercher</string>
+    <string name="Entretien">Entretiens</string>
+    <string name="Identification">Identification</string>
+    <string name="Nom_utilisateur_ou_Email">Nom d\'utilisateur ou Email</string>
+    <string name="oublier">Mot de passe oublié?</string>
+    <string name="vehicule">Mes véhicules</string>
+    <string name="charge">Mes charges</string>
+    <string name="deux_date">recherche entre deux date</string>
+    <string name="date_debut">Date de début</string>
+    <string name="date_fin">Date de fin</string>
+    <string name="TELECHARGEMENT">TELECHARGEMENT</string>
+    <string name="client">Mes Client</string>
+    <string name="location">Mes location</string>
+    <string name="recette">Mes Recettes</string>
+    <string name="afficher">Afficher</string>
+    <string name="alarme">alarme moi</string>
+    <string name="agenda">Agenda</string>
+    <string name="lundi">lundi</string>
+    <string name="mardi">Mardi</string>
+    <string name="Merc">Mercredi</string>
+    <string name="Jeudi">Jeudi</string>
+    <string name="Vendre">Vendredi</string>
+    <string name="sam">Samedi</string>
+    <string name="Dim">Dimanche</string>
+    <string name="D_ch">Date :</string>
+    <string name="pay">Payment:</string>
+    <string name="dis">Desingation:</string>
+    <string name="piece">Pieces changes</string>
+    <string name="main">Main d\'oeuvre</string>
+    <string name="ref">Réf facture</string>
+    <string name="d_rep">Date reparation(dd/mm/yyyy)</string>
+    <string name="mont_rep">Montant de réparation</string>
+    <string name="d_sin">Date de Sinistre</string>
+    <string name="genre"> Genre :</string>
+    <string name="corps">Corporelle</string>
+    <string name="Material">Matériel</string>
+    <string name="respo">Responsabilité</string>
+    <string name="Mont_pris">Montant de prise en charge</string>
+    <string name="marque_com">Marque de Combustion</string>
+    <string name="date_visite">Date de la Visite technique</string>
+    <string name="date_proch">Date de la prochaine Visite technique</string>
+    <string name="cin">Cin ou Num passport</string>
+    <string name="Nom_client">Nom de Client</string>
+    <string name="Prenom">Prénom de Client </string>
+    <string name="act">Activité</string>
+    <string name="genre_acc">Genre d\'accident</string>
+    <string name="d_dloc">Date Début Location</string>
+    <string name="d_floc">Date fin Location</string>
+    <string name="prix">Prix de Location</string>
+    <string name="nbr_jour">Nombre des Jours</string>
+    <string name="proch_ass">Prochaine Assurance : Null</string>
+    <string name="ajout_ass">Ajouter Assurance</string>
+    <string name="ass_aut">ASSURANCE AUTO</string>
+    <string name="sin_aut">SINISTRES AUTO</string>
+    <string name="id">Id  :</string>
+    <string name="Modifier">Modifier</string>
+    <string name="Type_vidange">Type vidange</string>
+    <string name="his_sin">l\'historique des Sinistres</string>
+    <string name="ajouter_sin">Ajouter un Nouveaux Sinistre</string>
+    <string name="Supprimer">Supprimer</string>
+    <string name="Evoluez">Evoluez ce client</string>
+    <string name="proch_vid">Prochaine Vidange : Null</string>
+    <string name="proch_vis">Prochaine Visite technique : Null</string>
+    <string name="ajouter_vid">Ajouter Vidange</string>
+    <string name="marque_voi">Marque véhicule</string>
+    <string name="d_circula">Date mise en circulation</string>
+    <string name="date">Date</string>
+    <string name="mod">Mode Payment : </string>
+    <string name="esp">espéce</string>
+    <string name="chek">chèque</string>
+    <string name="virm">virement</string>
+    <string name="his">l\'historique des reparations</string>
+    <string name="Enregistrer">Enregistrer</string>
+    <string name="créé">Votre compte a été créé</string>
+    <string name="Event">evenment</string>
+    <string name="Time">Temps</string>
+    <string name="Flotte">Ma Flotte</string>
+    <string name="assurances">  Mes assurances</string>
+    <string name="véhicules">  Mes véhicules</string>
+    <string name="mes_entretiens">  Mes entretiens</string>
+    <string name="Ma_Recette">Ma Recette</string>
+    <string name="Mes_Charges">Mes Charges</string>
+    <string name="Calendrier">Calendrier</string>
+    <string name="Mes_Clients">Mes Clients</string>
+    <string name="Mes_Locations">Mes Locations</string>
+    <string name="Se_déconnecter">Se déconnecter</string>
+    <string name="typeevent">type evenment</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="title_activity_login">Se connecter</string>
+
+
+    <string name="first_name">Prénom</string>
+    <string name="coleur">Choisir la couleur</string>
+    <string name="mont">Montant:</string>
+    <string name="adr">Adresse</string>
+    <string name="ajouter_vis">Ajouter Visite technique</string>
 </resources>

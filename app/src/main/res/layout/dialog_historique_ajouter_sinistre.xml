@@ -49,7 +49,7 @@
             android:layout_gravity="center"
             android:background="@drawable/button_style"
             android:gravity="center"
-            android:text="l'historique de sinisstre"
+            android:text="@string/his_sin"
             android:textColor="@color/NAVwhite" />
 
         <Button
@@ -60,7 +60,7 @@
             android:layout_gravity="center"
             android:background="@drawable/button_style"
             android:gravity="center"
-            android:text="Ajouter un nouveaux "
+            android:text="@string/ajouter_sin"
             android:textColor="@color/NAVwhite" />
 
     </LinearLayout>

@@ -5,10 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CalendarView;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,19 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.applandeo.materialcalendarview.EventDay;
-import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark"
+    android:padding="5dp"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="650dp"
+        android:layout_height="675dp"
+        android:background="@color/colorPrimaryDark"
+        android:padding="5dp"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="60dp"
+            android:layout_marginLeft="60dp">
+
+            <EditText
+                android:id="@+id/text_prenom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:enabled="false"
+                android:hint="@string/Matricule"
+                android:textSize="18dp"
+                android:textColor="@color/green"
+                android:textColorHint="@color/BlueDarck"
+                android:gravity="center"
+                android:background="@drawable/rounded_edit_text"/>
+            <EditText
+                android:id="@+id/text_piece"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/piece"
+                android:textColor="@color/NAVblack_theme100"
+                android:textColorHint="@color/BlueDarck"
+                android:gravity="center"
+                android:background="@drawable/rounded_edit_text"
+                android:textSize="18dp" />
+
+
+            <EditText
+                android:id="@+id/text_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/main"
+                android:textColor="@color/NAVblack_theme100"
+                android:textColorHint="@color/BlueDarck"
+                android:gravity="center"
+                android:background="@drawable/rounded_edit_text"
+                android:layout_marginTop="16dp"
+                android:textSize="18dp"
+                />
+            <EditText
+                android:id="@+id/text_ref_facture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/ref"
+                android:textColor="@color/NAVblack_theme100"
+                android:textColorHint="@color/BlueDarck"
+                android:gravity="center"
+                android:background="@drawable/rounded_edit_text"
+                android:layout_marginTop="16dp"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/text_date_reparation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rounded_edit_text"
+                android:gravity="center"
+                android:hint="@string/d_rep"
+                android:inputType="date"
+                android:textColor="@color/NAVblack_theme100"
+                android:textColorHint="@color/BlueDarck"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/text_Montant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/mont_rep"
+                android:inputType="number"
+                android:textSize="18dp"
+                android:textColor="@color/NAVblack_theme100"
+                android:textColorHint="@color/BlueDarck"
+                android:gravity="center"
+                android:background="@drawable/rounded_edit_text"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            >
+            <Button
+                android:id="@+id/btn_modifier1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/confirmer"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/button_style"
+                android:textColor="@color/NAVwhite"
+                android:layout_marginRight="18dp"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="500dp"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark"
+    android:padding="5dp"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+    <TextView
+        android:id="@+id/text_close"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textColor="@color/NAVwhite"
+        android:text="x"
+        android:textStyle="bold"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:background="@drawable/cercelbaground"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp">
+
+
+        <TextView
+            android:id="@+id/text_idreccet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/id"
+            android:textStyle="bold"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="16sp"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:id="@+id/text_Cin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16sp"
+            android:text="@string/cin"
+            android:textColor="@color/NAVwhite"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_MAtrc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16sp"
+            android:text="@string/Matricule"
+            android:textColor="@color/NAVwhite"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/text_datedbt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/d_dloc"
+            android:textStyle="bold"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="16sp"
+            android:textSize="18dp"/>
+        <TextView
+            android:id="@+id/text_datefin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/d_floc"
+            android:textStyle="bold"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="16sp"
+            android:textSize="18dp"/>
+        <TextView
+            android:id="@+id/text_nbJour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nbr_jour"
+            android:textStyle="bold"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="16sp"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:id="@+id/text_prixt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/prix"
+            android:textStyle="bold"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginTop="16sp"
+            android:textSize="18dp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        >
+        <Button
+            android:id="@+id/btn_modifier_reccet"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:text="@string/Modifier"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/button_style"
+            android:textColor="@color/NAVwhite"
+            android:layout_marginRight="18dp"/>
+
+
+    </LinearLayout>
+
+
+    <!--android:visibility="gone"-->
+
+    <LinearLayout
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_marginTop="9dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:progressTint="#FFCC01"
+            android:progressBackgroundTint="@color/NAVgray_theme50" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/descLayout"
+        android:visibility="gone">
+        <EditText
+            android:layout_gravity="center"
+            android:layout_width="250dp"
+            android:layout_height="75dp"
+            android:hint="description"
+            android:textColorHint="@color/NAVgray_theme50"
+            android:gravity="center"
+            android:textColor="@color/NAVwhite.1"
+            android:background="@drawable/edittextbackground"
+            android:id="@+id/descript">
+
+        </EditText>
+        <Button
+            android:id="@+id/ratingBTN"
+            android:layout_gravity="center"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="confirm">
+
+        </Button>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/downLayout"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="-12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Evoluez ce client"
+            android:textColor="@color/NAVwhite.1"
+            android:layout_gravity="center" />
+
+        <ImageView
+            android:id="@+id/downImage"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
