@@ -146,12 +146,14 @@
                     android:layout_marginTop="5dp"
                    />
 
+
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginLeft="29dp"
                     android:layout_marginTop="30dp"
                     />
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -187,7 +189,18 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+
         </FrameLayout>
+
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"/>
 
         <LinearLayout
             android:layout_width="309dp"
@@ -199,6 +212,7 @@
             android:background="@drawable/bg_button_rectangle_white"
             android:id="@+id/sinscrire"
             >
+
 
             <ImageView
                 android:layout_width="45dp"

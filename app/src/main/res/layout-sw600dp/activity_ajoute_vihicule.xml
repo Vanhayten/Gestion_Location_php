@@ -116,6 +116,23 @@
 
         </com.divyanshu.colorseekbar.ColorSeekBar>
 
+        <TextView
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="24sp"
+            android:fontFamily="@font/open_sans_regular"
+            android:id="@+id/state"/>
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            />
 
         <Button
             android:layout_width="match_parent"

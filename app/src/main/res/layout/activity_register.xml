@@ -80,7 +80,7 @@
             android:layout_marginEnd="@dimen/margin_secondary"
             android:background="@drawable/bg_field"
             android:hint="@string/use_Name"
-            android:inputType="text"
+            android:inputType="textPersonName"
             android:padding="@dimen/padding_secondary"
             android:paddingTop="@dimen/padding_primary"
             android:paddingBottom="@dimen/padding_primary"
@@ -285,7 +285,18 @@
             app:layout_constraintTop_toBottomOf="@+id/et_password"
             app:layout_constraintVertical_bias="0.0" />
 
-
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_password"
+        app:layout_constraintBottom_toTopOf="@+id/btn_register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_password"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 
@@ -336,7 +347,8 @@
                 android:text="@string/login"
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimary"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:onClick="goBack"/>
 
         </LinearLayout>
 

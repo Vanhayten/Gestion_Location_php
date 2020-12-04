@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,6 +9,17 @@
     android:background="@color/NAVwhite_theme50"
     tools:context=".vehicules"
     tools:openDrawer="end">
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <com.scwang.smart.refresh.header.ClassicsHeader
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+        <com.scwang.smart.refresh.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,6 +33,7 @@
             app:theme="@style/ToolbarColoredBackArrow"
           />
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="672dp"
@@ -31,12 +44,26 @@
             android:background="@color/NAVwhite_theme50"
             android:orientation="vertical">
 
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeToRefresh"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:background="@color/colorPrimary"
                 android:orientation="vertical">
+
+                <ProgressBar
+                    android:visibility="gone"
+                    android:id="@+id/progressBar1"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="-50dp"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -48,14 +75,11 @@
                     android:textColor="#FFFFFF"
                     android:textSize="28dp"></TextView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
+
                 <EditText
                     android:id="@+id/chercherMatr"
                     android:layout_width="300dp"
-                    android:layout_height="40dp"
+                    android:layout_height="43dp"
                     android:layout_marginTop="8dp"
                     android:hint="@string/Rechercher"
                     android:textAlignment="center"
@@ -63,17 +87,19 @@
                     android:textColorHint="@color/BlueDarck"
                     android:background="@drawable/rounded_edit_text"
                     android:layout_marginBottom="16dp"
-                    >
+                    android:layout_gravity="center"
+                   />
 
-                </EditText>
-                </LinearLayout>
 
                 <TextView
                     android:id="@+id/idcolor"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"></TextView>
+                    android:layout_height="1dp" />
 
             </LinearLayout>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
             <ListView
                 android:id="@+id/list1"
@@ -83,9 +109,10 @@
                 android:layout_marginTop="-25dp"
                 android:layout_marginRight="30dp"
                 android:divider="@android:color/transparent"
-                android:dividerHeight="10.0sp">
+                android:dividerHeight="10.0sp"/>
 
-            </ListView>
+
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -112,6 +139,9 @@
 
 
     </RelativeLayout>
+
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"

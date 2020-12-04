@@ -2,29 +2,31 @@
     <string name="app_name">Gestloc</string>
     <string name="drawerOpen">drawerOpen</string>
     <string name="drawerClose">drawerClose</string>
+    <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Mot de passe </string>
-    <string name="action_sign_in">Connectez-vous ou inscrivez-vous</string>
-    <string name="action_sign_in_short">Se connecter</string>
-    <string name="welcome">"Bienvenue"</string>
-    <string name="invalid_username">Nom utilisateur incorrect</string>
-    <string name="invalid_password">Mot de passe doit etre supérieur à 5 caractères</string>
-    <string name="login_failed">"Nom utilisateur incorrect"</string>
-    <string name="user">"Nom Prenom"</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="user">"nom Prenom"</string>
     <string name="register">S\'inscrire</string>
     <string name="register_msg">Bonjour, rejoignez-nous</string>
+    <string name="first_name">Prénom</string>
     <string name="use_Name">Nom d\'utilisateur</string>
     <string name="error_name">Min 4 caractères!</string>
-    <string name="userName">Déja existe</string>
+    <string name="userName">Deja existe</string>
     <string name="last_name">Nom </string>
-    <string name="numTele">Numéro de télephone</string>
+    <string name="numTele">Numero de telephone</string>
     <string name="email">Email</string>
-    <string name="error_email">Email incorrect!</string>
-    <string name="error_tele">Numéro de télephone incorrecte!</string>
+    <string name="error_email">Invalid email!</string>
+    <string name="error_tele">Invalid phone!</string>
     <string name="password">Mot de passe</string>
-    <string name="error_password">le mots de passe doit contient minimum 8 caractère!</string>
+    <string name="error_password">Min 8 character!</string>
     <string name="register_have_account_msg">Vous avez déjà un compte?</string>
-    <string name="login">Identification</string>
+    <string name="login">S\'identifier</string>
     <string name="Matricule">Matricule</string>
     <string name="Date_vidange">Date vidange</string>
     <string name="Kilomètrage">Kilomètrage</string>
@@ -34,7 +36,7 @@
     <string name="Filtre_à_carburant">Filtre à carburant </string>
     <string name="kilométrage">kilométrage d\'huile : </string>
     <string name="KM">KM</string>
-    <string name="Ajoute">Ajouter</string>
+    <string name="Ajoute">Ajoute</string>
     <string name="Nom_voiture">Nom_voiture</string>
     <string name="Immatriculation">Immatriculation_(12345-A-15)</string>
     <string name="Date_de_mise">Date de mise en circulation (dd/mm/yyyy)</string>
@@ -141,32 +143,15 @@
     <string name="Diesel">Diesel</string>
     <string name="Essence">Essence</string>
     <string name="Hybride">Hybride</string>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <string name="failed_message">Aucun Internet trouvé. Vérifiez votre connexion</string>
+    <string name="ok">ok</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-
-    <string name="title_activity_login">Se connecter</string>
-
-
-    <string name="first_name">Prénom</string>
-    <string name="coleur">Choisir la couleur</string>
-    <string name="mont">Montant:</string>
-    <string name="adr">Adresse</string>
-    <string name="ajouter_vis">Ajouter Visite technique</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hosting">http://192.168.1.137:8080</string>
+    <string name="coleur">coleur</string>
+    <string name="adr">address</string>
+    <string name="mont">le montant :</string>
+    <string name="ajouter_vis">ajouté visite technique</string>
+    <string name="failed">failed</string>
 </resources>

@@ -148,4 +148,9 @@
     <string name="Hybride">هجين</string>
     <string name="Essence">بنزين</string>
     <string name="Diesel">ديزل</string>
+    <string name="hosting">http://192.168.0.102:8080</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="failed">فشل</string>
+    <string name="failed_message">لم يتم العثور على الإنترنت. تحقق من اتصالك</string>
+    <string name="ok">حسنا</string>
 </resources>

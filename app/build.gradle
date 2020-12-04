@@ -15,6 +15,7 @@ android {
        
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        useLibrary "org.apache.http.legacy"
     }
 
     buildTypes {
@@ -62,10 +63,21 @@ dependencies {
     implementation 'com.itextpdf:itextg:5.5.10'
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
 
-    implementation 'com.android.volley:volley:1.1.0'
+    implementation 'com.github.VishnuSivadasVS:Advanced-HttpURLConnection:1.2'
 
-    implementation 'com.android.support:design:27.1.1'
 
+    implementation 'com.android.volley:volley:1.1.1'
+
+
+    // Note: There will be no default Header and Footer after subcontracting. It needs to be added manually!
+    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'      //core
+    implementation  'com.scwang.smart:refresh-header-classics:2.0.1'    //ClassicsHeader
+    implementation  'com.scwang.smart:refresh-header-radar:2.0.1'       //BezierRadarHeader
+    implementation  'com.scwang.smart:refresh-header-falsify:2.0.1'     //FalsifyHeader
+    implementation  'com.scwang.smart:refresh-header-material:2.0.1'    //MaterialHeader
+    implementation  'com.scwang.smart:refresh-header-two-level:2.0.1'   //TwoLevelHeader
+    implementation  'com.scwang.smart:refresh-footer-ball:2.0.1'        //BallPulseFooter
+    implementation  'com.scwang.smart:refresh-footer-classics:2.0.1'    //ClassicsFooter
 
 
 

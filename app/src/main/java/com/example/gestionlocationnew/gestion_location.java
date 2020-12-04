@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import java.sql.Timestamp;
+
 
 public class gestion_location extends SQLiteOpenHelper {
 
@@ -48,6 +50,7 @@ public class gestion_location extends SQLiteOpenHelper {
     private static final String Col_Date_Effet_Assurance = "Date_Effet_Assurance";
     private static final String Col_Date_Echeance = "Date_Echeance";
     private static final String Col_Couleur_Vehicule = "Couleur_Vehicule";
+    private static final String Col_on_update = "on_update";
     //private static final String Col_login = "Login";
 
     //declarationtable recette
@@ -148,7 +151,7 @@ public class gestion_location extends SQLiteOpenHelper {
 
 
     public gestion_location(Context context) {
-        super(context, DATABASE_NAME, null, 5);
+        super(context, DATABASE_NAME, null, 6);
             db = this.getWritableDatabase();
     }
 
@@ -158,7 +161,10 @@ public class gestion_location extends SQLiteOpenHelper {
         //, PRIMARY KEY("+Col_login+","+Cole_Email+")
         String table1 = "Create table "+Table1+" ("+Col_Idreccete+" Integer PRIMARY KEY AUTOINCREMENT ,"+Col_login+" text ,"+Col_Mdp+" text,"+Col_Nom+" text,"+Col_Prenom+" text,"+Col_Role+" text,"+Cole_dateID+" date , "+Cole_Email+" text )";
         String table2 = "Create table "+Table2+" ("+Col_nom+" text  ,"+Col_prenom+" text,"+Col_adresse+" text,"+Col_cin+" text primary key,"+Col_tel+" text,"+Col_activité+" text , "+Col_login+" text)";
-        String table3 = "Create table "+Table3+" ("+Col_Marque_Vihicule+" text ,"+Col_DateCirculation+" date ,"+Col_immatriculation+" text primary key,"+Col_MarqueCombustion+" text , "+Col_ValeurDentrée+" Integer,"+Col_Date_Effet_Assurance+" date,"+Col_Date_Echeance+" date,"+Col_Couleur_Vehicule+" Integer,"+Col_login+" text)";
+        String table3 = "Create table "+Table3+" ("+Col_Marque_Vihicule+" text ,"+Col_DateCirculation+" date ,"+Col_immatriculation+" text primary key,"+Col_MarqueCombustion+" text , "+Col_ValeurDentrée+" Integer,"+Col_Date_Effet_Assurance+" date,"+Col_Date_Echeance+" date,"+Col_Couleur_Vehicule+" Integer,"+Col_login+" text, on_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)";
+
+        //String add_culumn = "ALTER TABLE véhicules  ADD COLUMN on_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP";
+
         String table4 = "Create table "+Table4+" ("+Col_IdRecette+" text primary key ,"+Col_date_début+" Date,"+Col_date_fin+" Date,"+Col_nbJour+" Integer,"+Col_prix_location+" Integer , "+Col_prixTotal_location+" Integer , "+Col_Type+" Text,"+Col_matr+" Text,"+Col_CinCl+" text ,"+Col_login+" text)";
         String table5 = "Create table "+Table5+" ("+Col_IdCharge+" Integer PRIMARY KEY AUTOINCREMENT,"+Col_Date+" date,"+Col_Montant+" integer,"+Col_Payment+" text,"+Col_designation+" text ,"+Col_login+" text)";
         String table6 = "Create table "+Table6+" ("+Col_IdEvenement+" text primary key,"+Col_DateDebut+" date ,"+Col_DateFin+" date,"+Col_Rappel+" text,"+Col_Nature+" text,"+Col_Responsable+" text ,"+Col_login+" text)";
@@ -174,6 +180,9 @@ public class gestion_location extends SQLiteOpenHelper {
         db.execSQL(table1);
         db.execSQL(table2);
         db.execSQL(table3);
+
+       // db.execSQL(add_culumn);
+
         db.execSQL(table4);
         db.execSQL(table5);
         db.execSQL(table6);
@@ -423,7 +432,9 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
 //methode modifier vihicule
 
 
-    public void modifier_vihucle(String Nom,String date , String imatricul, String marque, Integer valeur, String Date_Effet, String Date_echance, Integer couleur,String login){
+    public boolean modifier_vihucle(String Nom, String date , String imatricul, String marque, Integer valeur, String Date_Effet, String Date_echance, Integer couleur, String login, Timestamp dateNow){
+
+        boolean res=false;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues v = new ContentValues();
         v.put(Col_Marque_Vihicule,Nom);
@@ -433,7 +444,15 @@ public boolean insert_client(String nom , String prenom, String adr, String cin,
         v.put(Col_Date_Effet_Assurance,Date_Effet);
         v.put(Col_Date_Echeance,Date_echance);
         v.put(Col_Couleur_Vehicule,couleur);
-        db.update(Table3,v,""+Col_immatriculation+"=? AND " + Col_login + " =?",new String[]{imatricul,login});
+        v.put(Col_on_update, String.valueOf(dateNow));
+        long result =  db.update(Table3,v,""+Col_immatriculation+"=? AND " + Col_login + " =?",new String[]{imatricul,login});
+        if(result == -1){
+            res=false;
+        }
+        else{
+            res=true;
+        }
+        return res;
     }
 
 
