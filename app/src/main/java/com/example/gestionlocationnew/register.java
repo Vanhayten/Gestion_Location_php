@@ -560,15 +560,18 @@ public class register extends AppCompatActivity {
                     field[6] = "Email";
 
 
+
                     //Creating array for data
                     String[] data = new String[7];
-                    data[0] = String.valueOf(strings[0]);
-                    data[1] = String.valueOf(strings[1]);
-                    data[2] = String.valueOf(strings[2]);
-                    data[3] = String.valueOf(strings[3]);
-                    data[4] = String.valueOf(strings[4]);
-                    data[5] = String.valueOf(strings[5]);
-                    data[6] = String.valueOf(strings[6]);
+                    data[0] = String.valueOf(strings[0][0]);
+                    data[1] = String.valueOf(strings[0][1]);
+                    data[2] = String.valueOf(strings[0][2]);
+                    data[3] = String.valueOf(strings[0][3]);
+                    data[4] = String.valueOf(strings[0][4]);
+                    data[5] = String.valueOf(strings[0][5]);
+                    data[6] = String.valueOf(strings[0][6]);
+
+
 
                     String host = getResources().getString(R.string.hosting);
                     PutData putData = new PutData(host + "/gesloc/LoginRegister/signup.php", "POST", field, data);
