@@ -563,14 +563,17 @@ public class register extends AppCompatActivity {
 
                     //Creating array for data
                     String[] data = new String[7];
-                    data[0] = String.valueOf(strings[0][0]);
-                    data[1] = String.valueOf(strings[0][1]);
-                    data[2] = String.valueOf(strings[0][2]);
-                    data[3] = String.valueOf(strings[0][3]);
-                    data[4] = String.valueOf(strings[0][4]);
-                    data[5] = String.valueOf(strings[0][5]);
-                    data[6] = String.valueOf(strings[0][6]);
+                    data = strings[0];
+//                    data[0] = String.valueOf(strings[0][0]);
+//                    data[1] = String.valueOf(strings[0][1]);
+//                    data[2] = String.valueOf(strings[0][2]);
+//                    data[3] = String.valueOf(strings[0][3]);
+//                    data[4] = String.valueOf(strings[0][4]);
+//                    data[5] = String.valueOf(strings[0][5]);
+//                    data[6] = String.valueOf(strings[0][6]);
 
+
+                   // Log.i("data","Login  "+strings[0][0]+"  MDP"+strings[0][1]+"       "+strings[0][2]+"      "+strings[0][3]+"    "+strings[0][4]+"   "+strings[0][5]+"   "+strings[0][6]);
 
 
                     String host = getResources().getString(R.string.hosting);
@@ -633,7 +636,19 @@ public class register extends AppCompatActivity {
 
             if (checker) {
 
+
                 llProgressBar.setVisibility(View.VISIBLE);
+
+                ImageView ImageChecker = (ImageView) llProgressBar.findViewById(R.id.ImageDone);
+                ImageChecker.setImageResource(R.drawable.cancel);
+                llProgressBar.setVisibility(View.VISIBLE);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        llProgressBar.setVisibility(View.INVISIBLE);
+                    }
+                }, 3000);
+
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -641,10 +656,12 @@ public class register extends AppCompatActivity {
                         register.this.startActivity(mainIntent);
                         register.this.finish();
                     }
-                }, 2000);
+                }, 1000);
 
             } else {
 
+                TextView Text = (TextView) llProgressBar.findViewById(R.id.pbText);
+                Text.setText("Votre compte ne pas créé");
                 ImageView ImageChecker = (ImageView) llProgressBar.findViewById(R.id.ImageDone);
                 ImageChecker.setImageResource(R.drawable.cancel);
                 llProgressBar.setVisibility(View.VISIBLE);
