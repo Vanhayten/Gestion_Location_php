@@ -145,4 +145,7 @@
     <string name="typeevent">نوع الحدث</string>
     <string name="drawerOpen">نوع الحدث</string>
     <string name="drawerClose">نوع الحدث</string>
+    <string name="Hybride">هجين</string>
+    <string name="Essence">بنزين</string>
+    <string name="Diesel">ديزل</string>
 </resources>

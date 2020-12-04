@@ -138,6 +138,9 @@
     <string name="Mes_Locations">Mes Locations</string>
     <string name="Se_déconnecter">Se déconnecter</string>
     <string name="typeevent">type evenment</string>
+    <string name="Diesel">Diesel</string>
+    <string name="Essence">Essence</string>
+    <string name="Hybride">Hybride</string>
 
 
 
