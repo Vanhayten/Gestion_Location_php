@@ -1,5 +1,6 @@
 package com.example.gestionlocationnew;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -109,6 +110,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
 
     CircleImageView profile;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -713,12 +715,14 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
+
                                         //Start ProgressBar first (Set visibility VISIBLE)
                                         progressBar.setVisibility(View.VISIBLE);
                                         Handler handler = new Handler(Looper.getMainLooper());
                                         handler.post(new Runnable() {
                                             @Override
                                             public void run() {
+
                                                 //Starting Write and Read data with URL
                                                 //Creating array for parameters
                                                 String[] field = new String[2];
@@ -938,6 +942,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                             public void onComplete(@NonNull Task<Void> task) {
                                 Toast.makeText(vehicules.this, " déconnecté avec succès", Toast.LENGTH_SHORT).show();
                                 // ...
+
                             }
                         });
 
@@ -949,6 +954,7 @@ public class vehicules extends AppCompatActivity implements NavigationView.OnNav
                 startActivity(T);
                 this.overridePendingTransition(R.anim.slide_in_right,
                         R.anim.slide_in_left);
+                finish();
                 break;
         }
         return false;

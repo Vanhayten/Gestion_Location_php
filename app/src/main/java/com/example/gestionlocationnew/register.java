@@ -544,6 +544,7 @@ public class register extends AppCompatActivity {
         protected String doInBackground(String[]... strings) {
 
 
+
             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(new Runnable() {
                 @Override
@@ -564,6 +565,7 @@ public class register extends AppCompatActivity {
                     //Creating array for data
                     String[] data = new String[7];
                     data = strings[0];
+
 //                    data[0] = String.valueOf(strings[0][0]);
 //                    data[1] = String.valueOf(strings[0][1]);
 //                    data[2] = String.valueOf(strings[0][2]);
@@ -571,6 +573,7 @@ public class register extends AppCompatActivity {
 //                    data[4] = String.valueOf(strings[0][4]);
 //                    data[5] = String.valueOf(strings[0][5]);
 //                    data[6] = String.valueOf(strings[0][6]);
+
 
 
                    // Log.i("data","Login  "+strings[0][0]+"  MDP"+strings[0][1]+"       "+strings[0][2]+"      "+strings[0][3]+"    "+strings[0][4]+"   "+strings[0][5]+"   "+strings[0][6]);
@@ -636,11 +639,6 @@ public class register extends AppCompatActivity {
 
             if (checker) {
 
-
-                llProgressBar.setVisibility(View.VISIBLE);
-
-                ImageView ImageChecker = (ImageView) llProgressBar.findViewById(R.id.ImageDone);
-                ImageChecker.setImageResource(R.drawable.cancel);
                 llProgressBar.setVisibility(View.VISIBLE);
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -670,7 +668,7 @@ public class register extends AppCompatActivity {
                     public void run() {
                         llProgressBar.setVisibility(View.INVISIBLE);
                     }
-                }, 2000);
+                }, 3000);
             }
 
         }

@@ -188,14 +188,6 @@ public class service_vehicule extends Service {
     }
 
 
-
-
-
-
-
-
-
-
     public void sync_Deleted_Database(String Login){
 
         SQLiteDatabase table = db.getReadableDatabase ();
