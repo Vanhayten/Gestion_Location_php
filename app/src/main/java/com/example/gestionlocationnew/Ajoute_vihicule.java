@@ -60,6 +60,8 @@ public class Ajoute_vihicule extends AppCompatActivity {
     String Nom, Prenom, role, login;
     int intColot;
 
+    sync_mysql SyncVihicule;
+
 
     ProgressBar progressBar;
 
@@ -77,6 +79,8 @@ public class Ajoute_vihicule extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar1);
         state = (TextView) findViewById(R.id.state);
+
+        SyncVihicule = new sync_mysql();
 
         SharedPreferences perfs1 = getSharedPreferences("perfs1", MODE_PRIVATE);
         boolean firststart1 = perfs1.getBoolean("firststart1", true);
@@ -249,10 +253,22 @@ public class Ajoute_vihicule extends AppCompatActivity {
                 if (intColot != 0) {
                     if (confirmerMatricule(text3.getText().toString()) == false) {
 
+                        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+                        String[] data = new String[10];
+                        data[0] = text1.getText().toString();
+                        data[1] = text2.getText().toString();
+                        data[2] = text3.getText().toString();
+                        data[3] = spinner.getSelectedItem().toString();
+                        data[4] = text4.getText().toString();
+                        data[5] = text5.getText().toString();
+                        data[6] = text6.getText().toString();
+                        data[7] = intColot+"";
+                        data[8] = login;
+                        data[9] =  ""+timestamp;
 
                         AddTask myTask= new AddTask();
-                        //start asynctask
-                        myTask.execute();
+                        myTask.execute(data);
 
 
                         /**
@@ -393,14 +409,11 @@ public class Ajoute_vihicule extends AppCompatActivity {
 
 
 
-
-    class AddTask extends AsyncTask<String,String,Boolean>
+    boolean checker;
+    class AddTask extends AsyncTask<String[],String,Boolean>
     {
-        /* Params: 1000 : Integer
-           Progress: message content : String
-           Result: true : Boolean
-         */
-        boolean checker;
+
+
         View parentLayout = findViewById(android.R.id.content);
 
         @Override
@@ -408,20 +421,52 @@ public class Ajoute_vihicule extends AppCompatActivity {
         {
             //Start ProgressBar first (Set visibility VISIBLE)
             progressBar.setVisibility(View.VISIBLE);
-
             checker =false;
         }
         @Override
-        protected Boolean doInBackground(String... params)
+        protected Boolean doInBackground(String[]... params)
         {
-            checker = false;
 
-            publishProgress("open connection");
+            /*publishProgress("open connection");
 
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            String[] field = new String[10];
+            field[0] = "MarqueVihicule";
+            field[1] = "DateCirculation";
+            field[2] = "immatriculation";
+            field[3] = "MarqueCombustion";
+            field[4] = "ValeurDentrée";
+            field[5] = "Date_Effet_Assurance";
+            field[6] = "Date_Echeance";
+            field[7] = "Couleur_Vehicule";
+            field[8] = "Login";
+            field[9] = "on_update";
 
 
-            Handler handler = new Handler(Looper.getMainLooper());
+            //Creating array for data
+            String[] data = params[0];
+
+            String host = getResources().getString(R.string.hosting)+"/gesloc/vehicules/insertvehicule.php";
+
+         boolean tester = SyncVihicule.syncAdd(field,data,host);
+
+         if(tester){
+             boolean resulta = false;
+             try {
+                 resulta = DB.insert_vehiucle(text1.getText().toString(), text2.getText().toString(), text3.getText().toString(), spinner.getSelectedItem().toString(), Integer.parseInt(text4.getText().toString()), text5.getText().toString(), text6.getText().toString(), intColot, login);
+                 if(resulta){
+                     publishProgress("L'ajoute Effectué");
+                     checker = true;
+                 }
+
+             } catch (Exception E) {
+
+             }
+
+         }else {
+             checker = false;
+         }*/
+
+             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -443,19 +488,8 @@ public class Ajoute_vihicule extends AppCompatActivity {
 
 
                     //Creating array for data
-                    String[] data = new String[10];
-                    data[0] = text1.getText().toString();
-                    data[1] = text2.getText().toString();
-                    data[2] = text3.getText().toString();
-                    data[3] = spinner.getSelectedItem().toString();
-                    data[4] = text4.getText().toString();
-                    data[5] = text5.getText().toString();
-                    data[6] = text6.getText().toString();
-                    data[7] = intColot+"";
-                    data[8] = login;
-                    data[9] =  ""+timestamp;
+                    String[] data = params[0];
 
-                    //  Log.i("#########",text1.getText().toString()+"  "+text2.getText().toString()+"  "+text3.getText().toString()+"  "+spinner.getSelectedItem().toString()+"  "+text4.getText().toString()+"  "+text5.getText().toString()+"  "+text6.getText().toString()+"   "+intColot+""+"  "+login );
 
                     String host = getResources().getString(R.string.hosting);
                     PutData putData = new PutData(host+"/gesloc/vehicules/insertvehicule.php", "POST", field, data);
@@ -463,14 +497,11 @@ public class Ajoute_vihicule extends AppCompatActivity {
                         if (putData.onComplete()) {
                             String result = putData.getResult();
 
-                            publishProgress("Start Read");
 
 
                             if(result.equals("Add Success")){
 
-                                /**
-                                 * add database in local
-                                 */
+
                                 Boolean resulta = null;
                                 try {
                                     resulta = DB.insert_vehiucle(text1.getText().toString(), text2.getText().toString(), text3.getText().toString(), spinner.getSelectedItem().toString(), Integer.parseInt(text4.getText().toString()), text5.getText().toString(), text6.getText().toString(), intColot, login);
@@ -499,12 +530,7 @@ public class Ajoute_vihicule extends AppCompatActivity {
                     //End Write and Read data with URL
                 }
             });
-
-
-
             //-----------------------------------------------------------------------
-
-
             return checker;
         }
         @Override
@@ -513,15 +539,12 @@ public class Ajoute_vihicule extends AppCompatActivity {
             //setting text
            // state.setText(progress[0]);
             Snackbar.make(parentLayout, progress[0], Snackbar.LENGTH_SHORT).show();
-
         }
         @Override
         protected void onPostExecute(Boolean checker1)
         {
             //checking result is true or not
             if(checker){
-                Log.i("state","###################### yep");
-
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -537,16 +560,9 @@ public class Ajoute_vihicule extends AppCompatActivity {
                     }
                 }, 5000);
 
-
-
-
             }else {
-                Log.i("state","###################### none");
-
                 Snackbar.make(parentLayout, "L'ajoute n'est pas Effectué", Snackbar.LENGTH_SHORT).show();
-
             }
-
             //End ProgressBar (Set visibility to GONE)
             progressBar.setVisibility(View.GONE);
         }

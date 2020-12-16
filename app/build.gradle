@@ -78,12 +78,6 @@ dependencies {
     implementation  'com.scwang.smart:refresh-header-two-level:2.0.1'   //TwoLevelHeader
     implementation  'com.scwang.smart:refresh-footer-ball:2.0.1'        //BallPulseFooter
     implementation  'com.scwang.smart:refresh-footer-classics:2.0.1'    //ClassicsFooter
-
-
-
-
-
-
 }
 
 

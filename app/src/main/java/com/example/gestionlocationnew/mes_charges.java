@@ -1031,6 +1031,8 @@ public class mes_charges extends AppCompatActivity implements NavigationView.OnN
                 }
                 boolean c = false;
                 try {
+
+
                     c = db.insert_charge(datech.getText().toString(), Integer.parseInt(montant.getText().toString()), modpay.toString(), design.getText().toString(),login);
 
                 }catch (Exception es){

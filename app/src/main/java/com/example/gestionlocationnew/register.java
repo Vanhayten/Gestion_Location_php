@@ -529,6 +529,8 @@ public class register extends AppCompatActivity {
     }
 
 
+
+
     class ADDAsync extends AsyncTask<String[], String, String> {
 
         boolean checher;
@@ -591,8 +593,6 @@ public class register extends AppCompatActivity {
                             publishProgress(result);
 
                             if (result.equals("Sign Up Success")) {
-
-
                                 /**
                                  * add data to local
                                  */
